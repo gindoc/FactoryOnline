@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Factory Online</string>
+    <string name="api">https://www.livecoding.tv:443</string>
+</resources>

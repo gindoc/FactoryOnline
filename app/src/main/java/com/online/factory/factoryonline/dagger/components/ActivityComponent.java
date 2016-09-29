@@ -1,0 +1,20 @@
+package com.online.factory.factoryonline.dagger.components;
+
+
+
+import com.online.factory.factoryonline.modules.main.MainActivity;
+import com.online.factory.factoryonline.dagger.modules.ActivityModule;
+import com.online.factory.factoryonline.dagger.modules.FragmentModule;
+
+import dagger.Subcomponent;
+
+/**
+ * Created by louiszgm-pc on 2016/9/21.
+ */
+@Subcomponent(modules = ActivityModule.class)
+public interface ActivityComponent {
+
+    void inject(MainActivity activity);
+
+    FragmentComponent plus(FragmentModule module);
+}
