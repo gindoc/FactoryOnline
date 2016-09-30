@@ -16,11 +16,11 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
 
     @Override
     public void logIn() {
-
+        mViewRef.get().startLogIn();
     }
 
     @Override
     public void logOut() {
-
+        mViewRef.get().refreshWhenLogOut();
     }
 }

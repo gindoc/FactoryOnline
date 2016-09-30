@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.dagger.components;
 
 
 
+import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.dagger.modules.ActivityModule;
 import com.online.factory.factoryonline.dagger.modules.FragmentModule;
@@ -17,4 +18,6 @@ public interface ActivityComponent {
     void inject(MainActivity activity);
 
     FragmentComponent plus(FragmentModule module);
+
+    void inject(LoginActivity activity);
 }

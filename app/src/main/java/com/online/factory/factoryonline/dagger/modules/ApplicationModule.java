@@ -7,6 +7,10 @@ import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.online.factory.factoryonline.modules.login.LoginContext;
+
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -34,7 +38,9 @@ public class ApplicationModule {
         return mApp;
     }
 
-    public LinearLayoutManager provideLayoutManager(){
-        return new LinearLayoutManager(mApp, LinearLayoutManager.VERTICAL,false);
+    @Provides
+    @Singleton
+    public LoginContext provideLoginContext(){
+        return new LoginContext();
     }
 }

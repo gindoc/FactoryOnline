@@ -7,7 +7,7 @@ import android.content.Context;
  */
 
 public class LoginContext {
-    private UserState mState;
+    private UserState mState = new LogOutState();
 
     public void setmState(UserState mState) {
         this.mState = mState;

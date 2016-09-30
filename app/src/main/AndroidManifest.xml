@@ -3,6 +3,7 @@
     package="com.online.factory.factoryonline">
 
     <application
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +12,7 @@
         <activity android:name=".modules.main.MainActivity">
 
         </activity>
-
+        <activity android:name=".modules.login.LoginActivity"/>
         <activity
             android:name=".modules.splash.SplashActivity"
             android:theme="@style/SplashTheme"

@@ -47,11 +47,11 @@ public abstract class BaseFragment<V , T extends BasePresenter<V>>  extends Supp
         return mComponent;
     }
 
-    public CharSequence getmTitle() {
+    public CharSequence getTitle() {
         return mTitle;
     }
 
-    public void setmTitle(CharSequence mTitle) {
+    public void setTitle(CharSequence mTitle) {
         this.mTitle = mTitle;
     }
 
