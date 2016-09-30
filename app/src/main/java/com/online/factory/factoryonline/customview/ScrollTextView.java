@@ -132,7 +132,6 @@ public class ScrollTextView extends TextSwitcher implements ViewSwitcher.ViewFac
         });
         return t;
     }
-
     interface OnItemClickListener{
         void onItemClick(int position);
     }
