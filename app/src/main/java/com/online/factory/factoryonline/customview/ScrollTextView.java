@@ -2,14 +2,18 @@ package com.online.factory.factoryonline.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
@@ -98,10 +102,35 @@ public class ScrollTextView extends TextSwitcher implements ViewSwitcher.ViewFac
         this.news = news;
     }
 
+    public void startAutoScroll() {
+        mHandler.sendEmptyMessage(FLAG_START);
+    }
+
+    public void stopAutoScroll() {
+        mHandler.sendEmptyMessage(FLAG_STOP);
+    }
 
     @Override
     public View makeView() {
-        return null;
+        TextView t = new TextView(mContext);
+        t.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+        t.setText(news.get(currentItem % news.size()));
+        t.setMaxLines(1);
+        t.setPadding(10, 10, 10, 10);
+        t.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        t.setTextColor(Color.RED);
+
+        t.setClickable(true);
+
+        t.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemClickListener != null && news.size() > 0 && currentItem != -1) {
+                    itemClickListener.onItemClick(currentItem % news.size());
+                }
+            }
+        });
+        return t;
     }
 
     interface OnItemClickListener{
