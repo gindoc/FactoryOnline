@@ -36,6 +36,7 @@
                         android:layout_width="@dimen/x200"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:onClick="@{() -> presenter.logIn()}"
                         android:text="登录" />
                 </RelativeLayout>
 
@@ -184,7 +185,8 @@
                             android:drawableStart="@drawable/ic_home_full"
                             android:gravity="center_vertical"
                             android:textSize="12sp"
-                            android:text="条目"
+                            android:text="注销"
+                            android:onClick="@{() -> presenter.logOut()}"
                             android:background="?android:selectableItemBackground"
                             />
                     </LinearLayout>

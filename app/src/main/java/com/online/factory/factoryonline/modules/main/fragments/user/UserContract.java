@@ -11,7 +11,7 @@ public interface UserContract {
 
     interface View extends IBaseView{
         void startLogIn();
-
+        void refreshWhenLogOut();
     }
 
     interface Presenter extends IBasePresenter{

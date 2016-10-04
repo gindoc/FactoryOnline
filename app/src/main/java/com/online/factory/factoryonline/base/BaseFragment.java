@@ -13,7 +13,6 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import com.trello.rxlifecycle.android.RxLifecycleAndroid;
-import com.trello.rxlifecycle.components.support.RxFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import rx.Observable;
@@ -47,11 +46,11 @@ public abstract class BaseFragment<V , T extends BasePresenter<V>>  extends Supp
         return mComponent;
     }
 
-    public CharSequence getmTitle() {
+    public CharSequence getTitle() {
         return mTitle;
     }
 
-    public void setmTitle(CharSequence mTitle) {
+    public void setTitle(CharSequence mTitle) {
         this.mTitle = mTitle;
     }
 

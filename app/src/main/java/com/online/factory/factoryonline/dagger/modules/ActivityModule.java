@@ -4,6 +4,8 @@ import android.support.v4.app.FragmentManager;
 
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.modules.login.fragments.PwdLoginFragment;
+import com.online.factory.factoryonline.modules.login.fragments.SmsLoginFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -33,4 +35,12 @@ public class ActivityModule {
         return mActivity.get().getSupportFragmentManager();
     }
 
+    @Provides
+    @Named("LoginFragments")
+    public ArrayList<BaseFragment> provideLoginFragments(PwdLoginFragment pwdLoginFragment , SmsLoginFragment smsLoginFragment){
+        ArrayList<BaseFragment> list = new ArrayList<>();
+        list.add(pwdLoginFragment);
+        list.add(smsLoginFragment);
+        return list;
+    }
 }

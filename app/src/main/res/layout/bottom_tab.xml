@@ -48,16 +48,19 @@
         <RadioButton
             style="@style/bottom_tab_style"
             android:drawableTop="@drawable/rb_locate_drawable_selector"
+            android:onClick="onClickRecommend"
             android:text="推荐"/>
 
         <RadioButton
             style="@style/bottom_tab_style"
             android:drawableTop="@drawable/rb_msg_drawable_selector"
+            android:onClick="onClickMsg"
             android:text="消息"/>
 
         <RadioButton
             style="@style/bottom_tab_style"
             android:drawableTop="@drawable/rb_account_drawable_selector"
+            android:onClick="onClickUser"
             android:text="我的"/>
     </RadioGroup>
 </LinearLayout>
