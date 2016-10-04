@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentUserBinding;
 import com.online.factory.factoryonline.modules.login.LogInState;
 import com.online.factory.factoryonline.modules.login.LogOutState;

@@ -9,9 +9,6 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.modules.login.LoginContext;
-import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
-import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
-import com.online.factory.factoryonline.modules.main.fragments.user.UserPresenter;
 
 import javax.inject.Inject;
 
@@ -22,6 +19,9 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     UserFragment userFragment;
+
+    @Inject
+    HomeFragment homeFragment;
 
     @Inject
     LoginContext mLoginContext;

@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.LinearLayoutManager;
+
+import com.online.factory.factoryonline.modules.login.LoginContext;
+
+import javax.inject.Singleton;
 
 import com.online.factory.factoryonline.modules.login.LoginContext;
 
