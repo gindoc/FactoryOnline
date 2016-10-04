@@ -40,6 +40,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
     //    compile "com.google.guava:guava:$rootProject.guavaVersion"
+
     // Add Dagger dependencies
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
@@ -63,6 +64,6 @@ dependencies {
     compile 'com.google.android:flexbox:0.2.3'
     compile 'me.yokeyword:fragmentation:0.7.12'
     compile 'com.github.aurae.retrofit2:converter-logansquare:1.4.1'
-
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
     testCompile "junit:junit:$rootProject.junitVersion"
 }
