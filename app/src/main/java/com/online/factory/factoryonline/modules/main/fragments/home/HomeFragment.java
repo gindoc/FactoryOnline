@@ -7,11 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
+import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
+import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,7 +25,9 @@ import javax.inject.Inject;
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
     private FragmentHomeBinding mBinding;
-//    private SlideShowView slideShowView;
+    private LayoutHomeHeaderBinding mHeaderBinding;
+
+    private BaseRecyclerViewAdapter mAdapter;
 
     @Inject
     public HomeFragment() {
@@ -48,11 +54,24 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentHomeBinding.inflate(inflater);
+        mHeaderBinding = LayoutHomeHeaderBinding.inflate(inflater);
 
         mBinding.setPresenter(mPresenter);
+//        mHeaderBinding.set
 
         mPresenter.requestIndexPicUrls();
 //        mPresenter.requestScrollMsg();
+
+        List<FactoryInfo> datas = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            FactoryInfo info = new FactoryInfo();
+            info.setName("No. " + i);
+            datas.add(info);
+        }
+        mAdapter = new HomeRecyclerViewAdapter(getContext(), datas);
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
+
 
         return mBinding.getRoot();
     }
@@ -61,17 +80,15 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void onResume() {
         super.onResume();
 
-        mBinding.scrollTxtView.startAutoScroll();
-
-        mBinding.slideShowView.startPlay();
+        mHeaderBinding.scrollTxtView.startAutoScroll();
+        mHeaderBinding.slideShowView.startPlay();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mBinding.slideShowView.stopPlay();
-
-        mBinding.scrollTxtView.stopAutoScroll();
+        mHeaderBinding.slideShowView.stopPlay();
+        mHeaderBinding.scrollTxtView.stopAutoScroll();
 
     }
 
@@ -86,11 +103,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Override
     public void initSlideShowView(String[] urls) {
-        mBinding.slideShowView.setImageUrls(urls);
+        mHeaderBinding.slideShowView.setImageUrls(urls);
     }
 
     @Override
     public void initScrollTextView(List<News> newses) {
-        mBinding.scrollTxtView.setNews(newses);
+        mHeaderBinding.scrollTxtView.setNews(newses);
     }
 }

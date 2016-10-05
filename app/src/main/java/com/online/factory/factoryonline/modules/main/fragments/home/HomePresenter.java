@@ -1,9 +1,7 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
 import com.bluelinelabs.logansquare.LoganSquare;
-import com.google.common.collect.Iterators;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
@@ -15,7 +13,6 @@ import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
