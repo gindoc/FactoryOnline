@@ -65,5 +65,6 @@ dependencies {
     compile 'me.yokeyword:fragmentation:0.7.12'
     compile 'com.github.aurae.retrofit2:converter-logansquare:1.4.1'
     compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     testCompile "junit:junit:$rootProject.junitVersion"
 }

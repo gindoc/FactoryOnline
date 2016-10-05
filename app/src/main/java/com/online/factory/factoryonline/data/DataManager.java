@@ -1,6 +1,8 @@
 package com.online.factory.factoryonline.data;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.News;
 
@@ -21,7 +23,7 @@ public class DataManager {
         this.factoryApi = api;
     }
 
-    public Observable<String[]> getIndexPicUrls() {
+    public Observable<JsonObject> getIndexPicUrls() {
         return factoryApi.getIndexPicUrls();
     }
 

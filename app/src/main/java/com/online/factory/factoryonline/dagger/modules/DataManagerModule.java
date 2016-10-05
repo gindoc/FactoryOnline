@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.dagger.modules;
 
+import android.content.Context;
 import android.content.res.Resources;
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
@@ -25,6 +26,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -45,6 +47,7 @@ public class DataManagerModule {
     }
 
     @Provides
+    @Named("httpLogger")
     public HttpLoggingInterceptor providesHttpLogger(){
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         HttpLoggingInterceptor.Level basic = BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.HEADERS:HttpLoggingInterceptor.Level.NONE;
@@ -52,42 +55,44 @@ public class DataManagerModule {
         return interceptor;
     }
 
+    @Provides
+    @Named("localdata")
     public Interceptor provideLocalDataInterceptor(){
         Interceptor interceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
+                String responseString = "{\n" +
+                        "    \"pic\": [\n" +
+                        "        \"http: //www.cwenhui.com/images/zhuimeng.jpg\",\n" +
+                        "        \"http://www.cwenhui.com/images/mianshi.jpg\"\n" +
+                        "    ]\n" +
+                        "}";
                 Request request = chain.request();
-
-                return null;
-            }
-        };
-        return interceptor;
-    }
-    @Provides
-    public OkHttpClient providesHttpClient(HttpLoggingInterceptor loggingInterceptor){
-
-        Interceptor interceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                String responseString = "{\"indexPicUrls\": [\"http: //www.cwenhui.com/images/zhuimeng" +
-                        ".jpg\",\"http://www.cwenhui.com/images/zhuimeng.jpg\"]}";
-                Response response = new Response.Builder()
+                Response intercepterResponse = new Response.Builder()
                         .code(200)
                         .message(responseString)
-                        .request(chain.request())
+                        .request(request)
                         .protocol(Protocol.HTTP_1_0)
                         .body(ResponseBody.create(MediaType.parse("application/json"), responseString
                                 .getBytes()))
                         .addHeader("content-type", "application/json")
                         .build();
-                return response;
+                return intercepterResponse;
             }
         };
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .addNetworkInterceptor(interceptor)
-                .build();
-        return client;
+        return BuildConfig.DEBUG ? interceptor:null;
+    }
+
+    @Provides
+    public OkHttpClient provideHttpClient(@Named("httpLogger")HttpLoggingInterceptor loggingInterceptor , @Named("localdata")Interceptor localDataInterceptor){
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.addInterceptor(loggingInterceptor);
+        if(localDataInterceptor != null){
+            builder.addInterceptor(localDataInterceptor);
+        }
+        OkHttpClient okHttpClient = builder.build();
+        return okHttpClient;
     }
 
     @Provides
@@ -96,6 +101,7 @@ public class DataManagerModule {
                 .baseUrl(url)
                 .client(client)
                 .addConverterFactory(converterFactory)
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }

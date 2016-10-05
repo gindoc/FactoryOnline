@@ -9,6 +9,9 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
+import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
+import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
 
 import javax.inject.Inject;
 
@@ -30,7 +33,7 @@ public class MainActivity extends BaseActivity {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadRootFragment(R.id.tab_content,recommendFragment);
+        loadRootFragment(R.id.tab_content,homeFragment);
     }
 
     @Override
