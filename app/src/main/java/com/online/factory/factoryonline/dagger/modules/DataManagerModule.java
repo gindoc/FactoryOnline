@@ -1,6 +1,5 @@
 package com.online.factory.factoryonline.dagger.modules;
 
-import android.content.Context;
 import android.content.res.Resources;
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
@@ -63,7 +62,7 @@ public class DataManagerModule {
             public Response intercept(Chain chain) throws IOException {
                 String responseString = "{\n" +
                         "    \"pic\": [\n" +
-                        "        \"http: //www.cwenhui.com/images/zhuimeng.jpg\",\n" +
+                        "        \"http://www.cwenhui.com/images/zhuimeng.jpg\",\n" +
                         "        \"http://www.cwenhui.com/images/mianshi.jpg\"\n" +
                         "    ]\n" +
                         "}";
