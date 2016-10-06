@@ -42,6 +42,7 @@ public class HomeRecyclerView extends SuperRecyclerView {
                 super.onScrolled(recyclerView, dx, dy);
                 int[] pos = new int[2];
                 searchView.getLocationInWindow(pos);
+                    scrollChangedListener.onScrolled(getScrolledDistance());
                 if (pos[1] <= 0) {
                     Toast.makeText(getContext(), "get y = " + pos[1], Toast.LENGTH_SHORT).show();
                 }
@@ -58,4 +59,13 @@ public class HomeRecyclerView extends SuperRecyclerView {
         return (firstItemPosition + 1) * itemHeight - firstItemBottom;
     }
 
+    interface ScrollChangedListener{
+        void onScrolled(int dy);
+    }
+
+    private ScrollChangedListener scrollChangedListener;
+
+    public void setScrollChangedListener(ScrollChangedListener scrollChangedListener) {
+        this.scrollChangedListener = scrollChangedListener;
+    }
 }

@@ -23,7 +23,8 @@ import javax.inject.Inject;
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
+public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
+        .View, HomeRecyclerView.ScrollChangedListener {
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
 
@@ -68,6 +69,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         }
         mAdapter = new HomeRecyclerViewAdapter(getContext(), datas);
         mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setScrollChangedListener(this);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
         mBinding.recyclerView.init();
 
@@ -107,5 +109,10 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     @Override
     public void initScrollTextView(List<News> newses) {
         mHeaderBinding.scrollTxtView.setNews(newses);
+    }
+
+    @Override
+    public void onScrolled(int dy) {
+        mBinding.coverView.setAlpha(dy/10);
     }
 }
