@@ -6,6 +6,7 @@ import com.online.factory.factoryonline.BuildConfig;
 import com.online.factory.factoryonline.dagger.components.ApplicationComponent;
 import com.online.factory.factoryonline.dagger.components.DaggerApplicationComponent;
 import com.online.factory.factoryonline.dagger.modules.ApplicationModule;
+import com.online.factory.factoryonline.utils.ComponentHolder;
 
 import timber.log.Timber;
 
@@ -29,8 +30,10 @@ public class BaseApplication extends Application {
         if(mComponent == null){
             mComponent = DaggerApplicationComponent.builder()
                     .applicationModule(new ApplicationModule(this))
+//                    .dataManagerModule()
                     .build();
         }
+        ComponentHolder.setAppComponent(mComponent);
         return  mComponent;
     }
 
