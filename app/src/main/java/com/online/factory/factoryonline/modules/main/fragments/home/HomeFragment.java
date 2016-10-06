@@ -116,23 +116,26 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Override
     public void onScrolled(int dy) {
-        Timber.e("dy: " + dy);
-        int limit = mBinding.searchview.getHeight();
-        Timber.e("limit:  " + limit);
-        mBinding.coverView.setAlpha(dy / 100f);
-        if (limit > 0) {
-            if (dy <= limit) {
-                Timber.e("1 - dy / limit:" + (1 - dy * 1.0f / limit));
-                ObjectAnimator
-                        .ofFloat(mBinding.searchview, "scaleX", 1 - dy * 1.0f / (3*limit))
-                        .setDuration(limit / 700)
-                        .start();
-                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", -limit / 100 * dy)
-                        .setDuration(limit / 700 )
-                        .start();
-                Timber.e("Y   : " + -limit / 100 * dy);
+
+            Timber.e("dy: " + dy);
+            int limit = mBinding.searchview.getHeight();
+            Timber.e("limit:  " + limit);
+            mBinding.coverView.setAlpha(dy / 100f);
+        Timber.d("coverView  %f" , mBinding.coverView.getTranslationY());
+//        Timber.d("searchView  %f", mBinding.searchview.get);
+            if (limit > 0) {
+                if (dy <= limit) {
+                    Timber.e("1 - dy / limit:" + (1 - dy * 1.0f / limit));
+                    ObjectAnimator
+                            .ofFloat(mBinding.searchview, "scaleX", 1 + dy * 1.0f / (3*limit))
+                            .setDuration(limit / 700)
+                            .start();
+                    ObjectAnimator.ofFloat(mBinding.searchview, "translationY", limit / 100 * dy)
+                            .setDuration(limit / 700 )
+                            .start();
+                    Timber.e("Y   : " + -limit / 100 * dy);
+                }
             }
         }
-    }
 
 }

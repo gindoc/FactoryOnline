@@ -10,6 +10,8 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.DecorateRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView;
 
+import timber.log.Timber;
+
 /**
  * Created by cwenhui on 2016.02.23
  */
@@ -32,6 +34,7 @@ public class HomeRecyclerView extends SuperRecyclerView {
         final View searchView = header.findViewById(R.id.scroll_txt_view);
 
         addOnScrollListener(new RecyclerView.OnScrollListener() {
+            private int totalDy = 0;
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             }
@@ -39,20 +42,25 @@ public class HomeRecyclerView extends SuperRecyclerView {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int[] pos = new int[2];
-                searchView.getLocationInWindow(pos);
-                scrollChangedListener.onScrolled(getScrolledDistance());
+                totalDy -= dy;
+                scrollChangedListener.onScrolled(totalDy);
             }
         });
     }
 
     private int getScrolledDistance() {
-        LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
-        View firstVisibleItem = this.getChildAt(0);
-        int firstItemPosition = layoutManager.findFirstVisibleItemPosition();
-        int itemHeight = firstVisibleItem.getHeight();
-        int firstItemBottom = layoutManager.getDecoratedBottom(firstVisibleItem);
-        return (firstItemPosition + 1) * itemHeight - firstItemBottom;
+//        LinearLayoutManager layoutManager = (LinearLayoutManager) getLayoutManager();
+//        View firstVisibleItem = this.getChildAt(0);
+//        int firstItemPosition = layoutManager.findFirstVisibleItemPosition();
+//        int itemHeight = firstVisibleItem.getHeight();
+//        int firstItemBottom = layoutManager.getDecoratedBottom(firstVisibleItem);
+//        Timber.d("firstItemBottom  %d" , firstItemBottom);
+//        return firstItemBottom == 0? 0 :(firstItemPosition + 1) * itemHeight - firstItemBottom;
+        LinearLayoutManager layoutManager = (LinearLayoutManager) this.getLayoutManager();
+        int position = layoutManager.findFirstVisibleItemPosition();
+        View firstVisiableChildView = layoutManager.findViewByPosition(position);
+        int itemHeight = firstVisiableChildView.getHeight();
+        return (position) * itemHeight - firstVisiableChildView.getTop();
     }
 
     interface ScrollChangedListener{
