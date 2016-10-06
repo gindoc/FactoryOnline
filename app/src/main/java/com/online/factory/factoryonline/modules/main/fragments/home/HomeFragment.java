@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,10 +21,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
+public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
+        .View, HomeRecyclerView.ScrollChangedListener {
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
 
@@ -57,21 +61,20 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mHeaderBinding = LayoutHomeHeaderBinding.inflate(inflater);
 
         mBinding.setPresenter(mPresenter);
-//        mHeaderBinding.set
 
         mPresenter.requestIndexPicUrls();
-//        mPresenter.requestScrollMsg();
 
         List<FactoryInfo> datas = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             FactoryInfo info = new FactoryInfo();
             info.setName("No. " + i);
             datas.add(info);
         }
         mAdapter = new HomeRecyclerViewAdapter(getContext(), datas);
         mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setScrollChangedListener(this);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
-
+        mBinding.recyclerView.init();
 
         return mBinding.getRoot();
     }
@@ -110,4 +113,26 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void initScrollTextView(List<News> newses) {
         mHeaderBinding.scrollTxtView.setNews(newses);
     }
+
+    @Override
+    public void onScrolled(int dy) {
+        Timber.e("dy: " + dy);
+        int limit = mBinding.searchview.getHeight();
+        Timber.e("limit:  " + limit);
+        mBinding.coverView.setAlpha(dy / 100f);
+        if (limit > 0) {
+            if (dy <= limit) {
+                Timber.e("1 - dy / limit:" + (1 - dy * 1.0f / limit));
+                ObjectAnimator
+                        .ofFloat(mBinding.searchview, "scaleX", 1 - dy * 1.0f / (3*limit))
+                        .setDuration(limit / 700)
+                        .start();
+                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", -limit / 100 * dy)
+                        .setDuration(limit / 700 )
+                        .start();
+                Timber.e("Y   : " + -limit / 100 * dy);
+            }
+        }
+    }
+
 }

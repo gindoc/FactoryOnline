@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
         <variable
@@ -17,12 +18,82 @@
         <!--<include
             android:id="@+id/home_header"
             layout="@layout/layout_home_header"/>-->
-
-        <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
-            android:id="@+id/recyclerView"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cacheColorHint="@null"
-            android:scrollbars="vertical"/>
+            android:layout_height="wrap_content">
+
+            <com.online.factory.factoryonline.modules.main.fragments.home.HomeRecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="@null"
+                android:scrollbars="vertical"/>
+
+            <View
+                android:id="@+id/cover_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y50"
+                android:background="#06f922"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y50"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@drawable/ic_arrow_down"
+                        android:gravity="center"
+                        android:padding="@dimen/x15"
+                        android:text="北京"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"/>
+
+                    <ImageView
+                        android:id="@+id/logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_home_full"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:padding="@dimen/x6"
+                        android:src="@drawable/ic_scan"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/searchview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/x10"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginRight="@dimen/x10">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/ic_search"
+                        android:gravity="center_vertical"
+                        android:text="输入小区或商圈名字"
+                        android:paddingLeft="@dimen/x10"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
     </LinearLayout>
 </layout>
