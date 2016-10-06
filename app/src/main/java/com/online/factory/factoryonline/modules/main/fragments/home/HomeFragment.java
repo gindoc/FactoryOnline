@@ -57,13 +57,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mHeaderBinding = LayoutHomeHeaderBinding.inflate(inflater);
 
         mBinding.setPresenter(mPresenter);
-//        mHeaderBinding.set
 
         mPresenter.requestIndexPicUrls();
-//        mPresenter.requestScrollMsg();
 
         List<FactoryInfo> datas = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             FactoryInfo info = new FactoryInfo();
             info.setName("No. " + i);
             datas.add(info);
@@ -71,7 +69,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mAdapter = new HomeRecyclerViewAdapter(getContext(), datas);
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
-
+        mBinding.recyclerView.init();
 
         return mBinding.getRoot();
     }
