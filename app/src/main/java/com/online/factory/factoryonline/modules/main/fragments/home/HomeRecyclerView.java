@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.DecorateRecyclerViewAdapter;
@@ -42,10 +41,7 @@ public class HomeRecyclerView extends SuperRecyclerView {
                 super.onScrolled(recyclerView, dx, dy);
                 int[] pos = new int[2];
                 searchView.getLocationInWindow(pos);
-                    scrollChangedListener.onScrolled(getScrolledDistance());
-                if (pos[1] <= 0) {
-                    Toast.makeText(getContext(), "get y = " + pos[1], Toast.LENGTH_SHORT).show();
-                }
+                scrollChangedListener.onScrolled(getScrolledDistance());
             }
         });
     }
