@@ -1,13 +1,17 @@
 package com.online.factory.factoryonline.dagger.modules;
 
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 import com.online.factory.factoryonline.BuildConfig;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.utils.ComponentHolder;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.inject.Named;
 
@@ -26,6 +30,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 
 /**
@@ -34,38 +39,66 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class DataManagerModule {
 
-     @Provides
-     @Named("api_url")
-    HttpUrl providesApiUrl(Resources resources){
-         return HttpUrl.parse(resources.getString(R.string.api));
-     }
+    @Provides
+    @Named("api_url")
+    HttpUrl providesApiUrl(Resources resources) {
+        return HttpUrl.parse(resources.getString(R.string.api));
+    }
 
     @Provides
-    Converter.Factory providesLoganSquareConverter(){
+    Converter.Factory providesLoganSquareConverter() {
         return LoganSquareConverterFactory.create();
     }
 
     @Provides
     @Named("httpLogger")
-    public HttpLoggingInterceptor providesHttpLogger(){
+    public HttpLoggingInterceptor providesHttpLogger() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        HttpLoggingInterceptor.Level basic = BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.HEADERS:HttpLoggingInterceptor.Level.NONE;
+        HttpLoggingInterceptor.Level basic = BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.HEADERS :
+                HttpLoggingInterceptor.Level.NONE;
         interceptor.setLevel(basic);
         return interceptor;
     }
 
+
+    private String createResponseBody(Interceptor.Chain chain) {
+        HttpUrl uri = chain.request().url();
+        String path = uri.url().getPath();
+        String query = uri.url().getQuery();
+        Timber.d("地址为:%s", uri.toString());
+        Timber.d("path为:%s", path);
+        Timber.d("查询的参数为:%s", query);
+        StringBuffer response = new StringBuffer();
+        BufferedReader reader;
+        AssetManager assetManager = ComponentHolder.getAppComponent().getContext().getAssets();
+        try {
+            String fileName;
+            if (path.matches("^(/scrollMsgs)$")) {//匹配/scrollMsgs
+                fileName = "ScrollMsgs.json";
+            }else if(path.matches("^(/factoryInfos/[1-9]\\d*/[1-9]\\d*)")) {
+                fileName = "FactoryInfos.json";
+            }else {
+                fileName = "SlideUrl.json";
+            }
+            reader = new BufferedReader(new InputStreamReader(assetManager.open(fileName)));
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response.toString();
+    }
+
     @Provides
     @Named("localdata")
-    public Interceptor provideLocalDataInterceptor(){
+    public Interceptor provideLocalDataInterceptor() {
         Interceptor interceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
-                String responseString = "{\n" +
-                        "    \"pic\": [\n" +
-                        "        \"http://www.cwenhui.com/images/zhuimeng.jpg\",\n" +
-                        "        \"http://www.cwenhui.com/images/mianshi.jpg\"\n" +
-                        "    ]\n" +
-                        "}";
+                String responseString = createResponseBody(chain);
                 Request request = chain.request();
                 Response intercepterResponse = new Response.Builder()
                         .code(200)
@@ -79,15 +112,16 @@ public class DataManagerModule {
                 return intercepterResponse;
             }
         };
-        return BuildConfig.DEBUG ? interceptor:null;
+        return BuildConfig.DEBUG ? interceptor : null;
     }
 
     @Provides
-    public OkHttpClient provideHttpClient(@Named("httpLogger")HttpLoggingInterceptor loggingInterceptor , @Named("localdata")Interceptor localDataInterceptor){
+    public OkHttpClient provideHttpClient(@Named("httpLogger") HttpLoggingInterceptor loggingInterceptor,
+                                          @Named("localdata") Interceptor localDataInterceptor) {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.addInterceptor(loggingInterceptor);
-        if(localDataInterceptor != null){
+        if (localDataInterceptor != null) {
             builder.addInterceptor(localDataInterceptor);
         }
         OkHttpClient okHttpClient = builder.build();
@@ -95,7 +129,8 @@ public class DataManagerModule {
     }
 
     @Provides
-    public Retrofit providesRetrofit(Converter.Factory converterFactory, @Named("api_url")HttpUrl url,OkHttpClient client){
+    public Retrofit providesRetrofit(Converter.Factory converterFactory, @Named("api_url") HttpUrl url,
+                                     OkHttpClient client) {
         return new Retrofit.Builder()
                 .baseUrl(url)
                 .client(client)
@@ -106,7 +141,7 @@ public class DataManagerModule {
     }
 
     @Provides
-    public FactoryApi providesApi(Retrofit retrofit){
+    public FactoryApi providesApi(Retrofit retrofit) {
         return retrofit.create(FactoryApi.class);
     }
 

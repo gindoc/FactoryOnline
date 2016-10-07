@@ -1,15 +1,14 @@
 package com.online.factory.factoryonline.data.remote;
 
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
-
-import org.json.JSONArray;
 
 import java.util.List;
 
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -23,4 +22,7 @@ public interface FactoryApi {
 
     @GET("/scrollMsgs")
     Observable<List<News>> getScrollMsgs();
+
+    @GET("/factoryInfos/{pageNo}/{pageSize}")
+    Observable<List<FactoryInfo>> getFactoryInfos(@Path("pageNo") int pageNo, @Path("pageSize") int pageSize);
 }

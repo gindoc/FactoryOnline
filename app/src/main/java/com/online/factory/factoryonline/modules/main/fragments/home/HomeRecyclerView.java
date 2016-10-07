@@ -10,8 +10,6 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.DecorateRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView;
 
-import timber.log.Timber;
-
 /**
  * Created by cwenhui on 2016.02.23
  */
@@ -31,7 +29,6 @@ public class HomeRecyclerView extends SuperRecyclerView {
     public void init() {
         DecorateRecyclerViewAdapter adapter = getBookendsAdapter();
         final View header = adapter.getHeader(0);
-        final View searchView = header.findViewById(R.id.scroll_txt_view);
 
         addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;
@@ -42,7 +39,7 @@ public class HomeRecyclerView extends SuperRecyclerView {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                totalDy -= dy;
+                totalDy += dy;
                 scrollChangedListener.onScrolled(totalDy);
             }
         });

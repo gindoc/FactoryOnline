@@ -8,6 +8,9 @@
         <variable
             name="presenter"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeContract.Presenter"/>
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment"/>
     </data>
 
     <RelativeLayout
@@ -67,26 +70,32 @@
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/rb_find"
                             style="@style/service_style"
                             android:background="@drawable/find_bg_selector"
+                            android:onClick="@{()->view.findFactory()}"
                             android:text="我要找房"/>
 
                         <RadioButton
+                            android:id="@+id/rb_agency"
                             style="@style/service_style"
+                            android:onClick="@{()->view.isAgency()}"
                             android:background="@drawable/agency_bg_selector"
                             android:text="我是中介"/>
 
                         <RadioButton
+                            android:id="@+id/rb_owner"
                             style="@style/service_style"
+                            android:onClick="@{()->view.isOwner()}"
                             android:background="@drawable/owner_bg_selector"
                             android:text="我是业主"/>
                     </RadioGroup>
 
                     <FrameLayout
+                        android:id="@+id/rolePick"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <include layout="@layout/fragment_owner"/>
                     </FrameLayout>
                 </LinearLayout>
 
