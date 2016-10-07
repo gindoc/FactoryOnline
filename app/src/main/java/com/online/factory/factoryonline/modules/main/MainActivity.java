@@ -2,12 +2,14 @@ package com.online.factory.factoryonline.modules.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
+import com.online.factory.factoryonline.databinding.ActivityMainBinding;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
@@ -17,6 +19,7 @@ import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
 
+    private ActivityMainBinding mBinding;
     @Inject
     RecommendFragment recommendFragment;
 
@@ -32,8 +35,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        loadRootFragment(R.id.tab_content,homeFragment);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding.bottomTab.rbHome.setChecked(true);
+        loadRootFragment(R.id.tab_content, homeFragment);
+        
     }
 
     @Override

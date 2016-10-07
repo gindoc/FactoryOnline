@@ -9,7 +9,18 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
 public class FactoryInfo extends BaseEntity {
     private String name;
     private String price;
+    private String address;
     private String imageUrl;
+    private String area;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 
     public FactoryInfo() {
     }
@@ -36,5 +47,13 @@ public class FactoryInfo extends BaseEntity {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

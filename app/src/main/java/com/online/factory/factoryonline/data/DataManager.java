@@ -1,9 +1,9 @@
 package com.online.factory.factoryonline.data;
 
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 
 import java.util.List;
@@ -29,5 +29,9 @@ public class DataManager {
 
     public Observable<List<News>> getScrollMsgs() {
         return factoryApi.getScrollMsgs();
+    }
+
+    public Observable<List<FactoryInfo>> getFactoryInfos(int pageNo, int pageSize) {
+        return factoryApi.getFactoryInfos(1,5);
     }
 }

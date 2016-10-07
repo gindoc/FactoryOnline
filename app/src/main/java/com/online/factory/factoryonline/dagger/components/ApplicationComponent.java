@@ -1,5 +1,7 @@
 package com.online.factory.factoryonline.dagger.components;
 
+import android.content.Context;
+
 import com.online.factory.factoryonline.dagger.modules.ActivityModule;
 import com.online.factory.factoryonline.dagger.modules.ApplicationModule;
 import com.online.factory.factoryonline.dagger.modules.DataManagerModule;
@@ -16,4 +18,6 @@ import dagger.Component;
 public interface ApplicationComponent {
 
     ActivityComponent plus(ActivityModule module);
+
+    Context getContext();
 }

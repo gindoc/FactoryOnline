@@ -21,7 +21,6 @@ import timber.log.Timber;
 
 public class FileUtils {
 
-
     private final static String PATTERN = "yyyyMMddHHmmss";
 
 

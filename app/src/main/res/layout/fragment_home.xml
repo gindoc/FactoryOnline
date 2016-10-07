@@ -15,9 +15,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--<include
-            android:id="@+id/home_header"
-            layout="@layout/layout_home_header"/>-->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

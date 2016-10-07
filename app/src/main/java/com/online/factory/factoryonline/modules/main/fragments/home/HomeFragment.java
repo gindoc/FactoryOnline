@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
@@ -16,7 +17,6 @@ import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,7 +30,6 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         .View, HomeRecyclerView.ScrollChangedListener {
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
-
     private BaseRecyclerViewAdapter mAdapter;
 
     @Inject
@@ -61,28 +60,36 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mHeaderBinding = LayoutHomeHeaderBinding.inflate(inflater);
 
         mBinding.setPresenter(mPresenter);
+        mHeaderBinding.setView(this);
+
+        findFactory();
+        mHeaderBinding.rbFind.setChecked(true);
 
         mPresenter.requestIndexPicUrls();
-
-        List<FactoryInfo> datas = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            FactoryInfo info = new FactoryInfo();
-            info.setName("No. " + i);
-            datas.add(info);
-        }
-        mAdapter = new HomeRecyclerViewAdapter(getContext(), datas);
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setScrollChangedListener(this);
-        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
-        mBinding.recyclerView.init();
+        mPresenter.requestScrollMsg();
+        mPresenter.requestFactoryInfo();
 
         return mBinding.getRoot();
+    }
+
+    public void findFactory() {
+        mHeaderBinding.rolePick.removeAllViews();
+        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_find, mHeaderBinding.rolePick);
+    }
+
+    public void isAgency() {
+        mHeaderBinding.rolePick.removeAllViews();
+        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_agency, mHeaderBinding.rolePick);
+    }
+
+    public void isOwner() {
+        mHeaderBinding.rolePick.removeAllViews();
+        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_owner, mHeaderBinding.rolePick);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         mHeaderBinding.scrollTxtView.startAutoScroll();
         mHeaderBinding.slideShowView.startPlay();
     }
@@ -92,7 +99,6 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         super.onPause();
         mHeaderBinding.slideShowView.stopPlay();
         mHeaderBinding.scrollTxtView.stopAutoScroll();
-
     }
 
     @Override
@@ -115,27 +121,31 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     }
 
     @Override
-    public void onScrolled(int dy) {
+    public void initRecyclerView(List<FactoryInfo> infos) {
+        mAdapter = new HomeRecyclerViewAdapter(getContext(), infos);
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setScrollChangedListener(this);
+        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
+        mBinding.recyclerView.init();
+    }
 
-            Timber.e("dy: " + dy);
-            int limit = mBinding.searchview.getHeight();
-            Timber.e("limit:  " + limit);
-            mBinding.coverView.setAlpha(dy / 100f);
-        Timber.d("coverView  %f" , mBinding.coverView.getTranslationY());
-//        Timber.d("searchView  %f", mBinding.searchview.get);
-            if (limit > 0) {
-                if (dy <= limit) {
-                    Timber.e("1 - dy / limit:" + (1 - dy * 1.0f / limit));
-                    ObjectAnimator
-                            .ofFloat(mBinding.searchview, "scaleX", 1 + dy * 1.0f / (3*limit))
-                            .setDuration(limit / 700)
-                            .start();
-                    ObjectAnimator.ofFloat(mBinding.searchview, "translationY", limit / 100 * dy)
-                            .setDuration(limit / 700 )
-                            .start();
-                    Timber.e("Y   : " + -limit / 100 * dy);
-                }
+    @Override
+    public void onScrolled(int dy) {
+        Timber.e("dy: " + dy);
+        int limit = mBinding.searchview.getHeight();
+        mBinding.coverView.setAlpha(dy / 100f);
+        if (limit > 0) {
+            if (dy <= limit) {
+                Timber.e("1 - dy / (3*limit):" + (1 - dy * 1.0f / (3 * limit)));
+                ObjectAnimator
+                        .ofFloat(mBinding.searchview, "scaleX", 1 - dy * 1.0f / (3 * limit))
+                        .setDuration(limit / 700)
+                        .start();
+                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", -limit / 100 * dy)
+                        .setDuration(limit / 700)
+                        .start();
+                Timber.e("translationY   : " + -limit / 100 * dy);
             }
         }
-
+    }
 }

@@ -1,23 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
     <data>
-
         <variable
             name="factory_name"
+            type="String"/>
+
+        <variable
+            name="factory_address"
+            type="String"/>
+
+        <variable
+            name="factory_price"
+            type="String"/>
+
+        <variable
+            name="factory_area"
             type="String"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
-                  android:layout_height="@dimen/y80"
-                  android:orientation="vertical">
+                  android:layout_height="@dimen/y100"
+                  android:gravity="center_vertical"
+                  android:orientation="horizontal"
+                  android:padding="@dimen/x10">
 
-        <TextView
+        <ImageView
+            android:id="@+id/factory_img"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/y80"
+            android:layout_marginRight="@dimen/x10"
+            android:src="@drawable/ic_home_full"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:text="@{factory_name}"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@{factory_name}"
+                android:textSize="18sp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{factory_address}"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@{factory_price}"
+                    android:textSize="16sp"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@{factory_area}"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
     </LinearLayout>
 </layout>

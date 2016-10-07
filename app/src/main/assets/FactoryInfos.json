@@ -1,0 +1,39 @@
+[
+  {
+    "name": "gindoc's factory",
+    "address": "xxx",
+    "price": "100万/平米",
+    "area": "1000平米",
+    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+  },
+  {
+    "name": "gindoc's factory2",
+    "address": "xxx",
+    "price": "100万/平米",
+    "area": "1000平米",
+    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+  },
+  {
+    "name": "gindoc's factory3",
+    "address": "xxx",
+    "price": "100万/平米",
+    "area": "1000平米",
+    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+  },
+
+  {
+    "name": "gindoc's factory4",
+    "address": "xxx",
+    "price": "100万/平米",
+    "area": "1000平米",
+    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+  },
+
+  {
+    "name": "gindoc's factory5",
+    "address": "xxx",
+    "price": "100万/平米",
+    "area": "1000平米",
+    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+  }
+]
