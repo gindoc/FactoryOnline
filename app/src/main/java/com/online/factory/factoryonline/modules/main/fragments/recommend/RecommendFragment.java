@@ -15,13 +15,11 @@ import javax.inject.Inject;
 /**
  * Created by louiszgm on 2016/9/30.
  */
-
 public class RecommendFragment extends BaseFragment {
 
     @Inject
     public RecommendFragment() {
     }
-
 
     @Nullable
     @Override

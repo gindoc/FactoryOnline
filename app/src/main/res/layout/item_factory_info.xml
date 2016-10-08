@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="factory_name"
@@ -16,9 +17,13 @@
         <variable
             name="factory_area"
             type="String"/>
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel"/>
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="@dimen/y100"
                   android:gravity="center_vertical"
@@ -30,7 +35,7 @@
             android:layout_width="@dimen/x120"
             android:layout_height="@dimen/y80"
             android:layout_marginRight="@dimen/x10"
-            android:src="@drawable/ic_home_full"/>
+            app:imageUrl="@{viewModel.factoryImg}"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@{factory_name}"
+                android:text="@{viewModel.factoryName}"
                 android:textSize="18sp"/>
 
             <RelativeLayout
@@ -52,14 +57,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{factory_address}"
+                    android:text="@{viewModel.factoryAddress}"
                     android:textSize="16sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="@{factory_price}"
+                    android:text="@{viewModel.factoryPrice}"
                     android:textSize="16sp"/>
 
             </RelativeLayout>
@@ -68,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@{factory_area}"
+                android:text="@{viewModel.factoryArea}"
                 android:textSize="16sp"/>
         </LinearLayout>
 

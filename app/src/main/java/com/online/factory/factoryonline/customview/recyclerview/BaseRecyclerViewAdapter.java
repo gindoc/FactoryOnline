@@ -36,6 +36,15 @@ public class BaseRecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> exte
         this.layoutInflater = LayoutInflater.from(context);
     }
 
+    public BaseRecyclerViewAdapter(Context context) {
+        this.mContext = context;
+        this.layoutInflater = LayoutInflater.from(context);
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
+
     public LayoutInflater getLayoutInflater() {
         return layoutInflater;
     }

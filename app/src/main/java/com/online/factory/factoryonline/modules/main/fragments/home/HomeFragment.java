@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
@@ -30,7 +29,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         .View, HomeRecyclerView.ScrollChangedListener {
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
-    private BaseRecyclerViewAdapter mAdapter;
+    @Inject
+    HomeRecyclerViewAdapter mAdapter;
 
     @Inject
     public HomeFragment() {
@@ -61,6 +61,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
         mBinding.setPresenter(mPresenter);
         mHeaderBinding.setView(this);
+
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setScrollChangedListener(this);
+        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
+        mBinding.recyclerView.init();
 
         findFactory();
         mHeaderBinding.rbFind.setChecked(true);
@@ -122,21 +127,17 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Override
     public void initRecyclerView(List<FactoryInfo> infos) {
-        mAdapter = new HomeRecyclerViewAdapter(getContext(), infos);
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setScrollChangedListener(this);
-        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
-        mBinding.recyclerView.init();
+        mAdapter.setData(infos);
     }
 
     @Override
     public void onScrolled(int dy) {
-        Timber.e("dy: " + dy);
+        Timber.e("dy:%d" , dy);
         int limit = mBinding.searchview.getHeight();
         mBinding.coverView.setAlpha(dy / 100f);
         if (limit > 0) {
             if (dy <= limit) {
-                Timber.e("1 - dy / (3*limit):" + (1 - dy * 1.0f / (3 * limit)));
+                Timber.e("1 - dy / (3*limit): %f" , (1 - dy * 1.0f / (3 * limit)));
                 ObjectAnimator
                         .ofFloat(mBinding.searchview, "scaleX", 1 - dy * 1.0f / (3 * limit))
                         .setDuration(limit / 700)
@@ -144,7 +145,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
                 ObjectAnimator.ofFloat(mBinding.searchview, "translationY", -limit / 100 * dy)
                         .setDuration(limit / 700)
                         .start();
-                Timber.e("translationY   : " + -limit / 100 * dy);
+                Timber.e("translationY   : %d" , -limit / 100 * dy);
             }
         }
     }
