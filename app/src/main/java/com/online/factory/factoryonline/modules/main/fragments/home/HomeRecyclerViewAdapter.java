@@ -1,29 +1,28 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemFactoryInfoBinding;
-import com.online.factory.factoryonline.models.BaseEntity;
 import com.online.factory.factoryonline.models.FactoryInfo;
-import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import javax.inject.Inject;
+import javax.inject.Provider;
 
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<BaseEntity, HomeRecyclerViewAdapter.HomeViewHolder> {
+public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<FactoryInfo, HomeRecyclerViewAdapter.HomeViewHolder> {
 
+    private Provider<HomeViewModel> provider;
 
-    public HomeRecyclerViewAdapter(Context context, List data) {
-        super(context, data);
+    @Inject
+    public HomeRecyclerViewAdapter(Context context, Provider<HomeViewModel> provider) {
+        super(context);
+        this.provider = provider;
     }
 
     @Override
@@ -35,27 +34,37 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<BaseEntity,
     @Override
     public void onBindViewHolder(HomeViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        ItemFactoryInfoBinding binding = (ItemFactoryInfoBinding) holder.itemView.getTag();
+        HomeViewModel viewModel = provider.get();
         FactoryInfo info = (FactoryInfo) data.get(position);
-        binding.setFactoryName(info.getName());
-        binding.setFactoryAddress(info.getAddress());
-        binding.setFactoryPrice(info.getPrice());
-        binding.setFactoryArea(info.getArea());
-        Resources resources = mContext.getResources();
-        int width = resources.getDimensionPixelOffset(R.dimen.x120);
-        int height = resources.getDimensionPixelOffset(R.dimen.x80);
-        Picasso.with(mContext).load(info.getImageUrl()).resize(width, height).into(binding.factoryImg);
+        viewModel.setFactoryInfo(info);
+        ItemFactoryInfoBinding binding = holder.getBinding();
+        binding.setViewModel(viewModel);
+
+
+//        ItemFactoryInfoBinding binding = (ItemFactoryInfoBinding) holder.itemView.getTag();
+//        FactoryInfo info = (FactoryInfo) data.get(position);
+//        binding.setFactoryName(info.getName());
+//        binding.setFactoryAddress(info.getAddress());
+//        binding.setFactoryPrice(info.getPrice());
+//        binding.setFactoryArea(info.getArea());
+
+//        Resources resources = mContext.getResources();
+//        int width = resources.getDimensionPixelOffset(R.dimen.x120);
+//        int height = resources.getDimensionPixelOffset(R.dimen.x80);
+//        Picasso.with(mContext).load(info.getImageUrl()).resize(width, height).into(binding.factoryImg);
     }
 
     class HomeViewHolder extends RecyclerView.ViewHolder{
 
-        public HomeViewHolder(View itemView) {
-            super(itemView);
+        private ItemFactoryInfoBinding binding;
+
+        public HomeViewHolder(View itemView, ItemFactoryInfoBinding binding) {
+            super((itemView));
+            this.binding = binding;
         }
 
-        public HomeViewHolder(View itemView, ViewDataBinding binding) {
-            super((itemView));
-            itemView.setTag(binding);
+        public ItemFactoryInfoBinding getBinding() {
+            return binding;
         }
     }
 }
