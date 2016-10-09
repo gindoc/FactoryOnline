@@ -68,7 +68,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.recyclerView.init();
 
         findFactory();
-        mHeaderBinding.rbFind.setChecked(true);
+        mHeaderBinding.rbFind.setChecked(true); //设置“找房”为选中状态
 
         mPresenter.requestIndexPicUrls();
         mPresenter.requestScrollMsg();
@@ -77,16 +77,25 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         return mBinding.getRoot();
     }
 
+    /**
+     * 切换rolePick为“找房”
+     */
     public void findFactory() {
         mHeaderBinding.rolePick.removeAllViews();
         LayoutInflater.from(getActivity()).inflate(R.layout.fragment_find, mHeaderBinding.rolePick);
     }
 
+    /**
+     * 切换rolePick为“我是中介”
+     */
     public void isAgency() {
         mHeaderBinding.rolePick.removeAllViews();
         LayoutInflater.from(getActivity()).inflate(R.layout.fragment_agency, mHeaderBinding.rolePick);
     }
 
+    /**
+     * 切换rolePick为“我是业主”
+     */
     public void isOwner() {
         mHeaderBinding.rolePick.removeAllViews();
         LayoutInflater.from(getActivity()).inflate(R.layout.fragment_owner, mHeaderBinding.rolePick);
@@ -113,6 +122,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Override
     public void showError(String error) {
+        Timber.e(error);
     }
 
     @Override
@@ -128,6 +138,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     @Override
     public void initRecyclerView(List<FactoryInfo> infos) {
         mAdapter.setData(infos);
+        mBinding.recyclerView.notifyDataSetChanged();
     }
 
     @Override

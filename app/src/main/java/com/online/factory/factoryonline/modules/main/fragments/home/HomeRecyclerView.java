@@ -28,7 +28,6 @@ public class HomeRecyclerView extends SuperRecyclerView {
 
     public void init() {
         DecorateRecyclerViewAdapter adapter = getBookendsAdapter();
-        final View header = adapter.getHeader(0);
 
         addOnScrollListener(new RecyclerView.OnScrollListener() {
             private int totalDy = 0;

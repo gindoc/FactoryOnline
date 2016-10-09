@@ -23,15 +23,33 @@ public class DataManager {
         this.factoryApi = api;
     }
 
+    /** 请求首页轮播图片url **/
     public Observable<JsonObject> getIndexPicUrls() {
         return factoryApi.getIndexPicUrls();
     }
 
+    /** 请求首页自动滚动的在线消息 **/
     public Observable<List<News>> getScrollMsgs() {
         return factoryApi.getScrollMsgs();
     }
 
+    /**
+     * 请求首页“猜你喜欢”列表
+     * @param pageNo    第几页
+     * @param pageSize  每页的大小
+     * @return
+     */
     public Observable<List<FactoryInfo>> getFactoryInfos(int pageNo, int pageSize) {
-        return factoryApi.getFactoryInfos(1,5);
+        return factoryApi.getFactoryInfos(pageNo, pageSize);
+    }
+
+    /**
+     * 请求“推荐”列表
+     * @param pageNo    第几页
+     * @param pageSize  每页的大小
+     * @return
+     */
+    public Observable<List<FactoryInfo>> getRecommendInfos(int pageNo, int pageSize) {
+        return factoryApi.getRecommendInfos(pageNo, pageSize);
     }
 }
