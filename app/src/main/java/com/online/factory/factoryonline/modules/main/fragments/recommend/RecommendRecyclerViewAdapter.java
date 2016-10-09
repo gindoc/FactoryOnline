@@ -35,7 +35,7 @@ public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factor
     public void onBindViewHolder(RecommendViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         RecommendViewModel viewModel = provider.get();
-        FactoryInfo info = (FactoryInfo) data.get(position);
+        FactoryInfo info = data.get(position);
         viewModel.setInfo(info);
         ItemRecommendListBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
@@ -53,4 +53,9 @@ public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factor
             return binding;
         }
     }
+
+//
+//    public class RecommendFooterViewHolder extends RecyclerView.ViewHolder{
+//
+//    }
 }

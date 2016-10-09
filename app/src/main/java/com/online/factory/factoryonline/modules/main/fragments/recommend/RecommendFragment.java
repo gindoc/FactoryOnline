@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -23,13 +24,16 @@ import timber.log.Timber;
  * Created by louiszgm on 2016/9/30.
  */
 public class RecommendFragment extends BaseFragment<RecommendContract.View, RecommendPresenter> implements
-        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener {
+        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener {
 
     private FragmentRecommendBinding mBinding;
     @Inject
     RecommendRecyclerViewAdapter mAdapter;
     @Inject
     RecommendPresenter mPresenter;
+
+    private int pageNo = 1;
+    private int pageSize = 5;
 
     @Inject
     public RecommendFragment() {
@@ -48,13 +52,14 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mBinding = FragmentRecommendBinding.inflate(inflater);
 
         mBinding.recyclerView.setAdapter(mAdapter);
-//        mBinding.recyclerView.addFooter();
+        mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer, container, false));
+        mBinding.recyclerView.setOnPageListener(this);
 
         mBinding.swipe.setColorSchemeResources(R.color.swipe_color_red, R.color.swipe_color_yellow, R.color
                 .swipe_color_blue);
         mBinding.swipe.setOnRefreshListener(this);
 
-        mPresenter.requestRecommendList(1, 5);
+        mPresenter.requestRecommendList(pageNo, pageSize);
 
         return mBinding.getRoot();
     }
@@ -92,6 +97,14 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void onRefresh() {
-        mPresenter.requestRecommendList(1, 5);
+        pageNo = 1;
+        mPresenter.requestRecommendList(pageNo, pageSize);
+    }
+
+    @Override
+    public void onPage() {
+        Timber.e("onScrollToBottom");
+        mBinding.recyclerView.showLoadingFooter();
+        mPresenter.requestRecommendList(++pageNo, pageSize);
     }
 }
