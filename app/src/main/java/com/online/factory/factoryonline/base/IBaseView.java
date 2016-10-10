@@ -7,7 +7,7 @@ import com.trello.rxlifecycle.LifecycleTransformer;
  */
 
 public interface IBaseView {
-    LifecycleTransformer getBindToLifecycle();
+    <T>LifecycleTransformer<T> getBindToLifecycle();
 
     void showError(String error);
 }

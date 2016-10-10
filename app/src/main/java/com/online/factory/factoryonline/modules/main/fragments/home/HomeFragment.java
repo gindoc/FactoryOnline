@@ -116,7 +116,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     }
 
     @Override
-    public LifecycleTransformer getBindToLifecycle() {
+    public <T>LifecycleTransformer<T> getBindToLifecycle() {
         return bindToLifecycle();
     }
 

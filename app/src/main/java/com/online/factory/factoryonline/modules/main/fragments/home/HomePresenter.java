@@ -33,7 +33,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     public void requestIndexPicUrls() {
       dataManager.getIndexPicUrls()
-              .compose(getView().getBindToLifecycle())
+              .compose(getView().<JsonObject>getBindToLifecycle())
               .subscribeOn(Schedulers.io())
               .observeOn(AndroidSchedulers.mainThread())
               .subscribe(new Subscriber<JsonObject>() {
@@ -64,8 +64,8 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     public void requestScrollMsg() {
         dataManager.getScrollMsgs()
+                .compose(getView().<List<News>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
-                .compose(getView().getBindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<News>>() {
                     @Override
@@ -82,8 +82,8 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     public void requestFactoryInfo() {
         dataManager.getFactoryInfos(1,5)
+                .compose(getView().<List<FactoryInfo>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
-        .compose(getView().getBindToLifecycle())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Action1<List<FactoryInfo>>() {
             @Override
