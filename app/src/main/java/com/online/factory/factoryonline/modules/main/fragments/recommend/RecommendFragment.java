@@ -34,6 +34,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     private int pageNo = 1;
     private int pageSize = 5;
+    private boolean isInit = true;      //true为下拉加载或初始化，false为上拉刷新
 
     @Inject
     public RecommendFragment() {
@@ -59,7 +60,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
                 .swipe_color_blue);
         mBinding.swipe.setOnRefreshListener(this);
 
-        mPresenter.requestRecommendList(pageNo, pageSize);
+        mPresenter.requestRecommendList(pageNo, pageSize, isInit);
 
         return mBinding.getRoot();
     }
@@ -69,8 +70,9 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         return mPresenter;
     }
 
+
     @Override
-    public LifecycleTransformer getBindToLifecycle() {
+    public <T> LifecycleTransformer<T> getBindToLifecycle() {
         return bindToLifecycle();
     }
 
@@ -81,13 +83,18 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void loadRecommendList(List<FactoryInfo> recommendList) {
-        mAdapter.setData(recommendList);
+        if (isInit) {
+            mAdapter.setData(recommendList);
+        }else {
+            mAdapter.addData(recommendList);
+        }
         mBinding.recyclerView.notifyDataSetChanged();
     }
 
     @Override
     public void cancelLoading() {
         mBinding.swipe.setRefreshing(false);
+        mBinding.recyclerView.hideLoadingFooter();
     }
 
     @Override
@@ -98,13 +105,14 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Override
     public void onRefresh() {
         pageNo = 1;
-        mPresenter.requestRecommendList(pageNo, pageSize);
+        isInit = true;
+        mPresenter.requestRecommendList(pageNo, pageSize, isInit);
     }
 
     @Override
     public void onPage() {
-        Timber.e("onScrollToBottom");
+        isInit = false;
         mBinding.recyclerView.showLoadingFooter();
-        mPresenter.requestRecommendList(++pageNo, pageSize);
+        mPresenter.requestRecommendList(++pageNo, pageSize, isInit);
     }
 }

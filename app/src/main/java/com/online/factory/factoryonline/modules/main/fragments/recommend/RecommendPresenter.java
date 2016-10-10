@@ -5,6 +5,7 @@ import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.FactoryInfo;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -25,17 +26,20 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
         this.dataManager = dataManager;
     }
 
-    public void requestRecommendList(int pageNo, int pageSize) {
+    public void requestRecommendList(int pageNo, int pageSize, boolean isInit) {
         final RecommendContract.View view = getView();
-        view.startLoading();
+        if (isInit) {
+            view.startLoading();
+        }
         dataManager.getRecommendInfos(pageNo, pageSize)
+                .delay(1000, TimeUnit.MILLISECONDS)
+                .compose(getView().<List<FactoryInfo>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
-                .compose(getView().getBindToLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<FactoryInfo>>() {
                     @Override
-                    public void call(List<FactoryInfo> recommendList) {
-                        view.loadRecommendList(recommendList);
+                    public void call(List<FactoryInfo> infos) {
+                        view.loadRecommendList(infos);
                         view.cancelLoading();
                     }
                 }, new Action1<Throwable>() {

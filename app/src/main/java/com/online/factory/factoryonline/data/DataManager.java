@@ -11,6 +11,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import timber.log.Timber;
 
 /**
  * Created by louiszgm on 2016/9/29.
@@ -50,6 +51,7 @@ public class DataManager {
      * @return
      */
     public Observable<List<FactoryInfo>> getRecommendInfos(int pageNo, int pageSize) {
+        Timber.e("pageNo:" + pageNo + "   pageSize:" + pageSize);
         return factoryApi.getRecommendInfos(pageNo, pageSize);
     }
 }

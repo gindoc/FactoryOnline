@@ -42,7 +42,12 @@ public class BaseRecyclerViewAdapter<T, VH extends RecyclerView.ViewHolder> exte
     }
 
     public void setData(List<T> data) {
+        this.data.clear();
         this.data = data;
+    }
+
+    public void addData(List<T> data) {
+        this.data.addAll(data);
     }
 
     public LayoutInflater getLayoutInflater() {
