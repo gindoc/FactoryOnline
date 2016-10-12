@@ -16,6 +16,7 @@ import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerView
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
+import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -35,20 +36,25 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     private FragmentRecommendBinding mBinding;
     private LayoutRecommendFilterDistrictBinding mDistrictBinding;
+    private LayoutRecommendFilterPriceAreaBinding mPriceAreaBinding;
 
     @Inject
     RecommendRecyclerViewAdapter mAdapter;  //推荐列表适配器
 
     @Inject
-    RecommendCategoryAdapter mCategoryAdapter;  //推荐页面一级目录适配器
+    RecommendCategoryAdapter mDistrictFirCategoryAdapter;  //推荐页面区域一级目录适配器
 
     @Inject
-    RecommendCategoryAdapter mSecondCategoryAdapter;    //推荐页面二级目录适配器
+    RecommendCategoryAdapter mDistrictSecCategoryAdapter;    //推荐页面区域二级目录适配器
+
+    @Inject
+    RecommendCategoryAdapter mPriceCategoryAdapter;           //推荐页面的价格目录
 
     @Inject
     RecommendPresenter mPresenter;
 
-    private CustomPopupWindow mCustomPopupWindow;
+    private CustomPopupWindow mDistrictPopupWindow;     //区域目录的popupWindow
+    private CustomPopupWindow mPricePopupWindow;         //价格目录的popupWindow
     private int pageNo = 1;
     private int pageSize = 5;
     private boolean isInit = true;      //true为下拉加载或初始化，false为上拉刷新
@@ -70,27 +76,35 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             savedInstanceState) {
         mBinding = FragmentRecommendBinding.inflate(inflater);
         mDistrictBinding = LayoutRecommendFilterDistrictBinding.inflate(inflater);
+        mPriceAreaBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
 
         mBinding.setView(this);
 
-        mCustomPopupWindow = new CustomPopupWindow(mDistrictBinding.getRoot());
+        mDistrictPopupWindow = new CustomPopupWindow(mDistrictBinding.getRoot());     //初始化区域的popupWindow
+        mPricePopupWindow = new CustomPopupWindow(mPriceAreaBinding.getRoot());       //初始化价格的popupWindow
 
-        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer,
                 container, false));
         mBinding.recyclerView.setOnPageListener(this);
 
-        mDistrictBinding.recyclerviewFirstCat.setAdapter(mCategoryAdapter);
+        mDistrictBinding.recyclerviewFirstCat.setAdapter(mDistrictFirCategoryAdapter);         //初始化推荐页面的一级目录
         mDistrictBinding.recyclerviewFirstCat.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        mCategoryAdapter.setOnItemClickListener(this);
-        mDistrictBinding.recyclerviewSecondCat.setAdapter(mSecondCategoryAdapter);
+        mDistrictFirCategoryAdapter.setOnItemClickListener(this);
+
+        mDistrictBinding.recyclerviewSecondCat.setAdapter(mDistrictSecCategoryAdapter);  //初始化推荐页面的二级目录
+        mDistrictBinding.recyclerviewSecondCat.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+
+        mPriceAreaBinding.recyclerView.setAdapter(mPriceCategoryAdapter);                  //初始化推荐页面的价格目录
+        mPriceAreaBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
         mBinding.swipe.setColorSchemeResources(R.color.swipe_color_red, R.color.swipe_color_yellow, R.color
-                .swipe_color_blue);
+                .swipe_color_blue);                                                      //初始化swipeRefleshLayout
         mBinding.swipe.setOnRefreshListener(this);
 
-        mPresenter.requestRecommendList(pageNo, pageSize, isInit);
-        mPresenter.requestRcommendCat();
+        mPresenter.requestRecommendList(pageNo, pageSize, isInit);                      // 请求推荐列表
+        mPresenter.requestDistrictCategories();                                           //请求推荐页面的目录
+        mPresenter.requestPriceCategories();                                              //请求推荐页面的价格目录
 
         return mBinding.getRoot();
     }
@@ -115,7 +129,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     public void loadRecommendList(List<FactoryInfo> recommendList) {
         if (isInit) {
             mAdapter.setData(recommendList);
-        }else {
+        } else {
             mAdapter.addData(recommendList);
         }
         mBinding.recyclerView.notifyDataSetChanged();
@@ -133,16 +147,23 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     }
 
     @Override
-    public void loadRecommendCategories(Map<String, List<String>> cats) {
+    public void loadRecommendDistrictCategories(Map<String, List<String>> cats) {
         mCategories = cats;
         List<String> firstCat = new ArrayList<>();
         for (Map.Entry<String, List<String>> fir : cats.entrySet()) {
             firstCat.add(fir.getKey());
         }
-        mCategoryAdapter.setData(firstCat);
+        mDistrictFirCategoryAdapter.setData(firstCat);
         if (firstCat.size() > 0) {
-            mSecondCategoryAdapter.setData(cats.get(firstCat.get(0)));
+            mDistrictSecCategoryAdapter.setData(cats.get(firstCat.get(0)));
         }
+    }
+
+    @Override
+    public void loadRecommendPriceCategories(List<String> cats) {
+        mPriceCategoryAdapter.setData(cats);
+        mPriceAreaBinding.recyclerView.notifyDataSetChanged();
+
     }
 
     @Override
@@ -159,19 +180,31 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mPresenter.requestRecommendList(++pageNo, pageSize, isInit);
     }
 
-    public void clickCategory() {
-        mCustomPopupWindow.setDarkColor(Color.parseColor("#a0000000"));
-        mCustomPopupWindow.resetDarkPosition();
-        mCustomPopupWindow.darkBelow(mBinding.llFRecommendCat);
-        mCustomPopupWindow.showAsDropDown(mBinding.llFRecommendCat);
+    public void clickDistrictCategory() {
+        showPopupWindow(mDistrictPopupWindow);
+    }
+
+    private void showPopupWindow(CustomPopupWindow popupWindow) {
+        popupWindow.setDarkColor(Color.parseColor("#a0000000"));
+        popupWindow.resetDarkPosition();
+        popupWindow.darkBelow(mBinding.llFRecommendCat);
+        popupWindow.showAsDropDown(mBinding.llFRecommendCat);
+    }
+
+    public void clickPriceCategory() {
+        showPopupWindow(mPricePopupWindow);
+    }
+
+    public void clickAreaCategory() {
+
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        String key = mCategoryAdapter.getData().get(position);
+        String key = mDistrictFirCategoryAdapter.getData().get(position);
         List<String> sec = mCategories.get(key);
-        mSecondCategoryAdapter.setData(sec);
+        mDistrictSecCategoryAdapter.setData(sec);
         mDistrictBinding.recyclerviewSecondCat.notifyDataSetChanged();
-
     }
+
 }

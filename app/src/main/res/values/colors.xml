@@ -12,4 +12,6 @@
     <color name="swipe_color_red">#ff1131</color>
     <color name="swipe_color_yellow">#fff311</color>
     <color name="swipe_color_blue">#1194ff</color>
+    <color name="light_gray">#e2e2e2</color>
+    <color name="green">#05c12e</color>
 </resources>

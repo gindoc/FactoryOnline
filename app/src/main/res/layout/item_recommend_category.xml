@@ -18,6 +18,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical"
+            android:paddingTop="@dimen/x5"
             android:paddingBottom="@dimen/x5"
             android:paddingLeft="@dimen/x10">
 
@@ -28,7 +29,7 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
-                tools:text="分类名" />
+                tools:text="区域/面积/价格的item" />
 
         </LinearLayout>
     </RelativeLayout>

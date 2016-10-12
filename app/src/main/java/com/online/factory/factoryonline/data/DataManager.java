@@ -63,7 +63,14 @@ public class DataManager {
      * 请求“推荐的目录”列表
      * @return
      */
-    public Observable<List<JsonObject>> getRcommendCats() {
-        return factoryApi.getRecommendCategories();
+    public Observable<List<JsonObject>> getRecommendDistrictCats() {
+        return factoryApi.getRecommendDistrictCats();
+    }
+
+    /**
+     * 请求推荐页面的价格目录
+     */
+    public Observable<List<String>> getRecommendPriceCats() {
+        return factoryApi.getRecommendPriceCats();
     }
 }

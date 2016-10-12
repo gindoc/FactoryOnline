@@ -22,7 +22,7 @@
             <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
                 android:id="@+id/recyclerview_second_cat"
                 android:layout_width="0dp"
-                android:background="@android:color/darker_gray"
+                android:background="#dadada"
                 android:layout_height="@dimen/y200"
                 android:layout_weight="1"/>
 

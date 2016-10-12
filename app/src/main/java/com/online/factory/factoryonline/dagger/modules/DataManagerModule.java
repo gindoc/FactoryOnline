@@ -79,8 +79,10 @@ public class DataManagerModule {
                 fileName = "FactoryInfos.json";
             }else if(path.matches("^(/recommendInfos/[1-9]\\d*/[1-9]\\d*)")) {
                 fileName = "RecommendInfos.json";
-            }else if(path.matches("^(/recommendCategories)")) {
-                fileName = "RecommendCategories.json";
+            }else if(path.matches("^(/recommendDistrictCats)")) {
+                fileName = "RecommendDistrictCats.json";
+            }else if(path.matches("^(/recommendPriceCats)")){
+                fileName = "RecommendPriceCats.json";
             }else {
                 fileName = "SlideUrl.json";
             }

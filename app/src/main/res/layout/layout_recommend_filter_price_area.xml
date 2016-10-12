@@ -1,12 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y200"
-        android:cacheColorHint="@null"
-        android:scrollbars="vertical"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y200"
+            android:cacheColorHint="@null"
+            android:scrollbars="vertical" />
+
+        <include layout="@layout/line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/x10">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gray_rectangle_baground"
+                android:hint="最低价格"
+                android:inputType="number"
+                android:maxLength="10"
+                android:padding="@dimen/x10"
+                android:textColor="#979797"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:text="-"
+                android:textSize="16sp" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gray_rectangle_baground"
+                android:hint="最高价格"
+                android:inputType="number"
+                android:maxLength="10"
+                android:padding="@dimen/x10"
+                android:textColor="#979797"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x30"
+                android:background="@drawable/green_rectangle_background"
+                android:padding="@dimen/x10"
+                android:text="确定"
+                android:textColor="@color/green"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

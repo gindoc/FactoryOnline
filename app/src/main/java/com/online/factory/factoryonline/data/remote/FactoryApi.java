@@ -47,6 +47,12 @@ public interface FactoryApi {
      * 请求“推荐的目录”列表
      * @return
      */
-    @GET("/recommendCategories")
-    Observable<List<JsonObject>> getRecommendCategories();
+    @GET("/recommendDistrictCats")
+    Observable<List<JsonObject>> getRecommendDistrictCats();
+
+    /**
+     * 请求推荐页面的价格目录
+     */
+    @GET("/recommendPriceCats")
+    Observable<List<String>> getRecommendPriceCats();
 }

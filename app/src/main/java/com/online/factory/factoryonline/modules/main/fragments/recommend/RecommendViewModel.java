@@ -55,6 +55,6 @@ public class RecommendViewModel extends BaseObservable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-        notifyPropertyChanged(BR.categoryName);
+//        notifyPropertyChanged(BR.categoryName);
     }
 }

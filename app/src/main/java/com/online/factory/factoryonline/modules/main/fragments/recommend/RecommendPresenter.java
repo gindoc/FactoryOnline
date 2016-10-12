@@ -32,6 +32,12 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
         this.dataManager = dataManager;
     }
 
+    /**
+     * 请求推荐列表
+     * @param pageNo        页码
+     * @param pageSize      页码大小
+     * @param isInit        是否初始化或下拉刷新
+     */
     public void requestRecommendList(int pageNo, int pageSize, boolean isInit) {
         final RecommendContract.View view = getView();
         if (isInit) {
@@ -57,8 +63,12 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                 });
     }
 
-    public void requestRcommendCat() {
-        dataManager.getRcommendCats()
+    /**
+     * 请求推荐页面的目录
+     */
+    public void requestDistrictCategories() {
+        dataManager.getRecommendDistrictCats()
+                .compose(getView().<List<JsonObject>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<JsonObject>>() {
@@ -77,7 +87,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                                 }
                             }
                         }
-                        getView().loadRecommendCategories(categories);
+                        getView().loadRecommendDistrictCategories(categories);
                     }
                 }, new Action1<Throwable>() {
                     @Override
@@ -86,5 +96,27 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                     }
                 });
 
+    }
+
+    /**
+     * 请求推荐页面的价格目录
+     */
+    @Override
+    public void requestPriceCategories() {
+        dataManager.getRecommendPriceCats()
+                .compose(getView().<List<String>>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<String>>() {
+                    @Override
+                    public void call(List<String> strings) {
+                        getView().loadRecommendPriceCategories(strings);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 }
