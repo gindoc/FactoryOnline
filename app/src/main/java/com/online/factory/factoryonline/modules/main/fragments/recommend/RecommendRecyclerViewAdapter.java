@@ -54,8 +54,4 @@ public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factor
         }
     }
 
-//
-//    public class RecommendFooterViewHolder extends RecyclerView.ViewHolder{
-//
-//    }
 }

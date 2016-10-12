@@ -44,4 +44,9 @@
         <item name="android:button">@android:color/transparent</item>
         <item name="android:textColor">@drawable/service_tab_text_selector</item>
     </style>
+
+    <style name="DarkAnimation">
+        <item name="android:windowEnterAnimation">@anim/dark_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/dark_fade_out</item>
+    </style>
 </resources>

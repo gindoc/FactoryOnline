@@ -42,4 +42,11 @@ public interface FactoryApi {
     @GET("/recommendInfos/{pageNo}/{pageSize}")
     Observable<List<FactoryInfo>> getRecommendInfos(@Path("pageNo") int pageNo, @Path("pageSize") int
             pageSize);
+
+    /**
+     * 请求“推荐的目录”列表
+     * @return
+     */
+    @GET("/recommendCategories")
+    Observable<List<JsonObject>> getRecommendCategories();
 }

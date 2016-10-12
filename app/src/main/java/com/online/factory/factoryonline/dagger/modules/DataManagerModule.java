@@ -79,6 +79,8 @@ public class DataManagerModule {
                 fileName = "FactoryInfos.json";
             }else if(path.matches("^(/recommendInfos/[1-9]\\d*/[1-9]\\d*)")) {
                 fileName = "RecommendInfos.json";
+            }else if(path.matches("^(/recommendCategories)")) {
+                fileName = "RecommendCategories.json";
             }else {
                 fileName = "SlideUrl.json";
             }

@@ -39,7 +39,6 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 .subscribe(new Subscriber<JsonObject>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
