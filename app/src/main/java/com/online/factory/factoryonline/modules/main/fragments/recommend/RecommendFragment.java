@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomPopupWindow;
+import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
@@ -80,6 +81,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mBinding.recyclerView.setOnPageListener(this);
 
         mDistrictBinding.recyclerviewFirstCat.setAdapter(mCategoryAdapter);
+        mDistrictBinding.recyclerviewFirstCat.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mCategoryAdapter.setOnItemClickListener(this);
         mDistrictBinding.recyclerviewSecondCat.setAdapter(mSecondCategoryAdapter);
 
@@ -141,7 +143,6 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         if (firstCat.size() > 0) {
             mSecondCategoryAdapter.setData(cats.get(firstCat.get(0)));
         }
-//        mDistrictBinding.recyclerviewFirstCat.notifyDataSetChanged();
     }
 
     @Override
