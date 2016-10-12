@@ -18,11 +18,6 @@ public class HomeViewModel extends BaseObservable {
     public HomeViewModel() {
     }
 
-    @Bindable
-    public FactoryInfo getFactoryInfo() {
-        return factoryInfo;
-    }
-
     public void setFactoryInfo(FactoryInfo factoryInfo) {
         this.factoryInfo = factoryInfo;
     }

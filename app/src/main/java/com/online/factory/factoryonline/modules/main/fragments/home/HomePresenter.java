@@ -32,34 +32,33 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     }
 
     public void requestIndexPicUrls() {
-      dataManager.getIndexPicUrls()
-              .compose(getView().<JsonObject>getBindToLifecycle())
-              .subscribeOn(Schedulers.io())
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribe(new Subscriber<JsonObject>() {
-                  @Override
-                  public void onCompleted() {
+        dataManager.getIndexPicUrls()
+                .compose(getView().<JsonObject>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<JsonObject>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
-                  }
-
-                  @Override
-                  public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
                         Timber.e(e.getMessage());
-                  }
+                    }
 
-                  @Override
-                  public void onNext(JsonObject jsonObject) {
-                      JsonArray pics = jsonObject.getAsJsonArray("pic");
-                      try {
-                          List<String> picList = LoganSquare.parseList(pics.toString(),String.class);
-                          String[] strings = new String[picList.size()];
-                          picList.toArray(strings);
-                          getView().initSlideShowView(strings);
-                      } catch (IOException e) {
-                          e.printStackTrace();
-                      }
-                  }
-              });
+                    @Override
+                    public void onNext(JsonObject jsonObject) {
+                        JsonArray pics = jsonObject.getAsJsonArray("pic");
+                        try {
+                            List<String> picList = LoganSquare.parseList(pics.toString(), String.class);
+                            String[] strings = new String[picList.size()];
+                            picList.toArray(strings);
+                            getView().initSlideShowView(strings);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     public void requestScrollMsg() {
@@ -81,20 +80,20 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     }
 
     public void requestFactoryInfo() {
-        dataManager.getFactoryInfos(1,5)
+        dataManager.getFactoryInfos(1, 5)
                 .compose(getView().<List<FactoryInfo>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Action1<List<FactoryInfo>>() {
-            @Override
-            public void call(List<FactoryInfo> infos) {
-                getView().initRecyclerView(infos);
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                Timber.e(throwable.getMessage());
-            }
-        });
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<FactoryInfo>>() {
+                    @Override
+                    public void call(List<FactoryInfo> infos) {
+                        getView().initRecyclerView(infos);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 }

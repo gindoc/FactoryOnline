@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
-import com.online.factory.factoryonline.databinding.ItemFactoryInfoBinding;
+import com.online.factory.factoryonline.databinding.ItemHomeListBinding;
 import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
@@ -27,7 +27,7 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<FactoryInfo
 
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemFactoryInfoBinding binding = ItemFactoryInfoBinding.inflate(layoutInflater);
+        ItemHomeListBinding binding = ItemHomeListBinding.inflate(layoutInflater);
         return new HomeViewHolder(binding.getRoot(),binding);
     }
 
@@ -37,33 +37,21 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<FactoryInfo
         HomeViewModel viewModel = provider.get();
         FactoryInfo info = (FactoryInfo) data.get(position);
         viewModel.setFactoryInfo(info);
-        ItemFactoryInfoBinding binding = holder.getBinding();
+        ItemHomeListBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
 
-
-//        ItemFactoryInfoBinding binding = (ItemFactoryInfoBinding) holder.itemView.getTag();
-//        FactoryInfo info = (FactoryInfo) data.get(position);
-//        binding.setFactoryName(info.getName());
-//        binding.setFactoryAddress(info.getAddress());
-//        binding.setFactoryPrice(info.getPrice());
-//        binding.setFactoryArea(info.getArea());
-
-//        Resources resources = mContext.getResources();
-//        int width = resources.getDimensionPixelOffset(R.dimen.x120);
-//        int height = resources.getDimensionPixelOffset(R.dimen.x80);
-//        Picasso.with(mContext).load(info.getImageUrl()).resize(width, height).into(binding.factoryImg);
     }
 
     class HomeViewHolder extends RecyclerView.ViewHolder{
 
-        private ItemFactoryInfoBinding binding;
+        private ItemHomeListBinding binding;
 
-        public HomeViewHolder(View itemView, ItemFactoryInfoBinding binding) {
+        public HomeViewHolder(View itemView, ItemHomeListBinding binding) {
             super((itemView));
             this.binding = binding;
         }
 
-        public ItemFactoryInfoBinding getBinding() {
+        public ItemHomeListBinding getBinding() {
             return binding;
         }
     }

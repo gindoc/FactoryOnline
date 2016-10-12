@@ -75,7 +75,7 @@ public class SuperRecyclerView extends LinearRecyclerView implements LinearRecyc
 
     @Override
     public void onScrollToBottom() {
-        Timber.d("onScrollToBottom,isLoading:%s",isLoading);
+        Timber.d("onScrollToBottom,isLoading:%s", isLoading);
         if (pageEnable && onPageListener != null && !isLoading) {
             isLoading = true;
             onPageListener.onPage();
@@ -162,6 +162,14 @@ public class SuperRecyclerView extends LinearRecyclerView implements LinearRecyc
 
         if (loadingFooter != null)
             decorateRecyclerViewAdapter.setFooterVisibility(loadingFooter, true);
+    }
+
+    public void hideLoadingFooter() {
+        if (hasAttachedFooter) {
+            isLoading = false;
+//            hasAttachedFooter = false;
+            decorateRecyclerViewAdapter.setFooterVisibility(loadingFooter, false);
+        }
     }
 
 }
