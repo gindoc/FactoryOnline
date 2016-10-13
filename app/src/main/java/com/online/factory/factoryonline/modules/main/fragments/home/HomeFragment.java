@@ -14,6 +14,7 @@ import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -83,6 +84,12 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void findFactory() {
         mHeaderBinding.rolePick.removeAllViews();
         LayoutInflater.from(getActivity()).inflate(R.layout.fragment_find, mHeaderBinding.rolePick);
+        mHeaderBinding.rolePick.findViewById(R.id.tv_findFactoryByMap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(BaiduMapActivity.getStartIntent(getActivity()));
+            }
+        });
     }
 
     /**
