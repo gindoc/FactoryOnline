@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.base;
 
 import android.app.Application;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.online.factory.factoryonline.BuildConfig;
 import com.online.factory.factoryonline.dagger.components.ApplicationComponent;
 import com.online.factory.factoryonline.dagger.components.DaggerApplicationComponent;
@@ -20,6 +21,9 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // 初始化baiduMap
+        SDKInitializer.initialize(this);
+        //初始化Timber
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }

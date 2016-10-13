@@ -54,6 +54,12 @@ public class MainActivity extends BaseActivity {
     public void onClickMsg(View view){
         mLoginContext.openMsg(MainActivity.this);
     }
+
+    public void onClickHome(View view){
+        if(findFragment(HomeFragment.class) == null){
+            startWithPop(homeFragment);
+        }
+    }
     public void onClickRecommend(View view){
         if(findFragment(RecommendFragment.class) == null){
             startWithPop(recommendFragment);
