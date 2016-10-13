@@ -119,4 +119,23 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                     }
                 });
     }
+
+    @Override
+    public void requestAreaCategories() {
+        dataManager.getRecommendAreaCats()
+                .compose(getView().<List<String>>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<String>>() {
+                    @Override
+                    public void call(List<String> strings) {
+                        getView().loadRecommendAreaCategories(strings);
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
 }
