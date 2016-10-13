@@ -41,6 +41,12 @@ public interface RecommendContract {
          * @param cats
          */
         void loadRecommendPriceCategories(List<String> cats);
+
+        /**
+         * 加载推荐列表的面积目录
+         * @param area
+         */
+        void loadRecommendAreaCategories(List<String> area);
     }
 
     interface Presenter extends IBasePresenter {
@@ -61,5 +67,10 @@ public interface RecommendContract {
          * 请求推荐页面的价格目录
          */
         void requestPriceCategories();
+
+        /**
+         * 请求推荐页面的面积目录
+         */
+        void requestAreaCategories();
     }
 }

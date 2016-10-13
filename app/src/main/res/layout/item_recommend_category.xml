@@ -18,8 +18,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingTop="@dimen/x5"
-            android:paddingBottom="@dimen/x5"
+            android:paddingTop="@dimen/x10"
             android:paddingLeft="@dimen/x10">
 
             <TextView
@@ -30,6 +29,12 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 tools:text="区域/面积/价格的item" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"
+                android:layout_marginTop="@dimen/x10"
+                android:background="#bababa" />
 
         </LinearLayout>
     </RelativeLayout>

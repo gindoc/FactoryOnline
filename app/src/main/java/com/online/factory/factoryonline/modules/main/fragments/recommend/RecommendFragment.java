@@ -1,16 +1,15 @@
 package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.customview.CustomPopupWindow;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
@@ -21,6 +20,7 @@ import com.online.factory.factoryonline.models.FactoryInfo;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +36,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     private FragmentRecommendBinding mBinding;
     private LayoutRecommendFilterDistrictBinding mDistrictBinding;
-    private LayoutRecommendFilterPriceAreaBinding mPriceAreaBinding;
+    private LayoutRecommendFilterPriceAreaBinding mPriceBinding;
+    private LayoutRecommendFilterPriceAreaBinding mAreaBinding;
 
     @Inject
     RecommendRecyclerViewAdapter mAdapter;  //推荐列表适配器
@@ -51,14 +52,15 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     RecommendCategoryAdapter mPriceCategoryAdapter;           //推荐页面的价格目录
 
     @Inject
+    RecommendCategoryAdapter mAreaCategoryAdapter;
+
+    @Inject
     RecommendPresenter mPresenter;
 
-    private CustomPopupWindow mDistrictPopupWindow;     //区域目录的popupWindow
-    private CustomPopupWindow mPricePopupWindow;         //价格目录的popupWindow
     private int pageNo = 1;
     private int pageSize = 5;
     private boolean isInit = true;      //true为下拉加载或初始化，false为上拉刷新
-    private Map<String, List<String>> mCategories;
+    private Map<String, List<String>> mDistrictCategories;
 
     @Inject
     public RecommendFragment() {
@@ -76,27 +78,32 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             savedInstanceState) {
         mBinding = FragmentRecommendBinding.inflate(inflater);
         mDistrictBinding = LayoutRecommendFilterDistrictBinding.inflate(inflater);
-        mPriceAreaBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
+        mPriceBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
+        mAreaBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
 
         mBinding.setView(this);
 
-        mDistrictPopupWindow = new CustomPopupWindow(mDistrictBinding.getRoot());     //初始化区域的popupWindow
-        mPricePopupWindow = new CustomPopupWindow(mPriceAreaBinding.getRoot());       //初始化价格的popupWindow
-
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
+        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer,
                 container, false));
         mBinding.recyclerView.setOnPageListener(this);
 
         mDistrictBinding.recyclerviewFirstCat.setAdapter(mDistrictFirCategoryAdapter);         //初始化推荐页面的一级目录
-        mDistrictBinding.recyclerviewFirstCat.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mDistrictFirCategoryAdapter.setOnItemClickListener(this);
 
         mDistrictBinding.recyclerviewSecondCat.setAdapter(mDistrictSecCategoryAdapter);  //初始化推荐页面的二级目录
-        mDistrictBinding.recyclerviewSecondCat.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
-        mPriceAreaBinding.recyclerView.setAdapter(mPriceCategoryAdapter);                  //初始化推荐页面的价格目录
-        mPriceAreaBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        mPriceBinding.recyclerView.setAdapter(mPriceCategoryAdapter);                  //初始化推荐页面的价格目录
+
+        mAreaBinding.recyclerView.setAdapter(mAreaCategoryAdapter);
+
+        String headers[] = {"区域", "面积", "价格"};
+        List<View> popViews = new ArrayList<>();
+        popViews.add(mDistrictBinding.getRoot());
+        popViews.add(mPriceBinding.getRoot());
+        popViews.add(mAreaBinding.getRoot());
+        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews, new TextView(getContext()));
 
         mBinding.swipe.setColorSchemeResources(R.color.swipe_color_red, R.color.swipe_color_yellow, R.color
                 .swipe_color_blue);                                                      //初始化swipeRefleshLayout
@@ -105,6 +112,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mPresenter.requestRecommendList(pageNo, pageSize, isInit);                      // 请求推荐列表
         mPresenter.requestDistrictCategories();                                           //请求推荐页面的目录
         mPresenter.requestPriceCategories();                                              //请求推荐页面的价格目录
+        mPresenter.requestAreaCategories();
 
         return mBinding.getRoot();
     }
@@ -148,7 +156,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void loadRecommendDistrictCategories(Map<String, List<String>> cats) {
-        mCategories = cats;
+        mDistrictCategories = cats;
         List<String> firstCat = new ArrayList<>();
         for (Map.Entry<String, List<String>> fir : cats.entrySet()) {
             firstCat.add(fir.getKey());
@@ -162,8 +170,14 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Override
     public void loadRecommendPriceCategories(List<String> cats) {
         mPriceCategoryAdapter.setData(cats);
-        mPriceAreaBinding.recyclerView.notifyDataSetChanged();
+        mPriceBinding.recyclerView.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void loadRecommendAreaCategories(List<String> area) {
+        mAreaCategoryAdapter.setData(area);
+        mAreaBinding.recyclerView.notifyDataSetChanged();
     }
 
     @Override
@@ -180,29 +194,10 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mPresenter.requestRecommendList(++pageNo, pageSize, isInit);
     }
 
-    public void clickDistrictCategory() {
-        showPopupWindow(mDistrictPopupWindow);
-    }
-
-    private void showPopupWindow(CustomPopupWindow popupWindow) {
-        popupWindow.setDarkColor(Color.parseColor("#a0000000"));
-        popupWindow.resetDarkPosition();
-        popupWindow.darkBelow(mBinding.llFRecommendCat);
-        popupWindow.showAsDropDown(mBinding.llFRecommendCat);
-    }
-
-    public void clickPriceCategory() {
-        showPopupWindow(mPricePopupWindow);
-    }
-
-    public void clickAreaCategory() {
-
-    }
-
     @Override
     public void onItemClick(View view, int position) {
         String key = mDistrictFirCategoryAdapter.getData().get(position);
-        List<String> sec = mCategories.get(key);
+        List<String> sec = mDistrictCategories.get(key);
         mDistrictSecCategoryAdapter.setData(sec);
         mDistrictBinding.recyclerviewSecondCat.notifyDataSetChanged();
     }

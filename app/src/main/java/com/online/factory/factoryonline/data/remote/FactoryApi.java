@@ -55,4 +55,12 @@ public interface FactoryApi {
      */
     @GET("/recommendPriceCats")
     Observable<List<String>> getRecommendPriceCats();
+
+    /**
+     * 请求推荐页面的面积目录
+     * @return
+     */
+    @GET("/recommendAreaCats")
+    Observable<List<String>> getRecommendAreaCats();
+
 }

@@ -73,4 +73,12 @@ public class DataManager {
     public Observable<List<String>> getRecommendPriceCats() {
         return factoryApi.getRecommendPriceCats();
     }
+
+    /**
+     * 请求推荐页面的面积目录
+     * @return
+     */
+    public Observable<List<String>> getRecommendAreaCats() {
+        return factoryApi.getRecommendAreaCats();
+    }
 }
