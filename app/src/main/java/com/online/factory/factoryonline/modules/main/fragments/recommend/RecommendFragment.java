@@ -14,6 +14,7 @@ import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
+import com.online.factory.factoryonline.databinding.ItemRecommendCategoryBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
 import com.online.factory.factoryonline.models.FactoryInfo;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 /**
@@ -57,6 +59,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Inject
     RecommendPresenter mPresenter;
 
+
     private int pageNo = 1;
     private int pageSize = 5;
     private boolean isInit = true;      //true为下拉加载或初始化，false为上拉刷新
@@ -70,6 +73,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     public void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -200,6 +204,9 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         List<String> sec = mDistrictCategories.get(key);
         mDistrictSecCategoryAdapter.setData(sec);
         mDistrictBinding.recyclerviewSecondCat.notifyDataSetChanged();
+//        mDistrictFirCategoryAdapter.getSubject().onNext(position);
+        ItemRecommendCategoryBinding binding = (ItemRecommendCategoryBinding) view.getTag();
+        binding.getViewModel().setClick(true);
     }
 
 }

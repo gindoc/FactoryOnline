@@ -16,6 +16,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by louiszgm-pc on 2016/9/21.
@@ -45,5 +46,10 @@ public class ApplicationModule {
     @Singleton
     public LoginContext provideLoginContext(){
         return new LoginContext();
+    }
+
+    @Provides
+    public BehaviorSubject provideBehaviorSubject(){
+        return BehaviorSubject.create();
     }
 }
