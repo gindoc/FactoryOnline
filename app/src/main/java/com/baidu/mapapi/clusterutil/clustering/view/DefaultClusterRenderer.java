@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
+import android.text.method.TextKeyListener;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -56,6 +57,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 
+import timber.log.Timber;
 
 import static com.baidu.mapapi.clusterutil.clustering.algo.NonHierarchicalDistanceBasedAlgorithm.MAX_DISTANCE_AT_ZOOM;
 
@@ -189,7 +191,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
         if (bucket < BUCKETS[0]) {
             return String.valueOf(bucket);
         }
-        return String.valueOf(bucket) + "+";
+//        return String.valueOf(bucket) + "+";
+        return String.valueOf(bucket) ;
     }
 
     /**
@@ -198,15 +201,16 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
      */
     protected int getBucket(Cluster<T> cluster) {
         int size = cluster.getSize();
-        if (size <= BUCKETS[0]) {
-            return size;
-        }
-        for (int i = 0; i < BUCKETS.length - 1; i++) {
-            if (size < BUCKETS[i + 1]) {
-                return BUCKETS[i];
-            }
-        }
-        return BUCKETS[BUCKETS.length - 1];
+//        if (size <= BUCKETS[0]) {
+//            return size;
+//        }
+//        for (int i = 0; i < BUCKETS.length - 1; i++) {
+//            if (size < BUCKETS[i + 1]) {
+//                return BUCKETS[i];
+//            }
+//        }
+//        return BUCKETS[BUCKETS.length - 1];
+        return  size;
     }
 
     /**
@@ -335,6 +339,8 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
             final float zoom = mMapZoom;
             final boolean zoomingIn = zoom > mZoom;
+            Timber.d("CurrentZoom: %f",zoom);
+            Timber.d("mZoom: %f",mZoom);
             final float zoomDelta = zoom - mZoom;
 
             final Set<MarkerWithPosition> markersToRemove = mMarkers;
