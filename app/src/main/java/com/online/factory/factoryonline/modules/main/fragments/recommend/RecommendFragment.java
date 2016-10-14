@@ -1,12 +1,20 @@
 package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
+import android.app.Activity;
+import android.content.Context;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
@@ -14,7 +22,6 @@ import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
-import com.online.factory.factoryonline.databinding.ItemRecommendCategoryBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
 import com.online.factory.factoryonline.models.FactoryInfo;
@@ -27,7 +34,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 /**
@@ -85,6 +91,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mAreaBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
 
         mBinding.setView(this);
+        mPriceBinding.setView(this);
+        mAreaBinding.setView(this);
 
         initRecyclerView(inflater, container);
 
@@ -93,6 +101,20 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         initSwipeLayout();
 
         requestRecommendMsg();
+
+        mPriceBinding.confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkParams(mPriceBinding);
+            }
+        });
+
+        mAreaBinding.confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkParams(mAreaBinding);
+            }
+        });
 
         return mBinding.getRoot();
     }
@@ -248,6 +270,33 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         isInit = false;
         mBinding.recyclerView.showLoadingFooter();
         mPresenter.requestRecommendList(++pageNo, pageSize, isInit);
+    }
+
+    private void hideKeyboard() {
+        Activity activity = getActivity();
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        // 隐藏软键盘
+        imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+    }
+
+    private void checkParams(LayoutRecommendFilterPriceAreaBinding binding) {
+        CharSequence max = binding.maximum.getText();
+        CharSequence min = binding.minimum.getText();
+        if (TextUtils.isEmpty(min)) {
+            Toast.makeText(getContext(), "请填写最小值", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(max)){
+            Toast.makeText(getContext(), "请填写最大值", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (Integer.parseInt(max.toString()) < Integer.parseInt(min.toString())) {
+            Toast.makeText(getContext(), "请输入正确的值（最大值不能小于最小值）", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mBinding.dropDownMenu.setTabText(min+"~"+max);
+        mBinding.dropDownMenu.closeMenu();
+        hideKeyboard();
     }
 
 }

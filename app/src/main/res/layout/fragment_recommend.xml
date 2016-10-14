@@ -70,15 +70,15 @@
             android:id="@+id/dropDownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dividerColor="#ccc"
+            app:dividerColor="#00000000"
             app:maskColor="#80000000"
-            app:menuBackgroundColor="@android:color/white"
+            app:menuBackgroundColor="#F8F8F8"
             app:menuSelectedIcon="@drawable/ic_arrow_up"
             app:menuTextSize="13sp"
             app:menuUnselectedIcon="@drawable/ic_arrow_down"
-            app:textSelectedColor="#000"
-            app:textUnselectedColor="#ccc"
-            app:underlineColor="#ccc" />
+            app:textSelectedColor="@color/colorPrimary"
+            app:textUnselectedColor="@android:color/black"
+            app:underlineColor="#E1E1E1" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe"

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.bottomTab.rbHome.setChecked(true);
         loadRootFragment(R.id.tab_content, homeFragment);

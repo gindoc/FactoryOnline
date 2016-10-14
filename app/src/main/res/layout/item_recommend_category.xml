@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.categoryName}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                android:textColor="@{viewModel.isClick?@android:color/holo_red_dark:@android:color/black}"
+                android:textColor="@{viewModel.isClick?@color/colorPrimary:@android:color/black}"
                 android:textSize="16sp"
                 tools:text="区域/面积/价格的item" />
             <View

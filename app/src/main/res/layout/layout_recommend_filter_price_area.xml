@@ -2,11 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
         <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
             android:id="@+id/recyclerView"
@@ -25,6 +31,7 @@
             android:padding="@dimen/x10">
 
             <EditText
+                android:id="@+id/minimum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gray_rectangle_baground"
@@ -44,6 +51,7 @@
                 android:textSize="16sp" />
 
             <EditText
+                android:id="@+id/maximum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/gray_rectangle_baground"
@@ -55,11 +63,15 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x30"
                 android:background="@drawable/green_rectangle_background"
-                android:padding="@dimen/x10"
+                android:paddingLeft="@dimen/x30"
+                android:paddingRight="@dimen/x30"
+                android:paddingTop="@dimen/x10"
+                android:paddingBottom="@dimen/x10"
                 android:text="确定"
                 android:textColor="@color/green"
                 android:textSize="14sp" />
