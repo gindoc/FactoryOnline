@@ -1,12 +1,20 @@
 package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
+import android.app.Activity;
+import android.content.Context;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
@@ -32,7 +40,7 @@ import timber.log.Timber;
  * Created by louiszgm on 2016/9/30.
  */
 public class RecommendFragment extends BaseFragment<RecommendContract.View, RecommendPresenter> implements
-        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener {
 
     private FragmentRecommendBinding mBinding;
     private LayoutRecommendFilterDistrictBinding mDistrictBinding;
@@ -56,6 +64,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Inject
     RecommendPresenter mPresenter;
+
 
     private int pageNo = 1;
     private int pageSize = 5;
@@ -82,7 +91,35 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mAreaBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
 
         mBinding.setView(this);
+        mPriceBinding.setView(this);
+        mAreaBinding.setView(this);
 
+        initRecyclerView(inflater, container);
+
+        initDropDown();
+
+        initSwipeLayout();
+
+        requestRecommendMsg();
+
+        mPriceBinding.confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkParams(mPriceBinding);
+            }
+        });
+
+        mAreaBinding.confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkParams(mAreaBinding);
+            }
+        });
+
+        return mBinding.getRoot();
+    }
+
+    private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer,
@@ -90,38 +127,79 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mBinding.recyclerView.setOnPageListener(this);
 
         mDistrictBinding.recyclerviewFirstCat.setAdapter(mDistrictFirCategoryAdapter);         //初始化推荐页面的一级目录
-        mDistrictFirCategoryAdapter.setOnItemClickListener(this);
+        mDistrictFirCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                String key = mDistrictFirCategoryAdapter.getData().get(position);
+                List<String> sec = mDistrictCategories.get(key);
+                mDistrictSecCategoryAdapter.setData(sec);
+                mDistrictBinding.recyclerviewSecondCat.notifyDataSetChanged();
+                mDistrictFirCategoryAdapter.getSubject().onNext(position);
+            }
+        });
 
         mDistrictBinding.recyclerviewSecondCat.setAdapter(mDistrictSecCategoryAdapter);  //初始化推荐页面的二级目录
+        mDistrictSecCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                onItemClickAction(mDistrictSecCategoryAdapter, position);
+            }
+        });
 
         mPriceBinding.recyclerView.setAdapter(mPriceCategoryAdapter);                  //初始化推荐页面的价格目录
+        mPriceCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                onItemClickAction(mPriceCategoryAdapter, position);
+            }
+        });
 
         mAreaBinding.recyclerView.setAdapter(mAreaCategoryAdapter);
+        mAreaCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                onItemClickAction(mAreaCategoryAdapter, position);
+            }
+        });
+    }
 
-        String headers[] = {"区域", "面积", "价格"};
+    private void onItemClickAction(RecommendCategoryAdapter adapter, int position) {
+        adapter.getSubject().onNext(position);
+        String title = adapter.getData().get(position);
+        mBinding.dropDownMenu.setTabText(title);
+        mBinding.dropDownMenu.closeMenu();
+    }
+
+    private void initDropDown() {
+        String headers[] = {"区域", "价格", "面积"};
         List<View> popViews = new ArrayList<>();
         popViews.add(mDistrictBinding.getRoot());
         popViews.add(mPriceBinding.getRoot());
         popViews.add(mAreaBinding.getRoot());
         mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews, new TextView(getContext()));
+        mDistrictFirCategoryAdapter.getSubject().onNext(0);
+        mDistrictSecCategoryAdapter.getSubject().onNext(0);
+        mPriceCategoryAdapter.getSubject().onNext(0);
+        mAreaCategoryAdapter.getSubject().onNext(0);
+    }
 
+    private void initSwipeLayout() {
         mBinding.swipe.setColorSchemeResources(R.color.swipe_color_red, R.color.swipe_color_yellow, R.color
                 .swipe_color_blue);                                                      //初始化swipeRefleshLayout
         mBinding.swipe.setOnRefreshListener(this);
+    }
 
+    private void requestRecommendMsg() {
         mPresenter.requestRecommendList(pageNo, pageSize, isInit);                      // 请求推荐列表
         mPresenter.requestDistrictCategories();                                           //请求推荐页面的目录
         mPresenter.requestPriceCategories();                                              //请求推荐页面的价格目录
         mPresenter.requestAreaCategories();
-
-        return mBinding.getRoot();
     }
 
     @Override
     protected RecommendPresenter createPresent() {
         return mPresenter;
     }
-
 
     @Override
     public <T> LifecycleTransformer<T> getBindToLifecycle() {
@@ -194,12 +272,31 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mPresenter.requestRecommendList(++pageNo, pageSize, isInit);
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        String key = mDistrictFirCategoryAdapter.getData().get(position);
-        List<String> sec = mDistrictCategories.get(key);
-        mDistrictSecCategoryAdapter.setData(sec);
-        mDistrictBinding.recyclerviewSecondCat.notifyDataSetChanged();
+    private void hideKeyboard() {
+        Activity activity = getActivity();
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        // 隐藏软键盘
+        imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+    }
+
+    private void checkParams(LayoutRecommendFilterPriceAreaBinding binding) {
+        CharSequence max = binding.maximum.getText();
+        CharSequence min = binding.minimum.getText();
+        if (TextUtils.isEmpty(min)) {
+            Toast.makeText(getContext(), "请填写最小值", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(max)){
+            Toast.makeText(getContext(), "请填写最大值", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (Integer.parseInt(max.toString()) < Integer.parseInt(min.toString())) {
+            Toast.makeText(getContext(), "请输入正确的值（最大值不能小于最小值）", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mBinding.dropDownMenu.setTabText(min+"~"+max);
+        mBinding.dropDownMenu.closeMenu();
+        hideKeyboard();
     }
 
 }

@@ -14,7 +14,7 @@ import javax.inject.Inject;
 public class RecommendViewModel extends BaseObservable {
     private FactoryInfo info;
     private String categoryName;
-
+    private boolean isClick;
     @Inject
     public RecommendViewModel() {
     }
@@ -23,6 +23,15 @@ public class RecommendViewModel extends BaseObservable {
         this.info = info;
     }
 
+    public void setClick(boolean click) {
+        isClick = click;
+        notifyPropertyChanged(BR.isClick);
+    }
+
+    @Bindable
+    public boolean getIsClick(){
+        return isClick;
+    }
     @Bindable
     public String getName() {
         return info.getName();

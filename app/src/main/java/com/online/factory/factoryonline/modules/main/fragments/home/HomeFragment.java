@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
@@ -64,6 +65,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mHeaderBinding.setView(this);
 
         mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.setScrollChangedListener(this);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
         mBinding.recyclerView.init();
@@ -95,9 +97,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     /**
      * 切换rolePick为“我是中介”
      */
-    public void isAgency() {
+    public void getCommission() {
         mHeaderBinding.rolePick.removeAllViews();
-        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_agency, mHeaderBinding.rolePick);
+        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_commission, mHeaderBinding.rolePick);
     }
 
     /**

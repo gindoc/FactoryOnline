@@ -18,17 +18,7 @@
             android:drawableTop="@drawable/ic_factory"
             android:gravity="center"
             android:padding="@dimen/x10"
-            android:text="发布招租信息"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_office"
-            android:gravity="center"
-            android:padding="@dimen/x10"
-            android:text="专人服务"
+            android:text="悬赏信息"
             android:textSize="18sp"/>
 
     </TableRow>

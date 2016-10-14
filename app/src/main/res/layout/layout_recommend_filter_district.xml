@@ -9,19 +9,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/y200"
             android:orientation="horizontal">
 
             <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
                android:id="@+id/recyclerview_first_cat"
                 android:layout_width="@dimen/x160"
-                android:layout_height="@dimen/y200"/>
+                android:layout_height="match_parent"/>
 
             <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
                 android:id="@+id/recyclerview_second_cat"
                 android:background="#dadada"
                 android:layout_width="@dimen/x160"
-                android:layout_height="@dimen/y200"/>
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
     </LinearLayout>
