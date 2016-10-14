@@ -20,17 +20,17 @@ import rx.subjects.BehaviorSubject;
  */
 public class RecommendCategoryAdapter extends BaseRecyclerViewAdapter<String, RecommendCategoryAdapter.RecommendCategoryViewHolder> {
     private Provider<RecommendViewModel> provider;
-//    private BehaviorSubject subject;
+    private BehaviorSubject subject;
     @Inject
     public RecommendCategoryAdapter(Context context, Provider<RecommendViewModel> provider,BehaviorSubject subject) {
         super(context);
         this.provider = provider;
-//        this.subject = subject;
+        this.subject = subject;
     }
 
-//    public BehaviorSubject getSubject() {
-//        return subject;
-//    }
+    public BehaviorSubject getSubject() {
+        return subject;
+    }
 
     @Override
     public RecommendCategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,33 +46,31 @@ public class RecommendCategoryAdapter extends BaseRecyclerViewAdapter<String, Re
         viewModel.setCategoryName(cat);
         ItemRecommendCategoryBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
-//        subject.subscribe(new Subscriber() {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(Object o) {
-//                Integer position1 = (Integer) o;
-//                viewModel.setClick(false);
-//                if(position1 == position){
-//                    viewModel.setClick(true);
-//                }
-//            }
-//        });
+        subject.subscribe(new Subscriber() {
+            @Override
+            public void onCompleted() {
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(Object o) {
+                Integer position1 = (Integer) o;
+                viewModel.setClick(false);
+                if(position1 == position){
+                    viewModel.setClick(true);
+                }
+            }
+        });
     }
 
     class RecommendCategoryViewHolder extends RecyclerView.ViewHolder {
         private ItemRecommendCategoryBinding binding;
 
         public RecommendCategoryViewHolder(View itemView, ItemRecommendCategoryBinding binding) {
-            super(itemView);itemView.setTag(binding);
+            super(itemView);
             this.binding = binding;
         }
 

@@ -16,19 +16,69 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginLeft="@dimen/x15"
+                android:layout_marginRight="@dimen/x5"
+                android:layout_marginTop="@dimen/x5"
+                android:layout_weight="1"
+                android:background="@drawable/gray_rectangle_background"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_search"
+                    android:gravity="center_vertical"
+                    android:hint="请输入小区或商圈的名称"
+                    android:paddingBottom="@dimen/x5"
+                    android:paddingLeft="@dimen/x10"
+                    android:paddingRight="@dimen/x10"
+                    android:paddingTop="@dimen/x5" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/x5"
+                    android:paddingLeft="@dimen/x10"
+                    android:paddingRight="@dimen/x10"
+                    android:paddingTop="@dimen/x5"
+                    android:src="@drawable/ic_delete" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/x10"
+                android:paddingRight="@dimen/x15"
+                android:src="@drawable/ic_locate_small" />
+        </LinearLayout>
+
+        <include layout="@layout/line" />
+
         <com.online.factory.factoryonline.customview.DropDownMenu
             android:id="@+id/dropDownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menuTextSize="13sp"
-            app:textUnselectedColor="#ccc"
-            app:textSelectedColor="#000"
             app:dividerColor="#ccc"
-            app:underlineColor="#ccc"
-            app:menuSelectedIcon="@drawable/ic_arrow_up"
             app:maskColor="#80000000"
             app:menuBackgroundColor="@android:color/white"
-            app:menuUnselectedIcon="@drawable/ic_arrow_down"/>
+            app:menuSelectedIcon="@drawable/ic_arrow_up"
+            app:menuTextSize="13sp"
+            app:menuUnselectedIcon="@drawable/ic_arrow_down"
+            app:textSelectedColor="#000"
+            app:textUnselectedColor="#ccc"
+            app:underlineColor="#ccc" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe"
@@ -42,5 +92,7 @@
                 android:cacheColorHint="@null"
                 android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
+
+
     </LinearLayout>
 </layout>

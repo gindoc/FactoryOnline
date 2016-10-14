@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="factory_name"
-            type="String"/>
+            type="String" />
 
         <variable
             name="factory_address"
-            type="String"/>
+            type="String" />
 
         <variable
             name="factory_price"
-            type="String"/>
+            type="String" />
 
         <variable
             name="factory_area"
-            type="String"/>
+            type="String" />
 
         <variable
             name="viewModel"
-            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel"/>
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel" />
     </data>
 
     <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/y100"
-                  android:gravity="center_vertical"
-                  android:orientation="horizontal"
-                  android:padding="@dimen/x10">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@drawable/button_click_background"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/x10">
 
         <ImageView
             android:id="@+id/factory_img"
             android:layout_width="@dimen/x120"
             android:layout_height="@dimen/y80"
             android:layout_marginRight="@dimen/x10"
-            app:imageUrl="@{viewModel.factoryImg}"/>
+            app:imageUrl="@{viewModel.factoryImg}" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,11 +48,14 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@{viewModel.factoryName}"
-                android:textSize="18sp"/>
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                tool:text="factoryName" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -58,23 +66,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.factoryAddress}"
-                    android:textSize="16sp"/>
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tool:text="address" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:text="@{viewModel.factoryPrice}"
-                    android:textSize="16sp"/>
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tool:text="price" />
 
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@{viewModel.factoryArea}"
-                android:textSize="16sp"/>
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                tool:text="area" />
         </LinearLayout>
 
     </LinearLayout>

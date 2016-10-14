@@ -34,7 +34,7 @@ import timber.log.Timber;
  * Created by louiszgm on 2016/9/30.
  */
 public class RecommendFragment extends BaseFragment<RecommendContract.View, RecommendPresenter> implements
-        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener {
 
     private FragmentRecommendBinding mBinding;
     private LayoutRecommendFilterDistrictBinding mDistrictBinding;
@@ -73,7 +73,6 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     public void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -87,6 +86,18 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
         mBinding.setView(this);
 
+        initRecyclerView(inflater, container);
+
+        initDropDown();
+
+        initSwipeLayout();
+
+        requestRecommendMsg();
+
+        return mBinding.getRoot();
+    }
+
+    private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer,
@@ -94,38 +105,79 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mBinding.recyclerView.setOnPageListener(this);
 
         mDistrictBinding.recyclerviewFirstCat.setAdapter(mDistrictFirCategoryAdapter);         //初始化推荐页面的一级目录
-        mDistrictFirCategoryAdapter.setOnItemClickListener(this);
+        mDistrictFirCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                String key = mDistrictFirCategoryAdapter.getData().get(position);
+                List<String> sec = mDistrictCategories.get(key);
+                mDistrictSecCategoryAdapter.setData(sec);
+                mDistrictBinding.recyclerviewSecondCat.notifyDataSetChanged();
+                mDistrictFirCategoryAdapter.getSubject().onNext(position);
+            }
+        });
 
         mDistrictBinding.recyclerviewSecondCat.setAdapter(mDistrictSecCategoryAdapter);  //初始化推荐页面的二级目录
+        mDistrictSecCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                onItemClickAction(mDistrictSecCategoryAdapter, position);
+            }
+        });
 
         mPriceBinding.recyclerView.setAdapter(mPriceCategoryAdapter);                  //初始化推荐页面的价格目录
+        mPriceCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                onItemClickAction(mPriceCategoryAdapter, position);
+            }
+        });
 
         mAreaBinding.recyclerView.setAdapter(mAreaCategoryAdapter);
+        mAreaCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                onItemClickAction(mAreaCategoryAdapter, position);
+            }
+        });
+    }
 
-        String headers[] = {"区域", "面积", "价格"};
+    private void onItemClickAction(RecommendCategoryAdapter adapter, int position) {
+        adapter.getSubject().onNext(position);
+        String title = adapter.getData().get(position);
+        mBinding.dropDownMenu.setTabText(title);
+        mBinding.dropDownMenu.closeMenu();
+    }
+
+    private void initDropDown() {
+        String headers[] = {"区域", "价格", "面积"};
         List<View> popViews = new ArrayList<>();
         popViews.add(mDistrictBinding.getRoot());
         popViews.add(mPriceBinding.getRoot());
         popViews.add(mAreaBinding.getRoot());
         mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews, new TextView(getContext()));
+        mDistrictFirCategoryAdapter.getSubject().onNext(0);
+        mDistrictSecCategoryAdapter.getSubject().onNext(0);
+        mPriceCategoryAdapter.getSubject().onNext(0);
+        mAreaCategoryAdapter.getSubject().onNext(0);
+    }
 
+    private void initSwipeLayout() {
         mBinding.swipe.setColorSchemeResources(R.color.swipe_color_red, R.color.swipe_color_yellow, R.color
                 .swipe_color_blue);                                                      //初始化swipeRefleshLayout
         mBinding.swipe.setOnRefreshListener(this);
+    }
 
+    private void requestRecommendMsg() {
         mPresenter.requestRecommendList(pageNo, pageSize, isInit);                      // 请求推荐列表
         mPresenter.requestDistrictCategories();                                           //请求推荐页面的目录
         mPresenter.requestPriceCategories();                                              //请求推荐页面的价格目录
         mPresenter.requestAreaCategories();
-
-        return mBinding.getRoot();
     }
 
     @Override
     protected RecommendPresenter createPresent() {
         return mPresenter;
     }
-
 
     @Override
     public <T> LifecycleTransformer<T> getBindToLifecycle() {
@@ -196,17 +248,6 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         isInit = false;
         mBinding.recyclerView.showLoadingFooter();
         mPresenter.requestRecommendList(++pageNo, pageSize, isInit);
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        String key = mDistrictFirCategoryAdapter.getData().get(position);
-        List<String> sec = mDistrictCategories.get(key);
-        mDistrictSecCategoryAdapter.setData(sec);
-        mDistrictBinding.recyclerviewSecondCat.notifyDataSetChanged();
-//        mDistrictFirCategoryAdapter.getSubject().onNext(position);
-        ItemRecommendCategoryBinding binding = (ItemRecommendCategoryBinding) view.getTag();
-        binding.getViewModel().setClick(true);
     }
 
 }

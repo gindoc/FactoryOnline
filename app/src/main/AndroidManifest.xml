@@ -22,8 +22,7 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="MLPHyB7vZjqhVxq48DQM72Y6" />
-        <activity android:name=".modules.main.MainActivity"
-            android:theme="@style/HomeTheme">
+        <activity android:name=".modules.main.MainActivity">
 
         </activity>
         <activity android:name=".modules.baidumap.BaiduMapActivity"></activity>

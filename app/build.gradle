@@ -68,6 +68,10 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
     testCompile "junit:junit:$rootProject.junitVersion"
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
     testCompile('org.robolectric:robolectric:3.0') {
