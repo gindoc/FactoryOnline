@@ -1,0 +1,2998 @@
+{
+  "data": [
+    {
+      "AREAID": "110000",
+      "LATITUDE": 39.911013,
+      "LONGITUDE": 116.413554,
+      "NAME": "北京市",
+      "citys": [
+        {
+          "AREAID": "110101",
+          "LATITUDE": 39.934772,
+          "LONGITUDE": 116.422773,
+          "NAME": "东城区"
+        },
+        {
+          "AREAID": "110102",
+          "LATITUDE": 39.918236,
+          "LONGITUDE": 116.372623,
+          "NAME": "西城区"
+        },
+        {
+          "AREAID": "110105",
+          "LATITUDE": 39.927669,
+          "LONGITUDE": 116.450111,
+          "NAME": "朝阳区"
+        },
+        {
+          "AREAID": "110106",
+          "LATITUDE": 39.864896,
+          "LONGITUDE": 116.292562,
+          "NAME": "丰台区"
+        },
+        {
+          "AREAID": "110107",
+          "LATITUDE": 39.911344,
+          "LONGITUDE": 116.229603,
+          "NAME": "石景山区"
+        },
+        {
+          "AREAID": "110108",
+          "LATITUDE": 39.965528,
+          "LONGITUDE": 116.304881,
+          "NAME": "海淀区"
+        },
+        {
+          "AREAID": "110109",
+          "LATITUDE": 39.946127,
+          "LONGITUDE": 116.108063,
+          "NAME": "门头沟区"
+        },
+        {
+          "AREAID": "110111",
+          "LATITUDE": 39.754105,
+          "LONGITUDE": 116.149384,
+          "NAME": "房山区"
+        },
+        {
+          "AREAID": "110112",
+          "LATITUDE": 39.916195,
+          "LONGITUDE": 116.663556,
+          "NAME": "通州区"
+        },
+        {
+          "AREAID": "110113",
+          "LATITUDE": 40.136374,
+          "LONGITUDE": 116.661193,
+          "NAME": "顺义区"
+        },
+        {
+          "AREAID": "110114",
+          "LATITUDE": 40.226486,
+          "LONGITUDE": 116.237897,
+          "NAME": "昌平区"
+        },
+        {
+          "AREAID": "110115",
+          "LATITUDE": 39.732495,
+          "LONGITUDE": 116.348215,
+          "NAME": "大兴区"
+        },
+        {
+          "AREAID": "110116",
+          "LATITUDE": 40.322317,
+          "LONGITUDE": 116.638156,
+          "NAME": "怀柔区"
+        },
+        {
+          "AREAID": "110117",
+          "LATITUDE": 40.14697,
+          "LONGITUDE": 117.127789,
+          "NAME": "平谷区"
+        },
+        {
+          "AREAID": "110228",
+          "LATITUDE": 40.382129,
+          "LONGITUDE": 116.849716,
+          "NAME": "密云县"
+        },
+        {
+          "AREAID": "110229",
+          "LATITUDE": 40.462449,
+          "LONGITUDE": 115.981662,
+          "NAME": "延庆县"
+        }
+      ]
+    },
+    {
+      "AREAID": "120000",
+      "LATITUDE": 39.090908,
+      "LONGITUDE": 117.205914,
+      "NAME": "天津市",
+      "citys": [
+        {
+          "AREAID": "120101",
+          "LATITUDE": 39.123205,
+          "LONGITUDE": 117.221168,
+          "NAME": "和平区"
+        },
+        {
+          "AREAID": "120102",
+          "LATITUDE": 39.134554,
+          "LONGITUDE": 117.258694,
+          "NAME": "河东区"
+        },
+        {
+          "AREAID": "120103",
+          "LATITUDE": 39.115763,
+          "LONGITUDE": 117.229775,
+          "NAME": "河西区"
+        },
+        {
+          "AREAID": "120104",
+          "LATITUDE": 39.144153,
+          "LONGITUDE": 117.156626,
+          "NAME": "南开区"
+        },
+        {
+          "AREAID": "120105",
+          "LATITUDE": 39.153621,
+          "LONGITUDE": 117.203334,
+          "NAME": "河北区"
+        },
+        {
+          "AREAID": "120106",
+          "LATITUDE": 39.173314,
+          "LONGITUDE": 117.158132,
+          "NAME": "红桥区"
+        },
+        {
+          "AREAID": "120110",
+          "LATITUDE": 39.092256,
+          "LONGITUDE": 117.320847,
+          "NAME": "东丽区"
+        },
+        {
+          "AREAID": "120111",
+          "LATITUDE": 39.147441,
+          "LONGITUDE": 117.013798,
+          "NAME": "西青区"
+        },
+        {
+          "AREAID": "120112",
+          "LATITUDE": 38.943849,
+          "LONGITUDE": 117.363487,
+          "NAME": "津南区"
+        },
+        {
+          "AREAID": "120113",
+          "LATITUDE": 39.230168,
+          "LONGITUDE": 117.141845,
+          "NAME": "北辰区"
+        },
+        {
+          "AREAID": "120114",
+          "LATITUDE": 39.38903,
+          "LONGITUDE": 117.050717,
+          "NAME": "武清区"
+        },
+        {
+          "AREAID": "120115",
+          "LATITUDE": 39.723243,
+          "LONGITUDE": 117.316431,
+          "NAME": "宝坻区"
+        },
+        {
+          "AREAID": "120116",
+          "LATITUDE": 39.009513,
+          "LONGITUDE": 117.71711,
+          "NAME": "滨海新区"
+        },
+        {
+          "AREAID": "120221",
+          "LATITUDE": 39.337,
+          "LONGITUDE": 117.831139,
+          "NAME": "宁河县"
+        },
+        {
+          "AREAID": "120223",
+          "LATITUDE": 38.953446,
+          "LONGITUDE": 116.980747,
+          "NAME": "静海县"
+        },
+        {
+          "AREAID": "120225",
+          "LATITUDE": 40.051476,
+          "LONGITUDE": 117.41487,
+          "NAME": "蓟县"
+        }
+      ]
+    },
+    {
+      "AREAID": "130000",
+      "LATITUDE": 38.042284,
+      "LONGITUDE": 114.476188,
+      "NAME": "河北省",
+      "citys": [
+        {
+          "AREAID": "130100",
+          "LATITUDE": 38.048684,
+          "LONGITUDE": 114.520828,
+          "NAME": "石家庄市"
+        },
+        {
+          "AREAID": "130200",
+          "LATITUDE": 39.636673,
+          "LONGITUDE": 118.187036,
+          "NAME": "唐山市"
+        },
+        {
+          "AREAID": "130300",
+          "LATITUDE": 39.941259,
+          "LONGITUDE": 119.606184,
+          "NAME": "秦皇岛市"
+        },
+        {
+          "AREAID": "130400",
+          "LATITUDE": 36.631222,
+          "LONGITUDE": 114.545808,
+          "NAME": "邯郸市"
+        },
+        {
+          "AREAID": "130500",
+          "LATITUDE": 37.076646,
+          "LONGITUDE": 114.510889,
+          "NAME": "邢台市"
+        },
+        {
+          "AREAID": "130600",
+          "LATITUDE": 38.880055,
+          "LONGITUDE": 115.471052,
+          "NAME": "保定市"
+        },
+        {
+          "AREAID": "130700",
+          "LATITUDE": 40.830172,
+          "LONGITUDE": 114.894165,
+          "NAME": "张家口市"
+        },
+        {
+          "AREAID": "130800",
+          "LATITUDE": 40.957855,
+          "LONGITUDE": 117.969798,
+          "NAME": "承德市"
+        },
+        {
+          "AREAID": "130900",
+          "LATITUDE": 38.31022,
+          "LONGITUDE": 116.845272,
+          "NAME": "沧州市"
+        },
+        {
+          "AREAID": "131000",
+          "LATITUDE": 39.54352,
+          "LONGITUDE": 116.69034,
+          "NAME": "廊坊市"
+        },
+        {
+          "AREAID": "131100",
+          "LATITUDE": 37.745166,
+          "LONGITUDE": 115.676942,
+          "NAME": "衡水市"
+        }
+      ]
+    },
+    {
+      "AREAID": "140000",
+      "LATITUDE": 37.87976,
+      "LONGITUDE": 112.569095,
+      "NAME": "山西省",
+      "citys": [
+        {
+          "AREAID": "140100",
+          "LATITUDE": 37.876885,
+          "LONGITUDE": 112.55706,
+          "NAME": "太原市"
+        },
+        {
+          "AREAID": "140200",
+          "LATITUDE": 40.082539,
+          "LONGITUDE": 113.306446,
+          "NAME": "大同市"
+        },
+        {
+          "AREAID": "140300",
+          "LATITUDE": 37.86234,
+          "LONGITUDE": 113.587087,
+          "NAME": "阳泉市"
+        },
+        {
+          "AREAID": "140400",
+          "LATITUDE": 36.201585,
+          "LONGITUDE": 113.123046,
+          "NAME": "长治市"
+        },
+        {
+          "AREAID": "140500",
+          "LATITUDE": 35.496081,
+          "LONGITUDE": 112.857706,
+          "NAME": "晋城市"
+        },
+        {
+          "AREAID": "140600",
+          "LATITUDE": 39.33789,
+          "LONGITUDE": 112.438184,
+          "NAME": "朔州市"
+        },
+        {
+          "AREAID": "140700",
+          "LATITUDE": 37.692757,
+          "LONGITUDE": 112.759375,
+          "NAME": "晋中市"
+        },
+        {
+          "AREAID": "140800",
+          "LATITUDE": 35.032587,
+          "LONGITUDE": 111.013379,
+          "NAME": "运城市"
+        },
+        {
+          "AREAID": "140900",
+          "LATITUDE": 38.422382,
+          "LONGITUDE": 112.740804,
+          "NAME": "忻州市"
+        },
+        {
+          "AREAID": "141000",
+          "LATITUDE": 36.094052,
+          "LONGITUDE": 111.526153,
+          "NAME": "临汾市"
+        },
+        {
+          "AREAID": "141100",
+          "LATITUDE": 37.525476,
+          "LONGITUDE": 111.148086,
+          "NAME": "吕梁市"
+        }
+      ]
+    },
+    {
+      "AREAID": "150000",
+      "LATITUDE": 40.823096,
+      "LONGITUDE": 111.771822,
+      "NAME": "内蒙古自治区",
+      "citys": [
+        {
+          "AREAID": "150100",
+          "LATITUDE": 40.847461,
+          "LONGITUDE": 111.758518,
+          "NAME": "呼和浩特市"
+        },
+        {
+          "AREAID": "150200",
+          "LATITUDE": 40.663636,
+          "LONGITUDE": 109.846755,
+          "NAME": "包头市"
+        },
+        {
+          "AREAID": "150300",
+          "LATITUDE": 39.660154,
+          "LONGITUDE": 106.80185,
+          "NAME": "乌海市"
+        },
+        {
+          "AREAID": "150400",
+          "LATITUDE": 42.264586,
+          "LONGITUDE": 118.895463,
+          "NAME": "赤峰市"
+        },
+        {
+          "AREAID": "150500",
+          "LATITUDE": 43.658363,
+          "LONGITUDE": 122.251207,
+          "NAME": "通辽市"
+        },
+        {
+          "AREAID": "150600",
+          "LATITUDE": 39.61463,
+          "LONGITUDE": 109.787314,
+          "NAME": "鄂尔多斯市"
+        },
+        {
+          "AREAID": "150700",
+          "LATITUDE": 49.217977,
+          "LONGITUDE": 119.77221,
+          "NAME": "呼伦贝尔市"
+        },
+        {
+          "AREAID": "150800",
+          "LATITUDE": 40.749427,
+          "LONGITUDE": 107.394129,
+          "NAME": "巴彦淖尔市"
+        },
+        {
+          "AREAID": "150900",
+          "LATITUDE": 40.999972,
+          "LONGITUDE": 113.140223,
+          "NAME": "乌兰察布市"
+        },
+        {
+          "AREAID": "152200",
+          "LATITUDE": 46.088444,
+          "LONGITUDE": 122.044544,
+          "NAME": "兴安盟"
+        },
+        {
+          "AREAID": "152500",
+          "LATITUDE": 43.939525,
+          "LONGITUDE": 116.054141,
+          "NAME": "锡林郭勒盟"
+        },
+        {
+          "AREAID": "152900",
+          "LATITUDE": 38.857806,
+          "LONGITUDE": 105.735357,
+          "NAME": "阿拉善盟"
+        }
+      ]
+    },
+    {
+      "AREAID": "210000",
+      "LATITUDE": 41.841317,
+      "LONGITUDE": 123.435847,
+      "NAME": "辽宁省",
+      "citys": [
+        {
+          "AREAID": "210100",
+          "LATITUDE": 41.811339,
+          "LONGITUDE": 123.438973,
+          "NAME": "沈阳市"
+        },
+        {
+          "AREAID": "210200",
+          "LATITUDE": 38.919345,
+          "LONGITUDE": 121.621391,
+          "NAME": "大连市"
+        },
+        {
+          "AREAID": "210300",
+          "LATITUDE": 41.114122,
+          "LONGITUDE": 123.000974,
+          "NAME": "鞍山市"
+        },
+        {
+          "AREAID": "210400",
+          "LATITUDE": 41.886078,
+          "LONGITUDE": 123.963595,
+          "NAME": "抚顺市"
+        },
+        {
+          "AREAID": "210500",
+          "LATITUDE": 41.299847,
+          "LONGITUDE": 123.773468,
+          "NAME": "本溪市"
+        },
+        {
+          "AREAID": "210600",
+          "LATITUDE": 40.00569,
+          "LONGITUDE": 124.362564,
+          "NAME": "丹东市"
+        },
+        {
+          "AREAID": "210700",
+          "LATITUDE": 41.100869,
+          "LONGITUDE": 121.133631,
+          "NAME": "锦州市"
+        },
+        {
+          "AREAID": "210800",
+          "LATITUDE": 40.672565,
+          "LONGITUDE": 122.241475,
+          "NAME": "营口市"
+        },
+        {
+          "AREAID": "210900",
+          "LATITUDE": 42.027983,
+          "LONGITUDE": 121.676518,
+          "NAME": "阜新市"
+        },
+        {
+          "AREAID": "211000",
+          "LATITUDE": 41.274452,
+          "LONGITUDE": 123.243726,
+          "NAME": "辽阳市"
+        },
+        {
+          "AREAID": "211100",
+          "LATITUDE": 41.125939,
+          "LONGITUDE": 122.077269,
+          "NAME": "盘锦市"
+        },
+        {
+          "AREAID": "211200",
+          "LATITUDE": 42.292573,
+          "LONGITUDE": 123.848797,
+          "NAME": "铁岭市"
+        },
+        {
+          "AREAID": "211300",
+          "LATITUDE": 41.579487,
+          "LONGITUDE": 120.457301,
+          "NAME": "朝阳市"
+        },
+        {
+          "AREAID": "211400",
+          "LATITUDE": 40.717364,
+          "LONGITUDE": 120.843388,
+          "NAME": "葫芦岛市"
+        }
+      ]
+    },
+    {
+      "AREAID": "220000",
+      "LATITUDE": 43.901864,
+      "LONGITUDE": 125.333383,
+      "NAME": "吉林省",
+      "citys": [
+        {
+          "AREAID": "220100",
+          "LATITUDE": 43.82178,
+          "LONGITUDE": 125.33017,
+          "NAME": "长春市"
+        },
+        {
+          "AREAID": "220200",
+          "LATITUDE": 43.843512,
+          "LONGITUDE": 126.556073,
+          "NAME": "吉林市"
+        },
+        {
+          "AREAID": "220300",
+          "LATITUDE": 43.172447,
+          "LONGITUDE": 124.356844,
+          "NAME": "四平市"
+        },
+        {
+          "AREAID": "220400",
+          "LATITUDE": 42.8943,
+          "LONGITUDE": 125.150107,
+          "NAME": "辽源市"
+        },
+        {
+          "AREAID": "220500",
+          "LATITUDE": 41.733906,
+          "LONGITUDE": 125.946506,
+          "NAME": "通化市"
+        },
+        {
+          "AREAID": "220600",
+          "LATITUDE": 41.94643,
+          "LONGITUDE": 126.431052,
+          "NAME": "白山市"
+        },
+        {
+          "AREAID": "220700",
+          "LATITUDE": 45.147201,
+          "LONGITUDE": 124.831633,
+          "NAME": "松原市"
+        },
+        {
+          "AREAID": "220800",
+          "LATITUDE": 45.6254,
+          "LONGITUDE": 122.845302,
+          "NAME": "白城市"
+        },
+        {
+          "AREAID": "222400",
+          "LATITUDE": 42.897211,
+          "LONGITUDE": 129.515602,
+          "NAME": "延边朝鲜族自治州"
+        },
+        {
+          "AREAID": "222401",
+          "LATITUDE": 42.897091,
+          "LONGITUDE": 129.515602,
+          "NAME": "延吉市"
+        },
+        {
+          "AREAID": "222402",
+          "LATITUDE": 42.974434,
+          "LONGITUDE": 129.850282,
+          "NAME": "图们市"
+        },
+        {
+          "AREAID": "222403",
+          "LATITUDE": 43.378402,
+          "LONGITUDE": 128.238662,
+          "NAME": "敦化市"
+        },
+        {
+          "AREAID": "222404",
+          "LATITUDE": 42.868208,
+          "LONGITUDE": 130.372382,
+          "NAME": "珲春市"
+        },
+        {
+          "AREAID": "222405",
+          "LATITUDE": 42.771508,
+          "LONGITUDE": 129.433044,
+          "NAME": "龙井市"
+        },
+        {
+          "AREAID": "222406",
+          "LATITUDE": 42.552735,
+          "LONGITUDE": 129.017176,
+          "NAME": "和龙市"
+        },
+        {
+          "AREAID": "222424",
+          "LATITUDE": 43.318459,
+          "LONGITUDE": 129.77786,
+          "NAME": "汪清县"
+        },
+        {
+          "AREAID": "222426",
+          "LATITUDE": 43.117874,
+          "LONGITUDE": 128.90565,
+          "NAME": "安图县"
+        }
+      ]
+    },
+    {
+      "AREAID": "230000",
+      "LATITUDE": 45.747709,
+      "LONGITUDE": 126.669503,
+      "NAME": "黑龙江省",
+      "citys": [
+        {
+          "AREAID": "230100",
+          "LATITUDE": 45.807782,
+          "LONGITUDE": 126.542417,
+          "NAME": "哈尔滨市"
+        },
+        {
+          "AREAID": "230200",
+          "LATITUDE": 47.360087,
+          "LONGITUDE": 123.924531,
+          "NAME": "齐齐哈尔市"
+        },
+        {
+          "AREAID": "230300",
+          "LATITUDE": 45.300906,
+          "LONGITUDE": 130.976161,
+          "NAME": "鸡西市"
+        },
+        {
+          "AREAID": "230400",
+          "LATITUDE": 47.356043,
+          "LONGITUDE": 130.304284,
+          "NAME": "鹤岗市"
+        },
+        {
+          "AREAID": "230500",
+          "LATITUDE": 46.652966,
+          "LONGITUDE": 131.165442,
+          "NAME": "双鸭山市"
+        },
+        {
+          "AREAID": "230600",
+          "LATITUDE": 46.593216,
+          "LONGITUDE": 125.109727,
+          "NAME": "大庆市"
+        },
+        {
+          "AREAID": "230700",
+          "LATITUDE": 47.733329,
+          "LONGITUDE": 128.84704,
+          "NAME": "伊春市"
+        },
+        {
+          "AREAID": "230800",
+          "LATITUDE": 46.806581,
+          "LONGITUDE": 130.32696,
+          "NAME": "佳木斯市"
+        },
+        {
+          "AREAID": "230900",
+          "LATITUDE": 45.776512,
+          "LONGITUDE": 131.009618,
+          "NAME": "七台河市"
+        },
+        {
+          "AREAID": "231000",
+          "LATITUDE": 44.558647,
+          "LONGITUDE": 129.638976,
+          "NAME": "牡丹江市"
+        },
+        {
+          "AREAID": "231100",
+          "LATITUDE": 50.251193,
+          "LONGITUDE": 127.535014,
+          "NAME": "黑河市"
+        },
+        {
+          "AREAID": "231200",
+          "LATITUDE": 46.658789,
+          "LONGITUDE": 126.975678,
+          "NAME": "绥化市"
+        },
+        {
+          "AREAID": "232700",
+          "LATITUDE": 51.92993,
+          "LONGITUDE": 124.59866,
+          "NAME": "大兴安岭地区"
+        }
+      ]
+    },
+    {
+      "AREAID": "310000",
+      "LATITUDE": 31.236305,
+      "LONGITUDE": 121.480237,
+      "NAME": "上海市",
+      "citys": [
+        {
+          "AREAID": "310101",
+          "LATITUDE": 31.237372,
+          "LONGITUDE": 121.491194,
+          "NAME": "黄浦区"
+        },
+        {
+          "AREAID": "310104",
+          "LATITUDE": 31.194616,
+          "LONGITUDE": 121.443266,
+          "NAME": "徐汇区"
+        },
+        {
+          "AREAID": "310105",
+          "LATITUDE": 31.226487,
+          "LONGITUDE": 121.430394,
+          "NAME": "长宁区"
+        },
+        {
+          "AREAID": "310106",
+          "LATITUDE": 31.22977,
+          "LONGITUDE": 121.462365,
+          "NAME": "静安区"
+        },
+        {
+          "AREAID": "310107",
+          "LATITUDE": 31.255173,
+          "LONGITUDE": 121.403569,
+          "NAME": "普陀区"
+        },
+        {
+          "AREAID": "310108",
+          "LATITUDE": 31.253373,
+          "LONGITUDE": 121.465963,
+          "NAME": "闸北区"
+        },
+        {
+          "AREAID": "310109",
+          "LATITUDE": 31.270157,
+          "LONGITUDE": 121.511736,
+          "NAME": "虹口区"
+        },
+        {
+          "AREAID": "310110",
+          "LATITUDE": 31.265486,
+          "LONGITUDE": 121.532609,
+          "NAME": "杨浦区"
+        },
+        {
+          "AREAID": "310112",
+          "LATITUDE": 31.118893,
+          "LONGITUDE": 121.388672,
+          "NAME": "闵行区"
+        },
+        {
+          "AREAID": "310113",
+          "LATITUDE": 31.410955,
+          "LONGITUDE": 121.495971,
+          "NAME": "宝山区"
+        },
+        {
+          "AREAID": "310114",
+          "LATITUDE": 31.380476,
+          "LONGITUDE": 121.272804,
+          "NAME": "嘉定区"
+        },
+        {
+          "AREAID": "310115",
+          "LATITUDE": 31.22739,
+          "LONGITUDE": 121.550544,
+          "NAME": "浦东新区"
+        },
+        {
+          "AREAID": "310116",
+          "LATITUDE": 30.747995,
+          "LONGITUDE": 121.348902,
+          "NAME": "金山区"
+        },
+        {
+          "AREAID": "310117",
+          "LATITUDE": 31.038472,
+          "LONGITUDE": 121.233011,
+          "NAME": "松江区"
+        },
+        {
+          "AREAID": "310118",
+          "LATITUDE": 31.155541,
+          "LONGITUDE": 121.130814,
+          "NAME": "青浦区"
+        },
+        {
+          "AREAID": "310120",
+          "LATITUDE": 30.923948,
+          "LONGITUDE": 121.480604,
+          "NAME": "奉贤区"
+        },
+        {
+          "AREAID": "310230",
+          "LATITUDE": 31.628674,
+          "LONGITUDE": 121.403856,
+          "NAME": "崇明县"
+        }
+      ]
+    },
+    {
+      "AREAID": "320000",
+      "LATITUDE": 32.066586,
+      "LONGITUDE": 118.769502,
+      "NAME": "江苏省",
+      "citys": [
+        {
+          "AREAID": "320100",
+          "LATITUDE": 32.064735,
+          "LONGITUDE": 118.802891,
+          "NAME": "南京市"
+        },
+        {
+          "AREAID": "320200",
+          "LATITUDE": 31.496704,
+          "LONGITUDE": 120.318954,
+          "NAME": "无锡市"
+        },
+        {
+          "AREAID": "320300",
+          "LATITUDE": 34.210143,
+          "LONGITUDE": 117.29235,
+          "NAME": "徐州市"
+        },
+        {
+          "AREAID": "320400",
+          "LATITUDE": 31.816791,
+          "LONGITUDE": 119.980142,
+          "NAME": "常州市"
+        },
+        {
+          "AREAID": "320500",
+          "LATITUDE": 31.304566,
+          "LONGITUDE": 120.589613,
+          "NAME": "苏州市"
+        },
+        {
+          "AREAID": "320600",
+          "LATITUDE": 31.985237,
+          "LONGITUDE": 120.900301,
+          "NAME": "南通市"
+        },
+        {
+          "AREAID": "320700",
+          "LATITUDE": 34.602342,
+          "LONGITUDE": 119.229571,
+          "NAME": "连云港市"
+        },
+        {
+          "AREAID": "320800",
+          "LATITUDE": 33.616272,
+          "LONGITUDE": 119.022429,
+          "NAME": "淮安市"
+        },
+        {
+          "AREAID": "320900",
+          "LATITUDE": 33.355301,
+          "LONGITUDE": 120.168187,
+          "NAME": "盐城市"
+        },
+        {
+          "AREAID": "321000",
+          "LATITUDE": 32.39986,
+          "LONGITUDE": 119.419107,
+          "NAME": "扬州市"
+        },
+        {
+          "AREAID": "321100",
+          "LATITUDE": 32.195688,
+          "LONGITUDE": 119.431494,
+          "NAME": "镇江市"
+        },
+        {
+          "AREAID": "321200",
+          "LATITUDE": 32.4612,
+          "LONGITUDE": 119.932115,
+          "NAME": "泰州市"
+        },
+        {
+          "AREAID": "321300",
+          "LATITUDE": 33.967686,
+          "LONGITUDE": 118.282062,
+          "NAME": "宿迁市"
+        }
+      ]
+    },
+    {
+      "AREAID": "330000",
+      "LATITUDE": 30.271487,
+      "LONGITUDE": 120.160136,
+      "NAME": "浙江省",
+      "citys": [
+        {
+          "AREAID": "330100",
+          "LATITUDE": 30.280059,
+          "LONGITUDE": 120.161693,
+          "NAME": "杭州市"
+        },
+        {
+          "AREAID": "330200",
+          "LATITUDE": 29.880177,
+          "LONGITUDE": 121.556686,
+          "NAME": "宁波市"
+        },
+        {
+          "AREAID": "330300",
+          "LATITUDE": 28.001095,
+          "LONGITUDE": 120.705869,
+          "NAME": "温州市"
+        },
+        {
+          "AREAID": "330400",
+          "LATITUDE": 30.750912,
+          "LONGITUDE": 120.762045,
+          "NAME": "嘉兴市"
+        },
+        {
+          "AREAID": "330500",
+          "LATITUDE": 30.899015,
+          "LONGITUDE": 120.094566,
+          "NAME": "湖州市"
+        },
+        {
+          "AREAID": "330600",
+          "LATITUDE": 30.036519,
+          "LONGITUDE": 120.586673,
+          "NAME": "绍兴市"
+        },
+        {
+          "AREAID": "330700",
+          "LATITUDE": 29.084455,
+          "LONGITUDE": 119.654027,
+          "NAME": "金华市"
+        },
+        {
+          "AREAID": "330800",
+          "LATITUDE": 28.941661,
+          "LONGITUDE": 118.880768,
+          "NAME": "衢州市"
+        },
+        {
+          "AREAID": "330900",
+          "LATITUDE": 29.991092,
+          "LONGITUDE": 122.214339,
+          "NAME": "舟山市"
+        },
+        {
+          "AREAID": "331000",
+          "LATITUDE": 28.662297,
+          "LONGITUDE": 121.426996,
+          "NAME": "台州市"
+        },
+        {
+          "AREAID": "331100",
+          "LATITUDE": 28.472979,
+          "LONGITUDE": 119.929503,
+          "NAME": "丽水市"
+        }
+      ]
+    },
+    {
+      "AREAID": "340000",
+      "LATITUDE": 31.867312,
+      "LONGITUDE": 117.292218,
+      "NAME": "安徽省",
+      "citys": [
+        {
+          "AREAID": "340100",
+          "LATITUDE": 31.82687,
+          "LONGITUDE": 117.235447,
+          "NAME": "合肥市"
+        },
+        {
+          "AREAID": "340200",
+          "LATITUDE": 31.358798,
+          "LONGITUDE": 118.439561,
+          "NAME": "芜湖市"
+        },
+        {
+          "AREAID": "340300",
+          "LATITUDE": 32.921498,
+          "LONGITUDE": 117.395835,
+          "NAME": "蚌埠市"
+        },
+        {
+          "AREAID": "340400",
+          "LATITUDE": 32.631837,
+          "LONGITUDE": 117.006189,
+          "NAME": "淮南市"
+        },
+        {
+          "AREAID": "340500",
+          "LATITUDE": 31.67633,
+          "LONGITUDE": 118.512691,
+          "NAME": "马鞍山市"
+        },
+        {
+          "AREAID": "340600",
+          "LATITUDE": 33.96064,
+          "LONGITUDE": 116.804878,
+          "NAME": "淮北市"
+        },
+        {
+          "AREAID": "340700",
+          "LATITUDE": 30.950899,
+          "LONGITUDE": 117.818795,
+          "NAME": "铜陵市"
+        },
+        {
+          "AREAID": "340800",
+          "LATITUDE": 30.548594,
+          "LONGITUDE": 117.070127,
+          "NAME": "安庆市"
+        },
+        {
+          "AREAID": "341000",
+          "LATITUDE": 29.721365,
+          "LONGITUDE": 118.345096,
+          "NAME": "黄山市"
+        },
+        {
+          "AREAID": "341100",
+          "LATITUDE": 32.308165,
+          "LONGITUDE": 118.323252,
+          "NAME": "滁州市"
+        },
+        {
+          "AREAID": "341200",
+          "LATITUDE": 32.895879,
+          "LONGITUDE": 115.821389,
+          "NAME": "阜阳市"
+        },
+        {
+          "AREAID": "341300",
+          "LATITUDE": 33.652034,
+          "LONGITUDE": 116.970454,
+          "NAME": "宿州市"
+        },
+        {
+          "AREAID": "341500",
+          "LATITUDE": 31.741226,
+          "LONGITUDE": 116.529651,
+          "NAME": "六安市"
+        },
+        {
+          "AREAID": "341600",
+          "LATITUDE": 33.850774,
+          "LONGITUDE": 115.785767,
+          "NAME": "亳州市"
+        },
+        {
+          "AREAID": "341700",
+          "LATITUDE": 30.67098,
+          "LONGITUDE": 117.497839,
+          "NAME": "池州市"
+        },
+        {
+          "AREAID": "341800",
+          "LATITUDE": 30.946576,
+          "LONGITUDE": 118.765196,
+          "NAME": "宣城市"
+        }
+      ]
+    },
+    {
+      "AREAID": "350000",
+      "LATITUDE": 26.106051,
+      "LONGITUDE": 119.30304,
+      "NAME": "福建省",
+      "citys": [
+        {
+          "AREAID": "350100",
+          "LATITUDE": 26.080447,
+          "LONGITUDE": 119.302938,
+          "NAME": "福州市"
+        },
+        {
+          "AREAID": "350200",
+          "LATITUDE": 24.485821,
+          "LONGITUDE": 118.095915,
+          "NAME": "厦门市"
+        },
+        {
+          "AREAID": "350300",
+          "LATITUDE": 25.45996,
+          "LONGITUDE": 119.014232,
+          "NAME": "莆田市"
+        },
+        {
+          "AREAID": "350400",
+          "LATITUDE": 26.269683,
+          "LONGITUDE": 117.645742,
+          "NAME": "三明市"
+        },
+        {
+          "AREAID": "350500",
+          "LATITUDE": 24.880242,
+          "LONGITUDE": 118.682316,
+          "NAME": "泉州市"
+        },
+        {
+          "AREAID": "350600",
+          "LATITUDE": 24.519197,
+          "LONGITUDE": 117.653827,
+          "NAME": "漳州市"
+        },
+        {
+          "AREAID": "350700",
+          "LATITUDE": 26.647662,
+          "LONGITUDE": 118.1843,
+          "NAME": "南平市"
+        },
+        {
+          "AREAID": "350800",
+          "LATITUDE": 25.081257,
+          "LONGITUDE": 117.023668,
+          "NAME": "龙岩市"
+        },
+        {
+          "AREAID": "350900",
+          "LATITUDE": 26.671748,
+          "LONGITUDE": 119.554701,
+          "NAME": "宁德市"
+        }
+      ]
+    },
+    {
+      "AREAID": "360000",
+      "LATITUDE": 28.68047,
+      "LONGITUDE": 115.91646,
+      "NAME": "江西省",
+      "citys": [
+        {
+          "AREAID": "360100",
+          "LATITUDE": 28.687675,
+          "LONGITUDE": 115.864528,
+          "NAME": "南昌市"
+        },
+        {
+          "AREAID": "360200",
+          "LATITUDE": 29.274337,
+          "LONGITUDE": 117.184967,
+          "NAME": "景德镇市"
+        },
+        {
+          "AREAID": "360300",
+          "LATITUDE": 27.62897,
+          "LONGITUDE": 113.86077,
+          "NAME": "萍乡市"
+        },
+        {
+          "AREAID": "360400",
+          "LATITUDE": 29.711328,
+          "LONGITUDE": 116.007993,
+          "NAME": "九江市"
+        },
+        {
+          "AREAID": "360500",
+          "LATITUDE": 27.823541,
+          "LONGITUDE": 114.923664,
+          "NAME": "新余市"
+        },
+        {
+          "AREAID": "360600",
+          "LATITUDE": 28.265879,
+          "LONGITUDE": 117.075765,
+          "NAME": "鹰潭市"
+        },
+        {
+          "AREAID": "360700",
+          "LATITUDE": 25.837179,
+          "LONGITUDE": 114.94126,
+          "NAME": "赣州市"
+        },
+        {
+          "AREAID": "360800",
+          "LATITUDE": 27.119751,
+          "LONGITUDE": 115.00027,
+          "NAME": "吉安市"
+        },
+        {
+          "AREAID": "360900",
+          "LATITUDE": 27.820089,
+          "LONGITUDE": 114.422683,
+          "NAME": "宜春市"
+        },
+        {
+          "AREAID": "361000",
+          "LATITUDE": 27.953603,
+          "LONGITUDE": 116.364627,
+          "NAME": "抚州市"
+        },
+        {
+          "AREAID": "361100",
+          "LATITUDE": 28.460864,
+          "LONGITUDE": 117.950028,
+          "NAME": "上饶市"
+        }
+      ]
+    },
+    {
+      "AREAID": "370000",
+      "LATITUDE": 36.674414,
+      "LONGITUDE": 117.02702,
+      "NAME": "山东省",
+      "citys": [
+        {
+          "AREAID": "370100",
+          "LATITUDE": 36.671627,
+          "LONGITUDE": 117.001319,
+          "NAME": "济南市"
+        },
+        {
+          "AREAID": "370200",
+          "LATITUDE": 36.072358,
+          "LONGITUDE": 120.389445,
+          "NAME": "青岛市"
+        },
+        {
+          "AREAID": "370300",
+          "LATITUDE": 36.819182,
+          "LONGITUDE": 118.061254,
+          "NAME": "淄博市"
+        },
+        {
+          "AREAID": "370400",
+          "LATITUDE": 34.816569,
+          "LONGITUDE": 117.328513,
+          "NAME": "枣庄市"
+        },
+        {
+          "AREAID": "370500",
+          "LATITUDE": 37.43999,
+          "LONGITUDE": 118.681046,
+          "NAME": "东营市"
+        },
+        {
+          "AREAID": "370600",
+          "LATITUDE": 37.469868,
+          "LONGITUDE": 121.454425,
+          "NAME": "烟台市"
+        },
+        {
+          "AREAID": "370700",
+          "LATITUDE": 36.713212,
+          "LONGITUDE": 119.168138,
+          "NAME": "潍坊市"
+        },
+        {
+          "AREAID": "370800",
+          "LATITUDE": 35.420269,
+          "LONGITUDE": 116.593852,
+          "NAME": "济宁市"
+        },
+        {
+          "AREAID": "370900",
+          "LATITUDE": 36.205905,
+          "LONGITUDE": 117.094893,
+          "NAME": "泰安市"
+        },
+        {
+          "AREAID": "371000",
+          "LATITUDE": 37.519322,
+          "LONGITUDE": 122.128245,
+          "NAME": "威海市"
+        },
+        {
+          "AREAID": "371100",
+          "LATITUDE": 35.422798,
+          "LONGITUDE": 119.533606,
+          "NAME": "日照市"
+        },
+        {
+          "AREAID": "371200",
+          "LATITUDE": 36.219357,
+          "LONGITUDE": 117.683221,
+          "NAME": "莱芜市"
+        },
+        {
+          "AREAID": "371300",
+          "LATITUDE": 35.110531,
+          "LONGITUDE": 118.36299,
+          "NAME": "临沂市"
+        },
+        {
+          "AREAID": "371400",
+          "LATITUDE": 37.441313,
+          "LONGITUDE": 116.365825,
+          "NAME": "德州市"
+        },
+        {
+          "AREAID": "371500",
+          "LATITUDE": 36.462681,
+          "LONGITUDE": 115.992077,
+          "NAME": "聊城市"
+        },
+        {
+          "AREAID": "371600",
+          "LATITUDE": 37.388387,
+          "LONGITUDE": 117.9792,
+          "NAME": "滨州市"
+        },
+        {
+          "AREAID": "371700",
+          "LATITUDE": 35.239435,
+          "LONGITUDE": 115.487696,
+          "NAME": "菏泽市"
+        }
+      ]
+    },
+    {
+      "AREAID": "410000",
+      "LATITUDE": 34.772024,
+      "LONGITUDE": 113.759604,
+      "NAME": "河南省",
+      "citys": [
+        {
+          "AREAID": "410100",
+          "LATITUDE": 34.753488,
+          "LONGITUDE": 113.631349,
+          "NAME": "郑州市"
+        },
+        {
+          "AREAID": "410200",
+          "LATITUDE": 34.802941,
+          "LONGITUDE": 114.313904,
+          "NAME": "开封市"
+        },
+        {
+          "AREAID": "410300",
+          "LATITUDE": 34.624376,
+          "LONGITUDE": 112.460033,
+          "NAME": "洛阳市"
+        },
+        {
+          "AREAID": "410400",
+          "LATITUDE": 33.772051,
+          "LONGITUDE": 113.198935,
+          "NAME": "平顶山市"
+        },
+        {
+          "AREAID": "410500",
+          "LATITUDE": 36.103649,
+          "LONGITUDE": 114.3996,
+          "NAME": "安阳市"
+        },
+        {
+          "AREAID": "410600",
+          "LATITUDE": 35.752656,
+          "LONGITUDE": 114.304044,
+          "NAME": "鹤壁市"
+        },
+        {
+          "AREAID": "410700",
+          "LATITUDE": 35.308973,
+          "LONGITUDE": 113.933349,
+          "NAME": "新乡市"
+        },
+        {
+          "AREAID": "410800",
+          "LATITUDE": 35.221493,
+          "LONGITUDE": 113.248557,
+          "NAME": "焦作市"
+        },
+        {
+          "AREAID": "410900",
+          "LATITUDE": 35.767586,
+          "LONGITUDE": 115.035917,
+          "NAME": "濮阳市"
+        },
+        {
+          "AREAID": "411000",
+          "LATITUDE": 34.041737,
+          "LONGITUDE": 113.858804,
+          "NAME": "许昌市"
+        },
+        {
+          "AREAID": "411100",
+          "LATITUDE": 33.587703,
+          "LONGITUDE": 114.02323,
+          "NAME": "漯河市"
+        },
+        {
+          "AREAID": "411200",
+          "LATITUDE": 34.778442,
+          "LONGITUDE": 111.206832,
+          "NAME": "三门峡市"
+        },
+        {
+          "AREAID": "411300",
+          "LATITUDE": 32.996701,
+          "LONGITUDE": 112.535009,
+          "NAME": "南阳市"
+        },
+        {
+          "AREAID": "411400",
+          "LATITUDE": 34.420378,
+          "LONGITUDE": 115.662798,
+          "NAME": "商丘市"
+        },
+        {
+          "AREAID": "411500",
+          "LATITUDE": 32.153186,
+          "LONGITUDE": 114.099264,
+          "NAME": "信阳市"
+        },
+        {
+          "AREAID": "411600",
+          "LATITUDE": 33.631958,
+          "LONGITUDE": 114.703433,
+          "NAME": "周口市"
+        },
+        {
+          "AREAID": "411700",
+          "LATITUDE": 33.017546,
+          "LONGITUDE": 114.029465,
+          "NAME": "驻马店市"
+        },
+        {
+          "AREAID": "419001",
+          "LATITUDE": 35.072867,
+          "LONGITUDE": 112.609314,
+          "NAME": "济源市"
+        }
+      ]
+    },
+    {
+      "AREAID": "420000",
+      "LATITUDE": 30.551595,
+      "LONGITUDE": 114.348779,
+      "NAME": "湖北省",
+      "citys": [
+        {
+          "AREAID": "420100",
+          "LATITUDE": 30.598428,
+          "LONGITUDE": 114.311831,
+          "NAME": "武汉市"
+        },
+        {
+          "AREAID": "420200",
+          "LATITUDE": 30.205336,
+          "LONGITUDE": 115.045433,
+          "NAME": "黄石市"
+        },
+        {
+          "AREAID": "420300",
+          "LATITUDE": 32.635042,
+          "LONGITUDE": 110.80454,
+          "NAME": "十堰市"
+        },
+        {
+          "AREAID": "420500",
+          "LATITUDE": 30.697602,
+          "LONGITUDE": 111.292971,
+          "NAME": "宜昌市"
+        },
+        {
+          "AREAID": "420600",
+          "LATITUDE": 32.014786,
+          "LONGITUDE": 112.129091,
+          "NAME": "襄阳市"
+        },
+        {
+          "AREAID": "420700",
+          "LATITUDE": 30.396522,
+          "LONGITUDE": 114.901557,
+          "NAME": "鄂州市"
+        },
+        {
+          "AREAID": "420800",
+          "LATITUDE": 31.041792,
+          "LONGITUDE": 112.205843,
+          "NAME": "荆门市"
+        },
+        {
+          "AREAID": "420900",
+          "LATITUDE": 30.930712,
+          "LONGITUDE": 113.922962,
+          "NAME": "孝感市"
+        },
+        {
+          "AREAID": "421000",
+          "LATITUDE": 30.340606,
+          "LONGITUDE": 112.24722,
+          "NAME": "荆州市"
+        },
+        {
+          "AREAID": "421100",
+          "LATITUDE": 30.459422,
+          "LONGITUDE": 114.878872,
+          "NAME": "黄冈市"
+        },
+        {
+          "AREAID": "421200",
+          "LATITUDE": 29.847123,
+          "LONGITUDE": 114.328967,
+          "NAME": "咸宁市"
+        },
+        {
+          "AREAID": "421300",
+          "LATITUDE": 31.696341,
+          "LONGITUDE": 113.389071,
+          "NAME": "随州市"
+        },
+        {
+          "AREAID": "422800",
+          "LATITUDE": 30.277908,
+          "LONGITUDE": 109.494763,
+          "NAME": "恩施土家族苗族自治州"
+        },
+        {
+          "AREAID": "429004",
+          "LATITUDE": 30.368184,
+          "LONGITUDE": 113.46109,
+          "NAME": "仙桃市"
+        },
+        {
+          "AREAID": "429005",
+          "LATITUDE": 30.407633,
+          "LONGITUDE": 112.905773,
+          "NAME": "潜江市"
+        },
+        {
+          "AREAID": "429006",
+          "LATITUDE": 30.669711,
+          "LONGITUDE": 113.172549,
+          "NAME": "天门市"
+        },
+        {
+          "AREAID": "429021",
+          "LATITUDE": 31.750473,
+          "LONGITUDE": 110.682083,
+          "NAME": "神农架林区"
+        }
+      ]
+    },
+    {
+      "AREAID": "430000",
+      "LATITUDE": 28.118301,
+      "LONGITUDE": 112.989982,
+      "NAME": "湖南省",
+      "citys": [
+        {
+          "AREAID": "430100",
+          "LATITUDE": 28.233971,
+          "LONGITUDE": 112.945333,
+          "NAME": "长沙市"
+        },
+        {
+          "AREAID": "430200",
+          "LATITUDE": 27.833737,
+          "LONGITUDE": 113.140431,
+          "NAME": "株洲市"
+        },
+        {
+          "AREAID": "430300",
+          "LATITUDE": 27.83585,
+          "LONGITUDE": 112.950575,
+          "NAME": "湘潭市"
+        },
+        {
+          "AREAID": "430400",
+          "LATITUDE": 26.899517,
+          "LONGITUDE": 112.578397,
+          "NAME": "衡阳市"
+        },
+        {
+          "AREAID": "430500",
+          "LATITUDE": 27.245167,
+          "LONGITUDE": 111.474133,
+          "NAME": "邵阳市"
+        },
+        {
+          "AREAID": "430600",
+          "LATITUDE": 29.363262,
+          "LONGITUDE": 113.135679,
+          "NAME": "岳阳市"
+        },
+        {
+          "AREAID": "430700",
+          "LATITUDE": 29.037723,
+          "LONGITUDE": 111.704994,
+          "NAME": "常德市"
+        },
+        {
+          "AREAID": "430800",
+          "LATITUDE": 29.122477,
+          "LONGITUDE": 110.484925,
+          "NAME": "张家界市"
+        },
+        {
+          "AREAID": "430900",
+          "LATITUDE": 28.559818,
+          "LONGITUDE": 112.361677,
+          "NAME": "益阳市"
+        },
+        {
+          "AREAID": "431000",
+          "LATITUDE": 25.776711,
+          "LONGITUDE": 113.021311,
+          "NAME": "郴州市"
+        },
+        {
+          "AREAID": "431100",
+          "LATITUDE": 26.426612,
+          "LONGITUDE": 111.618703,
+          "NAME": "永州市"
+        },
+        {
+          "AREAID": "431200",
+          "LATITUDE": 27.575595,
+          "LONGITUDE": 110.008116,
+          "NAME": "怀化市"
+        },
+        {
+          "AREAID": "431300",
+          "LATITUDE": 27.703196,
+          "LONGITUDE": 112.001082,
+          "NAME": "娄底市"
+        },
+        {
+          "AREAID": "433100",
+          "LATITUDE": 28.317399,
+          "LONGITUDE": 109.745507,
+          "NAME": "湘西土家族苗族自治州"
+        }
+      ]
+    },
+    {
+      "AREAID": "440000",
+      "LATITUDE": 23.137962,
+      "LONGITUDE": 113.272698,
+      "NAME": "广东省",
+      "citys": [
+        {
+          "AREAID": "440100",
+          "LATITUDE": 23.135308,
+          "LONGITUDE": 113.270793,
+          "NAME": "广州市"
+        },
+        {
+          "AREAID": "440200",
+          "LATITUDE": 24.816174,
+          "LONGITUDE": 113.603757,
+          "NAME": "韶关市"
+        },
+        {
+          "AREAID": "440300",
+          "LATITUDE": 22.548515,
+          "LONGITUDE": 114.066112,
+          "NAME": "深圳市"
+        },
+        {
+          "AREAID": "440400",
+          "LATITUDE": 22.276392,
+          "LONGITUDE": 113.583235,
+          "NAME": "珠海市"
+        },
+        {
+          "AREAID": "440500",
+          "LATITUDE": 23.359289,
+          "LONGITUDE": 116.688739,
+          "NAME": "汕头市"
+        },
+        {
+          "AREAID": "440600",
+          "LATITUDE": 23.027707,
+          "LONGITUDE": 113.128432,
+          "NAME": "佛山市"
+        },
+        {
+          "AREAID": "440700",
+          "LATITUDE": 22.584459,
+          "LONGITUDE": 113.088165,
+          "NAME": "江门市"
+        },
+        {
+          "AREAID": "440800",
+          "LATITUDE": 21.277163,
+          "LONGITUDE": 110.365494,
+          "NAME": "湛江市"
+        },
+        {
+          "AREAID": "440900",
+          "LATITUDE": 21.669051,
+          "LONGITUDE": 110.931773,
+          "NAME": "茂名市"
+        },
+        {
+          "AREAID": "441200",
+          "LATITUDE": 23.052984,
+          "LONGITUDE": 112.47177,
+          "NAME": "肇庆市"
+        },
+        {
+          "AREAID": "441300",
+          "LATITUDE": 23.116409,
+          "LONGITUDE": 114.423348,
+          "NAME": "惠州市"
+        },
+        {
+          "AREAID": "441400",
+          "LATITUDE": 24.294311,
+          "LONGITUDE": 116.129179,
+          "NAME": "梅州市"
+        },
+        {
+          "AREAID": "441500",
+          "LATITUDE": 22.791322,
+          "LONGITUDE": 115.381693,
+          "NAME": "汕尾市"
+        },
+        {
+          "AREAID": "441600",
+          "LATITUDE": 23.749829,
+          "LONGITUDE": 114.707097,
+          "NAME": "河源市"
+        },
+        {
+          "AREAID": "441700",
+          "LATITUDE": 21.864421,
+          "LONGITUDE": 111.989051,
+          "NAME": "阳江市"
+        },
+        {
+          "AREAID": "441800",
+          "LATITUDE": 23.688238,
+          "LONGITUDE": 113.062619,
+          "NAME": "清远市"
+        },
+        {
+          "AREAID": "441900",
+          "LATITUDE": 23.026997,
+          "LONGITUDE": 113.758231,
+          "NAME": "东莞市"
+        },
+        {
+          "AREAID": "442000",
+          "LATITUDE": 22.522262,
+          "LONGITUDE": 113.399023,
+          "NAME": "中山市"
+        },
+        {
+          "AREAID": "445100",
+          "LATITUDE": 23.662923,
+          "LONGITUDE": 116.62943,
+          "NAME": "潮州市"
+        },
+        {
+          "AREAID": "445200",
+          "LATITUDE": 23.555773,
+          "LONGITUDE": 116.37922,
+          "NAME": "揭阳市"
+        },
+        {
+          "AREAID": "445300",
+          "LATITUDE": 22.921154,
+          "LONGITUDE": 112.051045,
+          "NAME": "云浮市"
+        }
+      ]
+    },
+    {
+      "AREAID": "450000",
+      "LATITUDE": 22.821171,
+      "LONGITUDE": 108.334063,
+      "NAME": "广西壮族自治区",
+      "citys": [
+        {
+          "AREAID": "450100",
+          "LATITUDE": 22.823037,
+          "LONGITUDE": 108.373351,
+          "NAME": "南宁市"
+        },
+        {
+          "AREAID": "450200",
+          "LATITUDE": 24.331519,
+          "LONGITUDE": 109.42198,
+          "NAME": "柳州市"
+        },
+        {
+          "AREAID": "450300",
+          "LATITUDE": 25.279893,
+          "LONGITUDE": 110.296442,
+          "NAME": "桂林市"
+        },
+        {
+          "AREAID": "450400",
+          "LATITUDE": 23.482873,
+          "LONGITUDE": 111.285647,
+          "NAME": "梧州市"
+        },
+        {
+          "AREAID": "450500",
+          "LATITUDE": 21.486955,
+          "LONGITUDE": 109.126614,
+          "NAME": "北海市"
+        },
+        {
+          "AREAID": "450600",
+          "LATITUDE": 21.693439,
+          "LONGITUDE": 108.361138,
+          "NAME": "防城港市"
+        },
+        {
+          "AREAID": "450700",
+          "LATITUDE": 21.985392,
+          "LONGITUDE": 108.66089,
+          "NAME": "钦州市"
+        },
+        {
+          "AREAID": "450800",
+          "LATITUDE": 23.118929,
+          "LONGITUDE": 109.604155,
+          "NAME": "贵港市"
+        },
+        {
+          "AREAID": "450900",
+          "LATITUDE": 22.660656,
+          "LONGITUDE": 110.18743,
+          "NAME": "玉林市"
+        },
+        {
+          "AREAID": "451000",
+          "LATITUDE": 23.907845,
+          "LONGITUDE": 106.624969,
+          "NAME": "百色市"
+        },
+        {
+          "AREAID": "451100",
+          "LATITUDE": 24.409403,
+          "LONGITUDE": 111.573078,
+          "NAME": "贺州市"
+        },
+        {
+          "AREAID": "451200",
+          "LATITUDE": 24.698828,
+          "LONGITUDE": 108.091898,
+          "NAME": "河池市"
+        },
+        {
+          "AREAID": "451300",
+          "LATITUDE": 23.758226,
+          "LONGITUDE": 109.228844,
+          "NAME": "来宾市"
+        },
+        {
+          "AREAID": "451400",
+          "LATITUDE": 22.384864,
+          "LONGITUDE": 107.371369,
+          "NAME": "崇左市"
+        }
+      ]
+    },
+    {
+      "AREAID": "460000",
+      "LATITUDE": 20.025669,
+      "LONGITUDE": 110.355167,
+      "NAME": "海南省",
+      "citys": [
+        {
+          "AREAID": "460100",
+          "LATITUDE": 20.050057,
+          "LONGITUDE": 110.206424,
+          "NAME": "海口市"
+        },
+        {
+          "AREAID": "460200",
+          "LATITUDE": 18.258217,
+          "LONGITUDE": 109.518646,
+          "NAME": "三亚市"
+        },
+        {
+          "AREAID": "460300",
+          "LATITUDE": 16.838984,
+          "LONGITUDE": 112.340061,
+          "NAME": "三沙市"
+        },
+        {
+          "AREAID": "469001",
+          "LATITUDE": 18.780944,
+          "LONGITUDE": 109.5235,
+          "NAME": "五指山市"
+        },
+        {
+          "AREAID": "469002",
+          "LATITUDE": 19.264142,
+          "LONGITUDE": 110.481183,
+          "NAME": "琼海市"
+        },
+        {
+          "AREAID": "469003",
+          "LATITUDE": 19.527081,
+          "LONGITUDE": 109.587145,
+          "NAME": "儋州市"
+        },
+        {
+          "AREAID": "469005",
+          "LATITUDE": 19.549156,
+          "LONGITUDE": 110.804248,
+          "NAME": "文昌市"
+        },
+        {
+          "AREAID": "469006",
+          "LATITUDE": 18.801602,
+          "LONGITUDE": 110.396187,
+          "NAME": "万宁市"
+        },
+        {
+          "AREAID": "469007",
+          "LATITUDE": 19.101834,
+          "LONGITUDE": 108.660239,
+          "NAME": "东方市"
+        },
+        {
+          "AREAID": "469021",
+          "LATITUDE": 19.687034,
+          "LONGITUDE": 110.365833,
+          "NAME": "定安县"
+        },
+        {
+          "AREAID": "469022",
+          "LATITUDE": 19.357499,
+          "LONGITUDE": 110.110047,
+          "NAME": "屯昌县"
+        },
+        {
+          "AREAID": "469023",
+          "LATITUDE": 19.744403,
+          "LONGITUDE": 110.011387,
+          "NAME": "澄迈县"
+        },
+        {
+          "AREAID": "469024",
+          "LATITUDE": 19.918707,
+          "LONGITUDE": 109.697212,
+          "NAME": "临高县"
+        },
+        {
+          "AREAID": "469025",
+          "LATITUDE": 19.231702,
+          "LONGITUDE": 109.458142,
+          "NAME": "白沙黎族自治县"
+        },
+        {
+          "AREAID": "469026",
+          "LATITUDE": 19.304371,
+          "LONGITUDE": 109.062055,
+          "NAME": "昌江黎族自治县"
+        },
+        {
+          "AREAID": "469027",
+          "LATITUDE": 18.755925,
+          "LONGITUDE": 109.180119,
+          "NAME": "乐东黎族自治县"
+        },
+        {
+          "AREAID": "469028",
+          "LATITUDE": 18.51229,
+          "LONGITUDE": 110.043664,
+          "NAME": "陵水黎族自治县"
+        },
+        {
+          "AREAID": "469029",
+          "LATITUDE": 18.645177,
+          "LONGITUDE": 109.709086,
+          "NAME": "保亭黎族苗族自治县"
+        },
+        {
+          "AREAID": "469030",
+          "LATITUDE": 19.039198,
+          "LONGITUDE": 109.844902,
+          "NAME": "琼中黎族苗族自治县"
+        }
+      ]
+    },
+    {
+      "AREAID": "500000",
+      "LATITUDE": 29.570997,
+      "LONGITUDE": 106.557165,
+      "NAME": "重庆市",
+      "citys": [
+        {
+          "AREAID": "500101",
+          "LATITUDE": 30.813624,
+          "LONGITUDE": 108.415288,
+          "NAME": "万州区"
+        },
+        {
+          "AREAID": "500102",
+          "LATITUDE": 29.709427,
+          "LONGITUDE": 107.39624,
+          "NAME": "涪陵区"
+        },
+        {
+          "AREAID": "500103",
+          "LATITUDE": 29.559433,
+          "LONGITUDE": 106.575039,
+          "NAME": "渝中区"
+        },
+        {
+          "AREAID": "500104",
+          "LATITUDE": 29.489884,
+          "LONGITUDE": 106.488784,
+          "NAME": "大渡口区"
+        },
+        {
+          "AREAID": "500105",
+          "LATITUDE": 29.612838,
+          "LONGITUDE": 106.580806,
+          "NAME": "江北区"
+        },
+        {
+          "AREAID": "500106",
+          "LATITUDE": 29.547176,
+          "LONGITUDE": 106.464194,
+          "NAME": "沙坪坝区"
+        },
+        {
+          "AREAID": "500107",
+          "LATITUDE": 29.507801,
+          "LONGITUDE": 106.517958,
+          "NAME": "九龙坡区"
+        },
+        {
+          "AREAID": "500108",
+          "LATITUDE": 29.527997,
+          "LONGITUDE": 106.568974,
+          "NAME": "南岸区"
+        },
+        {
+          "AREAID": "500109",
+          "LATITUDE": 29.811624,
+          "LONGITUDE": 106.402852,
+          "NAME": "北碚区"
+        },
+        {
+          "AREAID": "500110",
+          "LATITUDE": 29.022455,
+          "LONGITUDE": 106.665422,
+          "NAME": "綦江区"
+        },
+        {
+          "AREAID": "500111",
+          "LATITUDE": 29.486631,
+          "LONGITUDE": 105.779946,
+          "NAME": "大足区"
+        },
+        {
+          "AREAID": "500112",
+          "LATITUDE": 29.723702,
+          "LONGITUDE": 106.636991,
+          "NAME": "渝北区"
+        },
+        {
+          "AREAID": "500113",
+          "LATITUDE": 29.408846,
+          "LONGITUDE": 106.546867,
+          "NAME": "巴南区"
+        },
+        {
+          "AREAID": "500114",
+          "LATITUDE": 29.538993,
+          "LONGITUDE": 108.777601,
+          "NAME": "黔江区"
+        },
+        {
+          "AREAID": "500115",
+          "LATITUDE": 29.863629,
+          "LONGITUDE": 107.087581,
+          "NAME": "长寿区"
+        },
+        {
+          "AREAID": "500116",
+          "LATITUDE": 29.295824,
+          "LONGITUDE": 106.265958,
+          "NAME": "江津区"
+        },
+        {
+          "AREAID": "500117",
+          "LATITUDE": 29.978671,
+          "LONGITUDE": 106.283328,
+          "NAME": "合川区"
+        },
+        {
+          "AREAID": "500118",
+          "LATITUDE": 29.361948,
+          "LONGITUDE": 105.933589,
+          "NAME": "永川区"
+        },
+        {
+          "AREAID": "500119",
+          "LATITUDE": 29.163559,
+          "LONGITUDE": 107.105545,
+          "NAME": "南川区"
+        },
+        {
+          "AREAID": "500223",
+          "LATITUDE": 30.196855,
+          "LONGITUDE": 105.845919,
+          "NAME": "潼南县"
+        },
+        {
+          "AREAID": "500224",
+          "LATITUDE": 29.818323,
+          "LONGITUDE": 106.039243,
+          "NAME": "铜梁县"
+        },
+        {
+          "AREAID": "500226",
+          "LATITUDE": 29.411155,
+          "LONGITUDE": 105.60086,
+          "NAME": "荣昌县"
+        },
+        {
+          "AREAID": "500227",
+          "LATITUDE": 29.567501,
+          "LONGITUDE": 106.198727,
+          "NAME": "璧山县"
+        },
+        {
+          "AREAID": "500228",
+          "LATITUDE": 30.679531,
+          "LONGITUDE": 107.808893,
+          "NAME": "梁平县"
+        },
+        {
+          "AREAID": "500229",
+          "LATITUDE": 31.953358,
+          "LONGITUDE": 108.670942,
+          "NAME": "城口县"
+        },
+        {
+          "AREAID": "500230",
+          "LATITUDE": 29.86953,
+          "LONGITUDE": 107.737331,
+          "NAME": "丰都县"
+        },
+        {
+          "AREAID": "500231",
+          "LATITUDE": 30.332483,
+          "LONGITUDE": 107.341719,
+          "NAME": "垫江县"
+        },
+        {
+          "AREAID": "500232",
+          "LATITUDE": 29.331757,
+          "LONGITUDE": 107.766355,
+          "NAME": "武隆县"
+        },
+        {
+          "AREAID": "500233",
+          "LATITUDE": 30.306133,
+          "LONGITUDE": 108.044205,
+          "NAME": "忠县"
+        },
+        {
+          "AREAID": "500234",
+          "LATITUDE": 31.166922,
+          "LONGITUDE": 108.399608,
+          "NAME": "开县"
+        },
+        {
+          "AREAID": "500235",
+          "LATITUDE": 30.936741,
+          "LONGITUDE": 108.703428,
+          "NAME": "云阳县"
+        },
+        {
+          "AREAID": "500236",
+          "LATITUDE": 31.024561,
+          "LONGITUDE": 109.470533,
+          "NAME": "奉节县"
+        },
+        {
+          "AREAID": "500237",
+          "LATITUDE": 31.080436,
+          "LONGITUDE": 109.885346,
+          "NAME": "巫山县"
+        },
+        {
+          "AREAID": "500238",
+          "LATITUDE": 31.404879,
+          "LONGITUDE": 109.576563,
+          "NAME": "巫溪县"
+        },
+        {
+          "AREAID": "500240",
+          "LATITUDE": 30.005989,
+          "LONGITUDE": 108.120564,
+          "NAME": "石柱土家族自治县"
+        },
+        {
+          "AREAID": "500241",
+          "LATITUDE": 28.454066,
+          "LONGITUDE": 109.013715,
+          "NAME": "秀山土家族苗族自治县"
+        },
+        {
+          "AREAID": "500242",
+          "LATITUDE": 28.847003,
+          "LONGITUDE": 108.774365,
+          "NAME": "酉阳土家族苗族自治县"
+        },
+        {
+          "AREAID": "500243",
+          "LATITUDE": 29.299527,
+          "LONGITUDE": 108.172127,
+          "NAME": "彭水苗族土家族自治县"
+        }
+      ]
+    },
+    {
+      "AREAID": "510000",
+      "LATITUDE": 30.65679,
+      "LONGITUDE": 104.082256,
+      "NAME": "四川省",
+      "citys": [
+        {
+          "AREAID": "510100",
+          "LATITUDE": 30.576279,
+          "LONGITUDE": 104.071216,
+          "NAME": "成都市"
+        },
+        {
+          "AREAID": "510300",
+          "LATITUDE": 29.345379,
+          "LONGITUDE": 104.784891,
+          "NAME": "自贡市"
+        },
+        {
+          "AREAID": "510400",
+          "LATITUDE": 26.588109,
+          "LONGITUDE": 101.725262,
+          "NAME": "攀枝花市"
+        },
+        {
+          "AREAID": "510500",
+          "LATITUDE": 28.877577,
+          "LONGITUDE": 105.449092,
+          "NAME": "泸州市"
+        },
+        {
+          "AREAID": "510600",
+          "LATITUDE": 31.133105,
+          "LONGITUDE": 104.404319,
+          "NAME": "德阳市"
+        },
+        {
+          "AREAID": "510700",
+          "LATITUDE": 31.473364,
+          "LONGITUDE": 104.686164,
+          "NAME": "绵阳市"
+        },
+        {
+          "AREAID": "510800",
+          "LATITUDE": 32.441808,
+          "LONGITUDE": 105.849993,
+          "NAME": "广元市"
+        },
+        {
+          "AREAID": "510900",
+          "LATITUDE": 30.539156,
+          "LONGITUDE": 105.599152,
+          "NAME": "遂宁市"
+        },
+        {
+          "AREAID": "511000",
+          "LATITUDE": 29.585836,
+          "LONGITUDE": 105.065028,
+          "NAME": "内江市"
+        },
+        {
+          "AREAID": "511100",
+          "LATITUDE": 29.558141,
+          "LONGITUDE": 103.77193,
+          "NAME": "乐山市"
+        },
+        {
+          "AREAID": "511300",
+          "LATITUDE": 30.843297,
+          "LONGITUDE": 106.117231,
+          "NAME": "南充市"
+        },
+        {
+          "AREAID": "511400",
+          "LATITUDE": 30.081369,
+          "LONGITUDE": 103.85507,
+          "NAME": "眉山市"
+        },
+        {
+          "AREAID": "511500",
+          "LATITUDE": 28.75761,
+          "LONGITUDE": 104.648103,
+          "NAME": "宜宾市"
+        },
+        {
+          "AREAID": "511600",
+          "LATITUDE": 30.461708,
+          "LONGITUDE": 106.639772,
+          "NAME": "广安市"
+        },
+        {
+          "AREAID": "511700",
+          "LATITUDE": 31.214347,
+          "LONGITUDE": 107.474504,
+          "NAME": "达州市"
+        },
+        {
+          "AREAID": "511800",
+          "LATITUDE": 30.021277,
+          "LONGITUDE": 103.04636,
+          "NAME": "雅安市"
+        },
+        {
+          "AREAID": "511900",
+          "LATITUDE": 31.872851,
+          "LONGITUDE": 106.753912,
+          "NAME": "巴中市"
+        },
+        {
+          "AREAID": "512000",
+          "LATITUDE": 30.134846,
+          "LONGITUDE": 104.634415,
+          "NAME": "资阳市"
+        },
+        {
+          "AREAID": "513200",
+          "LATITUDE": 31.905609,
+          "LONGITUDE": 102.231186,
+          "NAME": "阿坝藏族羌族自治州"
+        },
+        {
+          "AREAID": "513300",
+          "LATITUDE": 30.055207,
+          "LONGITUDE": 101.969084,
+          "NAME": "甘孜藏族自治州"
+        },
+        {
+          "AREAID": "513400",
+          "LATITUDE": 27.887685,
+          "LONGITUDE": 102.273965,
+          "NAME": "凉山彝族自治州"
+        }
+      ]
+    },
+    {
+      "AREAID": "520000",
+      "LATITUDE": 26.604242,
+      "LONGITUDE": 106.713693,
+      "NAME": "贵州省",
+      "citys": [
+        {
+          "AREAID": "520100",
+          "LATITUDE": 26.652747,
+          "LONGITUDE": 106.636816,
+          "NAME": "贵阳市"
+        },
+        {
+          "AREAID": "520200",
+          "LATITUDE": 26.599086,
+          "LONGITUDE": 104.836786,
+          "NAME": "六盘水市"
+        },
+        {
+          "AREAID": "520300",
+          "LATITUDE": 27.731749,
+          "LONGITUDE": 106.933658,
+          "NAME": "遵义市"
+        },
+        {
+          "AREAID": "520400",
+          "LATITUDE": 26.259904,
+          "LONGITUDE": 105.952622,
+          "NAME": "安顺市"
+        },
+        {
+          "AREAID": "520500",
+          "LATITUDE": 27.408562,
+          "LONGITUDE": 105.333323,
+          "NAME": "毕节市"
+        },
+        {
+          "AREAID": "520600",
+          "LATITUDE": 27.674903,
+          "LONGITUDE": 109.168558,
+          "NAME": "铜仁市"
+        },
+        {
+          "AREAID": "522300",
+          "LATITUDE": 25.095974,
+          "LONGITUDE": 104.910858,
+          "NAME": "黔西南布依族苗族自治州"
+        },
+        {
+          "AREAID": "522600",
+          "LATITUDE": 26.589678,
+          "LONGITUDE": 107.989306,
+          "NAME": "黔东南苗族侗族自治州"
+        },
+        {
+          "AREAID": "522700",
+          "LATITUDE": 26.260588,
+          "LONGITUDE": 107.528658,
+          "NAME": "黔南布依族苗族自治州"
+        }
+      ]
+    },
+    {
+      "AREAID": "530000",
+      "LATITUDE": 25.05156,
+      "LONGITUDE": 102.716147,
+      "NAME": "云南省",
+      "citys": [
+        {
+          "AREAID": "530100",
+          "LATITUDE": 24.885953,
+          "LONGITUDE": 102.839667,
+          "NAME": "昆明市"
+        },
+        {
+          "AREAID": "530300",
+          "LATITUDE": 25.496328,
+          "LONGITUDE": 103.802685,
+          "NAME": "曲靖市"
+        },
+        {
+          "AREAID": "530400",
+          "LATITUDE": 24.357512,
+          "LONGITUDE": 102.5537,
+          "NAME": "玉溪市"
+        },
+        {
+          "AREAID": "530500",
+          "LATITUDE": 25.117882,
+          "LONGITUDE": 99.168373,
+          "NAME": "保山市"
+        },
+        {
+          "AREAID": "530600",
+          "LATITUDE": 27.344057,
+          "LONGITUDE": 103.723311,
+          "NAME": "昭通市"
+        },
+        {
+          "AREAID": "530700",
+          "LATITUDE": 26.862521,
+          "LONGITUDE": 100.23357,
+          "NAME": "丽江市"
+        },
+        {
+          "AREAID": "530800",
+          "LATITUDE": 22.830987,
+          "LONGITUDE": 100.97281,
+          "NAME": "普洱市"
+        },
+        {
+          "AREAID": "530900",
+          "LATITUDE": 23.89053,
+          "LONGITUDE": 100.09528,
+          "NAME": "临沧市"
+        },
+        {
+          "AREAID": "532300",
+          "LATITUDE": 25.051226,
+          "LONGITUDE": 101.534082,
+          "NAME": "楚雄彝族自治州"
+        },
+        {
+          "AREAID": "532500",
+          "LATITUDE": 23.369914,
+          "LONGITUDE": 103.38215,
+          "NAME": "红河哈尼族彝族自治州"
+        },
+        {
+          "AREAID": "532600",
+          "LATITUDE": 23.404187,
+          "LONGITUDE": 104.221606,
+          "NAME": "文山壮族苗族自治州"
+        },
+        {
+          "AREAID": "532800",
+          "LATITUDE": 22.013792,
+          "LONGITUDE": 100.803836,
+          "NAME": "西双版纳傣族自治州"
+        },
+        {
+          "AREAID": "532900",
+          "LATITUDE": 25.612206,
+          "LONGITUDE": 100.274223,
+          "NAME": "大理白族自治州"
+        },
+        {
+          "AREAID": "533100",
+          "LATITUDE": 24.438031,
+          "LONGITUDE": 98.591419,
+          "NAME": "德宏傣族景颇族自治州"
+        },
+        {
+          "AREAID": "533300",
+          "LATITUDE": 25.823734,
+          "LONGITUDE": 98.863184,
+          "NAME": "怒江傈僳族自治州"
+        },
+        {
+          "AREAID": "533400",
+          "LATITUDE": 27.825264,
+          "LONGITUDE": 99.709476,
+          "NAME": "迪庆藏族自治州"
+        }
+      ]
+    },
+    {
+      "AREAID": "540000",
+      "LATITUDE": 29.653148,
+      "LONGITUDE": 91.124021,
+      "NAME": "西藏自治区",
+      "citys": [
+        {
+          "AREAID": "540100",
+          "LATITUDE": 29.650088,
+          "LONGITUDE": 91.121025,
+          "NAME": "拉萨市"
+        },
+        {
+          "AREAID": "542100",
+          "LATITUDE": 31.140576,
+          "LONGITUDE": 97.185582,
+          "NAME": "昌都地区"
+        },
+        {
+          "AREAID": "542200",
+          "LATITUDE": 29.24309,
+          "LONGITUDE": 91.779601,
+          "NAME": "山南地区"
+        },
+        {
+          "AREAID": "542300",
+          "LATITUDE": 29.269023,
+          "LONGITUDE": 88.891486,
+          "NAME": "日喀则地区"
+        },
+        {
+          "AREAID": "542400",
+          "LATITUDE": 31.482375,
+          "LONGITUDE": 92.0578,
+          "NAME": "那曲地区"
+        },
+        {
+          "AREAID": "542500",
+          "LATITUDE": 30.406574,
+          "LONGITUDE": 81.151894,
+          "NAME": "阿里地区"
+        },
+        {
+          "AREAID": "542600",
+          "LATITUDE": 29.654792,
+          "LONGITUDE": 94.368109,
+          "NAME": "林芝地区"
+        }
+      ]
+    },
+    {
+      "AREAID": "610000",
+      "LATITUDE": 34.271171,
+      "LONGITUDE": 108.960637,
+      "NAME": "陕西省",
+      "citys": [
+        {
+          "AREAID": "610100",
+          "LATITUDE": 34.347436,
+          "LONGITUDE": 108.946306,
+          "NAME": "西安市"
+        },
+        {
+          "AREAID": "610200",
+          "LATITUDE": 34.902957,
+          "LONGITUDE": 108.951558,
+          "NAME": "铜川市"
+        },
+        {
+          "AREAID": "610300",
+          "LATITUDE": 34.367747,
+          "LONGITUDE": 107.243899,
+          "NAME": "宝鸡市"
+        },
+        {
+          "AREAID": "610400",
+          "LATITUDE": 34.335599,
+          "LONGITUDE": 108.715712,
+          "NAME": "咸阳市"
+        },
+        {
+          "AREAID": "610500",
+          "LATITUDE": 34.505687,
+          "LONGITUDE": 109.516739,
+          "NAME": "渭南市"
+        },
+        {
+          "AREAID": "610600",
+          "LATITUDE": 36.591003,
+          "LONGITUDE": 109.496361,
+          "NAME": "延安市"
+        },
+        {
+          "AREAID": "610700",
+          "LATITUDE": 33.07382,
+          "LONGITUDE": 107.030197,
+          "NAME": "汉中市"
+        },
+        {
+          "AREAID": "610800",
+          "LATITUDE": 38.290886,
+          "LONGITUDE": 109.741195,
+          "NAME": "榆林市"
+        },
+        {
+          "AREAID": "610900",
+          "LATITUDE": 32.690575,
+          "LONGITUDE": 109.03592,
+          "NAME": "安康市"
+        },
+        {
+          "AREAID": "611000",
+          "LATITUDE": 33.876525,
+          "LONGITUDE": 109.94688,
+          "NAME": "商洛市"
+        }
+      ]
+    },
+    {
+      "AREAID": "620000",
+      "LATITUDE": 36.065479,
+      "LONGITUDE": 103.83282,
+      "NAME": "甘肃省",
+      "citys": [
+        {
+          "AREAID": "620100",
+          "LATITUDE": 36.067312,
+          "LONGITUDE": 103.840692,
+          "NAME": "兰州市"
+        },
+        {
+          "AREAID": "620300",
+          "LATITUDE": 38.525777,
+          "LONGITUDE": 102.194197,
+          "NAME": "金昌市"
+        },
+        {
+          "AREAID": "620400",
+          "LATITUDE": 36.550821,
+          "LONGITUDE": 104.144182,
+          "NAME": "白银市"
+        },
+        {
+          "AREAID": "620500",
+          "LATITUDE": 34.587162,
+          "LONGITUDE": 105.731276,
+          "NAME": "天水市"
+        },
+        {
+          "AREAID": "620600",
+          "LATITUDE": 37.934078,
+          "LONGITUDE": 102.644524,
+          "NAME": "武威市"
+        },
+        {
+          "AREAID": "620700",
+          "LATITUDE": 38.932187,
+          "LONGITUDE": 100.456221,
+          "NAME": "张掖市"
+        },
+        {
+          "AREAID": "620800",
+          "LATITUDE": 35.549266,
+          "LONGITUDE": 106.671741,
+          "NAME": "平凉市"
+        },
+        {
+          "AREAID": "620900",
+          "LATITUDE": 39.738615,
+          "LONGITUDE": 98.500427,
+          "NAME": "酒泉市"
+        },
+        {
+          "AREAID": "621000",
+          "LATITUDE": 35.716096,
+          "LONGITUDE": 107.649305,
+          "NAME": "庆阳市"
+        },
+        {
+          "AREAID": "621100",
+          "LATITUDE": 35.587354,
+          "LONGITUDE": 104.631662,
+          "NAME": "定西市"
+        },
+        {
+          "AREAID": "621200",
+          "LATITUDE": 33.406825,
+          "LONGITUDE": 104.928233,
+          "NAME": "陇南市"
+        },
+        {
+          "AREAID": "622900",
+          "LATITUDE": 35.607475,
+          "LONGITUDE": 103.217303,
+          "NAME": "临夏回族自治州"
+        },
+        {
+          "AREAID": "623000",
+          "LATITUDE": 34.98901,
+          "LONGITUDE": 102.917605,
+          "NAME": "甘南藏族自治州"
+        }
+      ]
+    },
+    {
+      "AREAID": "630000",
+      "LATITUDE": 36.627027,
+      "LONGITUDE": 101.786572,
+      "NAME": "青海省",
+      "citys": [
+        {
+          "AREAID": "630100",
+          "LATITUDE": 36.623477,
+          "LONGITUDE": 101.784269,
+          "NAME": "西宁市"
+        },
+        {
+          "AREAID": "630200",
+          "LATITUDE": 36.508247,
+          "LONGITUDE": 102.110729,
+          "NAME": "海东市"
+        },
+        {
+          "AREAID": "632200",
+          "LATITUDE": 36.960702,
+          "LONGITUDE": 100.907395,
+          "NAME": "海北藏族自治州"
+        },
+        {
+          "AREAID": "632300",
+          "LATITUDE": 35.526125,
+          "LONGITUDE": 102.021495,
+          "NAME": "黄南藏族自治州"
+        },
+        {
+          "AREAID": "632500",
+          "LATITUDE": 36.292132,
+          "LONGITUDE": 100.626831,
+          "NAME": "海南藏族自治州"
+        },
+        {
+          "AREAID": "632600",
+          "LATITUDE": 34.477207,
+          "LONGITUDE": 100.251341,
+          "NAME": "果洛藏族自治州"
+        },
+        {
+          "AREAID": "632700",
+          "LATITUDE": 33.011061,
+          "LONGITUDE": 97.01308,
+          "NAME": "玉树藏族自治州"
+        },
+        {
+          "AREAID": "632800",
+          "LATITUDE": 37.382839,
+          "LONGITUDE": 97.377823,
+          "NAME": "海西蒙古族藏族自治州"
+        }
+      ]
+    },
+    {
+      "AREAID": "640000",
+      "LATITUDE": 38.476848,
+      "LONGITUDE": 106.265275,
+      "NAME": "宁夏回族自治区",
+      "citys": [
+        {
+          "AREAID": "640100",
+          "LATITUDE": 38.492392,
+          "LONGITUDE": 106.238976,
+          "NAME": "银川市"
+        },
+        {
+          "AREAID": "640200",
+          "LATITUDE": 38.989783,
+          "LONGITUDE": 106.39078,
+          "NAME": "石嘴山市"
+        },
+        {
+          "AREAID": "640300",
+          "LATITUDE": 38.003863,
+          "LONGITUDE": 106.205161,
+          "NAME": "吴忠市"
+        },
+        {
+          "AREAID": "640400",
+          "LATITUDE": 36.021609,
+          "LONGITUDE": 106.24917,
+          "NAME": "固原市"
+        },
+        {
+          "AREAID": "640500",
+          "LATITUDE": 37.506058,
+          "LONGITUDE": 105.203332,
+          "NAME": "中卫市"
+        }
+      ]
+    },
+    {
+      "AREAID": "650000",
+      "LATITUDE": 43.799467,
+      "LONGITUDE": 87.633574,
+      "NAME": "新疆维吾尔自治区",
+      "citys": [
+        {
+          "AREAID": "650100",
+          "LATITUDE": 43.832806,
+          "LONGITUDE": 87.623314,
+          "NAME": "乌鲁木齐市"
+        },
+        {
+          "AREAID": "650200",
+          "LATITUDE": 45.585765,
+          "LONGITUDE": 84.89587,
+          "NAME": "克拉玛依市"
+        },
+        {
+          "AREAID": "652100",
+          "LATITUDE": 42.957303,
+          "LONGITUDE": 89.196029,
+          "NAME": "吐鲁番地区"
+        },
+        {
+          "AREAID": "652200",
+          "LATITUDE": 42.824642,
+          "LONGITUDE": 93.522785,
+          "NAME": "哈密地区"
+        },
+        {
+          "AREAID": "652300",
+          "LATITUDE": 44.016923,
+          "LONGITUDE": 87.314822,
+          "NAME": "昌吉回族自治州"
+        },
+        {
+          "AREAID": "652700",
+          "LATITUDE": 44.912168,
+          "LONGITUDE": 82.073064,
+          "NAME": "博尔塔拉蒙古自治州"
+        },
+        {
+          "AREAID": "652800",
+          "LATITUDE": 41.770226,
+          "LONGITUDE": 86.151584,
+          "NAME": "巴音郭楞蒙古自治州"
+        },
+        {
+          "AREAID": "652900",
+          "LATITUDE": 41.174545,
+          "LONGITUDE": 80.266525,
+          "NAME": "阿克苏地区"
+        },
+        {
+          "AREAID": "653000",
+          "LATITUDE": 39.721257,
+          "LONGITUDE": 76.173127,
+          "NAME": "克孜勒苏柯尔克孜自治州"
+        },
+        {
+          "AREAID": "653100",
+          "LATITUDE": 39.476419,
+          "LONGITUDE": 75.99625,
+          "NAME": "喀什地区"
+        },
+        {
+          "AREAID": "653200",
+          "LATITUDE": 37.120556,
+          "LONGITUDE": 79.928877,
+          "NAME": "和田地区"
+        },
+        {
+          "AREAID": "654000",
+          "LATITUDE": 43.922815,
+          "LONGITUDE": 81.330697,
+          "NAME": "伊犁哈萨克自治州"
+        },
+        {
+          "AREAID": "654200",
+          "LATITUDE": 46.751068,
+          "LONGITUDE": 82.987095,
+          "NAME": "塔城地区"
+        },
+        {
+          "AREAID": "654300",
+          "LATITUDE": 47.851367,
+          "LONGITUDE": 88.146856,
+          "NAME": "阿勒泰地区"
+        },
+        {
+          "AREAID": "659001",
+          "LATITUDE": 44.312423,
+          "LONGITUDE": 86.085507,
+          "NAME": "石河子市"
+        },
+        {
+          "AREAID": "659002",
+          "LATITUDE": 40.553846,
+          "LONGITUDE": 81.287224,
+          "NAME": "阿拉尔市"
+        },
+        {
+          "AREAID": "659003",
+          "LATITUDE": 39.871158,
+          "LONGITUDE": 79.075437,
+          "NAME": "图木舒克市"
+        },
+        {
+          "AREAID": "659004",
+          "LATITUDE": 44.173731,
+          "LONGITUDE": 87.54681,
+          "NAME": "五家渠市"
+        },
+        {
+          "AREAID": "659005",
+          "LATITUDE": 47.369109,
+          "LONGITUDE": 87.806614,
+          "NAME": "北屯市"
+        },
+        {
+          "AREAID": "659006",
+          "LATITUDE": 41.86591,
+          "LONGITUDE": 85.706368,
+          "NAME": "铁门关市"
+        }
+      ]
+    },
+    {
+      "AREAID": "710000",
+      "LATITUDE": 23.80406,
+      "LONGITUDE": 120.961454,
+      "NAME": "台湾省",
+      "citys": []
+    },
+    {
+      "AREAID": "810000",
+      "LATITUDE": 22.281089,
+      "LONGITUDE": 114.171994,
+      "NAME": "香港特别行政区",
+      "citys": []
+    },
+    {
+      "AREAID": "820000",
+      "LATITUDE": 22.192961,
+      "LONGITUDE": 113.549403,
+      "NAME": "澳门特别行政区",
+      "citys": []
+    }
+  ],
+  "statecode": "1"
+}
