@@ -99,6 +99,7 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
      */
     public void addMarkers() {
 
+        mClusterManager.setRenderer(new MyRenDerer(this,mBaiduMap,mClusterManager));
         // 添加Marker点
 //        LatLng llA = new LatLng(39.963175, 116.400244);
 //        LatLng llB = new LatLng(39.942821, 116.369199);
