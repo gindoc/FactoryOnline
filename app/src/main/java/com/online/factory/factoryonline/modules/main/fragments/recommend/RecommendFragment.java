@@ -176,7 +176,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         popViews.add(mDistrictBinding.getRoot());
         popViews.add(mPriceBinding.getRoot());
         popViews.add(mAreaBinding.getRoot());
-        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews, new TextView(getContext()));
+        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews/*, new TextView(getContext())*/);
         mDistrictFirCategoryAdapter.getSubject().onNext(0);
         mDistrictSecCategoryAdapter.getSubject().onNext(0);
         mPriceCategoryAdapter.getSubject().onNext(0);
