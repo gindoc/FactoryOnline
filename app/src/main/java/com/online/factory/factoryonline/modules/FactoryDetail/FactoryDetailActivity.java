@@ -10,7 +10,6 @@ import com.online.factory.factoryonline.R;
 /**
  * Created by cwenhui on 2016/10/17.
  */
-
 public class FactoryDetailActivity extends AppCompatActivity {
 
     @Override
