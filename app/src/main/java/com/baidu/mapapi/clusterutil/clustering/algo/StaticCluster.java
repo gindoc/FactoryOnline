@@ -18,12 +18,18 @@ import java.util.List;
 public class StaticCluster<T extends ClusterItem> implements Cluster<T> {
     private final LatLng mCenter;
     private final List<T> mItems = new ArrayList<T>();
-
+    private String mDescription;
     public StaticCluster(LatLng center) {
         mCenter = center;
     }
 
+    public String getmDescription() {
+        return mDescription;
+    }
 
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
+    }
 
     public boolean add(T t) {
         return mItems.add(t);

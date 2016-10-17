@@ -23,6 +23,8 @@ import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import timber.log.Timber;
+
 /**
  * Groups many items on a map based on zoom level.
  * <p/>
@@ -169,6 +171,7 @@ public class ClusterManager<T extends ClusterItem> implements
 
     @Override
     public void onMapStatusChange(MapStatus mapStatus) {
+        Timber.d("zoom level %f",mapStatus.zoom);
         if (mRenderer instanceof BaiduMap.OnMapStatusChangeListener) {
             ((BaiduMap.OnMapStatusChangeListener) mRenderer).onMapStatusChange(mapStatus);
         }

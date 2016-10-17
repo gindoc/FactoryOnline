@@ -16,6 +16,7 @@ import com.baidu.mapapi.cloud.CloudSearchResult;
 import com.baidu.mapapi.cloud.DetailSearchResult;
 import com.baidu.mapapi.clusterutil.clustering.Cluster;
 import com.baidu.mapapi.clusterutil.clustering.ClusterManager;
+import com.baidu.mapapi.clusterutil.clustering.algo.StaticCluster;
 import com.baidu.mapapi.clusterutil.clustering.view.DefaultClusterRenderer;
 import com.baidu.mapapi.clusterutil.ui.IconGenerator;
 import com.baidu.mapapi.map.BaiduMap;
@@ -80,14 +81,15 @@ public class MyRenDerer extends DefaultClusterRenderer {
     @Override
     protected void onBeforeClusterRendered(Cluster cluster, MarkerOptions markerOptions) {
         super.onBeforeClusterRendered(cluster, markerOptions);
-//        loadPoi(cluster.getPosition().latitude,cluster.getPosition().longitude);
+
     }
 
     @Override
     protected void onClusterRendered(Cluster cluster, Marker marker) {
         super.onClusterRendered(cluster, marker);
+        StaticCluster staticCluster = (StaticCluster) cluster;
         mMaker = marker;
-        BitmapDescriptor descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon("东莞市"+cluster.getSize()));
+        BitmapDescriptor descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(staticCluster.getmDescription()+cluster.getSize()));
         mMaker.setIcon(descriptor);
     }
 

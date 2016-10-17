@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 
+import com.baidu.mapapi.clusterutil.clustering.Cluster;
 import com.baidu.mapapi.clusterutil.clustering.ClusterItem;
 import com.baidu.mapapi.clusterutil.clustering.ClusterManager;
 import com.baidu.mapapi.map.BaiduMap;
@@ -47,7 +48,7 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
 
     BaiduMap mBaiduMap;
     MapStatus ms;
-    private ClusterManager<MyItem> mClusterManager;
+    private ClusterManager<MyItem1> mClusterManager;
 
 
     public static Intent getStartIntent(Context context) {
@@ -64,7 +65,7 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
         mBaiduMap.setOnMapLoadedCallback(this);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
         // 定义点聚合管理类ClusterManager
-        mClusterManager = new ClusterManager<MyItem>(this, mBaiduMap);
+        mClusterManager = new ClusterManager<MyItem1>(this, mBaiduMap);
         // 添加Marker点
         addMarkers();
         // 设置地图监听，当地图状态发生改变时，进行点聚合运算
@@ -100,42 +101,23 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
     public void addMarkers() {
 
         mClusterManager.setRenderer(new MyRenDerer(this,mBaiduMap,mClusterManager));
-        // 添加Marker点
-//        LatLng llA = new LatLng(39.963175, 116.400244);
-//        LatLng llB = new LatLng(39.942821, 116.369199);
-//        LatLng llC = new LatLng(39.939723, 116.425541);
-//        LatLng llD = new LatLng(39.906965, 116.401394);
-//        LatLng llE = new LatLng(39.956965, 116.331394);
-//        LatLng llF = new LatLng(39.886965, 116.441394);
-//        LatLng llG = new LatLng(39.996965, 116.411394);
-//        LatLng llH = new LatLng(39.996965, 116.411394);
-//        LatLng llI = new LatLng(39.996965, 116.411394);
-//        LatLng llJ = new LatLng(39.996965, 116.411394);
-//        LatLng llK = new LatLng(39.996965, 116.411394);
-//        LatLng llL = new LatLng(39.996965, 116.411394);
-//        LatLng llM = new LatLng(39.996965, 116.411394);
-
-        List<MyItem> items = getLatLngList();
-//        items.add(new MyItem(llA));
-//        items.add(new MyItem(llB));
-//        items.add(new MyItem(llC));
-//        items.add(new MyItem(llD));
-//        items.add(new MyItem(llE));
-//        items.add(new MyItem(llF));
-//        items.add(new MyItem(llG));
-//        items.add(new MyItem(llH));
-//        items.add(new MyItem(llI));
-//        items.add(new MyItem(llJ));
-//        items.add(new MyItem(llK));
-//        items.add(new MyItem(llL));
-//        items.add(new MyItem(llM));
+        mClusterManager.setAlgorithm(new MyAlgorithm<MyItem1>());
+        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem1>() {
+            @Override
+            public boolean onClusterItemClick(MyItem1 item) {
+                ms = new MapStatus.Builder().zoom(12).build();
+                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
+                return true;
+            }
+        });
+        List<MyItem1> items = getLatLngList();
 
         mClusterManager.addItems(items);
 
     }
 
-    private List<MyItem> getLatLngList() {
-        List<MyItem> results = new ArrayList<>();
+    private List<MyItem1> getLatLngList() {
+        List<MyItem1> results = new ArrayList<>();
         LbsCloudResponse lbsCloudResponse = null;
         List<LbsCloud> list = null;
         StringBuffer response = new StringBuffer();
@@ -160,13 +142,13 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
         }
 
         for(LbsCloud lbsCloud:list){
-            String address = lbsCloud.getAddress();
-            String province = lbsCloud.getProvince();
-            float lat = lbsCloud.getLocation().get(1);
-            float lng = lbsCloud.getLocation().get(0);
-            Timber.d(" lat  lng : %f %f",lat,lng);
-            LatLng  latLng = new LatLng(lat,lng);
-            results.add(new MyItem(latLng));
+//            String address = lbsCloud.getAddress();
+//            String province = lbsCloud.getProvince();
+//            float lat = lbsCloud.getLocation().get(1);
+//            float lng = lbsCloud.getLocation().get(0);
+//            Timber.d(" lat  lng : %f %f",lat,lng);
+//            LatLng  latLng = new LatLng(lat,lng);
+            results.add(new MyItem1(lbsCloud));
         }
         return results;
     }
@@ -192,7 +174,36 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
                     .fromResource(R.drawable.icon_gcoding);
         }
     }
+    /**
+     * 每个Marker点，包含Marker点坐标以及图标
+     */
+    public class MyItem1 implements ClusterItem {
+        private  LatLng mPosition;
+        private  LbsCloud mLbs;
+        public MyItem1(LbsCloud lbsCloud) {
+            float lat = lbsCloud.getLocation().get(1);
+            float lng = lbsCloud.getLocation().get(0);
+            LatLng  latLng = new LatLng(lat,lng);
+            mPosition = latLng;
+            mLbs = lbsCloud;
+        }
+        public int getDistrictId(){
+            return mLbs.getDistrictId();
+        }
+        public String getDescription(){
+            return mLbs.getCustom_district();
+        }
+        @Override
+        public LatLng getPosition() {
+            return mPosition;
+        }
 
+        @Override
+        public BitmapDescriptor getBitmapDescriptor() {
+            return BitmapDescriptorFactory
+                    .fromResource(R.drawable.icon_gcoding);
+        }
+    }
     @Override
     public void onMapLoaded() {
         // TODO Auto-generated method stub
