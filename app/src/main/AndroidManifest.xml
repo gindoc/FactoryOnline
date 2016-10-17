@@ -3,15 +3,16 @@
     package="com.online.factory.factoryonline">
 
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -22,15 +23,16 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="MLPHyB7vZjqhVxq48DQM72Y6" />
+
         <activity android:name=".modules.main.MainActivity">
 
         </activity>
         <activity android:name=".modules.baidumap.BaiduMapActivity"></activity>
-        <activity android:name=".modules.login.LoginActivity"/>
+        <activity android:name=".modules.login.LoginActivity" />
         <activity
             android:name=".modules.splash.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
