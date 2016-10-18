@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.data;
 
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 
@@ -44,7 +45,7 @@ public class DataManager {
      * @param pageSize 每页的大小
      * @return
      */
-    public Observable<List<FactoryInfo>> getFactoryInfos(int pageNo, int pageSize) {
+    public Observable<List<Factory>> getFactoryInfos(int pageNo, int pageSize) {
         return factoryApi.getFactoryInfos(pageNo, pageSize);
     }
 
@@ -55,7 +56,7 @@ public class DataManager {
      * @param pageSize 每页的大小
      * @return
      */
-    public Observable<List<FactoryInfo>> getRecommendInfos(int pageNo, int pageSize) {
+    public Observable<List<Factory>> getRecommendInfos(int pageNo, int pageSize) {
         return factoryApi.getRecommendInfos(pageNo, pageSize);
     }
 
@@ -80,5 +81,14 @@ public class DataManager {
      */
     public Observable<List<String>> getRecommendAreaCats() {
         return factoryApi.getRecommendAreaCats();
+    }
+
+    /**
+     * 请求服务器，判断该厂房是否被收藏
+     * @param fId   厂房id
+     * @return
+     */
+    public Observable<Boolean> isFactoryCollected(int fId) {
+        return factoryApi.isFactoryCollected(fId);
     }
 }

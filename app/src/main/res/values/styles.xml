@@ -1,7 +1,6 @@
 <resources>
 
     <style name="AppTheme" parent="AppTheme.Base">
-
     </style>
 
     <!-- app启动页的背景. -->

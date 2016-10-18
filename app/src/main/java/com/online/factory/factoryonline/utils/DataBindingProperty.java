@@ -16,6 +16,12 @@ public class DataBindingProperty {
     public static void setImageScr(ImageView imageView , String url){
         Picasso.with(imageView.getContext()).load(url).into(imageView);
     }
+
+    @BindingAdapter({"imageId"})
+    public static void setImageId(ImageView imageView, int imageId) {
+        imageView.setImageResource(imageId);
+    }
+
     @BindingAdapter({"isRefresh"})
     public static void isRefresh(SwipeRefreshLayout swipeRefreshLayout , boolean isLoad){
         swipeRefreshLayout.setRefreshing(isLoad);

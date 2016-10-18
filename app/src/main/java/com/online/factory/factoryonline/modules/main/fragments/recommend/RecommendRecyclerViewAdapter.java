@@ -12,6 +12,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView;
 import com.online.factory.factoryonline.databinding.ItemRecommendListBinding;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
@@ -20,7 +21,7 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<FactoryInfo, RecommendRecyclerViewAdapter.RecommendViewHolder> {
+public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factory, RecommendRecyclerViewAdapter.RecommendViewHolder> {
 
     private Provider<RecommendViewModel> provider;
 
@@ -41,7 +42,7 @@ public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factor
     public void onBindViewHolder(RecommendViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         RecommendViewModel viewModel = provider.get();
-        FactoryInfo info = data.get(position);
+        Factory info = data.get(position);
         viewModel.setInfo(info);
         ItemRecommendListBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);

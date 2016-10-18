@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 
 import java.io.IOException;
@@ -45,12 +46,12 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
         }
         dataManager.getRecommendInfos(pageNo, pageSize)
                 .delay(1000, TimeUnit.MILLISECONDS)
-                .compose(getView().<List<FactoryInfo>>getBindToLifecycle())
+                .compose(getView().<List<Factory>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<FactoryInfo>>() {
+                .subscribe(new Action1<List<Factory>>() {
                     @Override
-                    public void call(List<FactoryInfo> infos) {
+                    public void call(List<Factory> infos) {
                         view.loadRecommendList(infos);
                         view.cancelLoading();
                     }

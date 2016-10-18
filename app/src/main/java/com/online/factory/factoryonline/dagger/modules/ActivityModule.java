@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.dagger.modules;
 
+import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import com.online.factory.factoryonline.base.BaseActivity;

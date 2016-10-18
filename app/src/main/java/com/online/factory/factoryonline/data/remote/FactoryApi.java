@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.data.remote;
 
 
 import com.google.gson.JsonObject;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 
@@ -31,7 +32,7 @@ public interface FactoryApi {
      * @return
      */
     @GET("/factoryInfos/{pageNo}/{pageSize}")
-    Observable<List<FactoryInfo>> getFactoryInfos(@Path("pageNo") int pageNo, @Path("pageSize") int pageSize);
+    Observable<List<Factory>> getFactoryInfos(@Path("pageNo") int pageNo, @Path("pageSize") int pageSize);
 
     /**
      * 请求“推荐”列表
@@ -40,7 +41,7 @@ public interface FactoryApi {
      * @return
      */
     @GET("/recommendInfos/{pageNo}/{pageSize}")
-    Observable<List<FactoryInfo>> getRecommendInfos(@Path("pageNo") int pageNo, @Path("pageSize") int
+    Observable<List<Factory>> getRecommendInfos(@Path("pageNo") int pageNo, @Path("pageSize") int
             pageSize);
 
     /**
@@ -63,4 +64,11 @@ public interface FactoryApi {
     @GET("/recommendAreaCats")
     Observable<List<String>> getRecommendAreaCats();
 
+    /**
+     * 请求服务器，判断该厂房是否被收藏
+     * @param fId   厂房id
+     * @return
+     */
+    @GET("/isFactoryCollected/{fId}")
+    Observable<Boolean> isFactoryCollected(@Path("fId") int fId);
 }

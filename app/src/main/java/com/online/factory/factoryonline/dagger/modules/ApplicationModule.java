@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 
 import com.online.factory.factoryonline.modules.login.LoginContext;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.online.factory.factoryonline.modules.login.LoginContext;

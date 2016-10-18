@@ -20,6 +20,5 @@
             android:padding="@dimen/x10"
             android:text="悬赏信息"
             android:textSize="18sp"/>
-
     </TableRow>
 </TableLayout>

@@ -1,6 +1,7 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,11 +11,13 @@ import android.view.ViewGroup;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
-import com.online.factory.factoryonline.models.FactoryInfo;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -28,7 +31,7 @@ import timber.log.Timber;
  * Created by cwenhui on 2016.02.23
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
-        .View, HomeRecyclerView.ScrollChangedListener {
+        .View, HomeRecyclerView.ScrollChangedListener, BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
     @Inject
@@ -69,6 +72,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.recyclerView.setScrollChangedListener(this);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
         mBinding.recyclerView.init();
+        mAdapter.setOnItemClickListener(this);
 
         findFactory();
         mHeaderBinding.rbFind.setChecked(true); //设置“找房”为选中状态
@@ -145,7 +149,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     }
 
     @Override
-    public void initRecyclerView(List<FactoryInfo> infos) {
+    public void initRecyclerView(List<Factory> infos) {
         mAdapter.setData(infos);
         mBinding.recyclerView.notifyDataSetChanged();
     }
@@ -168,5 +172,14 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
                 Timber.e("translationY   : %d" , -limit / 100 * dy);
             }
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent();
+        intent.setClass(getContext(), FactoryDetailActivity.class);
+        Factory factory = mAdapter.getData().get(position);
+        intent.putExtra(FactoryDetailActivity.FACTORY_DETIAL, factory);
+        startActivity(intent);
     }
 }

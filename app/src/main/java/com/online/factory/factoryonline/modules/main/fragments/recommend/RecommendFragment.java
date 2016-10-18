@@ -24,6 +24,7 @@ import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -176,7 +177,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         popViews.add(mDistrictBinding.getRoot());
         popViews.add(mPriceBinding.getRoot());
         popViews.add(mAreaBinding.getRoot());
-        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews, new TextView(getContext()));
+        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews/*, new TextView(getContext())*/);
         mDistrictFirCategoryAdapter.getSubject().onNext(0);
         mDistrictSecCategoryAdapter.getSubject().onNext(0);
         mPriceCategoryAdapter.getSubject().onNext(0);
@@ -212,7 +213,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     }
 
     @Override
-    public void loadRecommendList(List<FactoryInfo> recommendList) {
+    public void loadRecommendList(List<Factory> recommendList) {
         if (isInit) {
             mAdapter.setData(recommendList);
         } else {

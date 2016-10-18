@@ -85,6 +85,8 @@ public class DataManagerModule {
                 fileName = "RecommendPriceCats.json";
             }else if(path.matches("^(/recommendAreaCats)")){
                 fileName = "RecomendAreaCats.json";
+            }else if(path.matches("^(/isFactoryCollected/[0-9]\\d*)")){
+                fileName = "IsFactoryCollected.json";
             }else {
                 fileName = "SlideUrl.json";
             }

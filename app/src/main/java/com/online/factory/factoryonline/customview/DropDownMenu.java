@@ -108,9 +108,9 @@ public class DropDownMenu extends LinearLayout {
      *
      * @param tabTexts
      * @param popupViews
-     * @param contentView
+//     * @param contentView
      */
-    public void setDropDownMenu(@NonNull List<String> tabTexts, @NonNull List<View> popupViews, @NonNull View contentView) {
+    public void setDropDownMenu(@NonNull List<String> tabTexts, @NonNull List<View> popupViews) {
         if (tabTexts.size() != popupViews.size()) {
             throw new IllegalArgumentException("params not match, tabTexts.size() should be equal popupViews.size()");
         }
@@ -118,7 +118,6 @@ public class DropDownMenu extends LinearLayout {
         for (int i = 0; i < tabTexts.size(); i++) {
             addTab(tabTexts, i);
         }
-        containerView.addView(contentView, 0);
 
         maskView = new View(getContext());
         maskView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
@@ -129,12 +128,12 @@ public class DropDownMenu extends LinearLayout {
                 closeMenu();
             }
         });
-        containerView.addView(maskView, 1);
+        containerView.addView(maskView, 0);
         maskView.setVisibility(GONE);
 
         popupMenuViews = new FrameLayout(getContext());
         popupMenuViews.setVisibility(GONE);
-        containerView.addView(popupMenuViews, 2);
+        containerView.addView(popupMenuViews, 1);
 
         for (int i = 0; i < popupViews.size(); i++) {
             popupViews.get(i).setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

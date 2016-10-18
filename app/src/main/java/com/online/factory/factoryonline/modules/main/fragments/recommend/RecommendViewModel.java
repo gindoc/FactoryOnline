@@ -4,6 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.online.factory.factoryonline.BR;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
@@ -12,14 +13,14 @@ import javax.inject.Inject;
  * Created by cwenhui on 2016.02.23
  */
 public class RecommendViewModel extends BaseObservable {
-    private FactoryInfo info;
+    private Factory info;
     private String categoryName;
     private boolean isClick;
     @Inject
     public RecommendViewModel() {
     }
 
-    public void setInfo(FactoryInfo info) {
+    public void setInfo(Factory info) {
         this.info = info;
     }
 
@@ -34,13 +35,13 @@ public class RecommendViewModel extends BaseObservable {
     }
     @Bindable
     public String getName() {
-        return info.getName();
+        return info.getTitle();
     }
 
-    @Bindable
-    public String getAddress() {
-        return info.getAddress();
-    }
+//    @Bindable
+//    public String getAddress() {
+//        return info.getAddress();
+//    }
 
     @Bindable
     public String getPrice() {
@@ -49,12 +50,12 @@ public class RecommendViewModel extends BaseObservable {
 
     @Bindable
     public String getArea() {
-        return info.getArea();
+        return info.getRange();
     }
 
     @Bindable
     public String getImgUrl() {
-        return info.getImageUrl();
+        return info.getThumbnail_url();
     }
 
     @Bindable
@@ -65,5 +66,10 @@ public class RecommendViewModel extends BaseObservable {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
 //        notifyPropertyChanged(BR.categoryName);
+    }
+
+    @Bindable
+    public String getAddressOverview() {
+        return info.getAddress_overview();
     }
 }

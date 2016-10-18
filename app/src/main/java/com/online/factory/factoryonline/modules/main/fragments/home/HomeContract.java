@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.main.fragments.home;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 
@@ -16,7 +17,7 @@ public interface HomeContract {
 
         void initScrollTextView(List<News> newses);
 
-        void initRecyclerView(List<FactoryInfo> infos);
+        void initRecyclerView(List<Factory> infos);
     }
 
     interface Presenter extends IBasePresenter {
