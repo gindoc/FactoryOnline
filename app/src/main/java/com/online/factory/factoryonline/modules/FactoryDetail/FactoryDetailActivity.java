@@ -94,6 +94,10 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+                break;
             case R.id.collect:
                 break;
             case R.id.share:

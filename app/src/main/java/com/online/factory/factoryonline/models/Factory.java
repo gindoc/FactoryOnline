@@ -17,9 +17,11 @@ public class Factory extends BaseEntity implements Serializable{
     private String price;
     private String range;
     private String description;
-    private String id;
+    private int id;
+    private String address_overview;
 
     public Factory() {
+
     }
 
     public String getTitle() {
@@ -78,11 +80,19 @@ public class Factory extends BaseEntity implements Serializable{
         this.description = description;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getAddress_overview() {
+        return address_overview;
+    }
+
+    public void setAddress_overview(String address_overview) {
+        this.address_overview = address_overview;
     }
 }

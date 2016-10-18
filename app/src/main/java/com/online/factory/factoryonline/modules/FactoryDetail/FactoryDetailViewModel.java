@@ -48,4 +48,9 @@ public class FactoryDetailViewModel extends BaseObservable {
     public List<String> getImageUrls() {
         return factory.getImage_urls();
     }
+
+    @Bindable
+    public String getAddressOverview() {
+        return factory.getAddress_overview();
+    }
 }
