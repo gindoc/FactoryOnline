@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.modules.main.fragments.recommend;
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface RecommendContract {
          * 加载推荐列表
          * @param recommendList
          */
-        void loadRecommendList(List<FactoryInfo> recommendList);
+        void loadRecommendList(List<Factory> recommendList);
 
         /**
          * 取消加载时显示的swipeRefreshLayout和FooterView

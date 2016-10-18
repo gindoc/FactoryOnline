@@ -24,6 +24,7 @@ import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -212,7 +213,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     }
 
     @Override
-    public void loadRecommendList(List<FactoryInfo> recommendList) {
+    public void loadRecommendList(List<Factory> recommendList) {
         if (isInit) {
             mAdapter.setData(recommendList);
         } else {

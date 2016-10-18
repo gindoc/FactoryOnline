@@ -15,7 +15,7 @@ import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerView
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
-import com.online.factory.factoryonline.models.FactoryInfo;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
@@ -149,7 +149,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     }
 
     @Override
-    public void initRecyclerView(List<FactoryInfo> infos) {
+    public void initRecyclerView(List<Factory> infos) {
         mAdapter.setData(infos);
         mBinding.recyclerView.notifyDataSetChanged();
     }
@@ -178,6 +178,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void onItemClick(View view, int position) {
         Intent intent = new Intent();
         intent.setClass(getContext(), FactoryDetailActivity.class);
+        Factory factory = mAdapter.getData().get(position);
+        intent.putExtra(FactoryDetailActivity.FACTORY_DETIAL, factory);
         startActivity(intent);
     }
 }

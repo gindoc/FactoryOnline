@@ -1,39 +1,72 @@
 [
   {
-    "name": "gindoc's factory",
-    "address": "xxx",
+    "title": "gindoc's factory",
+    "description": "xxx",
     "price": "100万/平米",
-    "area": "1000平米",
-    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+    "range": "1000平米",
+    "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+    "image_urls": [
+      "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+      "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+      "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+    ]
   },
   {
-    "name": "gindoc's factory2",
-    "address": "xxx",
+    "title": "gindoc's factory2",
+    "description": "xxx",
     "price": "100万/平米",
-    "area": "1000平米",
-    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+    "range": "1000平米",
+    "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+    "image_urls": [
+      "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+      "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+      "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+    ]
   },
   {
-    "name": "gindoc's factory3",
-    "address": "xxx",
+    "title": "gindoc's factory3",
+    "description": "xxx",
     "price": "100万/平米",
-    "area": "1000平米",
-    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+    "range": "1000平米",
+    "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+    "image_urls": [
+      "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+      "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+      "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+    ]
   },
-
   {
-    "name": "gindoc's factory4",
-    "address": "xxx",
+    "title": "gindoc's factory4",
+    "description": "xxx",
     "price": "100万/平米",
-    "area": "1000平米",
-    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+    "range": "1000平米",
+    "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+    "image_urls": [
+      "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+      "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+      "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+    ]
   },
-
   {
-    "name": "gindoc's factory5",
-    "address": "xxx",
+    "title": "gindoc's factory5",
+    "description": "xxx",
     "price": "100万/平米",
-    "area": "1000平米",
-    "imageUrl": "http://www.cwenhui.com/images/zhuimeng.jpg"
+    "range": "1000平米",
+    "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+    "image_urls": [
+      "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+      "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+      "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+      "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+    ]
   }
 ]

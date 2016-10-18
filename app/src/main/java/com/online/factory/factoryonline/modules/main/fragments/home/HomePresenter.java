@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 
@@ -81,12 +82,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     public void requestFactoryInfo() {
         dataManager.getFactoryInfos(1, 5)
-                .compose(getView().<List<FactoryInfo>>getBindToLifecycle())
+                .compose(getView().<List<Factory>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<FactoryInfo>>() {
+                .subscribe(new Action1<List<Factory>>() {
                     @Override
-                    public void call(List<FactoryInfo> infos) {
+                    public void call(List<Factory> infos) {
                         getView().initRecyclerView(infos);
                     }
                 }, new Action1<Throwable>() {

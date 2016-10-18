@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -133,12 +134,12 @@ public class SlideShowView extends FrameLayout {
     private class MyPagerAdapter  extends PagerAdapter{
 
         @Override
-        public void destroyItem(View container, int position, Object object) {
+        public void destroyItem(ViewGroup container, int position, Object object) {
             ((ViewPager)container).removeView(imageViewsList.get(position));
         }
 
         @Override
-        public Object instantiateItem(View container, int position) {
+        public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = imageViewsList.get(position);
 
             Picasso.with(context)

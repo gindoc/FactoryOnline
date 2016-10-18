@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.modules.main.fragments.home;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
@@ -12,19 +13,19 @@ import javax.inject.Inject;
  */
 
 public class HomeViewModel extends BaseObservable {
-    private FactoryInfo factoryInfo;
+    private Factory factoryInfo;
 
     @Inject
     public HomeViewModel() {
     }
 
-    public void setFactoryInfo(FactoryInfo factoryInfo) {
+    public void setFactoryInfo(Factory factoryInfo) {
         this.factoryInfo = factoryInfo;
     }
 
     @Bindable
     public String getFactoryName() {
-        return factoryInfo.getName();
+        return factoryInfo.getTitle();
     }
 
 
@@ -33,19 +34,19 @@ public class HomeViewModel extends BaseObservable {
         return factoryInfo.getPrice();
     }
 
-    @Bindable
-    public String getFactoryAddress() {
-        return factoryInfo.getAddress();
-    }
+//    @Bindable
+//    public String getFactoryAddress() {
+//        return factoryInfo.getAddress();
+//    }
 
     @Bindable
     public String getFactoryArea() {
-        return factoryInfo.getArea();
+        return factoryInfo.getRange();
     }
 
 
     @Bindable
     public String getFactoryImg() {
-        return factoryInfo.getImageUrl();
+        return factoryInfo.getThumbnail_url();
     }
 }

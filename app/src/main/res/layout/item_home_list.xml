@@ -4,23 +4,6 @@
     xmlns:tool="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="factory_name"
-            type="String" />
-
-        <variable
-            name="factory_address"
-            type="String" />
-
-        <variable
-            name="factory_price"
-            type="String" />
-
-        <variable
-            name="factory_area"
-            type="String" />
-
         <variable
             name="viewModel"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel" />
@@ -65,7 +48,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.factoryAddress}"
+                    android:text="地址"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     tool:text="address" />

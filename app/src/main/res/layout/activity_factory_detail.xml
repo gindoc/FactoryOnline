@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailViewModel" />
+    </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="#fff"
+            android:background="@color/colorPrimary"
             android:gravity="center">
 
             <TextView
@@ -44,10 +50,12 @@
                     android:layout_height="wrap_content">
 
                     <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/y200" />
 
                     <TextView
+                        android:id="@+id/tv_pager_index"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|bottom"
@@ -56,6 +64,7 @@
                         android:padding="@dimen/x10"
                         android:textColor="@android:color/white"
                         android:textSize="18sp"
+                        android:text='@{"1/"+viewModel.imageUrls.size()}'
                         tool:text="1/6" />
                 </FrameLayout>
 
@@ -76,6 +85,7 @@
                         android:maxLines="2"
                         android:textColor="@android:color/black"
                         android:textSize="18sp"
+                        android:text="@{viewModel.title}"
                         tool:text="万江客运总站理想0769" />
 
                     <TextView
@@ -86,6 +96,7 @@
                         android:layout_marginBottom="@dimen/x10"
                         android:textColor="#FC6517"
                         android:textSize="22sp"
+                        android:text="@{viewModel.price}"
                         tool:text="1300" />
 
                     <TextView
@@ -144,6 +155,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#333333"
+                            android:text="@{viewModel.range}"
                             android:textSize="16sp"
                             tool:text="1000m²" />
                     </LinearLayout>
@@ -203,6 +215,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="#333333"
                             android:textSize="16sp"
+                            android:text="@{viewModel.description}"
                             tool:text="交通方便，环境优美，价格优惠" />
                     </LinearLayout>
 
