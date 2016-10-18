@@ -1,8 +1,4 @@
-/*
- * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
- */
-
-package com.baidu.mapapi.clusterutil.clustering.view;
+package com.online.factory.factoryonline.modules.baidumap;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,7 +17,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
-import android.text.method.TextKeyListener;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -30,6 +25,7 @@ import com.baidu.mapapi.clusterutil.MarkerManager;
 import com.baidu.mapapi.clusterutil.clustering.Cluster;
 import com.baidu.mapapi.clusterutil.clustering.ClusterItem;
 import com.baidu.mapapi.clusterutil.clustering.ClusterManager;
+import com.baidu.mapapi.clusterutil.clustering.algo.StaticCluster;
 import com.baidu.mapapi.clusterutil.projection.Point;
 import com.baidu.mapapi.clusterutil.projection.SphericalMercatorProjection;
 import com.baidu.mapapi.clusterutil.ui.IconGenerator;
@@ -56,17 +52,21 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-
-import timber.log.Timber;
-
-import static com.baidu.mapapi.clusterutil.clustering.algo.NonHierarchicalDistanceBasedAlgorithm.MAX_DISTANCE_AT_ZOOM;
-
+import static com.online.factory.factoryonline.modules.baidumap.PCDSAlgorithm.MAX_DISTANCE_AT_ZOOM;
 
 /**
- * The default view for a ClusterManager. Markers are animated in and out of clusters.
+ * Created by louiszgm on 2016/10/18.
+ * P: province
+ *
+ * C: City
+ *
+ * D:District
+ *
+ * S:Street
  */
-public class DefaultClusterRenderer<T extends ClusterItem> implements
-        com.baidu.mapapi.clusterutil.clustering.view.ClusterRenderer<T> {
+
+public class PCDSClusterRenderer<T extends ClusterItem> implements
+        com.baidu.mapapi.clusterutil.clustering.view.ClusterRenderer<T>  {
     private static final boolean SHOULD_ANIMATE = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     private final BaiduMap mMap;
     private final IconGenerator mIconGenerator;
@@ -120,7 +120,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
     private ClusterManager.OnClusterItemClickListener<T> mItemClickListener;
     private ClusterManager.OnClusterItemInfoWindowClickListener<T> mItemInfoWindowClickListener;
 
-    public DefaultClusterRenderer(Context context, BaiduMap map, ClusterManager<T> clusterManager) {
+    public PCDSClusterRenderer(Context context, BaiduMap map, ClusterManager<T> clusterManager) {
         mMap = map;
         mDensity = context.getResources().getDisplayMetrics().density;
         mIconGenerator = new IconGenerator(context);
@@ -158,9 +158,10 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
     private LayerDrawable makeClusterBackground() {
         mColoredCircleBackground = new ShapeDrawable(new OvalShape());
         ShapeDrawable outline = new ShapeDrawable(new OvalShape());
-        outline.getPaint().setColor(0x80ffffff); // Transparent white.
+        outline.getPaint().setColor(Color.parseColor("#000000")); // Transparent white.
         LayerDrawable background = new LayerDrawable(new Drawable[]{outline, mColoredCircleBackground});
-        int strokeWidth = (int) (mDensity * 3);
+        background.setAlpha(125);
+        int strokeWidth = (int) (mDensity * 2);
         background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
         return background;
     }
@@ -187,12 +188,9 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
         });
     }
 
-    protected String getClusterText(int bucket) {
-        if (bucket < BUCKETS[0]) {
-            return String.valueOf(bucket);
-        }
-//        return String.valueOf(bucket) + "+";
-        return String.valueOf(bucket) ;
+    protected String getClusterText(int bucket,String description) {
+
+        return description+"\n"+"    "+bucket;
     }
 
     /**
@@ -201,15 +199,6 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
      */
     protected int getBucket(Cluster<T> cluster) {
         int size = cluster.getSize();
-//        if (size <= BUCKETS[0]) {
-//            return size;
-//        }
-//        for (int i = 0; i < BUCKETS.length - 1; i++) {
-//            if (size < BUCKETS[i + 1]) {
-//                return BUCKETS[i];
-//            }
-//        }
-//        return BUCKETS[BUCKETS.length - 1];
         return  size;
     }
 
@@ -330,7 +319,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
         @SuppressLint("NewApi")
         public void run() {
-            if (clusters.equals(DefaultClusterRenderer.this.mClusters)) {
+            if (clusters.equals(PCDSClusterRenderer.this.mClusters)) {
                 mCallback.run();
                 return;
             }
@@ -348,9 +337,9 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             // Find all of the existing clusters that are on-screen. These are candidates for
             // markers to animate from.
             List<Point> existingClustersOnScreen = null;
-            if (DefaultClusterRenderer.this.mClusters != null && SHOULD_ANIMATE) {
+            if (PCDSClusterRenderer.this.mClusters != null && SHOULD_ANIMATE) {
                 existingClustersOnScreen = new ArrayList<Point>();
-                for (Cluster<T> c : DefaultClusterRenderer.this.mClusters) {
+                for (Cluster<T> c : PCDSClusterRenderer.this.mClusters) {
                     if (shouldRenderAsCluster(c) && visibleBounds.contains(c.getPosition())) {
                         Point point = mSphericalMercatorProjection.toPoint(c.getPosition());
                         existingClustersOnScreen.add(point);
@@ -419,7 +408,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
             markerModifier.waitUntilFree();
 
             mMarkers = newMarkers;
-            DefaultClusterRenderer.this.mClusters = clusters;
+            PCDSClusterRenderer.this.mClusters = clusters;
             mZoom = zoom;
 
             mCallback.run();
@@ -438,7 +427,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
     @Override
     public void setOnClusterInfoWindowClickListener(ClusterManager
-                                                                .OnClusterInfoWindowClickListener<T> listener) {
+                                                            .OnClusterInfoWindowClickListener<T> listener) {
         mInfoWindowClickListener = listener;
     }
 
@@ -449,7 +438,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
 
     @Override
     public void setOnClusterItemInfoWindowClickListener(ClusterManager
-                                                                    .OnClusterItemInfoWindowClickListener<T> listener) {
+                                                                .OnClusterItemInfoWindowClickListener<T> listener) {
         mItemInfoWindowClickListener = listener;
     }
 
@@ -631,7 +620,7 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
                 lock.lock();
                 return !(mCreateMarkerTasks.isEmpty() && mOnScreenCreateMarkerTasks.isEmpty()
                         && mOnScreenRemoveMarkerTasks.isEmpty() && mRemoveMarkerTasks.isEmpty()
-                                && mAnimationTasks.isEmpty());
+                        && mAnimationTasks.isEmpty());
             } finally {
                 lock.unlock();
             }
@@ -706,12 +695,18 @@ public class DefaultClusterRenderer<T extends ClusterItem> implements
      */
     protected void onBeforeClusterRendered(Cluster<T> cluster, MarkerOptions markerOptions) {
         int bucket = getBucket(cluster);
-        BitmapDescriptor descriptor = mIcons.get(bucket);
-        if (descriptor == null) {
-            mColoredCircleBackground.getPaint().setColor(getColor(bucket));
-            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket)));
-            mIcons.put(bucket, descriptor);
-        }
+        StaticCluster staticCluster = (StaticCluster) cluster;
+        String description = staticCluster.getDescription();
+//        BitmapDescriptor descriptor = mIcons.get(bucket);
+//        if (descriptor == null) {
+//            mColoredCircleBackground.getPaint().setColor(getColor(bucket));
+//            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
+//            mIcons.put(bucket, descriptor);
+//        }
+        BitmapDescriptor descriptor;
+        mColoredCircleBackground.getPaint().setColor(getColor(bucket));
+//        mColoredCircleBackground.setAlpha(1);
+        descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
         // TODO: consider adding anchor(.5, .5) (Individual markers will overlap more often)
         markerOptions.icon(descriptor);
     }

@@ -18,4 +18,5 @@ public interface Cluster<T extends com.baidu.mapapi.clusterutil.clustering.Clust
     Collection<T> getItems();
 
     int getSize();
+
 }

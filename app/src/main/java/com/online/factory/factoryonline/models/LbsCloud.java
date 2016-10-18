@@ -9,6 +9,8 @@ import java.util.List;
  */
 @JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS)
 public class LbsCloud {
+    private int districtId;
+    private String custom_district;
     private String address;// "东莞市南城街道簋村工业街",
     private String city;// "东莞市",
     private int city_id; //119,
@@ -29,6 +31,21 @@ public class LbsCloud {
     private String province;//"广东省",
     private String title;//"东莞市南城区篁村社区服务中心"
 
+    public int getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(int districtId) {
+        this.districtId = districtId;
+    }
+
+    public String getCustom_district() {
+        return custom_district;
+    }
+
+    public void setCustom_district(String custom_district) {
+        this.custom_district = custom_district;
+    }
 
     public String getAddress() {
         return address;
