@@ -49,4 +49,9 @@ public class HomeViewModel extends BaseObservable {
     public String getFactoryImg() {
         return factoryInfo.getThumbnail_url();
     }
+
+    @Bindable
+    public String getAddressOverview() {
+        return factoryInfo.getAddress_overview();
+    }
 }

@@ -67,4 +67,9 @@ public class RecommendViewModel extends BaseObservable {
         this.categoryName = categoryName;
 //        notifyPropertyChanged(BR.categoryName);
     }
+
+    @Bindable
+    public String getAddressOverview() {
+        return info.getAddress_overview();
+    }
 }

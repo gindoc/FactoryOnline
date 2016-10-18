@@ -48,7 +48,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="地址"
+                    android:text="@{viewModel.addressOverview}"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     tool:text="address" />
