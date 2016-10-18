@@ -23,11 +23,11 @@ public class StaticCluster<T extends ClusterItem> implements Cluster<T> {
         mCenter = center;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String mDescription) {
+    public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
 

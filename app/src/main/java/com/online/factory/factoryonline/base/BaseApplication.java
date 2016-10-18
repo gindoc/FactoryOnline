@@ -85,6 +85,7 @@ public class BaseApplication extends Application {
         @Override
         public void uncaughtException(Thread thread, Throwable ex) {
             ex.printStackTrace();
+            Timber.e(ex.getLocalizedMessage());
             if (dataManager == null) {
                 Timber.e("dataManager is null!!!!!!!!!!");
             }

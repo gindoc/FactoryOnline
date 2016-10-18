@@ -20,11 +20,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import timber.log.Timber;
+
 /**
- * Created by louiszgm-pc on 2016/10/15.
+ * Created by louiszgm on 2016/10/18.
+ *  P: province
+ *
+ *  C: City
+ *
+ *  D:District
+ *
+ *  S:Street
  */
 
-public class MyAlgorithm<T extends ClusterItem> implements Algorithm<T> {
+public class PCDSAlgorithm<T extends ClusterItem> implements Algorithm<T> {
     public static  int MAX_DISTANCE_AT_ZOOM = 100; // essentially 100 dp.
 
     /**
@@ -76,20 +85,73 @@ public class MyAlgorithm<T extends ClusterItem> implements Algorithm<T> {
      */
     @Override
     public Set<? extends Cluster<T>> getClusters(double zoom) {
+        Timber.d("zoomLevel  %f" ,zoom);
          Set<Cluster<T>> results = null;
-        if(zoom < 11){
-            //显示市级聚集点
-            results = getClustersByZoomLevel(zoom);
-        }else {
+        if(zoom < 10){
+            results =  getClustersByCity();
+        } else if(zoom >= 10 && zoom < 13){
+            //显示镇区聚集点
             results = getClustersByDistrict();
+        }else if(zoom >= 13 && zoom <17){
+            //显示街道聚集点
+            results = getClustersByStreet();
+        }else if(zoom>= 17){
+            results = getClustersByZoomLevel(zoom);
         }
-// else if(zoom >= 11 && zoom < 13){
-//            //显示区级，镇级 聚集点
-//            results = getClustersByDistrict();
-//        }else if(zoom >= 13){
-//            //显示地方 街道聚集点
-//
-//        }
+        return results;
+    }
+
+    private Set<Cluster<T>> getClustersByCity() {
+        Set<Cluster<T>> results = new HashSet<Cluster<T>>();
+        final Set<QuadItem<T>> visitedCandidates = new HashSet<QuadItem<T>>();
+        for(QuadItem<T> candidate:mItems){
+            if (visitedCandidates.contains(candidate)) {
+                // Candidate is already part of another cluster.
+                continue;
+            }
+            int compareId = ((BaiduMapActivity.MyItem)candidate.mClusterItem).getFactoryPoi().getCity_id();
+            String description = ((BaiduMapActivity.MyItem)candidate.mClusterItem).getFactoryPoi().getCity();
+            Timber.d("StreetDescription: %s" , description);
+            com.baidu.mapapi.clusterutil.clustering.algo.StaticCluster<T> cluster =
+                    new com.baidu.mapapi.clusterutil.clustering.algo
+                            .StaticCluster<T>(candidate.mClusterItem.getPosition());
+            cluster.setDescription(description);
+            results.add(cluster);
+            for(QuadItem<T> clusterItem:mItems){
+                int id = ((BaiduMapActivity.MyItem)clusterItem.mClusterItem).getFactoryPoi().getCity_id();
+                if(compareId == id){
+                    cluster.add(clusterItem.mClusterItem);
+                    visitedCandidates.add(clusterItem);
+                }
+            }
+        }
+        return results;
+    }
+
+    private Set<Cluster<T>> getClustersByStreet(){
+        Set<Cluster<T>> results = new HashSet<Cluster<T>>();
+        final Set<QuadItem<T>> visitedCandidates = new HashSet<QuadItem<T>>();
+        for(QuadItem<T> candidate:mItems){
+            if (visitedCandidates.contains(candidate)) {
+                // Candidate is already part of another cluster.
+                continue;
+            }
+            int compareId = ((BaiduMapActivity.MyItem)candidate.mClusterItem).getFactoryPoi().getStreet_id();
+            String description = ((BaiduMapActivity.MyItem)candidate.mClusterItem).getFactoryPoi().getStreet();
+            Timber.d("StreetDescription: %s" , description);
+            com.baidu.mapapi.clusterutil.clustering.algo.StaticCluster<T> cluster =
+                    new com.baidu.mapapi.clusterutil.clustering.algo
+                            .StaticCluster<T>(candidate.mClusterItem.getPosition());
+            cluster.setDescription(description);
+            results.add(cluster);
+            for(QuadItem<T> clusterItem:mItems){
+                int id = ((BaiduMapActivity.MyItem)clusterItem.mClusterItem).getFactoryPoi().getStreet_id();
+                if(compareId == id){
+                    cluster.add(clusterItem.mClusterItem);
+                    visitedCandidates.add(clusterItem);
+                }
+            }
+        }
         return results;
     }
     @NonNull
@@ -101,15 +163,16 @@ public class MyAlgorithm<T extends ClusterItem> implements Algorithm<T> {
                 // Candidate is already part of another cluster.
                 continue;
             }
-            int compareId = ((BaiduMapActivity.MyItem1)candidate.mClusterItem).getDistrictId();
-            String description = ((BaiduMapActivity.MyItem1)candidate.mClusterItem).getDescription();
+            int compareId = ((BaiduMapActivity.MyItem)candidate.mClusterItem).getFactoryPoi().getDistrict_id();
+            String description = ((BaiduMapActivity.MyItem)candidate.mClusterItem).getFactoryPoi().getDistrict();
+            Timber.d("DistrictDescription: %s" , description);
             com.baidu.mapapi.clusterutil.clustering.algo.StaticCluster<T> cluster =
                     new com.baidu.mapapi.clusterutil.clustering.algo
                             .StaticCluster<T>(candidate.mClusterItem.getPosition());
-            cluster.setmDescription(description);
+            cluster.setDescription(description);
             results.add(cluster);
             for(QuadItem<T> clusterItem:mItems){
-                int id = ((BaiduMapActivity.MyItem1)clusterItem.mClusterItem).getDistrictId();
+                int id = ((BaiduMapActivity.MyItem)clusterItem.mClusterItem).getFactoryPoi().getDistrict_id();
                 if(compareId == id){
                     cluster.add(clusterItem.mClusterItem);
                     visitedCandidates.add(clusterItem);
