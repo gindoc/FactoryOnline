@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity" />
+    </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -45,6 +52,7 @@
                         android:layout_centerInParent="true"
                         android:background="@drawable/orange_circle"
                         android:padding="@dimen/x20"
+                        android:onClick="@{()->view.toAlbumActivity()}"
                         android:src="@drawable/ic_camera" />
 
                     <TextView

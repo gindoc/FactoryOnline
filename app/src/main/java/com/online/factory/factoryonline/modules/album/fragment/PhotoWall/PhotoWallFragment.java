@@ -22,6 +22,10 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Inject
     PhotoWallPresenter mPresenter;
 
+    @Inject
+    public PhotoWallFragment() {
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
