@@ -1,24 +1,29 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.databinding.FragmentFindBinding;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
+import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -34,6 +39,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         .View, HomeRecyclerView.ScrollChangedListener, BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
+    private FragmentFindBinding mFindBinding;
     @Inject
     HomeRecyclerViewAdapter mAdapter;
 
@@ -89,13 +95,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
      */
     public void findFactory() {
         mHeaderBinding.rolePick.removeAllViews();
-        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_find, mHeaderBinding.rolePick);
-        mHeaderBinding.rolePick.findViewById(R.id.tv_findFactoryByMap).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(BaiduMapActivity.getStartIntent(getActivity()));
-            }
-        });
+        mFindBinding = FragmentFindBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
+        mFindBinding.setView(this);
+
     }
 
     /**
@@ -112,6 +114,17 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void isOwner() {
         mHeaderBinding.rolePick.removeAllViews();
         LayoutInflater.from(getActivity()).inflate(R.layout.fragment_owner, mHeaderBinding.rolePick);
+    }
+
+    public void publishRental() {
+        Activity activity = getActivity();
+        Intent intent = new Intent(activity, PublishRentalActivity.class);
+        startActivity(intent);
+        activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void useMap() {
+        startActivity(BaiduMapActivity.getStartIntent(getActivity()));
     }
 
     @Override

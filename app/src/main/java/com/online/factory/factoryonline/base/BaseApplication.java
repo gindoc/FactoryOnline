@@ -96,7 +96,7 @@ public class BaseApplication extends Application {
             .subscribe();//
 
             //重启app
-            restartApp();
+//            restartApp();
         }
         private void restartApp() {
             Intent intent = new Intent(BaseApplication.this, MainActivity.class);

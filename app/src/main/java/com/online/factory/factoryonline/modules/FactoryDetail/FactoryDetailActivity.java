@@ -67,7 +67,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     private void initToolbar() {
         mBinding.toolbar.setTitle("");
         setSupportActionBar(mBinding.toolbar);
-        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        mBinding.toolbar.setNavigationIcon(R.drawable.ic_close);
     }
 
     @Override

@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
+    </data>
+    <TableLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="0dp"
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_factory"
-            android:gravity="center"
-            android:padding="@dimen/x10"
-            android:text="发布求租信息"
-            android:textSize="14sp"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_findFactoryByMap"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_map"
-            android:gravity="center"
-            android:padding="@dimen/x10"
-            android:text="地图找房"
-            android:textSize="18sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_factory"
+                android:gravity="center"
+                android:padding="@dimen/x10"
+                android:onClick="@{()->view.publishRental()}"
+                android:text="发布求租信息"
+                android:textSize="14sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_office"
-            android:gravity="center"
-            android:padding="@dimen/x10"
-            android:text="专人服务"
-            android:textSize="18sp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_map"
+                android:gravity="center"
+                android:padding="@dimen/x10"
+                android:onClick="@{()->view.useMap()}"
+                android:text="地图找房"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_office"
+                android:gravity="center"
+                android:padding="@dimen/x10"
+                android:text="专人服务"
+                android:textSize="18sp" />
 
 
-    </TableRow>
-</TableLayout>
+        </TableRow>
+    </TableLayout>
+</layout>
