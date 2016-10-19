@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.dagger.components;
 
 
 import com.online.factory.factoryonline.dagger.modules.FragmentModule;
+import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
@@ -19,4 +20,6 @@ public interface FragmentComponent {
     void inject(HomeFragment homeFragment);
 
     void inject(RecommendFragment recommendFragment);
+
+    void inject(PhotoWallFragment photoWallFragment);
 }

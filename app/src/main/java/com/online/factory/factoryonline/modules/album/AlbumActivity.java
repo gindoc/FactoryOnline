@@ -13,7 +13,6 @@ import javax.annotation.Nonnull;
 /**
  * Created by cwenhui on 2016/10/19.
  */
-
 public class AlbumActivity extends BaseActivity {
 
     @Override
