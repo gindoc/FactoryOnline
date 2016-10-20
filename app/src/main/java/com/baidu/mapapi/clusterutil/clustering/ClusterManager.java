@@ -17,6 +17,7 @@ import com.baidu.mapapi.clusterutil.clustering.view.DefaultClusterRenderer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.Marker;
+import com.online.factory.factoryonline.modules.baidumap.PCDSClusterRenderer;
 
 import java.util.Collection;
 import java.util.Set;
@@ -193,6 +194,8 @@ public class ClusterManager<T extends ClusterItem> implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        mOnClusterClickListener.onClusterClick((Cluster<T>) ((PCDSClusterRenderer)mRenderer).getCluster(marker));
+        mOnClusterItemClickListener.onClusterItemClick((T) ((PCDSClusterRenderer)mRenderer).getClusterItem(marker));
         return false;
     }
 

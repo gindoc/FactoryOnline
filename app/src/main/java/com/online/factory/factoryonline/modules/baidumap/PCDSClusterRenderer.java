@@ -52,6 +52,8 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import timber.log.Timber;
+
 import static com.online.factory.factoryonline.modules.baidumap.PCDSAlgorithm.MAX_DISTANCE_AT_ZOOM;
 
 /**
@@ -135,6 +137,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
         mClusterManager.getMarkerCollection().setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+
                 return mItemClickListener != null && mItemClickListener.onClusterItemClick(mMarkerCache.get(marker));
             }
         });
@@ -143,6 +146,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
         mClusterManager.getClusterMarkerCollection().setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+
                 return mClickListener != null && mClickListener.onClusterClick(mMarkerToCluster.get(marker));
             }
         });
@@ -705,7 +709,6 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
 //        }
         BitmapDescriptor descriptor;
         mColoredCircleBackground.getPaint().setColor(getColor(bucket));
-//        mColoredCircleBackground.setAlpha(1);
         descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
         // TODO: consider adding anchor(.5, .5) (Individual markers will overlap more often)
         markerOptions.icon(descriptor);
@@ -819,6 +822,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
 
             onBeforeClusterRendered(cluster, markerOptions);
 
+            Timber.d("addMarker");
             Marker marker = mClusterManager.getClusterMarkerCollection().addMarker(markerOptions);
             mMarkerToCluster.put(marker, cluster);
             mClusterToMarker.put(cluster, marker);

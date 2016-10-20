@@ -15,7 +15,6 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016/10/17.
  */
-
 public class UserRecyclerViewAdapter extends BaseRecyclerViewAdapter<UserBean, UserRecyclerViewAdapter.UerViewHolder> {
 
     private Provider<UserViewModel> provider;
