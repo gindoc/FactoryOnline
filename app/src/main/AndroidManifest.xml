@@ -40,6 +40,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".modules.FactoryDetail.FactoryDetailActivity" />
+        <activity android:name=".modules.publishRental.PublishRentalActivity" />
+        <activity android:name=".modules.album.AlbumActivity"/>
     </application>
 
 </manifest>
