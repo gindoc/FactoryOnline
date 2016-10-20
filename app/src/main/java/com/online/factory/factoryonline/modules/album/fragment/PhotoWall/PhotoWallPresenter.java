@@ -1,23 +1,11 @@
 package com.online.factory.factoryonline.modules.album.fragment.PhotoWall;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BasePresenter;
-import com.online.factory.factoryonline.models.ImageFloderBean;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
-
-import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 import javax.inject.Inject;
 

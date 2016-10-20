@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.online.factory.factoryonline.models.ImageFloderBean;
+import com.online.factory.factoryonline.models.ImageFolderBean;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -28,7 +28,7 @@ public class ScanImageUtils {
     /**
      * 扫描拿到所有的图片文件夹
      **/
-    private static List<ImageFloderBean> mImageFloderBeens = new ArrayList<ImageFloderBean>();
+    private static List<ImageFolderBean> mImageFloderBeens = new ArrayList<ImageFolderBean>();
     /**
      * 存储图片数量最多的文件夹中的图片数量
      **/
@@ -49,6 +49,10 @@ public class ScanImageUtils {
      */
     public static File getMaxImgDir() {
         return maxImgDir;
+    }
+
+    public static List<ImageFolderBean> getmImageFloderBeens() {
+        return mImageFloderBeens;
     }
 
     static int totalCount = 0;
@@ -85,14 +89,14 @@ public class ScanImageUtils {
             if (parentFile == null)
                 continue;
             String dirPath = parentFile.getAbsolutePath();
-            ImageFloderBean imageFloderBean = null;
+            ImageFolderBean imageFloderBean = null;
             // 利用一个HashSet防止多次扫描同一个文件夹（不加这个判断，图片多起来还是相当恐怖的~~）
             if (mDirPaths.contains(dirPath)) {
                 continue;
             } else {
                 mDirPaths.add(dirPath);
                 // 初始化imageFloder
-                imageFloderBean = new ImageFloderBean();
+                imageFloderBean = new ImageFolderBean();
                 imageFloderBean.setDir(dirPath);
                 imageFloderBean.setFirstImagePath(path);
             }

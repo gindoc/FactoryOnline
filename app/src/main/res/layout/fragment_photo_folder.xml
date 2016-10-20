@@ -20,7 +20,7 @@
                 android:textSize="18sp" />
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v7.widget.RecyclerView
+        <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

@@ -55,6 +55,7 @@ public class PhotoFolderPresenter extends BasePresenter<PhotoFolderContract.View
             @Override
             public void onNext(Void aVoid) {
                 getView().hideLoadingDialog();
+                getView().initRecyclerview(ScanImageUtils.getmImageFloderBeens());
             }
         });
     }

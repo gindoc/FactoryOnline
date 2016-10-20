@@ -2,7 +2,7 @@ package com.online.factory.factoryonline.modules.album.fragment.PhotoFolder;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
-import com.online.factory.factoryonline.models.ImageFloderBean;
+import com.online.factory.factoryonline.models.ImageFolderBean;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface PhotoFolderContract {
 
         void hideLoadingDialog();
 
-        void initRecyclerview(List<ImageFloderBean> beanList);
+        void initRecyclerview(List<ImageFolderBean> beanList);
     }
 
     interface Presenter extends IBasePresenter{

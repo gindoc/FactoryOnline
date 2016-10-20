@@ -4,7 +4,6 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.online.factory.factoryonline.BR;
-import com.online.factory.factoryonline.models.ImageFloderBean;
 
 import javax.inject.Inject;
 

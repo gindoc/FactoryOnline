@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.databinding.FragmentPhotoFolderBinding;
-import com.online.factory.factoryonline.models.ImageFloderBean;
+import com.online.factory.factoryonline.models.ImageFolderBean;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -27,6 +27,9 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
     PhotoFolderPresenter mPresenter;
 
     @Inject
+    PhotoFolderAdapter mAdapter;
+
+    @Inject
     public PhotoFolderFragment() {
     }
 
@@ -41,7 +44,7 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentPhotoFolderBinding.inflate(inflater);
 
-//        mBinding.recyclerView.setAdapter();
+        mBinding.recyclerView.setAdapter(mAdapter);
 
         mPresenter.getPhotoFolders();
 
@@ -55,7 +58,7 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
 
     @Override
     public <T> LifecycleTransformer<T> getBindToLifecycle() {
-        return null;
+        return bindToLifecycle();
     }
 
     @Override
@@ -74,6 +77,8 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
     }
 
     @Override
-    public void initRecyclerview(List<ImageFloderBean> beanList) {
+    public void initRecyclerview(List<ImageFolderBean> beanList) {
+        mAdapter.setData(beanList);
+        mBinding.recyclerView.notifyDataSetChanged();
     }
 }
