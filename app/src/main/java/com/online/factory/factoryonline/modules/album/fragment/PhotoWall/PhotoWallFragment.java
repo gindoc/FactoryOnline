@@ -11,7 +11,6 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.databinding.FragmentPhotoWallBinding;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
-import com.online.factory.factoryonline.modules.album.fragment.photowall.PhotoWallPresenter;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -53,7 +52,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     @Override
-    protected com.online.factory.factoryonline.modules.album.fragment.photowall.PhotoWallPresenter createPresent() {
+    protected PhotoWallPresenter createPresent() {
         return mPresenter;
     }
 

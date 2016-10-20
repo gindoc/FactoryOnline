@@ -1,4 +1,4 @@
-package com.online.factory.factoryonline.modules.album.fragment.photowall;
+package com.online.factory.factoryonline.modules.album.fragment.PhotoWall;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -25,6 +25,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016/10/19.
@@ -69,29 +70,30 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 loadPhotos();
+                subscriber.onNext("");
             }
         })
+        .compose(getView().<String>getBindToLifecycle())
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Subscriber<String>() {
             @Override
-            public void onCompleted() {
-
-            }
+            public void onCompleted() {}
 
             @Override
             public void onError(Throwable e) {
-
+                Timber.e(e.getMessage());
             }
 
             @Override
             public void onNext(String o) {
-
+                getView().hideLoadingDialog();
             }
         });
     }
 
     public void loadPhotos() {
+        Timber.e("load photos");
         String firstImage = null;
 
         Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -154,8 +156,6 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
 
         // 扫描完成，辅助的HashSet也就可以释放内存了
         mDirPaths = null;
-
-        // 通知Handler扫描图片完成
-//        mHandler.sendEmptyMessage(0x110);
+Timber.e("load photos end!!");
     }
 }

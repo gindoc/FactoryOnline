@@ -10,20 +10,23 @@ import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityAlbumBinding;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 
+import javax.inject.Inject;
+
 /**
  * Created by cwenhui on 2016/10/19.
  */
 public class AlbumActivity extends BaseActivity {
     private ActivityAlbumBinding mBinding;
 
-//    @Inject
+    @Inject
     PhotoWallFragment photoWallFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_album);
-        photoWallFragment = new PhotoWallFragment();
+//        photoWallFragment = new PhotoWallFragment();
         loadRootFragment(R.id.rl_container, photoWallFragment);
     }
 
