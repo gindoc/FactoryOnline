@@ -10,8 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BasePresenter;
-import com.online.factory.factoryonline.models.ImageFloder;
-import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallContract;
+import com.online.factory.factoryonline.models.ImageFloderBean;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -43,7 +42,7 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
     /**
      * 扫描拿到所有的图片文件夹
      **/
-    private List<ImageFloder> mImageFloders = new ArrayList<ImageFloder>();
+    private List<ImageFloderBean> mImageFloderBeen = new ArrayList<ImageFloderBean>();
     /**
      * 存储图片数量最多的文件夹中的图片数量
      **/
@@ -88,12 +87,12 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
             @Override
             public void onNext(String o) {
                 getView().hideLoadingDialog();
+                getView().initRecyclerview(mImgDir, totalCount);
             }
         });
     }
 
     public void loadPhotos() {
-        Timber.e("load photos");
         String firstImage = null;
 
         Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -120,32 +119,30 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
             if (parentFile == null)
                 continue;
             String dirPath = parentFile.getAbsolutePath();
-            ImageFloder imageFloder = null;
+            ImageFloderBean imageFloderBean = null;
             // 利用一个HashSet防止多次扫描同一个文件夹（不加这个判断，图片多起来还是相当恐怖的~~）
             if (mDirPaths.contains(dirPath)) {
                 continue;
             } else {
                 mDirPaths.add(dirPath);
                 // 初始化imageFloder
-                imageFloder = new ImageFloder();
-                imageFloder.setDir(dirPath);
-                imageFloder.setFirstImagePath(path);
+                imageFloderBean = new ImageFloderBean();
+                imageFloderBean.setDir(dirPath);
+                imageFloderBean.setFirstImagePath(path);
             }
 
             int picSize = parentFile.list(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String filename) {
-                    if (filename.endsWith(".jpg")
-                            || filename.endsWith(".png")
-                            || filename.endsWith(".jpeg"))
+                    if (filename.endsWith(".jpg")|| filename.endsWith(".png")|| filename.endsWith(".jpeg"))
                         return true;
                     return false;
                 }
             }).length;
             totalCount += picSize;
 
-            imageFloder.setCount(picSize);
-            mImageFloders.add(imageFloder);
+            imageFloderBean.setCount(picSize);
+            mImageFloderBeen.add(imageFloderBean);
 
             if (picSize > mPicsSize) {
                 mPicsSize = picSize;
@@ -156,6 +153,5 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
 
         // 扫描完成，辅助的HashSet也就可以释放内存了
         mDirPaths = null;
-Timber.e("load photos end!!");
     }
 }
