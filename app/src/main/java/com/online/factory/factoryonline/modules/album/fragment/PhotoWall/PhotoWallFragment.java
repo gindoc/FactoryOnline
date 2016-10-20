@@ -105,7 +105,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     public void switchAlbum(View view) {
-        Toast.makeText(getContext(), "456", Toast.LENGTH_SHORT).show();
+        ((AlbumActivity)getActivity()).switchPhotoFolder();
     }
 
     @Override
@@ -124,13 +124,13 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mAdapter.getSubject().onNext(position);
         if (selectedItem.contains(position)) {
             selectedItem.remove((Integer) position);
-        }else{
+        } else {
             selectedItem.add(position);
         }
         if (selectedItem.size() > 0) {
             mBinding.btnFinish.setVisibility(View.VISIBLE);
-            mBinding.btnFinish.setText("完成("+selectedItem.size()+")");
-        }else{
+            mBinding.btnFinish.setText("完成(" + selectedItem.size() + ")");
+        } else {
             mBinding.btnFinish.setVisibility(View.GONE);
         }
     }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.models.ImageFloderBean;
+import com.online.factory.factoryonline.utils.ScanImageUtils;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -35,25 +36,6 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
     @Inject
     Context context;
 
-    /**
-     * 临时的辅助类，用于防止同一个文件夹的多次扫描
-     **/
-    private HashSet<String> mDirPaths = new HashSet<String>();
-    /**
-     * 扫描拿到所有的图片文件夹
-     **/
-    private List<ImageFloderBean> mImageFloderBeen = new ArrayList<ImageFloderBean>();
-    /**
-     * 存储图片数量最多的文件夹中的图片数量
-     **/
-    private int mPicsSize;
-    /**
-     * 图片数量最多的文件夹
-     **/
-    private File mImgDir;
-
-    int totalCount = 0;
-
     @Inject
     public PhotoWallPresenter() {
     }
@@ -68,7 +50,7 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
         Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                loadPhotos();
+                ScanImageUtils.scanImages(context);
                 subscriber.onNext("");
             }
         })
@@ -87,71 +69,9 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
             @Override
             public void onNext(String o) {
                 getView().hideLoadingDialog();
-                getView().initRecyclerview(mImgDir, totalCount);
+                getView().initRecyclerview(ScanImageUtils.getMaxImgDir(), ScanImageUtils.getTotalCount());
             }
         });
     }
 
-    public void loadPhotos() {
-        String firstImage = null;
-
-        Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        ContentResolver mContentResolver = context.getContentResolver();
-
-        // 只查询jpeg和png的图片
-        Cursor mCursor = mContentResolver.query(mImageUri, null,
-                MediaStore.Images.Media.MIME_TYPE + "=? or "
-                        + MediaStore.Images.Media.MIME_TYPE + "=?",
-                new String[]{"image/jpeg", "image/png"},
-                MediaStore.Images.Media.DATE_MODIFIED);
-
-        Log.e("TAG", mCursor.getCount() + "");
-        while (mCursor.moveToNext()) {
-            // 获取图片的路径
-            String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
-
-            Log.e("TAG", path);
-            // 拿到第一张图片的路径
-            if (firstImage == null)
-                firstImage = path;
-            // 获取该图片的父路径名
-            File parentFile = new File(path).getParentFile();
-            if (parentFile == null)
-                continue;
-            String dirPath = parentFile.getAbsolutePath();
-            ImageFloderBean imageFloderBean = null;
-            // 利用一个HashSet防止多次扫描同一个文件夹（不加这个判断，图片多起来还是相当恐怖的~~）
-            if (mDirPaths.contains(dirPath)) {
-                continue;
-            } else {
-                mDirPaths.add(dirPath);
-                // 初始化imageFloder
-                imageFloderBean = new ImageFloderBean();
-                imageFloderBean.setDir(dirPath);
-                imageFloderBean.setFirstImagePath(path);
-            }
-
-            int picSize = parentFile.list(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String filename) {
-                    if (filename.endsWith(".jpg")|| filename.endsWith(".png")|| filename.endsWith(".jpeg"))
-                        return true;
-                    return false;
-                }
-            }).length;
-            totalCount += picSize;
-
-            imageFloderBean.setCount(picSize);
-            mImageFloderBeen.add(imageFloderBean);
-
-            if (picSize > mPicsSize) {
-                mPicsSize = picSize;
-                mImgDir = parentFile;
-            }
-        }
-        mCursor.close();
-
-        // 扫描完成，辅助的HashSet也就可以释放内存了
-        mDirPaths = null;
-    }
 }

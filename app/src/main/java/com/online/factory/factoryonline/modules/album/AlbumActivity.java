@@ -8,6 +8,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityAlbumBinding;
+import com.online.factory.factoryonline.modules.album.fragment.PhotoFolder.PhotoFolderFragment;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 
 import javax.inject.Inject;
@@ -21,18 +22,29 @@ public class AlbumActivity extends BaseActivity {
     @Inject
     PhotoWallFragment photoWallFragment;
 
+    @Inject
+    PhotoFolderFragment photoFolderFragment;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_album);
-//        photoWallFragment = new PhotoWallFragment();
         loadRootFragment(R.id.rl_container, photoWallFragment);
     }
 
     @Override
     protected BasePresenter createPresent() {
         return null;
+    }
+
+    public void switchPhotoFolder() {
+        startWithPop(photoFolderFragment);
+//        startForResult(photoFolderFragment, PhotoFolderFragment.FROM_PHOTOWALL_FRAGMENT);
+    }
+
+    public void switchPhotoWall(){
+
     }
 
 }
