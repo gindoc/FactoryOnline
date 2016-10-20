@@ -125,6 +125,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     public void useMap() {
         startActivity(BaiduMapActivity.getStartIntent(getActivity()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     @Override

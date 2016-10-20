@@ -88,6 +88,7 @@ public class PCDSAlgorithm<T extends ClusterItem> implements Algorithm<T> {
         Timber.d("zoomLevel  %f" ,zoom);
          Set<Cluster<T>> results = null;
         if(zoom < 10){
+            //显示市聚集点
             results =  getClustersByCity();
         } else if(zoom >= 10 && zoom < 13){
             //显示镇区聚集点

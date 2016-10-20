@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 
+import com.baidu.mapapi.clusterutil.clustering.Cluster;
 import com.baidu.mapapi.clusterutil.clustering.ClusterItem;
 import com.baidu.mapapi.clusterutil.clustering.ClusterManager;
+import com.baidu.mapapi.clusterutil.clustering.algo.StaticCluster;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
@@ -45,6 +47,7 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
     BaiduMap mBaiduMap;
     MapStatus ms;
     private ClusterManager<MyItem> mClusterManager;
+    private PCDSClusterRenderer pcdsClusterRenderer;
 
 
     public static Intent getStartIntent(Context context) {
@@ -66,6 +69,7 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
         addMarkers();
         // 设置地图监听，当地图状态发生改变时，进行点聚合运算
         mBaiduMap.setOnMapStatusChangeListener(mClusterManager);
+        mBaiduMap.setOnMarkerClickListener(mClusterManager);
     }
 
     private void initialMap() {
@@ -84,12 +88,17 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
      * 向地图添加Marker点
      */
     public void addMarkers() {
-        mClusterManager.setRenderer(new PCDSClusterRenderer<MyItem>(this,mBaiduMap,mClusterManager));
+        pcdsClusterRenderer = new PCDSClusterRenderer<MyItem>(this,mBaiduMap,mClusterManager);
+        mClusterManager.setRenderer(pcdsClusterRenderer);
         mClusterManager.setAlgorithm(new PCDSAlgorithm<MyItem>());
-        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+
+
+        mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
             @Override
-            public boolean onClusterItemClick(MyItem item) {
-                ms = new MapStatus.Builder().zoom(12).build();
+            public boolean onClusterClick(Cluster<MyItem> cluster) {
+                Timber.d("onClusterClick");
+                StaticCluster staticCluster = (StaticCluster) cluster;
+                ms = new MapStatus.Builder().zoom(15).build();
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
                 return true;
             }

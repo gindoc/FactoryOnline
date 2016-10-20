@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import timber.log.Timber;
+
 /**
  * Keeps track of collections of markers on the map. Delegates all Marker-related events to each
  * collection's individually managed listeners.
@@ -61,6 +63,8 @@ public class MarkerManager implements BaiduMap.OnMarkerClickListener, BaiduMap.O
         Collection collection = mAllMarkers.get(marker);
         if (collection != null && collection.mMarkerClickListener != null) {
             // you can set the click action
+
+            collection.mMarkerClickListener.onMarkerClick(marker);
             return true;
         }
         return false;
