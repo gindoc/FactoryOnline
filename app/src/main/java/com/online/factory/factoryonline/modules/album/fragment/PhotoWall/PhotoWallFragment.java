@@ -14,11 +14,14 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.FragmentPhotoWallBinding;
+import com.online.factory.factoryonline.databinding.ItemPhotowallTakePicBinding;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,6 +30,8 @@ import javax.inject.Inject;
  */
 public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, PhotoWallPresenter> implements PhotoWallContract.View, BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentPhotoWallBinding mBinding;
+    private ItemPhotowallTakePicBinding mTakePicBinding;
+    private List<Integer> selectedItem = new ArrayList<>();
 
     @Inject
     PhotoWallPresenter mPresenter;
@@ -48,12 +53,16 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentPhotoWallBinding.inflate(inflater);
+        mTakePicBinding = ItemPhotowallTakePicBinding.inflate(inflater);
+
+        mBinding.setView(this);
+        mTakePicBinding.setView(this);
 
         initToolBar();
 
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        mBinding.recyclerView.addHeader(LayoutInflater.from(getContext()).inflate(R.layout.item_photowall_take_pic, null));
+        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mBinding.recyclerView.addHeader(mTakePicBinding.getRoot());
         mAdapter.setOnItemClickListener(this);
 
         mPresenter.getPhotos();
@@ -91,6 +100,14 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         CustomDialog.dismissDialog();
     }
 
+    public void takePic(View view) {
+        Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
+    }
+
+    public void switchAlbum(View view) {
+        Toast.makeText(getContext(), "456", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void initRecyclerview(File maxImgDir, int imgCount) {
         if (maxImgDir == null) {
@@ -105,5 +122,16 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Override
     public void onItemClick(View view, int position) {
         mAdapter.getSubject().onNext(position);
+        if (selectedItem.contains(position)) {
+            selectedItem.remove((Integer) position);
+        }else{
+            selectedItem.add(position);
+        }
+        if (selectedItem.size() > 0) {
+            mBinding.btnFinish.setVisibility(View.VISIBLE);
+            mBinding.btnFinish.setText("完成("+selectedItem.size()+")");
+        }else{
+            mBinding.btnFinish.setVisibility(View.GONE);
+        }
     }
 }
