@@ -42,7 +42,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_images"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y160"
+                    android:layout_height="@dimen/y200"
                     android:background="@drawable/demo">
 
                     <ImageView
@@ -79,7 +79,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y35"
+                        android:layout_height="@dimen/y55"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -125,7 +125,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y35"
+                        android:layout_height="@dimen/y55"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -170,7 +170,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y35"
+                        android:layout_height="@dimen/y55"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -216,7 +216,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y35"
+                        android:layout_height="@dimen/y55"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -277,7 +277,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y35"
+                        android:layout_height="@dimen/y55"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -315,7 +315,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y35"
+                        android:layout_height="@dimen/y55"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -370,7 +370,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y35"
+                        android:layout_height="@dimen/y55"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -408,7 +408,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y35"
+                        android:layout_height="@dimen/y55"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="customDialog_container" type="id">0x10000</item>
+    <item name="customDialog_textView" type="id">0x10001</item>
+    <item name="customDialog_radioButton" type="id">0x10002</item>
+</resources>

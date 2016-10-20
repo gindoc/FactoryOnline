@@ -9,10 +9,12 @@ import com.online.factory.factoryonline.base.IBaseView;
 
 public interface PhotoWallContract {
     interface View extends IBaseView{
+        void showLoadingDialog();
 
+        void hideLoadingDialog();
     }
 
     interface Presenter extends IBasePresenter{
-
+        void getPhotos();
     }
 }

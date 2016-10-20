@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
+    <!--    <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
                 android:text="相册"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
-        </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.Toolbar>-->
 
         <!--<android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -28,7 +28,6 @@
         <FrameLayout
             android:id="@+id/rl_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"/>
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 </layout>

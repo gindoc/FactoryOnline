@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.databinding.FragmentPhotoWallBinding;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
+import com.online.factory.factoryonline.modules.album.fragment.photowall.PhotoWallPresenter;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -38,6 +41,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mBinding = FragmentPhotoWallBinding.inflate(inflater);
 
         initToolBar();
+        mPresenter.getPhotos();
 
         return mBinding.getRoot();
     }
@@ -45,10 +49,11 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     private void initToolBar() {
         mBinding.toolbar.setTitle("");
         ((AlbumActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
+        mBinding.toolbar.setNavigationIcon(R.drawable.ic_close);
     }
 
     @Override
-    protected PhotoWallPresenter createPresent() {
+    protected com.online.factory.factoryonline.modules.album.fragment.photowall.PhotoWallPresenter createPresent() {
         return mPresenter;
     }
 
@@ -59,4 +64,14 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     @Override
     public void showError(String error) {}
+
+    @Override
+    public void showLoadingDialog() {
+        CustomDialog.createLoadingDialog(getContext()).show();
+    }
+
+    @Override
+    public void hideLoadingDialog() {
+        CustomDialog.dismissDialog();
+    }
 }
