@@ -170,22 +170,52 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Override
     public void onScrolled(int dy) {
-        Timber.e("dy:%d" , dy);
-        int limit = mBinding.searchview.getHeight();
-        mBinding.coverView.setAlpha(dy / 100f);
-        if (limit > 0) {
-            if (dy <= limit) {
-                Timber.e("1 - dy / (3*limit): %f" , (1 - dy * 1.0f / (3 * limit)));
+        int limit = 300;
+        float percentage = (float) Math.abs(dy) / (float) limit;
+        float scale = (float) (percentage*0.5);
+        mBinding.coverView.setAlpha(percentage);
+        int height = mBinding.coverView.getHeight();
+        Timber.d("toolbar height : %d",height);
+        Timber.d("percentage %f",percentage);
+        float translationY = -percentage*(height-80);
+        if(percentage < 1){
+            ObjectAnimator
+                        .ofFloat(mBinding.searchview, "scaleX", 1 - scale)
+                        .setDuration(limit / 700)
+                        .start();
+
+
+            ObjectAnimator.ofFloat(mBinding.searchview, "translationY", translationY)
+                    .setDuration(limit / 700)
+                    .start();
+        }else {
+            if (scale < 0.5){
                 ObjectAnimator
-                        .ofFloat(mBinding.searchview, "scaleX", 1 - dy * 1.0f / (3 * limit))
+                        .ofFloat(mBinding.searchview, "scaleX", 1 - scale)
                         .setDuration(limit / 700)
                         .start();
-                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", -limit / 100 * dy)
+            }else if(Math.abs(translationY) < height - 80){
+                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", translationY)
                         .setDuration(limit / 700)
                         .start();
-                Timber.e("translationY   : %d" , -limit / 100 * dy);
             }
         }
+//        Timber.e("dy:%d" , dy);
+//        int limit = mBinding.searchview.getHeight();
+//        mBinding.coverView.setAlpha(dy / 100f);
+//        if (limit > 0) {
+//            if (dy <= limit) {
+//                Timber.e("1 - dy / (3*limit): %f" , (1 - dy * 1.0f / (3 * limit)));
+//                ObjectAnimator
+//                        .ofFloat(mBinding.searchview, "scaleX", 1 - dy * 1.0f / (3 * limit))
+//                        .setDuration(limit / 700)
+//                        .start();
+//                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", -limit / 100 * dy)
+//                        .setDuration(limit / 700)
+//                        .start();
+//                Timber.e("translationY   : %d" , -limit / 100 * dy);
+//            }
+//        }
     }
 
     @Override
