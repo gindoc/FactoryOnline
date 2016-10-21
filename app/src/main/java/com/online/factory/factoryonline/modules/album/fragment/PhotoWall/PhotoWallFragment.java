@@ -1,6 +1,10 @@
 package com.online.factory.factoryonline.modules.album.fragment.PhotoWall;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +22,7 @@ import com.online.factory.factoryonline.databinding.ItemPhotowallTakePicBinding;
 import com.online.factory.factoryonline.models.ImageFolderBean;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoFolder.PhotoFolderFragment;
+import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -37,8 +42,10 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     public static final String SELECTED_FOLDER_INDEX = "selectedFolderIndex";
     private FragmentPhotoWallBinding mBinding;
     private ItemPhotowallTakePicBinding mTakePicBinding;
-//    private List<Integer> selectedItem = new ArrayList<>();
-
+    /**
+     * 拍照后图片的存储路径
+     */
+    private static String mImageCapturePath = "";
     @Inject
     PhotoWallPresenter mPresenter;
 
@@ -73,9 +80,35 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mBinding.recyclerView.addHeader(mTakePicBinding.getRoot());
 
+        mTakePicBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File file = FileUtils.createTempImage(getContext());
+                mImageCapturePath = file.toString();
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                getActivity().startActivityForResult(intent, ScanImageUtils.CHOOSE_CAPTURE);
+            }
+        });
+
         mPresenter.getPhotos();
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            Toast.makeText(getContext(), "拍照出错了...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (requestCode == ScanImageUtils.CHOOSE_CAPTURE && data != null) {
+            File picture = new File(mImageCapturePath);
+            if (picture.length() > 0) {
+//                Toast.makeText()
+            }
+        }
     }
 
     private void initToolBar() {

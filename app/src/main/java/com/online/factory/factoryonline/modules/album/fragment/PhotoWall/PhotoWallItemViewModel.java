@@ -25,8 +25,6 @@ public class PhotoWallItemViewModel extends BaseObservable {
         notifyPropertyChanged(BR.isClick);
     }
 
-
-
     @Bindable
     public boolean getIsClick() {
         return isClick;

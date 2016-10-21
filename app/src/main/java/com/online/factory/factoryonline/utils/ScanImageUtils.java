@@ -21,6 +21,8 @@ import timber.log.Timber;
  */
 
 public class ScanImageUtils {
+
+    public static int CHOOSE_CAPTURE= 1001;
     /**
      * 临时的辅助类，用于防止同一个文件夹的多次扫描
      **/
@@ -37,8 +39,8 @@ public class ScanImageUtils {
      * 图片数量最多的文件夹
      **/
     private static File maxImgDir;
-//    private static ContentResolver mContentResolver;
-//    private static Cursor mCursor;
+
+
 
 
     /**
