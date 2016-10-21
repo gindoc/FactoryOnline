@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
-import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.FragmentPhotoWallBinding;
 import com.online.factory.factoryonline.databinding.ItemPhotowallTakePicBinding;
 import com.online.factory.factoryonline.models.ImageFolderBean;
@@ -28,7 +26,6 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,17 +77,6 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mBinding.recyclerView.addHeader(mTakePicBinding.getRoot());
 
-        mTakePicBinding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File file = FileUtils.createTempImage(getContext());
-                mImageCapturePath = file.toString();
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                getActivity().startActivityForResult(intent, ScanImageUtils.CHOOSE_CAPTURE);
-            }
-        });
-
         mPresenter.getPhotos();
 
         return mBinding.getRoot();
@@ -103,10 +89,11 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             Toast.makeText(getContext(), "拍照出错了...", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (requestCode == ScanImageUtils.CHOOSE_CAPTURE && data != null) {
+        if (requestCode == ScanImageUtils.CHOOSE_CAPTURE) {
             File picture = new File(mImageCapturePath);
             if (picture.length() > 0) {
-//                Toast.makeText()
+                Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
+                mAdapter.getmSelectedItem().add(mImageCapturePath);
             }
         }
     }
@@ -142,7 +129,11 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     public void takePic(View view) {
-        Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = FileUtils.createTempImage(getContext());
+        mImageCapturePath = file.toString();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        startActivityForResult(intent, ScanImageUtils.CHOOSE_CAPTURE);
     }
 
     public void switchAlbum(View view) {
