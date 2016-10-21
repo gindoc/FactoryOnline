@@ -1,10 +1,12 @@
 package com.online.factory.factoryonline.modules.album.fragment.PhotoFolder;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
@@ -52,7 +54,7 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
         mBinding.recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
 
-        mPresenter.getPhotoFolders();
+        loadImageFolders();
 
         return mBinding.getRoot();
     }
@@ -87,13 +89,11 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
     }
 
     @Override
-    public void initRecyclerview(List<ImageFolderBean> beanList) {
-        mAdapter.setData(beanList);
-        mBinding.recyclerView.notifyDataSetChanged();
-    }
-
-    @Override
-    public void initRecyclerview() {
+    public void loadImageFolders() {
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            Toast.makeText(getContext(), "暂无外部存储", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mAdapter.setData(mFolderBeens);
         mBinding.recyclerView.notifyDataSetChanged();
     }

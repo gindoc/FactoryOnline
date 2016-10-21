@@ -2,9 +2,6 @@ package com.online.factory.factoryonline.modules.album.fragment.PhotoFolder;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
-import com.online.factory.factoryonline.models.ImageFolderBean;
-
-import java.util.List;
 
 /**
  * Created by cwenhui on 2016/10/20.
@@ -15,11 +12,9 @@ public interface PhotoFolderContract {
 
         void hideLoadingDialog();
 
-        void initRecyclerview(List<ImageFolderBean> beanList);
-        void initRecyclerview();
+        void loadImageFolders();
     }
 
     interface Presenter extends IBasePresenter{
-        void getPhotoFolders();
     }
 }
