@@ -7,21 +7,25 @@ import com.online.factory.factoryonline.BR;
 
 import javax.inject.Inject;
 
+import timber.log.Timber;
+
 /**
  * Created by cwenhui on 2016/10/20.
  */
-public class PhotoWallViewModel extends BaseObservable {
+public class PhotoWallItemViewModel extends BaseObservable {
     private boolean isClick;
     private String imgUrl;
 
     @Inject
-    public PhotoWallViewModel() {
+    public PhotoWallItemViewModel() {
     }
 
     public void setClick(boolean click) {
         isClick = click;
         notifyPropertyChanged(BR.isClick);
     }
+
+
 
     @Bindable
     public boolean getIsClick() {

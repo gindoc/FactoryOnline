@@ -8,14 +8,14 @@
         <import type="android.view.View" />
         <variable
             name="viewModel"
-            type="com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallViewModel" />
+            type="com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallItemViewModel" />
     </data>
     <FrameLayout
-        android:layout_width="@dimen/x100"
-        android:layout_height="@dimen/x100"
+        android:layout_width="@dimen/x106"
+        android:layout_height="@dimen/x106"
         android:padding="1dp">
 
-        <ImageView
+        <com.online.factory.factoryonline.customview.RecyclableImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"

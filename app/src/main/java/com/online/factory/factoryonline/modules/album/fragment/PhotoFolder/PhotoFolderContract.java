@@ -16,6 +16,7 @@ public interface PhotoFolderContract {
         void hideLoadingDialog();
 
         void initRecyclerview(List<ImageFolderBean> beanList);
+        void initRecyclerview();
     }
 
     interface Presenter extends IBasePresenter{

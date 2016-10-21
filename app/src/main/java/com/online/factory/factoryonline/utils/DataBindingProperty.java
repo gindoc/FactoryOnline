@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ImageView;
 
+import com.online.factory.factoryonline.R;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -25,7 +27,12 @@ public class DataBindingProperty {
     public static void setImageSrc(ImageView imageView, String url) {
         File file = new File(url);
         int imageWidth = imageView.getMeasuredWidth();
-        Picasso.with(imageView.getContext()).load(file).resize(imageWidth, imageWidth).into(imageView);
+        Picasso.with(imageView.getContext())
+                .load(file)
+                .resize(imageWidth, imageWidth)
+                .placeholder(R.drawable.ic_no_pic)
+                .config(Bitmap.Config.RGB_565)
+                .into(imageView);
     }
 
     @BindingAdapter({"imageId"})

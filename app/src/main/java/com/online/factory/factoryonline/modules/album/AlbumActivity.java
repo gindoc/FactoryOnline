@@ -39,7 +39,7 @@ public class AlbumActivity extends BaseActivity {
     }
 
     public void switchPhotoFolder() {
-        startWithPop(photoFolderFragment);
+//        startWithPop(photoFolderFragment);
 //        startForResult(photoFolderFragment, PhotoFolderFragment.FROM_PHOTOWALL_FRAGMENT);
     }
 

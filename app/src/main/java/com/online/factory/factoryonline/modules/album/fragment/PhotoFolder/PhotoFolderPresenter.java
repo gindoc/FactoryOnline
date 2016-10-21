@@ -32,7 +32,7 @@ public class PhotoFolderPresenter extends BasePresenter<PhotoFolderContract.View
             Toast.makeText(context, "暂无外部存储", Toast.LENGTH_SHORT).show();
             return;
         }
-        getView().showLoadingDialog();
+        /*getView().showLoadingDialog();
         Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
@@ -57,6 +57,7 @@ public class PhotoFolderPresenter extends BasePresenter<PhotoFolderContract.View
                 getView().hideLoadingDialog();
                 getView().initRecyclerview(ScanImageUtils.getmImageFloderBeens());
             }
-        });
+        });*/
+        getView().initRecyclerview();
     }
 }

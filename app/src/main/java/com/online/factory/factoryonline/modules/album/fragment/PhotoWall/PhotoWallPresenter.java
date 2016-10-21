@@ -2,10 +2,15 @@ package com.online.factory.factoryonline.modules.album.fragment.PhotoWall;
 
 import android.content.Context;
 import android.os.Environment;
+import android.view.View;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BasePresenter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -19,7 +24,7 @@ import timber.log.Timber;
  * Created by cwenhui on 2016/10/19.
  */
 public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> implements PhotoWallContract
-        .Presenter {
+        .Presenter{
 
     @Inject
     Context context;
@@ -57,9 +62,8 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
             @Override
             public void onNext(String o) {
                 getView().hideLoadingDialog();
-                getView().initRecyclerview(ScanImageUtils.getMaxImgDir(), ScanImageUtils.getTotalCount());
+                getView().initRecyclerview(ScanImageUtils.getMaxImgDir(), ScanImageUtils.getTotalCount(), ScanImageUtils.getmImageFloderBeens());
             }
         });
     }
-
 }

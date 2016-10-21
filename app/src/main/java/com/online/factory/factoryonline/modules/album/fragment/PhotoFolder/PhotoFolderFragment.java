@@ -8,10 +8,13 @@ import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.FragmentPhotoFolderBinding;
 import com.online.factory.factoryonline.models.ImageFolderBean;
+import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,9 +22,11 @@ import javax.inject.Inject;
 /**
  * Created by cwenhui on 2016/10/20.
  */
-public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, PhotoFolderPresenter> implements PhotoFolderContract.View {
+public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, PhotoFolderPresenter> implements PhotoFolderContract.View, BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentPhotoFolderBinding mBinding;
     public static final int FROM_PHOTOWALL_FRAGMENT = 100;
+
+    private List<ImageFolderBean> mFolderBeens = new ArrayList<>();
 
     @Inject
     PhotoFolderPresenter mPresenter;
@@ -45,6 +50,7 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
         mBinding = FragmentPhotoFolderBinding.inflate(inflater);
 
         mBinding.recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
 
         mPresenter.getPhotoFolders();
 
@@ -63,7 +69,11 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
 
     @Override
     public void showError(String error) {
+    }
 
+    public void setmFolderBeens(List<ImageFolderBean> mFolderBeens) {
+        this.mFolderBeens.clear();
+        this.mFolderBeens.addAll(mFolderBeens);
     }
 
     @Override
@@ -80,5 +90,19 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
     public void initRecyclerview(List<ImageFolderBean> beanList) {
         mAdapter.setData(beanList);
         mBinding.recyclerView.notifyDataSetChanged();
+    }
+
+    @Override
+    public void initRecyclerview() {
+        mAdapter.setData(mFolderBeens);
+        mBinding.recyclerView.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(PhotoWallFragment.SELECTED_FOLDER_INDEX, position);
+        setFramgentResult(PhotoWallFragment.FROM_PHOTOWALL_FRAGMENT, bundle);
+        pop();
     }
 }
