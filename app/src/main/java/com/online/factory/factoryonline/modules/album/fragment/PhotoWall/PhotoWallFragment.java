@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -90,6 +92,13 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mBinding.toolbar.setTitle("");
         ((AlbumActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_close);
+
+        mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
     }
 
     private void initRecyclerview() {

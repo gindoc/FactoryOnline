@@ -42,8 +42,14 @@
                 <RelativeLayout
                     android:id="@+id/rl_images"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y200"
-                    android:background="@drawable/demo">
+                    android:layout_height="@dimen/y200">
+
+                    <ImageView
+                        android:id="@+id/iv_selected_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/demo" />
 
                     <ImageView
                         android:id="@+id/iv_pick_img"
@@ -51,11 +57,12 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:background="@drawable/orange_circle"
-                        android:padding="@dimen/x20"
                         android:onClick="@{()->view.toAlbumActivity()}"
+                        android:padding="@dimen/x20"
                         android:src="@drawable/ic_camera" />
 
                     <TextView
+                        android:id="@+id/tv_pick_img"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/iv_pick_img"
@@ -64,6 +71,19 @@
                         android:text="拍个照呗"
                         android:textColor="@android:color/white"
                         android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_pic_more"
+                        android:layout_width="@dimen/x50"
+                        android:layout_height="@dimen/x50"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/orange_circle"
+                        android:padding="@dimen/x10"
+                        android:layout_margin="@dimen/x5"
+                        android:visibility="gone"
+                        android:onClick="@{()->view.pickMore()}"
+                        android:src="@drawable/ic_camera" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -113,8 +133,8 @@
                             android:paddingRight="@dimen/x5"
                             android:paddingTop="@dimen/x10"
                             android:text="石江 石美"
-                            android:textSize="16sp"
                             android:textColor="#383838"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -259,8 +279,8 @@
                             android:drawableRight="@drawable/ic_right"
                             android:gravity="center_vertical"
                             android:paddingRight="@dimen/x10"
-                            android:textSize="16sp"
-                            android:text="元/㎡/天" />
+                            android:text="元/㎡/天"
+                            android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -349,8 +369,8 @@
                             android:paddingRight="@dimen/x5"
                             android:paddingTop="@dimen/x10"
                             android:text="10字以上"
-                            android:textSize="16sp"
                             android:textColor="#383838"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -443,34 +463,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll_contact"
-                    android:gravity="center"
-                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/x15"
                     android:layout_marginTop="@dimen/x30"
-                    android:layout_marginBottom="@dimen/x15">
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/publish_activity_save_background"
                         android:layout_marginRight="@dimen/x5"
+                        android:background="@drawable/publish_activity_save_background"
+                        android:paddingBottom="@dimen/x5"
                         android:paddingLeft="@dimen/x50"
                         android:paddingRight="@dimen/x50"
                         android:paddingTop="@dimen/x5"
-                        android:paddingBottom="@dimen/x5"
-                        android:textSize="16sp"
-                        android:text="保存" />
+                        android:text="保存"
+                        android:textSize="16sp" />
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/x5"
+                        android:background="@drawable/publish_activity_release_background"
+                        android:paddingBottom="@dimen/x5"
                         android:paddingLeft="@dimen/x50"
                         android:paddingRight="@dimen/x50"
                         android:paddingTop="@dimen/x5"
-                        android:paddingBottom="@dimen/x5"
-                        android:textSize="16sp"
-                        android:background="@drawable/publish_activity_release_background"
-                        android:text="发布" />
+                        android:text="发布"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </RelativeLayout>

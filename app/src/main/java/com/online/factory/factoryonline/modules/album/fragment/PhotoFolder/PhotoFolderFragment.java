@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.FragmentPhotoFolderBinding;
 import com.online.factory.factoryonline.models.ImageFolderBean;
+import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -54,9 +56,23 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
         mBinding.recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
 
+        initToolbar();
+
         loadImageFolders();
 
         return mBinding.getRoot();
+    }
+
+    private void initToolbar() {
+        mBinding.toolbar.setTitle("");
+        ((AlbumActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
+        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop();
+            }
+        });
     }
 
     @Override

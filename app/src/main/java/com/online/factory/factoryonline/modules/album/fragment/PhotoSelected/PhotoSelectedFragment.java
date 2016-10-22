@@ -1,6 +1,7 @@
 package com.online.factory.factoryonline.modules.album.fragment.PhotoSelected;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.online.factory.factoryonline.databinding.ItemPhotoSelectedBinding;
 import com.online.factory.factoryonline.databinding.ItemPhotoSelectedFooterBinding;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
+import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.utils.DensityUtil;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -64,6 +66,7 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
             savedInstanceState) {
         mBinding = FragmentPhotoSelectedBinding.inflate(inflater);
         mFooterBinding = ItemPhotoSelectedFooterBinding.inflate(inflater);
+        mBinding.setView(this);
         mFooterBinding.setView(this);
 
         mSelectedPhotoPath.clear();
@@ -80,6 +83,12 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mBinding.toolbar.setTitle("");
         ((AlbumActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popFragmentWithResult();
+            }
+        });
     }
 
     private void initRecyclerView() {
@@ -90,10 +99,25 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
     }
 
     public void addPhoto() {
+        popFragmentWithResult();
+    }
+
+    private void popFragmentWithResult() {
         Bundle bundle = new Bundle();
+        mSelectedPhotoPath.clear();
+        mSelectedPhotoPath.addAll(mAdapter.getData());
         bundle.putStringArrayList(SELECTED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
         setFramgentResult(PhotoWallFragment.TO_PHOTOSELECTED_FRAGMENT, bundle);
         pop();
+    }
+
+    public void finish() {
+        Intent intent = new Intent();
+        mSelectedPhotoPath.clear();
+        mSelectedPhotoPath.addAll(mAdapter.getData());
+        intent.putStringArrayListExtra(SELECTED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        getActivity().setResult(PublishRentalActivity.TO_ALBUM_ACTIVITY, intent);
+        getActivity().finish();
     }
 
     @Override
