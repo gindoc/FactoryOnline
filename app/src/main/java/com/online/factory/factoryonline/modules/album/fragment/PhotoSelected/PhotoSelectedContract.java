@@ -8,7 +8,7 @@ import com.online.factory.factoryonline.base.IBaseView;
  */
 public interface PhotoSelectedContract {
     interface View extends IBaseView{
-
+        void loadSelectedPhotos();
     }
 
     interface Presenter extends IBasePresenter {

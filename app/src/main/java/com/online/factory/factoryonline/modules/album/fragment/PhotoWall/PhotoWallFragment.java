@@ -20,12 +20,15 @@ import com.online.factory.factoryonline.databinding.ItemPhotowallTakePicBinding;
 import com.online.factory.factoryonline.models.ImageFolderBean;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoFolder.PhotoFolderFragment;
+import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment;
 import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,8 +38,9 @@ import javax.inject.Inject;
  * Created by cwenhui on 2016/10/19.
  */
 public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, PhotoWallPresenter> implements PhotoWallContract.View/*, BaseRecyclerViewAdapter.OnItemClickListener*/ {
-    public static final int FROM_PHOTOWALL_FRAGMENT = 99;
+    public static final int TO_PHOTOFOLDER_FRAGMENT = 99;
     public static final String SELECTED_FOLDER_INDEX = "selectedFolderIndex";
+    private static final int TO_PHOTOSELECTED_FRAGMENT = 98;
     private FragmentPhotoWallBinding mBinding;
     private ItemPhotowallTakePicBinding mTakePicBinding;
     /**
@@ -51,6 +55,9 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     @Inject
     PhotoFolderFragment photoFolderFragment;
+
+    @Inject
+    PhotoSelectedFragment photoSelectedFragment;
 
     @Inject
     public PhotoWallFragment() {
@@ -82,21 +89,6 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         return mBinding.getRoot();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) {
-            Toast.makeText(getContext(), "拍照出错了...", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (requestCode == ScanImageUtils.CHOOSE_CAPTURE) {
-            File picture = new File(mImageCapturePath);
-            if (picture.length() > 0) {
-                Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
-                mAdapter.getmSelectedItem().add(mImageCapturePath);
-            }
-        }
-    }
 
     private void initToolBar() {
         mBinding.toolbar.setTitle("");
@@ -136,6 +128,30 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         startActivityForResult(intent, ScanImageUtils.CHOOSE_CAPTURE);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            Toast.makeText(getContext(), "拍照出错了...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (requestCode == ScanImageUtils.CHOOSE_CAPTURE) {
+            File picture = new File(mImageCapturePath);
+            if (picture.length() > 0) {
+                Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
+                ArrayList<String> selectedImagePath = (ArrayList<String>) mAdapter.getmSelectedItem();
+                selectedImagePath.add(mImageCapturePath);
+                //传已选图片的imagePath给photoSelectedFragment
+//                photoSelectedFragment.setSelectedPhotoPath(selectedImagePath);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO, selectedImagePath);
+                photoSelectedFragment.setArguments(bundle);
+//                startForResult(photoSelectedFragment, PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT);
+                start(photoSelectedFragment);
+            }
+        }
+    }
+
     public void switchAlbum(View view) {
         startForResult(photoFolderFragment, PhotoFolderFragment.FROM_PHOTOWALL_FRAGMENT);
     }
@@ -143,15 +159,14 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Override
     protected void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
-        if (requestCode == PhotoFolderFragment.FROM_PHOTOWALL_FRAGMENT && resultCode == FROM_PHOTOWALL_FRAGMENT) {
+        if (requestCode == PhotoFolderFragment.FROM_PHOTOWALL_FRAGMENT && resultCode == TO_PHOTOFOLDER_FRAGMENT) {
             int selectedIndex = data.getInt(SELECTED_FOLDER_INDEX);
             ImageFolderBean bean = ScanImageUtils.getmImageFloderBeens().get(selectedIndex);
             File imageDir = new File(bean.getDir());
             List<String> imagePath = Arrays.asList(imageDir.list(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String filename) {
-                    if (filename.endsWith(".jpg") || filename.endsWith(".png")
-                            || filename.endsWith(".jpeg"))
+                    if (filename.endsWith(".jpg") || filename.endsWith(".png") || filename.endsWith(".jpeg"))
                         return true;
                     return false;
                 }
@@ -159,6 +174,8 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             mAdapter.setData(imagePath);
             mAdapter.setmDirPath(imageDir.getAbsolutePath());
             mBinding.recyclerView.notifyDataSetChanged();
+        } else if (requestCode == PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT && resultCode == TO_PHOTOSELECTED_FRAGMENT) {
+
         }
     }
 

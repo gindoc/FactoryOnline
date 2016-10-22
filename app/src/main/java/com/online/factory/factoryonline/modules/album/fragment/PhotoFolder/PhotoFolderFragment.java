@@ -102,7 +102,7 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
     public void onItemClick(View view, int position) {
         Bundle bundle = new Bundle();
         bundle.putInt(PhotoWallFragment.SELECTED_FOLDER_INDEX, position);
-        setFramgentResult(PhotoWallFragment.FROM_PHOTOWALL_FRAGMENT, bundle);
+        setFramgentResult(PhotoWallFragment.TO_PHOTOFOLDER_FRAGMENT, bundle);
         pop();
     }
 }

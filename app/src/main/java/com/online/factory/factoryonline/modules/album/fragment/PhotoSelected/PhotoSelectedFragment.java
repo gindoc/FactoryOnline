@@ -1,13 +1,29 @@
 package com.online.factory.factoryonline.modules.album.fragment.PhotoSelected;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.databinding.FragmentPhotoSelectedBinding;
+import com.online.factory.factoryonline.databinding.ItemPhotoSelectedBinding;
+import com.online.factory.factoryonline.databinding.ItemPhotoSelectedFooterBinding;
+import com.online.factory.factoryonline.utils.DensityUtil;
+import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -15,10 +31,24 @@ import javax.inject.Inject;
  * Created by cwenhui on 2016.02.23
  */
 public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.View, PhotoSelectedPresenter> implements PhotoSelectedContract.View {
+    public static final int FROM_PHOTOWALL_FRAGMENT = 101;
+    public static final String SELECTED_PHOTO = "selectedPhoto";
 
     @Inject
     PhotoSelectedPresenter mPresenter;
 
+    private FragmentPhotoSelectedBinding mBinding;
+    private ItemPhotoSelectedFooterBinding mFooterBinding;
+
+    @Inject
+    PhotoSelectedAdapter mAdapter;
+
+    private List<String> mSelectedPhotoPath = new ArrayList<>();
+
+    @Inject
+    public PhotoSelectedFragment() {
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +60,22 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        mBinding = FragmentPhotoSelectedBinding.inflate(inflater);
+        mFooterBinding = ItemPhotoSelectedFooterBinding.inflate(inflater);
+
+        Context context = getContext();
+        mSelectedPhotoPath.addAll(getArguments().getStringArrayList(SELECTED_PHOTO));
+        mAdapter.setData(mSelectedPhotoPath);
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+        /*ImageView footer = new ImageView(context);
+        footer.setImageResource(R.drawable.ic_add);
+        int padding = DensityUtil.dip2px(context, 30);
+        footer.setPadding(padding,padding,padding,padding);
+        footer.setBackgroundColor(Color.WHITE);*/
+        mBinding.recyclerView.addFooter(mFooterBinding.getRoot());
+
+        return mBinding.getRoot();
     }
 
     @Override
@@ -46,5 +91,15 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
     @Override
     public void showError(String error) {
 
+    }
+
+    public void setSelectedPhotoPath(List<String> selectedPhotoPath) {
+        mSelectedPhotoPath.addAll(selectedPhotoPath);
+    }
+
+    @Override
+    public void loadSelectedPhotos() {
+//        mAdapter.setData(mSelectedPhotoPath);
+//        mBinding.recyclerView.notifyDataSetChanged();
     }
 }
