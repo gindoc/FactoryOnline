@@ -1,16 +1,19 @@
 package com.online.factory.factoryonline.data;
 
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.post.Regist;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import okhttp3.MultipartBody;
 import rx.Observable;
 
 /**
@@ -90,5 +93,20 @@ public class DataManager {
      */
     public Observable<Boolean> isFactoryCollected(int fId) {
         return factoryApi.isFactoryCollected(fId);
+    }
+
+    /**
+     * 注册
+     * @param regist
+     * @return
+     */
+    public Observable<JsonObject> regist(Regist regist){
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        if (regist != null) {
+                String registJsonString = new Gson().toJson(regist);
+                builder.addFormDataPart("regist", registJsonString);
+        }
+        return factoryApi.regist(builder.build());
     }
 }

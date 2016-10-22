@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.modules.main.MainActivity;
 
@@ -14,5 +15,10 @@ public class LogOutState implements UserState {
     @Override
     public void openMsg(Context context) {
         context.startActivity(LoginActivity.getStartIntent(context));
+    }
+
+    @Override
+    public void regist(Context context) {
+
     }
 }

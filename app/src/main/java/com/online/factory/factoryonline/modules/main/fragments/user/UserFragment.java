@@ -17,6 +17,7 @@ import com.online.factory.factoryonline.databinding.FragmentUserBinding;
 import com.online.factory.factoryonline.models.UserBean;
 import com.online.factory.factoryonline.modules.login.LogInState;
 import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -93,10 +94,12 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
 
     @Override
     public void startLogIn() {
-        Toast.makeText(getContext(), "登录成功", Toast.LENGTH_SHORT).show();
-        mBinding.btnLogin.setVisibility(View.GONE);
-        mBinding.llUserMsg.setVisibility(View.VISIBLE);
-        mLoginContext.setmState(new LogInState());
+//        Toast.makeText(getContext(), "登录成功", Toast.LENGTH_SHORT).show();
+//        mBinding.btnLogin.setVisibility(View.GONE);
+//        mBinding.llUserMsg.setVisibility(View.VISIBLE);
+//        mLoginContext.setmState(new LogInState());
+        startActivity(LoginActivity.getStartIntent(getActivity()));
+        getActivity().overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }
 
     @Override

@@ -8,7 +8,10 @@ import com.online.factory.factoryonline.models.News;
 
 import java.util.List;
 
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -71,4 +74,7 @@ public interface FactoryApi {
      */
     @GET("/isFactoryCollected/{fId}")
     Observable<Boolean> isFactoryCollected(@Path("fId") int fId);
+
+    @POST("/users")
+    Observable<JsonObject> regist(@Body RequestBody requestBody);
 }
