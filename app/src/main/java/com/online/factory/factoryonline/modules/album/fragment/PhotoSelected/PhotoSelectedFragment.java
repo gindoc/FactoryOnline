@@ -17,6 +17,7 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.databinding.FragmentPhotoSelectedBinding;
 import com.online.factory.factoryonline.databinding.ItemPhotoSelectedBinding;
 import com.online.factory.factoryonline.databinding.ItemPhotoSelectedFooterBinding;
+import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.utils.DensityUtil;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -63,19 +64,26 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mBinding = FragmentPhotoSelectedBinding.inflate(inflater);
         mFooterBinding = ItemPhotoSelectedFooterBinding.inflate(inflater);
 
-        Context context = getContext();
         mSelectedPhotoPath.addAll(getArguments().getStringArrayList(SELECTED_PHOTO));
-        mAdapter.setData(mSelectedPhotoPath);
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
-        /*ImageView footer = new ImageView(context);
-        footer.setImageResource(R.drawable.ic_add);
-        int padding = DensityUtil.dip2px(context, 30);
-        footer.setPadding(padding,padding,padding,padding);
-        footer.setBackgroundColor(Color.WHITE);*/
-        mBinding.recyclerView.addFooter(mFooterBinding.getRoot());
+
+        initRecyclerView();
+        mBinding.tvTitle.setText("已选"+mSelectedPhotoPath.size()+"张图片");
+        initToolbar();
 
         return mBinding.getRoot();
+    }
+
+    private void initToolbar() {
+        mBinding.toolbar.setTitle("");
+        ((AlbumActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
+        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+    }
+
+    private void initRecyclerView() {
+        mAdapter.setData(mSelectedPhotoPath);
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mBinding.recyclerView.addFooter(mFooterBinding.getRoot());
     }
 
     @Override
@@ -90,16 +98,6 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
 
     @Override
     public void showError(String error) {
-
     }
 
-    public void setSelectedPhotoPath(List<String> selectedPhotoPath) {
-        mSelectedPhotoPath.addAll(selectedPhotoPath);
-    }
-
-    @Override
-    public void loadSelectedPhotos() {
-//        mAdapter.setData(mSelectedPhotoPath);
-//        mBinding.recyclerView.notifyDataSetChanged();
-    }
 }

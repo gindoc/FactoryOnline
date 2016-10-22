@@ -79,21 +79,23 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mTakePicBinding.setView(this);
 
         initToolBar();
-
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        mBinding.recyclerView.addHeader(mTakePicBinding.getRoot());
+        initRecyclerview();
 
         mPresenter.getPhotos();
 
         return mBinding.getRoot();
     }
 
-
     private void initToolBar() {
         mBinding.toolbar.setTitle("");
         ((AlbumActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_close);
+    }
+
+    private void initRecyclerview() {
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        mBinding.recyclerView.addHeader(mTakePicBinding.getRoot());
     }
 
     @Override
