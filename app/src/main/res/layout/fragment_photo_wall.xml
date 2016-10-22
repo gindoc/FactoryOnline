@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:onClick="@{()->view.toPhotoSelectedFragment()}"
             android:layout_marginBottom="@dimen/x10"
             android:background="@color/colorPrimary"
             android:paddingLeft="@dimen/x100"

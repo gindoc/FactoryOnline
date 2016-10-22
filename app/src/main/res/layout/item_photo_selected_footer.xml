@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment" />
+    </data>
     <FrameLayout
         android:layout_width="@dimen/x106"
         android:layout_height="@dimen/x106"
@@ -11,6 +17,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:padding="@dimen/x30"
+            android:onClick="@{()->view.addPhoto()}"
             android:src="@drawable/ic_add" />
 
     </FrameLayout>

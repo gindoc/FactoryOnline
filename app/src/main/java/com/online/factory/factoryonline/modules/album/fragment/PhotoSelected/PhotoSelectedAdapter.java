@@ -47,9 +47,9 @@ public class PhotoSelectedAdapter extends BaseRecyclerViewAdapter<String, PhotoS
             @Override
             public void onClick(View v) {
                 data.remove(imageUrl);
-                SuperRecyclerView recyclerView = (SuperRecyclerView) binding.getRoot().getParent();
+                SuperRecyclerView recyclerView = (SuperRecyclerView) binding.getRoot().getParent();                     //获得recyclerview来通知更新，坑
                 recyclerView.notifyDataSetChanged();
-                TextView title = (TextView) ((ViewGroup) recyclerView.getParent()).findViewById(R.id.tv_title);
+                TextView title = (TextView) ((ViewGroup) recyclerView.getParent()).findViewById(R.id.tv_title);     //删除文件后设置一下title
                 title.setText("已选" + data.size() + "张图片");
                 Toast.makeText(mContext, "delete item ", Toast.LENGTH_SHORT).show();
             }

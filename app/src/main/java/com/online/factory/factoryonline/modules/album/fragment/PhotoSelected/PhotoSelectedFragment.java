@@ -18,6 +18,7 @@ import com.online.factory.factoryonline.databinding.FragmentPhotoSelectedBinding
 import com.online.factory.factoryonline.databinding.ItemPhotoSelectedBinding;
 import com.online.factory.factoryonline.databinding.ItemPhotoSelectedFooterBinding;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
+import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 import com.online.factory.factoryonline.utils.DensityUtil;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -63,11 +64,13 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
             savedInstanceState) {
         mBinding = FragmentPhotoSelectedBinding.inflate(inflater);
         mFooterBinding = ItemPhotoSelectedFooterBinding.inflate(inflater);
+        mFooterBinding.setView(this);
 
+        mSelectedPhotoPath.clear();
         mSelectedPhotoPath.addAll(getArguments().getStringArrayList(SELECTED_PHOTO));
 
-        initRecyclerView();
         mBinding.tvTitle.setText("已选"+mSelectedPhotoPath.size()+"张图片");
+        initRecyclerView();
         initToolbar();
 
         return mBinding.getRoot();
@@ -84,6 +87,13 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mBinding.recyclerView.addFooter(mFooterBinding.getRoot());
+    }
+
+    public void addPhoto() {
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList(SELECTED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        setFramgentResult(PhotoWallFragment.TO_PHOTOSELECTED_FRAGMENT, bundle);
+        pop();
     }
 
     @Override

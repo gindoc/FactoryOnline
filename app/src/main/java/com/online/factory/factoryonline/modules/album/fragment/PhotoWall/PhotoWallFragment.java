@@ -40,7 +40,7 @@ import javax.inject.Inject;
 public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, PhotoWallPresenter> implements PhotoWallContract.View/*, BaseRecyclerViewAdapter.OnItemClickListener*/ {
     public static final int TO_PHOTOFOLDER_FRAGMENT = 99;
     public static final String SELECTED_FOLDER_INDEX = "selectedFolderIndex";
-    private static final int TO_PHOTOSELECTED_FRAGMENT = 98;
+    public static final int TO_PHOTOSELECTED_FRAGMENT = 98;
     private FragmentPhotoWallBinding mBinding;
     private ItemPhotowallTakePicBinding mTakePicBinding;
     /**
@@ -143,15 +143,20 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
                 Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
                 ArrayList<String> selectedImagePath = (ArrayList<String>) mAdapter.getmSelectedItem();
                 selectedImagePath.add(mImageCapturePath);
-                //传已选图片的imagePath给photoSelectedFragment
-//                photoSelectedFragment.setSelectedPhotoPath(selectedImagePath);
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO, selectedImagePath);
-                photoSelectedFragment.setArguments(bundle);
-//                startForResult(photoSelectedFragment, PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT);
-                start(photoSelectedFragment);
+                toPhotoSelectedFragment(selectedImagePath);
             }
         }
+    }
+
+    public void toPhotoSelectedFragment(){
+        toPhotoSelectedFragment((ArrayList<String>) mAdapter.getmSelectedItem());
+    }
+
+    private void toPhotoSelectedFragment(ArrayList<String> selectedImagePath) {
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO, selectedImagePath);     //传送已选图片的路径给PhotoSelectedFragment
+        photoSelectedFragment.setArguments(bundle);
+        startForResult(photoSelectedFragment, PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT);
     }
 
     public void switchAlbum(View view) {
@@ -176,8 +181,11 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             mAdapter.setData(imagePath);
             mAdapter.setmDirPath(imageDir.getAbsolutePath());
             mBinding.recyclerView.notifyDataSetChanged();
-        } else if (requestCode == PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT && resultCode == TO_PHOTOSELECTED_FRAGMENT) {
-
+        } else if (requestCode == PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT && resultCode == TO_PHOTOSELECTED_FRAGMENT && data != null) {
+            List<String> selectedImage = data.getStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO);
+            mAdapter.getmSelectedItem().clear();
+            mAdapter.getmSelectedItem().addAll(selectedImage);
+            mBinding.recyclerView.notifyDataSetChanged();
         }
     }
 

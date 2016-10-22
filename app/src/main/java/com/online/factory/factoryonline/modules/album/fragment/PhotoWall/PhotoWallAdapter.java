@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemPhotowallGridBinding;
 
@@ -56,14 +58,14 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
     public void onBindViewHolder(PhotoWallViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final PhotoWallItemViewModel viewModel = provider.get();
-        String imageUrl = mDirPath + "/"+data.get(position);
-        for(String selected:mSelectedItem){
-            if (selected.equals(imageUrl)){
+        String imageUrl = mDirPath + "/" + data.get(position);
+        for (String selected : mSelectedItem) {
+            if (selected.equals(imageUrl)) {
                 viewModel.setClick(true);
             }
         }
         viewModel.setImgUrl(mDirPath + "/" + data.get(position));
-        ItemPhotowallGridBinding binding = holder.getBinding();
+        final ItemPhotowallGridBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +77,12 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
                 } else {
                     mSelectedItem.add(selectedImage);
                     viewModel.setClick(true);
+                }
+                Button finish = (Button) ((ViewGroup) binding.getRoot().getParent().getParent()).findViewById(R.id.btn_finish);
+                if (mSelectedItem.size() > 0) {             //每次点击都判断选中的数目是否大于0
+                    finish.setVisibility(View.VISIBLE);
+                } else {
+                    finish.setVisibility(View.GONE);
                 }
             }
         });
