@@ -11,6 +11,7 @@ import com.online.factory.factoryonline.databinding.ActivityAlbumBinding;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoFolder.PhotoFolderFragment;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
+import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,9 @@ public class AlbumActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             bundle.putStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
                     selectedImage);
+            int requestCode = getIntent().getIntExtra(PublishRentalActivity.REQUEST_CODE,
+                    PublishRentalActivity.TO_PHOTO_WALL);
+            bundle.putInt(PublishRentalActivity.REQUEST_CODE, requestCode);
             photoWallFragment.setArguments(bundle);
         }
         loadRootFragment(R.id.rl_container, photoWallFragment);

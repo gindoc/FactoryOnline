@@ -21,6 +21,7 @@ import com.online.factory.factoryonline.models.ImageFolderBean;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoFolder.PhotoFolderFragment;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment;
+import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -79,6 +80,12 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mBinding.setView(this);
         mTakePicBinding.setView(this);
 
+        int requestCode = getArguments().getInt(PublishRentalActivity.REQUEST_CODE);
+        List<String> selectedImage = getArguments().getStringArrayList(PhotoSelectedFragment
+                .SELECTED_PHOTO);
+        if (requestCode == PublishRentalActivity.TO_PHOTO_SELECTED && selectedImage.size()>0) {
+            toPhotoSelectedFragment((ArrayList<String>) selectedImage);
+        }
         initToolBar();
         initRecyclerview();
 
@@ -210,14 +217,12 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mAdapter.setData(Arrays.asList(maxImgDir.list()));
         mAdapter.setmDirPath(maxImgDir.getAbsolutePath());
         photoFolderFragment.setmFolderBeens(beanList);
-//        mBinding.recyclerView.notifyDataSetChanged();
 
         List<String> selectedImage = (List<String>) getArguments().get(PhotoSelectedFragment.SELECTED_PHOTO);
         if (selectedImage != null) {
             mAdapter.getmSelectedItem().clear();
             mAdapter.getmSelectedItem().addAll(selectedImage);
             mBinding.btnFinish.setVisibility(View.VISIBLE);
-//            mBinding.recyclerView.notifyDataSetChanged();
         }
         mBinding.recyclerView.notifyDataSetChanged();
     }

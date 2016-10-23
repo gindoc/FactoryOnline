@@ -25,10 +25,12 @@ import javax.inject.Inject;
  * Created by cwenhui on 2016/10/19.
  */
 public class PublishRentalActivity extends BaseActivity<PublishRentalContract.View, PublishRentalPresenter> implements PublishRentalContract.View {
+    public static final String REQUEST_CODE = "requestCode";
+    public static final int TO_PHOTO_WALL = 68;
+    public static final int TO_PHOTO_SELECTED = 69;
     private ActivityPublishRentalBinding mBinding;
     public static final int TO_PHOTO_WALL_PICK_IMAGE = 78;
     public static final int ALBUM_ACTIVITY_RESULT_OK = 79;
-    public static final int TO_PHOTO_WALL_PICK_MORE = 77;
 
     @Inject
     PublishRentalPresenter mPresenter;
@@ -73,6 +75,15 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         Intent intent = new Intent(this, AlbumActivity.class);
         intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
                 mSelectedImage);
+        intent.putExtra(REQUEST_CODE, TO_PHOTO_WALL);
+        startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
+    }
+
+    public void viewSelectedImage(){
+        Intent intent = new Intent(this, AlbumActivity.class);
+        intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
+                mSelectedImage);
+        intent.putExtra(REQUEST_CODE, TO_PHOTO_SELECTED);
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
     }
 
