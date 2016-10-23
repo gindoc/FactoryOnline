@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import timber.log.Timber;
-
 /**
  * Created by cwenhui on 2016/10/20.
  */
@@ -46,7 +44,6 @@ public class ScanImageUtils {
     /**
      * 获得最大图片数量的文件夹
      * 使用前请先调用scanImages
-     *
      * @return
      */
     public static File getMaxImgDir() {
@@ -77,12 +74,10 @@ public class ScanImageUtils {
                 new String[]{"image/jpeg", "image/png"},
                 MediaStore.Images.Media.DATE_MODIFIED);
 
-        Timber.e("imageCount  :  " + mCursor.getCount());
         while (mCursor.moveToNext()) {
             // 获取图片的路径
             String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
 
-            Timber.e("path  :  " + path);
             // 拿到第一张图片的路径
             if (firstImage == null)
                 firstImage = path;

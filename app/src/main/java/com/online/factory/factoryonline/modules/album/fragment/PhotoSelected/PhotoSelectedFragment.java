@@ -1,31 +1,22 @@
 package com.online.factory.factoryonline.modules.album.fragment.PhotoSelected;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.databinding.FragmentPhotoSelectedBinding;
-import com.online.factory.factoryonline.databinding.ItemPhotoSelectedBinding;
 import com.online.factory.factoryonline.databinding.ItemPhotoSelectedFooterBinding;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
-import com.online.factory.factoryonline.utils.DensityUtil;
-import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +107,7 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mSelectedPhotoPath.clear();
         mSelectedPhotoPath.addAll(mAdapter.getData());
         intent.putStringArrayListExtra(SELECTED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
-        getActivity().setResult(PublishRentalActivity.TO_ALBUM_ACTIVITY, intent);
+        getActivity().setResult(PublishRentalActivity.ALBUM_ACTIVITY_RESULT_OK, intent);
         getActivity().finish();
     }
 

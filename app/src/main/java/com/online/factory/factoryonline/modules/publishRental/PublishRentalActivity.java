@@ -3,9 +3,6 @@ package com.online.factory.factoryonline.modules.publishRental;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -29,7 +26,9 @@ import javax.inject.Inject;
  */
 public class PublishRentalActivity extends BaseActivity<PublishRentalContract.View, PublishRentalPresenter> implements PublishRentalContract.View {
     private ActivityPublishRentalBinding mBinding;
-    public static final int TO_ALBUM_ACTIVITY = 79;
+    public static final int TO_PHOTO_WALL_PICK_IMAGE = 78;
+    public static final int ALBUM_ACTIVITY_RESULT_OK = 79;
+    public static final int TO_PHOTO_WALL_PICK_MORE = 77;
 
     @Inject
     PublishRentalPresenter mPresenter;
@@ -67,18 +66,20 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     public void toAlbumActivity() {
         Intent intent = new Intent(this, AlbumActivity.class);
-        startActivityForResult(intent, AlbumActivity.FROM_ALBUM_ACTIVITY);
+        startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
     }
 
     public void pickMore(){
         Intent intent = new Intent(this, AlbumActivity.class);
-        intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>) mSelectedImage);
+        intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
+                mSelectedImage);
+        startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == AlbumActivity.FROM_ALBUM_ACTIVITY && resultCode == TO_ALBUM_ACTIVITY && data != null) {
+        if (requestCode == TO_PHOTO_WALL_PICK_IMAGE && resultCode == ALBUM_ACTIVITY_RESULT_OK && data != null) {
             mSelectedImage.clear();
             mSelectedImage.addAll(data.getStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO));
             if (mSelectedImage.size() > 0) {

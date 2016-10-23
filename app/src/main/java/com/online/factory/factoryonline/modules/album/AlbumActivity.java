@@ -12,6 +12,9 @@ import com.online.factory.factoryonline.modules.album.fragment.PhotoFolder.Photo
 import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -19,7 +22,6 @@ import javax.inject.Inject;
  */
 public class AlbumActivity extends BaseActivity {
     private ActivityAlbumBinding mBinding;
-    public static final int FROM_ALBUM_ACTIVITY = 78;
 
     @Inject
     PhotoWallFragment photoWallFragment;
@@ -32,11 +34,16 @@ public class AlbumActivity extends BaseActivity {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_album);
-        if (getIntent().getStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO) != null) {
-
-        } else {
-            loadRootFragment(R.id.rl_container, photoWallFragment);
+        List<String> selectedImage = getIntent().getStringArrayListExtra(PhotoSelectedFragment
+                .SELECTED_PHOTO);
+        if (selectedImage != null) {
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
+                    selectedImage);
+            photoWallFragment.setArguments(bundle);
         }
+        loadRootFragment(R.id.rl_container, photoWallFragment);
+
     }
 
     @Override
