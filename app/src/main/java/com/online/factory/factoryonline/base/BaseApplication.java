@@ -12,6 +12,7 @@ import com.online.factory.factoryonline.dagger.modules.ApplicationModule;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.ComponentHolder;
+import com.online.factory.factoryonline.utils.Saver;
 import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
@@ -41,6 +42,7 @@ public class BaseApplication extends Application {
         }
 //        enabledStrictMode();
         LeakCanary.install(this);
+        Saver.initSaver(this);
 
         getApplicationComponent().inject(this);
 

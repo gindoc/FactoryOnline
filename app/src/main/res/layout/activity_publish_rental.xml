@@ -48,8 +48,8 @@
                         android:id="@+id/iv_selected_img"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
                         android:onClick="@{()->view.viewSelectedImage()}"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/demo" />
 
                     <ImageView
@@ -79,12 +79,12 @@
                         android:layout_height="@dimen/x50"
                         android:layout_alignParentBottom="true"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/orange_circle"
-                        android:padding="@dimen/x10"
                         android:layout_margin="@dimen/x5"
-                        android:visibility="gone"
+                        android:background="@drawable/orange_circle"
                         android:onClick="@{()->view.pickMore()}"
-                        android:src="@drawable/ic_camera" />
+                        android:padding="@dimen/x10"
+                        android:src="@drawable/ic_camera"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -125,6 +125,7 @@
                             android:background="#CECECE" />
 
                         <TextView
+                            android:id="@+id/tv_district"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:drawableRight="@drawable/ic_right"
@@ -171,6 +172,7 @@
                             android:background="#CECECE" />
 
                         <EditText
+                            android:id="@+id/et_address"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="2-10个字"
@@ -216,9 +218,11 @@
                             android:background="#CECECE" />
 
                         <EditText
+                            android:id="@+id/et_range"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:inputType="number" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -262,9 +266,11 @@
                             android:background="#CECECE" />
 
                         <EditText
+                            android:id="@+id/et_Price"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:inputType="number"
                             android:textSize="16sp" />
 
                         <View
@@ -323,6 +329,7 @@
                             android:background="#CECECE" />
 
                         <EditText
+                            android:id="@+id/et_title"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="8-28字"
@@ -361,6 +368,7 @@
                             android:background="#CECECE" />
 
                         <TextView
+                            android:id="@+id/tv_description"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:drawableRight="@drawable/ic_right"
@@ -416,6 +424,7 @@
                             android:background="#CECECE" />
 
                         <EditText
+                            android:id="@+id/et_contact_name"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:hint="至少2字"
@@ -454,8 +463,10 @@
                             android:background="#CECECE" />
 
                         <EditText
+                            android:id="@+id/et_contact_num"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:inputType="number"
                             android:textSize="16sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -479,6 +490,7 @@
                         android:paddingRight="@dimen/x50"
                         android:paddingTop="@dimen/x5"
                         android:text="保存"
+                        android:onClick="@{()->view.savePublishRental()}"
                         android:textSize="16sp" />
 
                     <Button
