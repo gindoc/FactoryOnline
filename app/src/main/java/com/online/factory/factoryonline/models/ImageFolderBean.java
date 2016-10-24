@@ -1,6 +1,6 @@
 package com.online.factory.factoryonline.models;
 
-public class ImageFloder {
+public class ImageFolderBean {
     /**
      * 图片的文件夹路径
      */

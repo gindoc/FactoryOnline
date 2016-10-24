@@ -22,7 +22,7 @@ public class RecommendCategoryAdapter extends BaseRecyclerViewAdapter<String, Re
     private Provider<RecommendViewModel> provider;
     private BehaviorSubject subject;
     @Inject
-    public RecommendCategoryAdapter(Context context, Provider<RecommendViewModel> provider,BehaviorSubject subject) {
+    public RecommendCategoryAdapter(Context context, Provider<RecommendViewModel> provider, BehaviorSubject subject) {
         super(context);
         this.provider = provider;
         this.subject = subject;
