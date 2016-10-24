@@ -4,22 +4,30 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.databinding.ActivityPublishRentalBinding;
+import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment;
+import com.online.factory.factoryonline.utils.Saver;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -43,9 +51,37 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_publish_rental);
 
+        initView();
         mBinding.setView(this);
 
         initToolBar();
+    }
+
+    private void initView() {
+        Publish publish = Saver.getPublish();
+        if (publish != null) {
+            mBinding.tvDistrict.setText(publish.getDistrict_id() + "");
+            mBinding.etAddress.setText(publish.getAddress());
+            if (publish.getRange() != 0) {
+                mBinding.etRange.setText(publish.getRange() + "");
+            }
+            if (publish.getPrice() != 0) {
+                mBinding.etPrice.setText(publish.getPrice() + "");
+            }
+            mBinding.etTitle.setText(publish.getTitle());
+            mBinding.tvDescription.setText(publish.getDescription());
+            mBinding.etContactName.setText(publish.getContact_name());
+            mBinding.etContactNum.setText(publish.getContact_num());
+            mSelectedImage.clear();
+            mSelectedImage.addAll(Arrays.asList(publish.getPics()));
+            ViewTreeObserver observer = mBinding.ivSelectedImg.getViewTreeObserver();
+            observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                public boolean onPreDraw() {
+                    loadSelectedImage();
+                    return true;
+                }
+            });
+       }
     }
 
     private void initToolBar() {
@@ -94,12 +130,17 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case android.R.id.home:
-                Toast.makeText(this, "123", Toast.LENGTH_SHORT).show();
-//                finish();
+                finish();
                 break;
         }
         return true;
     }
+
+    public void savePublishRental() {
+        Publish publish = savePublish();
+        Saver.savePublish(publish);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -107,17 +148,60 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         if (requestCode == TO_PHOTO_WALL_PICK_IMAGE && resultCode == ALBUM_ACTIVITY_RESULT_OK && data != null) {
             mSelectedImage.clear();
             mSelectedImage.addAll(data.getStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO));
-            if (mSelectedImage.size() > 0) {
-                File file = new File(mSelectedImage.get(0));
-                Picasso.with(this).load(file)
-                        .placeholder(R.drawable.demo)
-                        .resize(mBinding.ivSelectedImg.getMeasuredWidth(), mBinding.ivSelectedImg.getMeasuredHeight())
-                        .config(Bitmap.Config.RGB_565)
-                        .into(mBinding.ivSelectedImg);
-                mBinding.ivPickImg.setVisibility(View.GONE);
-                mBinding.tvPickImg.setVisibility(View.GONE);
-                mBinding.ivPicMore.setVisibility(View.VISIBLE);
-            }
+            loadSelectedImage();
         }
+    }
+
+    private void loadSelectedImage() {
+        if (mSelectedImage.size() > 0) {
+            File file = new File(mSelectedImage.get(0));
+            Picasso.with(this).load(file)
+                    .placeholder(R.drawable.demo)
+                    .resize(mBinding.ivSelectedImg.getMeasuredWidth(), mBinding.ivSelectedImg.getMeasuredHeight())
+                    .config(Bitmap.Config.RGB_565)
+                    .into(mBinding.ivSelectedImg);
+            mBinding.ivPickImg.setVisibility(View.GONE);
+            mBinding.tvPickImg.setVisibility(View.GONE);
+            mBinding.ivPicMore.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @NonNull
+    private Publish savePublish() {
+        Publish publish = new Publish();
+        if (mBinding.tvDistrict.getTag() != null) {
+            int districtId = (int) mBinding.tvDistrict.getTag();
+            publish.setDistrict_id(districtId);
+        }
+        String address = mBinding.etAddress.getText().toString();
+        String range = mBinding.etRange.getText().toString();
+        String price = mBinding.etPrice.getText().toString();
+        String title = mBinding.etTitle.getText().toString();
+        String description = mBinding.tvDescription.getText().toString();
+        String contactName = mBinding.etContactName.getText().toString();
+        String contactNum = mBinding.etContactNum.getText().toString();
+        if (!TextUtils.isEmpty(address)) {
+            publish.setAddress(address);
+        }
+        if (!TextUtils.isEmpty(range)) {
+            publish.setRange(Float.parseFloat(range));
+        }
+        if (!TextUtils.isEmpty(price)) {
+            publish.setPrice(Float.parseFloat(price));
+        }
+        if (!TextUtils.isEmpty(title)) {
+            publish.setTitle(title);
+        }
+        if (!TextUtils.isEmpty(description)) {
+            publish.setDescription(description);
+        }
+        if (!TextUtils.isEmpty(contactName)) {
+            publish.setContact_num(contactName);
+        }
+        if (!TextUtils.isEmpty(contactNum)) {
+            publish.setContact_num(contactNum);
+        }
+        publish.setPics(mSelectedImage.toArray(new String[mSelectedImage.size()]));
+        return publish;
     }
 }
