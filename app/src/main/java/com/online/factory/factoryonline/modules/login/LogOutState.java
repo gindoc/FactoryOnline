@@ -19,6 +19,6 @@ public class LogOutState implements UserState {
 
     @Override
     public void regist(Context context) {
-
+        Toast.makeText(context,"自动登录失败",Toast.LENGTH_SHORT).show();
     }
 }

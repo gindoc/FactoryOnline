@@ -44,7 +44,10 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_regist);
+        handleRegistAction();
+    }
 
+    private void handleRegistAction() {
         mBinding.btnRegist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +60,7 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
                         presenter.regist(regist);
                     }
                 }catch (ValidateException exception){
-                    Toast.makeText(getApplicationContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+                    showError(exception.getMessage());
                 }
             }
         });
@@ -75,15 +78,20 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
     }
     @Override
     public void showError(String error) {
-
+        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void registSuccessfully() {
         Toast.makeText(this,"注册成功！随后将自动跳转!",Toast.LENGTH_SHORT).show();
-//        LogInState logInState = new LogInState();
-//        loginContext.setmState(logInState);
-//        loginContext.regist(this);
+
+    }
+
+    @Override
+    public void loginSuccessfully() {
+        LogInState logInState = new LogInState();
+        loginContext.setmState(logInState);
+        loginContext.regist(this);
     }
 
     private String getInputPhoneNum() {

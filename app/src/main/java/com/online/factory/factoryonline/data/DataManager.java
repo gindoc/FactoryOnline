@@ -7,7 +7,10 @@ import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
+import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.Response;
 
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class DataManager {
      * @param pageSize 每页的大小
      * @return
      */
-    public Observable<List<Factory>> getFactoryInfos(int pageNo, int pageSize) {
+    public Observable<FactoryResponse> getFactoryInfos(int pageNo, int pageSize) {
         return factoryApi.getFactoryInfos(pageNo, pageSize);
     }
 
@@ -100,7 +103,7 @@ public class DataManager {
      * @param regist
      * @return
      */
-    public Observable<JsonObject> regist(Regist regist){
+    public Observable<Response> regist(Regist regist){
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
         if (regist != null) {
@@ -108,5 +111,15 @@ public class DataManager {
                 builder.addFormDataPart("regist", registJsonString);
         }
         return factoryApi.regist(builder.build());
+    }
+
+    public Observable<Response> login(Login login){
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        if (login != null) {
+            String loginJsonString = new Gson().toJson(login);
+            builder.addFormDataPart("login", loginJsonString);
+        }
+        return factoryApi.login(builder.build());
     }
 }

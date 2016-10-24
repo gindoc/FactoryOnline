@@ -1,7 +1,7 @@
 package com.online.factory.factoryonline.data;
 
 
-import com.online.factory.factoryonline.utils.FileUtils;
+import com.online.factory.factoryonline.utils.FileUtilsPureJava;
 
 import java.io.IOException;
 
@@ -56,8 +56,7 @@ public class MockInterceptor implements Interceptor {
     }
 
     private String getResponseString(String fileName) {
-
-        StringBuilder stringBuilder = FileUtils.readFile(responeJsonPath + fileName, "UTF-8");
+        StringBuilder stringBuilder = FileUtilsPureJava.readFile(responeJsonPath + fileName, "UTF-8");
         return stringBuilder.toString();
     }
 

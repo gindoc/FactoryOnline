@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.Response;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public interface FactoryApi {
      * @return
      */
     @GET("/factoryInfos/{pageNo}/{pageSize}")
-    Observable<List<Factory>> getFactoryInfos(@Path("pageNo") int pageNo, @Path("pageSize") int pageSize);
+    Observable<FactoryResponse> getFactoryInfos(@Path("pageNo") int pageNo, @Path("pageSize") int pageSize);
 
     /**
      * 请求“推荐”列表
@@ -76,5 +78,8 @@ public interface FactoryApi {
     Observable<Boolean> isFactoryCollected(@Path("fId") int fId);
 
     @POST("/users")
-    Observable<JsonObject> regist(@Body RequestBody requestBody);
+    Observable<Response> regist(@Body RequestBody requestBody);
+
+    @POST("/user")
+    Observable<Response> login(@Body RequestBody requestBody);
 }

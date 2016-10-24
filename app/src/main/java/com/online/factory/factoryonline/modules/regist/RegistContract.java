@@ -12,6 +12,8 @@ public interface RegistContract {
 
     interface View extends IBaseView{
         void registSuccessfully();
+
+        void loginSuccessfully();
     }
 
     interface Presenter extends IBasePresenter{

@@ -80,7 +80,7 @@ public class DataManagerModule {
             if (path.matches("^(/scrollMsgs)$")) {//匹配/scrollMsgs
                 fileName = "ScrollMsgs.json";
             }else if(path.matches("^(/factoryInfos/[1-9]\\d*/[1-9]\\d*)")) {
-                fileName = "FactoryInfos.json";
+                fileName = "FactoryResponse.json";
             }else if(path.matches("^(/recommendInfos/[1-9]\\d*/[1-9]\\d*)")) {
                 fileName = "RecommendInfos.json";
             }else if(path.matches("^(/recommendDistrictCats)")) {
@@ -92,7 +92,9 @@ public class DataManagerModule {
             }else if(path.matches("^(/isFactoryCollected/[0-9]\\d*)")){
                 fileName = "IsFactoryCollected.json";
             }else if(path.matches("^(/users)")){
-                fileName = "IsFactoryCollected.json";
+                fileName = "Regist.json";
+            }else if(path.matches("^(/user)")){
+                fileName = "Login.json";
             }else {
                 fileName = "SlideUrl.json";
             }

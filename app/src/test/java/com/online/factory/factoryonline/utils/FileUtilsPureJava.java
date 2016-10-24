@@ -16,36 +16,12 @@ import java.util.Locale;
 import timber.log.Timber;
 
 /**
- * Created by louiszgm on 2016/10/5.
+ * Created by louiszgm on 2016/10/24.
  */
 
-public class FileUtils {
-
+public class FileUtilsPureJava {
     private final static String PATTERN = "yyyyMMddHHmmss";
 
-    private static final String SEPARATOR = File.separator;
-    private static final String EXTERNAL_ROOT = "factoryOnline";
-
-    private static final String EXTERNAL_STORAGE = Environment.getExternalStorageDirectory().getAbsolutePath() + SEPARATOR + EXTERNAL_ROOT;
-
-    private static final String IMAGE = "image";
-
-    private static String getStoreExternalPath(String folder) {
-        File file = new File(EXTERNAL_STORAGE + SEPARATOR + folder);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        return file.getAbsolutePath();
-    }
-
-    public static String getImagePath() {
-        return getStoreExternalPath(IMAGE) + SEPARATOR;
-    }
-
-    public static File createTempImage(Context context) {
-        String timeStamp = new SimpleDateFormat(PATTERN, Locale.CHINA).format(new Date());
-        return new File(getImagePath(), timeStamp + ".jpg");
-    }
 
     public static File createTmpFile(Context context, String filePath) {
 
@@ -95,6 +71,7 @@ public class FileUtils {
         File file = new File(filePath);
         StringBuilder fileContent = new StringBuilder("");
         if (file == null || !file.isFile()) {
+            Timber.d("文件不存在");
             return null;
         }
 
