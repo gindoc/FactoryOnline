@@ -16,4 +16,8 @@ public class LoginContext {
     public void openMsg(Context context){
         mState.openMsg(context);
     }
+
+    public void regist(Context context){
+        mState.regist(context);
+    }
 }

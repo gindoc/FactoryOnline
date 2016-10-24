@@ -37,6 +37,11 @@ import timber.log.Timber;
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
         .View, HomeRecyclerView.ScrollChangedListener, BaseRecyclerViewAdapter.OnItemClickListener {
+
+
+    public static float MAX_SCALE_RATE = 0.3f;
+    public static float MAX_TRANSLATIONY = 200;
+    public  float MAX_TOP;
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
     private FragmentFindBinding mFindBinding;
@@ -169,23 +174,38 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     }
 
     @Override
-    public void onScrolled(int dy) {
-        Timber.e("dy:%d" , dy);
-        int limit = mBinding.searchview.getHeight();
-        mBinding.coverView.setAlpha(dy / 100f);
-        if (limit > 0) {
-            if (dy <= limit) {
-                Timber.e("1 - dy / (3*limit): %f" , (1 - dy * 1.0f / (3 * limit)));
+    public void onScrolled(int dy,boolean isSwipeDown) {
+        Timber.d("dy %d",dy);
+        int limit = 300;
+        int i = dy % 300;
+        float percentage = (float) Math.abs(i) / (float) limit;
+        Timber.d("percentage : %f",percentage);
+        float scale = (float) (percentage*MAX_SCALE_RATE);
+
+
+        int height = mBinding.coverView.getHeight();
+        float translationY = -percentage*(height-50);
+
+        Timber.d("scale : %f",scale);
+        Timber.d("translationY %f",translationY);
+
+            if(Math.abs(dy) < limit){
+                mBinding.coverView.setAlpha(percentage);
                 ObjectAnimator
-                        .ofFloat(mBinding.searchview, "scaleX", 1 - dy * 1.0f / (3 * limit))
+                        .ofFloat(mBinding.searchview, "scaleX", 1-scale)
                         .setDuration(limit / 700)
                         .start();
-                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", -limit / 100 * dy)
+                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", translationY)
                         .setDuration(limit / 700)
                         .start();
-                Timber.e("translationY   : %d" , -limit / 100 * dy);
+            }else {
+
             }
-        }
+
+
+
+        Timber.d("height %f",mBinding.searchview.getY());
+        Timber.d("actual scalX %f",mBinding.searchview.getScaleX());
     }
 
     @Override

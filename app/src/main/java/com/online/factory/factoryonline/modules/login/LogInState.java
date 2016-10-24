@@ -1,8 +1,10 @@
 package com.online.factory.factoryonline.modules.login;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.main.fragments.msg.MsgFragment;
 
 /**
@@ -16,5 +18,10 @@ public class LogInState implements UserState {
         if(baseActivity.findFragment(MsgFragment.class) == null){
             baseActivity.startWithPop(MsgFragment.newInstance());
         }
+    }
+
+    @Override
+    public void regist(Context context) {
+        context.startActivity(MainActivity.getStartIntent(context));
     }
 }

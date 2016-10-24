@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -14,6 +15,7 @@ import com.online.factory.factoryonline.base.BaseFragmentPagerAdapter;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityLoginBinding;
 import com.online.factory.factoryonline.modules.main.MainActivity;
+import com.online.factory.factoryonline.modules.regist.RegistActivity;
 
 import java.util.ArrayList;
 
@@ -54,6 +56,10 @@ public class LoginActivity extends BaseActivity {
         mBinding.tabs.setupWithViewPager(mBinding.viewpager);
     }
 
+    public void onCLickSignUp(View view){
+        startActivity(RegistActivity.getStartIntent(this));
+        this.overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
+    }
     @Override
     protected BasePresenter createPresent() {
         return null;

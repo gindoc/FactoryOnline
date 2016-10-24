@@ -10,8 +10,10 @@ import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.utils.ComponentHolder;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import javax.inject.Named;
 
@@ -23,9 +25,14 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
+import okio.Buffer;
+import okio.BufferedSink;
+import okio.Okio;
+import okio.Sink;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -65,9 +72,6 @@ public class DataManagerModule {
         HttpUrl uri = chain.request().url();
         String path = uri.url().getPath();
         String query = uri.url().getQuery();
-        Timber.d("地址为:%s", uri.toString());
-        Timber.d("path为:%s", path);
-        Timber.d("查询的参数为:%s", query);
         StringBuffer response = new StringBuffer();
         BufferedReader reader;
         AssetManager assetManager = ComponentHolder.getAppComponent().getContext().getAssets();
@@ -86,6 +90,8 @@ public class DataManagerModule {
             }else if(path.matches("^(/recommendAreaCats)")){
                 fileName = "RecomendAreaCats.json";
             }else if(path.matches("^(/isFactoryCollected/[0-9]\\d*)")){
+                fileName = "IsFactoryCollected.json";
+            }else if(path.matches("^(/users)")){
                 fileName = "IsFactoryCollected.json";
             }else {
                 fileName = "SlideUrl.json";
@@ -110,6 +116,8 @@ public class DataManagerModule {
             public Response intercept(Chain chain) throws IOException {
                 String responseString = createResponseBody(chain);
                 Request request = chain.request();
+
+                Timber.d("requestBody : %s",bodyToString(request.body()));
                 Response intercepterResponse = new Response.Builder()
                         .code(200)
                         .message(responseString)
@@ -124,7 +132,19 @@ public class DataManagerModule {
         };
         return BuildConfig.DEBUG ? interceptor : null;
     }
-
+    private String bodyToString(final RequestBody request) {
+        try {
+            final RequestBody copy = request;
+            final Buffer buffer = new Buffer();
+            if (copy != null)
+                copy.writeTo(buffer);
+            else
+                return "";
+            return buffer.readUtf8();
+        } catch (final IOException e) {
+            return "did not work";
+        }
+    }
     @Provides
     public OkHttpClient provideHttpClient(@Named("httpLogger") HttpLoggingInterceptor loggingInterceptor,
                                           @Named("localdata") Interceptor localDataInterceptor) {
