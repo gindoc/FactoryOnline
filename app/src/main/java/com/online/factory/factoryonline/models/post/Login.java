@@ -7,7 +7,7 @@ package com.online.factory.factoryonline.models.post;
 public class Login {
     private String user_name;
 
-    private String login_key;
+    private String login_key_md5;
 
     private int login_type;//1.sms 2.pwd
 }
