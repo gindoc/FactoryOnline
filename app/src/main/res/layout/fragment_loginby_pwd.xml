@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -35,7 +36,7 @@
 
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/et_verificationcode"
+            android:id="@+id/et_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/line_sms_login"
@@ -65,3 +66,4 @@
         android:textColor="@android:color/white"
         android:text="登录"/>
 </LinearLayout>
+</layout>

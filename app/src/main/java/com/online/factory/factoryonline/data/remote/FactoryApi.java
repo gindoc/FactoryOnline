@@ -7,6 +7,7 @@ import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.models.response.UserResponse;
 
 import java.util.List;
 
@@ -81,5 +82,8 @@ public interface FactoryApi {
     Observable<Response> regist(@Body RequestBody requestBody);
 
     @POST("/user")
-    Observable<Response> login(@Body RequestBody requestBody);
+    Observable<UserResponse> login(@Body RequestBody requestBody);
+
+    @GET("/user")
+    Observable<UserResponse> getUser();
 }

@@ -10,10 +10,10 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.databinding.ActivityPublishRentalBinding;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
@@ -26,8 +26,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -58,7 +56,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
     }
 
     private void initView() {
-        Publish publish = Saver.getPublish();
+        Publish publish = Saver.getSerializableObject(SharePreferenceKey.PUBLISH);
         if (publish != null) {
             mBinding.tvDistrict.setText(publish.getDistrict_id() + "");
             mBinding.etAddress.setText(publish.getAddress());
@@ -138,7 +136,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     public void savePublishRental() {
         Publish publish = savePublish();
-        Saver.savePublish(publish);
+        Saver.saveSerializableObject(publish , SharePreferenceKey.PUBLISH);
     }
 
 

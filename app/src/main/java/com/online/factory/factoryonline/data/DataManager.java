@@ -3,14 +3,18 @@ package com.online.factory.factoryonline.data;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.models.response.UserResponse;
+import com.online.factory.factoryonline.utils.Saver;
 
 import java.util.List;
 
@@ -113,7 +117,7 @@ public class DataManager {
         return factoryApi.regist(builder.build());
     }
 
-    public Observable<Response> login(Login login){
+    public Observable<UserResponse> login(Login login){
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
         if (login != null) {
@@ -121,5 +125,18 @@ public class DataManager {
             builder.addFormDataPart("login", loginJsonString);
         }
         return factoryApi.login(builder.build());
+    }
+
+    public Observable<UserResponse> getUser(){
+        User localUser = Saver.getSerializableObject(SharePreferenceKey.USER);
+        if( localUser!= null){
+            UserResponse response = new UserResponse();
+            response.setUser(localUser);
+            response.setErro_code(200);
+            response.setErro_msg("成功");
+            return Observable.just(response);
+        }else {
+            return factoryApi.getUser();
+        }
     }
 }

@@ -19,9 +19,4 @@ public class LogInState implements UserState {
             baseActivity.startWithPop(MsgFragment.newInstance());
         }
     }
-
-    @Override
-    public void regist(Context context) {
-        context.startActivity(MainActivity.getStartIntent(context));
-    }
 }

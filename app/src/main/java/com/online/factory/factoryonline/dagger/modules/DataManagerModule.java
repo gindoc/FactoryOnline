@@ -94,7 +94,7 @@ public class DataManagerModule {
             }else if(path.matches("^(/users)")){
                 fileName = "Regist.json";
             }else if(path.matches("^(/user)")){
-                fileName = "Login.json";
+                fileName = "UserResponse.json";
             }else {
                 fileName = "SlideUrl.json";
             }

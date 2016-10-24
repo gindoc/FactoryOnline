@@ -16,9 +16,4 @@ public class LogOutState implements UserState {
     public void openMsg(Context context) {
         context.startActivity(LoginActivity.getStartIntent(context));
     }
-
-    @Override
-    public void regist(Context context) {
-        Toast.makeText(context,"自动登录失败",Toast.LENGTH_SHORT).show();
-    }
 }

@@ -4,7 +4,9 @@
     xmlns:tool="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="user"
+            type="com.online.factory.factoryonline.models.User"/>
         <variable
             name="presenter"
             type="com.online.factory.factoryonline.modules.main.fragments.user.UserContract.Presenter" />
@@ -60,7 +62,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:onClick="@{()->presenter.logIn()}"
-                        android:text="登录" />
+                        android:hint="登录"
+                        android:text="@{user.userName}" />
                 </FrameLayout>
 
                 <android.support.v7.widget.RecyclerView

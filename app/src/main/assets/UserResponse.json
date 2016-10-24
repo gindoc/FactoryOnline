@@ -1,0 +1,14 @@
+{
+  "erro_code":200,
+  "erro_msg":"成功",
+  "user":
+    {
+      "userName": "13377783999",
+      "phoneNum": "13377783999",
+      "id": 12300545,
+      "publish_count": 10,
+      "regist_time": 1477294143,
+      "avatar": "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+      "type": 1
+    }
+}

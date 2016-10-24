@@ -6,6 +6,8 @@ import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.modules.login.LogInState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.MD5;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
@@ -27,6 +29,8 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
     @Inject
     DataManager dataManager;
 
+    @Inject
+    LoginContext loginContext;
     @Inject
     public RegistPresenter() {
     }
@@ -66,6 +70,7 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                 .subscribe(new RxSubscriber<Response>() {
                     @Override
                     public void _onNext(Response response) {
+                        loginContext.setmState(new LogInState());
                         getView().loginSuccessfully();
                     }
 

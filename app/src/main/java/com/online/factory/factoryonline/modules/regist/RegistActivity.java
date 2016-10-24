@@ -17,6 +17,7 @@ import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.modules.login.LogInState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.Validate;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -31,8 +32,6 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
 
     @Inject
     RegistPresenter presenter;
-    @Inject
-    LoginContext loginContext;
 
     private ActivityRegistBinding mBinding;
     public static Intent getStartIntent(Context context) {
@@ -89,9 +88,8 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
 
     @Override
     public void loginSuccessfully() {
-        LogInState logInState = new LogInState();
-        loginContext.setmState(logInState);
-        loginContext.regist(this);
+       startActivity(MainActivity.getStartIntent(this));
+        overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }
 
     private String getInputPhoneNum() {
