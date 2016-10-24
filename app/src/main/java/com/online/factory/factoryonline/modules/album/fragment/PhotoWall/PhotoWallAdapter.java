@@ -50,7 +50,7 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
 
     @Override
     public PhotoWallViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemPhotowallGridBinding binding = ItemPhotowallGridBinding.inflate(layoutInflater);
+        ItemPhotowallGridBinding binding = ItemPhotowallGridBinding.inflate(layoutInflater, parent, false);
         return new PhotoWallViewHolder(binding.getRoot(), binding);
     }
 

@@ -5,7 +5,9 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -85,6 +87,18 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
                 mSelectedImage);
         intent.putExtra(REQUEST_CODE, TO_PHOTO_SELECTED);
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Toast.makeText(this, "123", Toast.LENGTH_SHORT).show();
+//                finish();
+                break;
+        }
+        return true;
     }
 
     @Override

@@ -26,7 +26,7 @@ public class PhotoFolderAdapter extends BaseRecyclerViewAdapter<ImageFolderBean,
 
     @Override
     public PhotoFolderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemPhotoFolderListBinding binding = ItemPhotoFolderListBinding.inflate(layoutInflater);
+        ItemPhotoFolderListBinding binding = ItemPhotoFolderListBinding.inflate(layoutInflater, parent, false);
         return new PhotoFolderViewHolder(binding.getRoot(), binding);
     }
 
