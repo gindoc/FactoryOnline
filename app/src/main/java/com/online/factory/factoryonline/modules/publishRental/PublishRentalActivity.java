@@ -71,7 +71,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             mBinding.etTitle.setText(publish.getTitle());
             mBinding.tvDescription.setText(publish.getDescription());
             mBinding.etContactName.setText(publish.getContact_name());
-            mBinding.etContactNum.setText(publish.getContact_num() + "");
+            mBinding.etContactNum.setText(publish.getContact_num());
             mSelectedImage.clear();
             mSelectedImage.addAll(Arrays.asList(publish.getPics()));
             ViewTreeObserver observer = mBinding.ivSelectedImg.getViewTreeObserver();
@@ -180,33 +180,28 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         String description = mBinding.tvDescription.getText().toString();
         String contactName = mBinding.etContactName.getText().toString();
         String contactNum = mBinding.etContactNum.getText().toString();
-        String pattern = "[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*$";
-        Pattern r = Pattern.compile(pattern);
-        if (TextUtils.isEmpty(address)) {
+        if (!TextUtils.isEmpty(address)) {
             publish.setAddress(address);
         }
-        Matcher m = r.matcher(range);
-        if (m.find() && TextUtils.isEmpty(range)) {
+        if (!TextUtils.isEmpty(range)) {
             publish.setRange(Float.parseFloat(range));
         }
-        m = r.matcher(price);
-        if (m.find() && TextUtils.isEmpty(price)) {
+        if (!TextUtils.isEmpty(price)) {
             publish.setPrice(Float.parseFloat(price));
         }
-        if (TextUtils.isEmpty(title)) {
+        if (!TextUtils.isEmpty(title)) {
             publish.setTitle(title);
         }
-        if (TextUtils.isEmpty(description)) {
+        if (!TextUtils.isEmpty(description)) {
             publish.setDescription(description);
         }
-        if (TextUtils.isEmpty(contactName)) {
+        if (!TextUtils.isEmpty(contactName)) {
             publish.setContact_num(contactName);
         }
-        m = r.matcher(contactNum);
-        if (m.find() && TextUtils.isEmpty(contactNum)) {
+        if (!TextUtils.isEmpty(contactNum)) {
             publish.setContact_num(contactNum);
         }
-        publish.setPics((String[]) mSelectedImage.toArray(new String[mSelectedImage.size()]));
+        publish.setPics(mSelectedImage.toArray(new String[mSelectedImage.size()]));
         return publish;
     }
 }
