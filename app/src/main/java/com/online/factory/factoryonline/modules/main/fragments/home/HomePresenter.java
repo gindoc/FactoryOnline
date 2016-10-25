@@ -40,18 +40,9 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 .compose(getView().<JsonObject>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<JsonObject>() {
+                .subscribe(new RxSubscriber<JsonObject>() {
                     @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(JsonObject jsonObject) {
+                    public void _onNext(JsonObject jsonObject) {
                         JsonArray pics = jsonObject.getAsJsonArray("pic");
                         try {
                             List<String> picList = LoganSquare.parseList(pics.toString(), String.class);
@@ -62,6 +53,11 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                             e.printStackTrace();
                         }
                     }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+
+                    }
                 });
     }
 
@@ -70,36 +66,20 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 .compose(getView().<List<News>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<News>>() {
+                .subscribe(new RxSubscriber<List<News>>() {
                     @Override
-                    public void call(List<News> newses) {
+                    public void _onNext(List<News> newses) {
                         getView().initScrollTextView(newses);
                     }
-                }, new Action1<Throwable>() {
+
                     @Override
-                    public void call(Throwable throwable) {
-                        Timber.e(throwable.getMessage());
+                    public void _onError(Throwable throwable) {
                     }
                 });
     }
 
     public void requestFactoryInfo() {
-//        dataManager.getFactoryInfos(1, 5)
-//                .compose(getView().<List<Factory>>getBindToLifecycle())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<List<Factory>>() {
-//                    @Override
-//                    public void call(List<Factory> infos) {
-//                        getView().initRecyclerView(infos);
-//                    }
-//                }, new Action1<Throwable>() {
-//                    @Override
-//                    public void call(Throwable throwable) {
-//                        Timber.e(throwable.getMessage());
-//                    }
-//                });
-        dataManager.getFactoryInfos(1 ,5)
+        dataManager.getFactoryInfos(1, 5)
                 .compose(RxResultHelper.<FactoryResponse>handleResult())
                 .compose(getView().<FactoryResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())

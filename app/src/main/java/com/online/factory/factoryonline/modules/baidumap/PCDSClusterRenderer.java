@@ -698,6 +698,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
      * The default implementation draws a circle with a rough count of the number of items.
      */
     protected void onBeforeClusterRendered(Cluster<T> cluster, MarkerOptions markerOptions) {
+//        mMap.getMapStatus().zoom
         int bucket = getBucket(cluster);
         StaticCluster staticCluster = (StaticCluster) cluster;
         String description = staticCluster.getDescription();

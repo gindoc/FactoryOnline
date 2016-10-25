@@ -6,6 +6,7 @@ import android.content.res.AssetManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 
 import com.baidu.mapapi.clusterutil.clustering.Cluster;
@@ -25,8 +26,10 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityBaidumapBinding;
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryPoi;
 import com.online.factory.factoryonline.models.LbsCloud;
+import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,13 +37,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 /**
  * Created by louiszgm on 2016/10/13.
  */
 
-public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoadedCallback {
+public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, BaiduMapPresent> implements BaiduMap.OnMapLoadedCallback, BaiduMapConstract.View {
 
     private ActivityBaidumapBinding mBinding;
 
@@ -49,17 +54,22 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
     private ClusterManager<MyItem> mClusterManager;
     private PCDSClusterRenderer pcdsClusterRenderer;
 
+    @Inject
+    MapRecyclerViewAdapter mAdapter;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, BaiduMapActivity.class);
         return intent;
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_baidumap);
         initialMap();
         startCluster();
+        mBinding.recyclerView.setAdapter(mAdapter);
+
     }
 
     private void startCluster() {
@@ -80,8 +90,8 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
     }
 
     @Override
-    protected BasePresenter createPresent() {
-        return null;
+    protected BaiduMapPresent createPresent() {
+        return mPresenter;
     }
 
     /**
@@ -92,15 +102,22 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
         mClusterManager.setRenderer(pcdsClusterRenderer);
         mClusterManager.setAlgorithm(new PCDSAlgorithm<MyItem>());
 
-
         mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>() {
             @Override
             public boolean onClusterClick(Cluster<MyItem> cluster) {
                 Timber.d("onClusterClick");
                 StaticCluster staticCluster = (StaticCluster) cluster;
-                ms = new MapStatus.Builder().zoom(15).build();
+                LatLng center = staticCluster.getPosition();
+                ms = new MapStatus.Builder().target(center).zoom(mBaiduMap.getMapStatus().zoom+3).build();
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
+                mBinding.toolbar.setVisibility(View.GONE);
                 return true;
+            }
+        });
+        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+            @Override
+            public boolean onClusterItemClick(MyItem item) {
+                return false;
             }
         });
         List<MyItem> items = getLatLngList();
@@ -132,6 +149,21 @@ public class BaiduMapActivity extends BaseActivity implements BaiduMap.OnMapLoad
             results.add(new MyItem(factoryPoi));
         }
         return results;
+    }
+
+    @Override
+    public void loadFactories(List<Factory> factories) {
+        mAdapter.setData(factories);
+        mBinding.recyclerView.notifyDataSetChanged();
+    }
+
+    @Override
+    public <T> LifecycleTransformer<T> getBindToLifecycle() {
+        return bindToLifecycle();
+    }
+
+    @Override
+    public void showError(String error) {
     }
 
     /**

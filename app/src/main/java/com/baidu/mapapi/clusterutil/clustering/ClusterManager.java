@@ -194,8 +194,14 @@ public class ClusterManager<T extends ClusterItem> implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        mOnClusterClickListener.onClusterClick((Cluster<T>) ((PCDSClusterRenderer)mRenderer).getCluster(marker));
-        mOnClusterItemClickListener.onClusterItemClick((T) ((PCDSClusterRenderer)mRenderer).getClusterItem(marker));
+        Cluster<T> cluster = (Cluster<T>) ((PCDSClusterRenderer)mRenderer).getCluster(marker);
+        T clusterItem = (T) ((PCDSClusterRenderer)mRenderer).getClusterItem(marker);
+        if(cluster != null){
+            mOnClusterClickListener.onClusterClick(cluster);
+        }else if (clusterItem != null){
+
+            mOnClusterItemClickListener.onClusterItemClick(clusterItem);
+        }
         return false;
     }
 

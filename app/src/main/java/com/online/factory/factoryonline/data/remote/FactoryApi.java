@@ -86,4 +86,7 @@ public interface FactoryApi {
 
     @GET("/user")
     Observable<UserResponse> getUser();
+
+    @GET("/publicmessages/{streetId}")
+    Observable<List<Factory>> getStreetFactories(@Path("streetId") int streetId);
 }

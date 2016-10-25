@@ -7,6 +7,7 @@ import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
+import com.online.factory.factoryonline.models.FactoryPoi;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;
@@ -138,5 +139,9 @@ public class DataManager {
         }else {
             return factoryApi.getUser();
         }
+    }
+
+    public Observable<List<Factory>> getStreetFactories(int streetId) {
+        return factoryApi.getStreetFactories(streetId);
     }
 }
