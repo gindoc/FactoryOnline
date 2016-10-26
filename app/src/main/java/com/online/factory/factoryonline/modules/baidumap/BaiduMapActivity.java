@@ -134,7 +134,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
                 Timber.d("onClusterClick");
                 StaticCluster staticCluster = (StaticCluster) cluster;
                 LatLng center = staticCluster.getPosition();
-                float currentZoom = mBaiduMap.getMapStatus().zoom;
+                int currentZoom = (int) mBaiduMap.getMapStatus().zoom;
                 if (currentZoom >= 13) {
                     MyItem item = ((ArrayList<MyItem>) cluster.getItems()).get(0);
                     int streetId = item.getFactoryPoi().getStreet_id();
@@ -145,7 +145,6 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
                     ms = new MapStatus.Builder().target(center).zoom(currentZoom + 3).build();
                     mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
                 }
-//                if (staticCluster)
                 return true;
             }
         });

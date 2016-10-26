@@ -7,11 +7,15 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +24,7 @@ import android.os.MessageQueue;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
 import com.baidu.mapapi.clusterutil.MarkerManager;
 import com.baidu.mapapi.clusterutil.clustering.Cluster;
@@ -51,6 +56,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
+import javax.inject.Inject;
 
 import timber.log.Timber;
 
@@ -170,6 +177,18 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
         return background;
     }
 
+    private LayerDrawable makeRecClusterBackground(){
+        mColoredCircleBackground = new ShapeDrawable(new RectShape());
+        Drawable drawable = resources.getDrawable(R.drawable.gray_solid_rectangle_background);
+
+//        ShapeDrawable outline = new ShapeDrawable(new RectShape());
+//        outline.getPaint().setColor(Color.parseColor("#000000")); // Transparent white.
+        LayerDrawable background = new LayerDrawable(new Drawable[]{/*outline*/drawable, mColoredCircleBackground});
+        background.setAlpha(125);
+        int strokeWidth = (int) (mDensity * 2);
+        background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+        return background;
+    }
     private com.baidu.mapapi.clusterutil.ui.SquareTextView makeSquareTextView(Context context) {
         com.baidu.mapapi.clusterutil.ui.SquareTextView squareTextView =
                 new com.baidu.mapapi.clusterutil.ui.SquareTextView(context);
@@ -693,15 +712,14 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
     protected void onBeforeClusterItemRendered(T item, MarkerOptions markerOptions) {
     }
 
+    @Inject
+    Context context;
     /**
      * Called before the marker for a Cluster is added to the map.
      * The default implementation draws a circle with a rough count of the number of items.
      */
     protected void onBeforeClusterRendered(Cluster<T> cluster, MarkerOptions markerOptions) {
-//        float zoom = mMap.getMapStatus().zoom;
-        int bucket = getBucket(cluster);
-        StaticCluster staticCluster = (StaticCluster) cluster;
-        String description = staticCluster.getDescription();
+
 //        BitmapDescriptor descriptor = mIcons.get(bucket);
 //        if (descriptor == null) {
 //            mColoredCircleBackground.getPaint().setColor(getColor(bucket));
@@ -709,33 +727,48 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
 //            mIcons.put(bucket, descriptor);
 //        }
         BitmapDescriptor descriptor;
-        mColoredCircleBackground.getPaint().setColor(getColor(bucket));
-//        if (zoom >= 13) {
-//            descriptor = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-//        }else {
-            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
-//        }
+
+            if (mZoom >= 13) {
+
+    //            descriptor = BitmapDescriptorFactory.fromResource(R.drawable.popup);
+                StaticCluster staticCluster = (StaticCluster) cluster;
+                Drawable drawable = resources.getDrawable(R.drawable.popup);
+                LayerDrawable drawables = new LayerDrawable(new Drawable[]{drawable});
+                mIconGenerator.setBackground(makeRecClusterBackground()/*drawables*/);
+                String description = staticCluster.getDescription();
+                descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(description));
+            }else {
+
+                int bucket = getBucket(cluster);
+                StaticCluster staticCluster = (StaticCluster) cluster;
+                mIconGenerator.setBackground(makeClusterBackground());
+                mColoredCircleBackground.getPaint().setColor(getColor(bucket));
+                String description = staticCluster.getDescription();
+                descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
+            }
+
         // TODO: consider adding anchor(.5, .5) (Individual markers will overlap more often)
         markerOptions.icon(descriptor);
     }
 
+    @Inject
+    Resources resources;
     /**
      * Called after the marker for a Cluster has been added to the map.
      */
     protected void onClusterRendered(Cluster<T> cluster, Marker marker) {
-        float zoom = mMap.getMapStatus().zoom;
-        int bucket = getBucket(cluster);
-        StaticCluster staticCluster = (StaticCluster) cluster;
-        String description = staticCluster.getDescription();
-
         BitmapDescriptor descriptor;
-        mColoredCircleBackground.getPaint().setColor(getColor(bucket));
-        if (zoom >= 13) {
-            descriptor = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-        }else {
-            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
+        if (mZoom >= 13) {
+//            descriptor = BitmapDescriptorFactory.fromResource(R.drawable.popup);
+            StaticCluster staticCluster = (StaticCluster) cluster;
+//            Drawable drawable = new BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.popup));
+
+//            mColoredCircleBackground.getPaint().setColor(getColor(bucket));
+            String description = staticCluster.getDescription();
+            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(description));
+            marker.setIcon(descriptor);
         }
-        marker.setIcon(descriptor);
+
     }
 
     /**
