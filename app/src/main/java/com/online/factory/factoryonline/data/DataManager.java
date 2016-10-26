@@ -12,6 +12,7 @@ import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
+import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.UserResponse;
@@ -141,7 +142,11 @@ public class DataManager {
         }
     }
 
-    public Observable<List<Factory>> getStreetFactories(int streetId) {
+    public Observable<FactoryResponse> getStreetFactories(int streetId) {
         return factoryApi.getStreetFactories(streetId);
+    }
+
+    public Observable<FactoryPoiResponse> getLatLngs(int cityId) {
+        return factoryApi.getLatLngs(cityId);
     }
 }

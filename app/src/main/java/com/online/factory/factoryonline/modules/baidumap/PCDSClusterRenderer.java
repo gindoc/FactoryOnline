@@ -698,7 +698,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
      * The default implementation draws a circle with a rough count of the number of items.
      */
     protected void onBeforeClusterRendered(Cluster<T> cluster, MarkerOptions markerOptions) {
-//        mMap.getMapStatus().zoom
+//        float zoom = mMap.getMapStatus().zoom;
         int bucket = getBucket(cluster);
         StaticCluster staticCluster = (StaticCluster) cluster;
         String description = staticCluster.getDescription();
@@ -710,7 +710,11 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
 //        }
         BitmapDescriptor descriptor;
         mColoredCircleBackground.getPaint().setColor(getColor(bucket));
-        descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
+//        if (zoom >= 13) {
+//            descriptor = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
+//        }else {
+            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
+//        }
         // TODO: consider adding anchor(.5, .5) (Individual markers will overlap more often)
         markerOptions.icon(descriptor);
     }
@@ -719,6 +723,19 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
      * Called after the marker for a Cluster has been added to the map.
      */
     protected void onClusterRendered(Cluster<T> cluster, Marker marker) {
+        float zoom = mMap.getMapStatus().zoom;
+        int bucket = getBucket(cluster);
+        StaticCluster staticCluster = (StaticCluster) cluster;
+        String description = staticCluster.getDescription();
+
+        BitmapDescriptor descriptor;
+        mColoredCircleBackground.getPaint().setColor(getColor(bucket));
+        if (zoom >= 13) {
+            descriptor = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
+        }else {
+            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(getClusterText(bucket,description)));
+        }
+        marker.setIcon(descriptor);
     }
 
     /**

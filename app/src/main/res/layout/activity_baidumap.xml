@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity" />
+    </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
         android:layout_width="fill_parent"
@@ -31,15 +37,23 @@
         <include layout="@layout/line" />
 
         <LinearLayout
+            android:id="@+id/ll_factory_list"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
+            android:background="@android:color/white"
             android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#F0F0F0" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#EDEDED" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,13 +82,9 @@
                     android:padding="@dimen/x10"
                     android:text="收起"
                     android:textColor="#232323"
+                    android:onClick="@{()->view.retract()}"
                     android:textSize="16sp" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#EDEDED" />
 
             <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
                 android:id="@+id/recyclerView"

@@ -3,8 +3,12 @@ package com.online.factory.factoryonline.modules.baidumap;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.FactoryPoi;
+import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
+import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -24,19 +28,38 @@ public class BaiduMapPresent extends BasePresenter<BaiduMapConstract.View> imple
     }
 
     @Override
-    public void getLatLngList(int streetId) {
+    public void getStreetFactoryList(int streetId) {
         dataManager.getStreetFactories(streetId)
-                .compose(getView().<List<Factory>>getBindToLifecycle())
+                .compose(getView().<FactoryResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<List<Factory>>() {
+                .subscribe(new RxSubscriber<FactoryResponse>() {
                     @Override
-                    public void _onNext(List<Factory> factories) {
-
+                    public void _onNext(FactoryResponse response) {
+                        getView().loadFactories(response.getFactory());
                     }
 
                     @Override
                     public void _onError(Throwable throwable) {
+                    }
+                });
+    }
+
+    @Override
+    public void getLatLngList(int cityId) {
+        dataManager.getLatLngs(cityId)
+                .compose(getView().<FactoryPoiResponse>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<FactoryPoiResponse>() {
+                    @Override
+                    public void _onNext(FactoryPoiResponse response) {
+                        getView().loadMarker(response.getFactoryPois());
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+
                     }
                 });
     }

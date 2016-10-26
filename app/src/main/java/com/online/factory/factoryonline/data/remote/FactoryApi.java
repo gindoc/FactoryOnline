@@ -4,7 +4,9 @@ package com.online.factory.factoryonline.data.remote;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryInfo;
+import com.online.factory.factoryonline.models.FactoryPoi;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.UserResponse;
@@ -88,5 +90,8 @@ public interface FactoryApi {
     Observable<UserResponse> getUser();
 
     @GET("/publicmessages/{streetId}")
-    Observable<List<Factory>> getStreetFactories(@Path("streetId") int streetId);
+    Observable<FactoryResponse> getStreetFactories(@Path("streetId") int streetId);
+
+    @GET("/factorypoi/{cityId}")
+    Observable<FactoryPoiResponse> getLatLngs(@Path("cityId") int cityId);
 }
