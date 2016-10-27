@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
@@ -24,12 +27,14 @@ import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 /**
@@ -49,6 +54,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     HomeRecyclerViewAdapter mAdapter;
 
     @Inject
+    LocationClient locationClient;
+
+    @Inject
+    BehaviorSubject subject;
+    @Inject
     public HomeFragment() {
     }
 
@@ -67,6 +77,21 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
+        locationClient.start();
+        locationClient.requestLocation();
+        subject.subscribe(new RxSubscriber<BDLocation>() {
+            @Override
+            public void _onNext(BDLocation bdLocation) {
+                Timber.d("定位成功");
+                mBinding.tvCity.setText(bdLocation.getProvince());
+            }
+
+            @Override
+            public void _onError(Throwable throwable) {
+
+            }
+        });
+
     }
 
     @Nullable

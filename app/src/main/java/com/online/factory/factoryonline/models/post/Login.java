@@ -9,7 +9,17 @@ public class Login {
 
     private String login_key_md5;
 
+    private String device_id;
+
     private int login_type;//1.sms 2.pwd
+
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
+    }
 
     public String getUser_name() {
         return user_name;

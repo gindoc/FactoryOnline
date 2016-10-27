@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<android.support.v7.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择地址"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+</android.support.v7.widget.Toolbar>
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="?attr/actionBarSize"
+           android:text="当前定位城市"
+           android:paddingLeft="@dimen/padding_size"
+           android:gravity="center_vertical"
+           android:textColor="@color/infoColor"
+           android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+       <include layout="@layout/line"/>
+       <TextView
+           android:id="@+id/tv_current_city"
+           android:layout_width="match_parent"
+           android:paddingLeft="@dimen/padding_size"
+           android:layout_height="?attr/actionBarSize"
+           tools:text="东莞市"
+           android:gravity="center_vertical"
+           android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+       <include layout="@layout/line"/>
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="?attr/actionBarSize"
+           android:text="所有城市"
+           android:textColor="@color/infoColor"
+           android:paddingLeft="@dimen/padding_size"
+           android:gravity="center_vertical"
+           android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+       <include layout="@layout/line"/>
+</LinearLayout>
+</layout>

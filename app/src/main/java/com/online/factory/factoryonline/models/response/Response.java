@@ -11,6 +11,16 @@ public class Response {
 
     private String erro_msg;
 
+    private String salt;
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
     public String getErro_msg() {
         return erro_msg;
     }

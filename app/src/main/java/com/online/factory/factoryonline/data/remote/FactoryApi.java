@@ -83,6 +83,9 @@ public interface FactoryApi {
     @POST("/users")
     Observable<Response> regist(@Body RequestBody requestBody);
 
+    @GET("/users/salt/{username}")
+    Observable<Response> getSalt(@Path("username")String userName);
+
     @POST("/user")
     Observable<UserResponse> login(@Body RequestBody requestBody);
 

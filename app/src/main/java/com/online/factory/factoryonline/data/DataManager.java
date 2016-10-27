@@ -119,6 +119,11 @@ public class DataManager {
         return factoryApi.regist(builder.build());
     }
 
+    /**
+     * 登录
+     * @param login
+     * @return
+     */
     public Observable<UserResponse> login(Login login){
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
@@ -129,6 +134,10 @@ public class DataManager {
         return factoryApi.login(builder.build());
     }
 
+    /**
+     * 获取当前登录用户的个人信息
+     * @return
+     */
     public Observable<UserResponse> getUser(){
         User localUser = Saver.getSerializableObject(SharePreferenceKey.USER);
         if( localUser!= null){
