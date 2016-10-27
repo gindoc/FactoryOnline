@@ -77,8 +77,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
-        locationClient.start();
-        locationClient.requestLocation();
+//        locationClient.start();
+//        locationClient.requestLocation();
         subject.subscribe(new RxSubscriber<BDLocation>() {
             @Override
             public void _onNext(BDLocation bdLocation) {
