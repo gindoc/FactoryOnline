@@ -40,8 +40,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                     @Override
                     public void _onNext(UserResponse response) {
                         loginContext.setmState(new LogInState());
-                        getView().loginSuccessfully();
                         Saver.saveSerializableObject(response.getUser(), SharePreferenceKey.USER);
+                        getView().loginSuccessfully();
                     }
 
                     @Override

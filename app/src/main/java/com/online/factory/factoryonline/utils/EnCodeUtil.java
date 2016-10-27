@@ -19,7 +19,7 @@ import java.io.StreamCorruptedException;
 public class EnCodeUtil {
 
     @NotNull
-    public static <T extends Object> String objectEncode(T object){
+    public static  String objectEncode(Object object){
         ByteArrayOutputStream baos = null;
         try {
             baos = new ByteArrayOutputStream();

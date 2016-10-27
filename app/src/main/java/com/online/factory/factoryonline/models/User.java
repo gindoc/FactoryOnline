@@ -17,6 +17,10 @@ public class User implements Serializable{
     private String avatar;
     private int type;
 
+    public User() {
+    }
+
+
     public int getId() {
         return id;
     }

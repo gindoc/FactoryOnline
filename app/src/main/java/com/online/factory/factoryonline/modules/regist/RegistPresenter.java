@@ -3,12 +3,15 @@ package com.online.factory.factoryonline.modules.regist;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.modules.login.LogInState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.MD5;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -37,10 +40,7 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
 
     @Override
     public void regist(Regist regist) {
-        final Login loginBean = new Login();
-        loginBean.setLogin_key_md5(MD5.getMD5(regist.getPwd()));
-        loginBean.setLogin_type(2);
-        loginBean.setUser_name(regist.getPhone_num());
+
         dataManager.regist(regist)
                 .compose(RxResultHelper.<Response>handleResult())
                 .compose(getView().<Response>getBindToLifecycle())
@@ -49,8 +49,7 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                 .subscribe(new RxSubscriber<Response>() {
                     @Override
                     public void _onNext(Response response) {
-                        getView().registSuccessfully();
-                        login(loginBean);
+                        getView().registSuccessfully(response.getSalt());
                     }
 
                     @Override
@@ -61,16 +60,17 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
 
     }
 
-    private void login(Login loginBean) {
+    public void login(Login loginBean) {
         dataManager.login(loginBean)
-                .compose(RxResultHelper.<Response>handleResult())
-                .compose(getView().<Response>getBindToLifecycle())
+                .compose(RxResultHelper.<UserResponse>handleResult())
+                .compose(getView().<UserResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<Response>() {
+                .subscribe(new RxSubscriber<UserResponse>() {
                     @Override
-                    public void _onNext(Response response) {
+                    public void _onNext(UserResponse userResponse) {
                         loginContext.setmState(new LogInState());
+                        Saver.saveSerializableObject(userResponse.getUser(),SharePreferenceKey.USER);
                         getView().loginSuccessfully();
                     }
 
