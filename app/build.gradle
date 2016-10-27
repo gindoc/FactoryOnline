@@ -60,7 +60,6 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
     compile "com.google.guava:guava:$rootProject.guavaVersion"
-
     // Add Dagger dependencies
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
@@ -86,15 +85,15 @@ dependencies {
     compile 'com.github.aurae.retrofit2:converter-logansquare:1.4.1'
     compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
-
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-
     testCompile "junit:junit:$rootProject.junitVersion"
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
-    testCompile('org.robolectric:robolectric:3.0') {
+    testCompile('org.robolectric:robolectric:3.0')
+    {
         exclude group: 'commons-logging', module: 'commons-logging'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
+    compile files('libs/jsms_android-1.1.0.jar')
 }
