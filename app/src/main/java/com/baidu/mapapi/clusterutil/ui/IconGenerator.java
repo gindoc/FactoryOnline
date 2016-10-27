@@ -212,9 +212,9 @@ public class IconGenerator {
         // Force setting of padding.
         // setBackgroundDrawable does not call setPadding if the background has 0 padding.
         if (background != null) {
-            Rect rect = new Rect();
-            background.getPadding(rect);
-            mContainer.setPadding(rect.left, rect.top, rect.right, rect.bottom);
+//            Rect rect = new Rect();
+//            background.getPadding(rect);
+//            mContainer.setPadding(rect.left, rect.top, rect.right, rect.bottom);
         } else {
             mContainer.setPadding(0, 0, 0, 0);
         }

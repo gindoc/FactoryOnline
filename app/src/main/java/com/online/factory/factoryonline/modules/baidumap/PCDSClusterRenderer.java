@@ -122,6 +122,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
      */
     private float mZoom;
 
+    private Context mContext;
     private final ViewModifier mViewModifier = new ViewModifier();
 
     private ClusterManager.OnClusterClickListener<T> mClickListener;
@@ -130,6 +131,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
     private ClusterManager.OnClusterItemInfoWindowClickListener<T> mItemInfoWindowClickListener;
 
     public PCDSClusterRenderer(Context context, BaiduMap map, ClusterManager<T> clusterManager) {
+        mContext = context;
         mMap = map;
         mDensity = context.getResources().getDisplayMetrics().density;
         mIconGenerator = new IconGenerator(context);
@@ -179,14 +181,15 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
 
     private LayerDrawable makeRecClusterBackground(){
         mColoredCircleBackground = new ShapeDrawable(new RectShape());
-        Drawable drawable = resources.getDrawable(R.drawable.gray_solid_rectangle_background);
 
+        Resources resources = mContext.getResources();
+        Drawable drawable = resources.getDrawable(R.drawable.popup);
 //        ShapeDrawable outline = new ShapeDrawable(new RectShape());
 //        outline.getPaint().setColor(Color.parseColor("#000000")); // Transparent white.
-        LayerDrawable background = new LayerDrawable(new Drawable[]{/*outline*/drawable, mColoredCircleBackground});
+        LayerDrawable background = new LayerDrawable(new Drawable[]{/*outline*/drawable});
         background.setAlpha(125);
         int strokeWidth = (int) (mDensity * 2);
-        background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
+//        background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
         return background;
     }
     private com.baidu.mapapi.clusterutil.ui.SquareTextView makeSquareTextView(Context context) {
@@ -712,8 +715,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
     protected void onBeforeClusterItemRendered(T item, MarkerOptions markerOptions) {
     }
 
-    @Inject
-    Context context;
+
     /**
      * Called before the marker for a Cluster is added to the map.
      * The default implementation draws a circle with a rough count of the number of items.
@@ -729,11 +731,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
         BitmapDescriptor descriptor;
 
             if (mZoom >= 13) {
-
-    //            descriptor = BitmapDescriptorFactory.fromResource(R.drawable.popup);
                 StaticCluster staticCluster = (StaticCluster) cluster;
-                Drawable drawable = resources.getDrawable(R.drawable.popup);
-                LayerDrawable drawables = new LayerDrawable(new Drawable[]{drawable});
                 mIconGenerator.setBackground(makeRecClusterBackground()/*drawables*/);
                 String description = staticCluster.getDescription();
                 descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(description));
@@ -751,23 +749,11 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
         markerOptions.icon(descriptor);
     }
 
-    @Inject
-    Resources resources;
+
     /**
      * Called after the marker for a Cluster has been added to the map.
      */
     protected void onClusterRendered(Cluster<T> cluster, Marker marker) {
-        BitmapDescriptor descriptor;
-        if (mZoom >= 13) {
-//            descriptor = BitmapDescriptorFactory.fromResource(R.drawable.popup);
-            StaticCluster staticCluster = (StaticCluster) cluster;
-//            Drawable drawable = new BitmapDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.popup));
-
-//            mColoredCircleBackground.getPaint().setColor(getColor(bucket));
-            String description = staticCluster.getDescription();
-            descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(description));
-            marker.setIcon(descriptor);
-        }
 
     }
 
