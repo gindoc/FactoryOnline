@@ -1,6 +1,7 @@
 {
-  "message": "成功",
-  "pois": [
+  "erro_code":200,
+  "erro_msg":"成功",
+  "factoryPois": [
     {
       "address": "大岭山镇德政街",
       "city": "东莞市",

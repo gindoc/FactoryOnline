@@ -6,19 +6,24 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.databinding.ActivityPublishRentalBinding;
+import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment;
 import com.online.factory.factoryonline.utils.Saver;
+import com.online.factory.factoryonline.utils.Validate;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -79,7 +84,19 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
                     return true;
                 }
             });
-       }
+        }
+
+        mBinding.ivSelectedImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PublishRentalActivity.this, AlbumActivity.class);
+                intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
+                        mSelectedImage);
+                intent.putExtra(REQUEST_CODE, TO_PHOTO_SELECTED);
+                startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
+            }
+        });
+        mBinding.ivSelectedImg.setClickable(false);
     }
 
     private void initToolBar() {
@@ -107,7 +124,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
     }
 
-    public void pickMore(){
+    public void pickMore() {
         Intent intent = new Intent(this, AlbumActivity.class);
         intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
                 mSelectedImage);
@@ -115,13 +132,13 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
     }
 
-    public void viewSelectedImage(){
+   /* public void viewSelectedImage() {
         Intent intent = new Intent(this, AlbumActivity.class);
         intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
                 mSelectedImage);
         intent.putExtra(REQUEST_CODE, TO_PHOTO_SELECTED);
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -136,7 +153,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     public void savePublishRental() {
         Publish publish = savePublish();
-        Saver.saveSerializableObject(publish , SharePreferenceKey.PUBLISH);
+        Saver.saveSerializableObject(publish, SharePreferenceKey.PUBLISH);
     }
 
 
@@ -161,6 +178,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             mBinding.ivPickImg.setVisibility(View.GONE);
             mBinding.tvPickImg.setVisibility(View.GONE);
             mBinding.ivPicMore.setVisibility(View.VISIBLE);
+            mBinding.ivSelectedImg.setClickable(true);
         }
     }
 
@@ -197,7 +215,13 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             publish.setContact_num(contactName);
         }
         if (!TextUtils.isEmpty(contactNum)) {
-            publish.setContact_num(contactNum);
+            try {
+                Validate.validatePhoneNum(contactNum);
+                publish.setContact_num(contactNum);
+            } catch (ValidateException e) {
+                CustomDialog.createAlertDialog(this, "请输入正确的手机号", contactNum).show();
+                e.printStackTrace();
+            }
         }
         publish.setPics(mSelectedImage.toArray(new String[mSelectedImage.size()]));
         return publish;

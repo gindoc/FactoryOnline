@@ -235,7 +235,7 @@
                     <com.online.factory.factoryonline.customview.RoundImageView
                         android:layout_width="@dimen/x80"
                         android:layout_height="@dimen/x80"
-                        android:src="@drawable/logo"
+                        android:src="@drawable/photo_head"
                         app:border_inside_color="#F7FFFF"
                         app:border_outside_color="#E8E4E5"
                         app:border_thickness="2dp"/>

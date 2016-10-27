@@ -139,6 +139,10 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     public void takePic(View view) {
+        if (mAdapter.getData().size() >= 9) {
+            Toast.makeText(getContext(), "最多选择9张图片", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File file = FileUtils.createTempImage(getContext());
         mImageCapturePath = file.toString();

@@ -77,7 +77,7 @@ public class DataManagerModule {
         AssetManager assetManager = ComponentHolder.getAppComponent().getContext().getAssets();
         try {
             String fileName;
-            if (path.matches("^(/scrollMsgs)$")) {//匹配/scrollMsgs
+            if (path.matches("^(/scrollMsgs)$")) {      //匹配/scrollMsgs
                 fileName = "ScrollMsgs.json";
             }else if(path.matches("^(/factoryInfos/[1-9]\\d*/[1-9]\\d*)")) {
                 fileName = "FactoryResponse.json";
@@ -95,14 +95,18 @@ public class DataManagerModule {
                 fileName = "Regist.json";
             }else if(path.matches("^(/user)")){
                 fileName = "UserResponse.json";
+            }else if(path.matches("^(/publicmessages/[1-9]\\d*)")){
+                fileName = "FactoryResponse.json";
+            }else if (path.matches("^(/factorypoi/[1-9]\\d*)")){
+                fileName = "FactoryPois.json";
             }else {
                 fileName = "SlideUrl.json";
             }
             reader = new BufferedReader(new InputStreamReader(assetManager.open(fileName)));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

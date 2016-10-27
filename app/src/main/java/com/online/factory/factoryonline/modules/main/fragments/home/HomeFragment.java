@@ -103,12 +103,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.setPresenter(mPresenter);
         mHeaderBinding.setView(this);
 
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        mBinding.recyclerView.setScrollChangedListener(this);
-        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
-        mBinding.recyclerView.init();
-        mAdapter.setOnItemClickListener(this);
+        initRecyclerView();
 
         findFactory();
         mHeaderBinding.rbFind.setChecked(true); //设置“找房”为选中状态
@@ -118,6 +113,15 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mPresenter.requestFactoryInfo();
 
         return mBinding.getRoot();
+    }
+
+    private void initRecyclerView() {
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        mBinding.recyclerView.setScrollChangedListener(this);
+        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
+        mBinding.recyclerView.init();
+        mAdapter.setOnItemClickListener(this);
     }
 
     /**

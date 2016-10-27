@@ -93,12 +93,16 @@ public class PCDSAlgorithm<T extends ClusterItem> implements Algorithm<T> {
         } else if(zoom >= 10 && zoom < 13){
             //显示镇区聚集点
             results = getClustersByDistrict();
-        }else if(zoom >= 13 && zoom <17){
-            //显示街道聚集点
+        }else {
             results = getClustersByStreet();
-        }else if(zoom>= 17){
-            results = getClustersByZoomLevel(zoom);
         }
+//        else if(zoom >= 13 && zoom <17){
+//            //显示街道聚集点
+//            results = getClustersByStreet();
+//        }
+        /*else if(zoom>= 17){
+            results = getClustersByZoomLevel(zoom);
+        }*/
         return results;
     }
 
