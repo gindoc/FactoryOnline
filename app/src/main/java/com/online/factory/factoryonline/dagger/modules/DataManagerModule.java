@@ -157,9 +157,9 @@ public class DataManagerModule {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.addInterceptor(loggingInterceptor);
-//        if (localDataInterceptor != null) {
-//            builder.addInterceptor(localDataInterceptor);
-//        }
+        if (localDataInterceptor != null) {
+            builder.addInterceptor(localDataInterceptor);
+        }
         OkHttpClient okHttpClient = builder.build();
         return okHttpClient;
     }

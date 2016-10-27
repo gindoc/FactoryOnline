@@ -85,6 +85,18 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
                 }
             });
         }
+
+        mBinding.ivSelectedImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PublishRentalActivity.this, AlbumActivity.class);
+                intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
+                        mSelectedImage);
+                intent.putExtra(REQUEST_CODE, TO_PHOTO_SELECTED);
+                startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
+            }
+        });
+        mBinding.ivSelectedImg.setClickable(false);
     }
 
     private void initToolBar() {
@@ -120,13 +132,13 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
     }
 
-    public void viewSelectedImage() {
+   /* public void viewSelectedImage() {
         Intent intent = new Intent(this, AlbumActivity.class);
         intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
                 mSelectedImage);
         intent.putExtra(REQUEST_CODE, TO_PHOTO_SELECTED);
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -166,6 +178,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             mBinding.ivPickImg.setVisibility(View.GONE);
             mBinding.tvPickImg.setVisibility(View.GONE);
             mBinding.ivPicMore.setVisibility(View.VISIBLE);
+            mBinding.ivSelectedImg.setClickable(true);
         }
     }
 

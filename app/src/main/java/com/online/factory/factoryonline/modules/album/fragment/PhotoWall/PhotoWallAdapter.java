@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
@@ -71,6 +72,10 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
             @Override
             public void onClick(View v) {
                 String selectedImage = mDirPath + "/" + data.get(position);
+                if (mSelectedItem.size() >= 9) {
+                    Toast.makeText(mContext, "最多选择9张图片", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (mSelectedItem.contains(selectedImage)) {
                     mSelectedItem.remove(selectedImage);
                     viewModel.setClick(false);
