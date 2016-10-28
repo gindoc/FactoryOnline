@@ -18,3 +18,5 @@
 -keep class com.baidu.** {*;}
 -keep class vi.com.** {*;}    
 -dontwarn com.baidu.**
+-keep class cn.jpush.sms.SMSSDK {*;}
+-keep class cn.jpush.sms.listener.** {*;}

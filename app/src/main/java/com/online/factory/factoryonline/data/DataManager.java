@@ -158,4 +158,13 @@ public class DataManager {
     public Observable<FactoryPoiResponse> getLatLngs(int cityId) {
         return factoryApi.getLatLngs(cityId);
     }
+
+    public Observable<JsonObject> getSmsCode(String phoneNum) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        builder.addFormDataPart("mobile", phoneNum)
+                .addFormDataPart("temp_id", "1");
+
+        return factoryApi.getSmsCode(builder.build());
+    }
 }

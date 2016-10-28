@@ -17,6 +17,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
 
+import cn.jpush.sms.SMSSDK;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -48,6 +49,7 @@ public class BaseApplication extends Application {
 
         // 初始化baiduMap
         SDKInitializer.initialize(this);
+        SMSSDK.getInstance().initSdk(this);
 
         //初始化Timber
         if (BuildConfig.DEBUG) {

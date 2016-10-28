@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.dagger.modules;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.util.Base64;
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 import com.online.factory.factoryonline.BuildConfig;
@@ -10,15 +11,14 @@ import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.utils.ComponentHolder;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 
 import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -30,9 +30,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okio.Buffer;
-import okio.BufferedSink;
-import okio.Okio;
-import okio.Sink;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -122,18 +119,31 @@ public class DataManagerModule {
             public Response intercept(Chain chain) throws IOException {
                 String responseString = createResponseBody(chain);
                 Request request = chain.request();
-
+                Request realRequest = null;
                 Timber.d("requestBody : %s",bodyToString(request.body()));
-                Response intercepterResponse = new Response.Builder()
-                        .code(200)
-                        .message(responseString)
-                        .request(request)
-                        .protocol(Protocol.HTTP_1_0)
-                        .body(ResponseBody.create(MediaType.parse("application/json"), responseString
-                                .getBytes()))
-                        .addHeader("content-type", "application/json")
-                        .build();
-                return intercepterResponse;
+                Response intercepterResponse = null;
+                if (request.url().toString().equals("https://api.sms.jpush.cn/v1/codes")) {
+                    String s = "2f0bf84aec9e72e58d647ea2:4930a1ae980aaebb491d152b";
+                    byte[] b = s.getBytes();
+                    String base64_auth_string = Base64.encodeToString(b, Base64.NO_WRAP);
+                    realRequest = request.newBuilder().addHeader("Authorization", "Basic " + base64_auth_string).build();
+                    Headers headers = realRequest.headers();
+                    for (int i=0;i<headers.size();i++) {
+                        Timber.e(headers.get("Authorization"));
+                    }
+                }else {
+                    intercepterResponse = new Response.Builder()
+                            .code(200)
+                            .message(responseString)
+                            .request(request)
+                            .protocol(Protocol.HTTP_1_0)
+                            .body(ResponseBody.create(MediaType.parse("application/json"), responseString
+                                    .getBytes()))
+                            .addHeader("content-type", "application/json")
+                            .build();
+                }
+
+                return intercepterResponse == null?chain.proceed(realRequest):intercepterResponse;
             }
         };
         return BuildConfig.DEBUG ? interceptor : null;

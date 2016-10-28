@@ -97,4 +97,7 @@ public interface FactoryApi {
 
     @GET("/factorypoi/{cityId}")
     Observable<FactoryPoiResponse> getLatLngs(@Path("cityId") int cityId);
+
+    @POST("https://api.sms.jpush.cn/v1/codes")
+    Observable<JsonObject> getSmsCode(@Body RequestBody requestBody);
 }
