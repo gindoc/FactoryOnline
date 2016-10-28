@@ -126,7 +126,7 @@ public class DataManagerModule {
                     String s = "2f0bf84aec9e72e58d647ea2:4930a1ae980aaebb491d152b";
                     byte[] b = s.getBytes();
                     String base64_auth_string = Base64.encodeToString(b, Base64.NO_WRAP);
-                    realRequest = request.newBuilder().addHeader("Authorization", base64_auth_string).build();
+                    realRequest = request.newBuilder().addHeader("Authorization", "Basic " + base64_auth_string).build();
                     Headers headers = realRequest.headers();
                     for (int i=0;i<headers.size();i++) {
                         Timber.e(headers.get("Authorization"));

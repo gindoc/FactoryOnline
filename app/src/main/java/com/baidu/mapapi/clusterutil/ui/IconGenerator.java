@@ -63,7 +63,50 @@ public class IconGenerator {
 
         return makeIcon();
     }
+    public Bitmap makeSpecificIcon(String text) {
+        if (mTextView != null) {
+            mTextView.setText(text);
+        }
 
+        return makeSpecificIcon();
+    }
+    public Bitmap makeSpecificIcon(){
+        int measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//        int heightMesureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.AT_MOST);
+        mContainer.measure(100, 100);
+
+//        int measuredWidth = mContainer.getMeasuredWidth();
+//        int measuredHeight = mContainer.getMeasuredHeight();
+
+        int measuredWidth = mContainer.getMeasuredWidth();
+        int measuredHeight = mContainer.getMeasuredHeight()/3;
+        mContainer.layout(0, 0, measuredWidth, measuredHeight);
+
+        if (mRotation == 1 || mRotation == 3) {
+            measuredHeight = mContainer.getMeasuredWidth();
+            measuredWidth = mContainer.getMeasuredHeight();
+        }
+
+        Bitmap r = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888);
+        r.eraseColor(Color.TRANSPARENT);
+
+        Canvas canvas = new Canvas(r);
+
+        if (mRotation != 0) {
+            // do nothing
+            if (mRotation == 1) {
+                canvas.translate(measuredWidth, 0);
+                canvas.rotate(90);
+            } else if (mRotation == 2) {
+                canvas.rotate(180, measuredWidth / 2, measuredHeight / 2);
+            } else {
+                canvas.translate(0, measuredHeight);
+                canvas.rotate(270);
+            }
+        }
+        mContainer.draw(canvas);
+        return r;
+    }
     /**
      * Creates an icon with the current content and style.
      * <p/>
@@ -72,7 +115,8 @@ public class IconGenerator {
      */
     public Bitmap makeIcon() {
         int measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        mContainer.measure(measureSpec, measureSpec);
+//        int heightMesureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.AT_MOST);
+        mContainer.measure(measureSpec, /*heightMesureSpec*/measureSpec);
 
         int measuredWidth = mContainer.getMeasuredWidth();
         int measuredHeight = mContainer.getMeasuredHeight();
@@ -212,9 +256,9 @@ public class IconGenerator {
         // Force setting of padding.
         // setBackgroundDrawable does not call setPadding if the background has 0 padding.
         if (background != null) {
-//            Rect rect = new Rect();
-//            background.getPadding(rect);
-//            mContainer.setPadding(rect.left, rect.top, rect.right, rect.bottom);
+            Rect rect = new Rect();
+            background.getPadding(rect);
+            mContainer.setPadding(rect.left, rect.top, rect.right, rect.bottom);
         } else {
             mContainer.setPadding(0, 0, 0, 0);
         }

@@ -180,15 +180,14 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
     }
 
     private LayerDrawable makeRecClusterBackground(){
-        mColoredCircleBackground = new ShapeDrawable(new RectShape());
 
         Resources resources = mContext.getResources();
-        Drawable drawable = resources.getDrawable(R.drawable.popup);
+        Drawable drawable = resources.getDrawable(R.drawable.ic_location);
 //        ShapeDrawable outline = new ShapeDrawable(new RectShape());
 //        outline.getPaint().setColor(Color.parseColor("#000000")); // Transparent white.
         LayerDrawable background = new LayerDrawable(new Drawable[]{/*outline*/drawable});
-        background.setAlpha(125);
-        int strokeWidth = (int) (mDensity * 2);
+//        background.setAlpha(125);
+//        int strokeWidth = (int) (mDensity * 2);
 //        background.setLayerInset(1, strokeWidth, strokeWidth, strokeWidth, strokeWidth);
         return background;
     }
@@ -734,7 +733,7 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
                 StaticCluster staticCluster = (StaticCluster) cluster;
                 mIconGenerator.setBackground(makeRecClusterBackground()/*drawables*/);
                 String description = staticCluster.getDescription();
-                descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeIcon(description));
+                descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeSpecificIcon(description));
             }else {
 
                 int bucket = getBucket(cluster);
