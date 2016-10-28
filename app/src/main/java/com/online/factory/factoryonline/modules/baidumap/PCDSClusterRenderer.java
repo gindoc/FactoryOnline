@@ -22,6 +22,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.MessageQueue;
 import android.util.SparseArray;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
@@ -731,11 +733,13 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
 
             if (mZoom >= 13) {
                 StaticCluster staticCluster = (StaticCluster) cluster;
-                mIconGenerator.setBackground(makeRecClusterBackground()/*drawables*/);
+                mIconGenerator.setBackground(makeRecClusterBackground());
                 String description = staticCluster.getDescription();
-                descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeSpecificIcon(description));
+                View view = LayoutInflater.from(mContext).inflate(R.layout.icon_baidu_location, null);
+                TextView textView = (TextView) view.findViewById(R.id.tv_street);
+                textView.setText(description + "(" + getBucket(cluster) + ")");
+                descriptor = BitmapDescriptorFactory.fromBitmap(mIconGenerator.makeStreetIcon(view));
             }else {
-
                 int bucket = getBucket(cluster);
                 StaticCluster staticCluster = (StaticCluster) cluster;
                 mIconGenerator.setBackground(makeClusterBackground());

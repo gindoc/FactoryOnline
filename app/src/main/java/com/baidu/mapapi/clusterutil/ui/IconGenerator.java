@@ -63,51 +63,23 @@ public class IconGenerator {
 
         return makeIcon();
     }
-    public Bitmap makeSpecificIcon(String text) {
-        if (mTextView != null) {
-            mTextView.setText(text);
-        }
 
-        return makeSpecificIcon();
+    /**
+     * 将View转化成bitmap
+     * @param view  待转化的View
+     * @return
+     */
+    public Bitmap makeStreetIcon(View view) {
+        view.setDrawingCacheEnabled(true);
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.buildDrawingCache();
+        Bitmap cacheBitmap = view.getDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+
+        return bitmap;
     }
-    public Bitmap makeSpecificIcon(){
-        int measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-//        int heightMesureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.AT_MOST);
-        mContainer.measure(100, 100);                                       //TODO measure(measureSpec,measureSpec)和measure(100,100)效果一样
 
-//        int measuredWidth = mContainer.getMeasuredWidth();
-//        int measuredHeight = mContainer.getMeasuredHeight();
-
-        int measuredWidth = mContainer.getMeasuredWidth();
-        int measuredHeight = mContainer.getMeasuredHeight()/3;              //TODO 无法做到自适应内容
-        mContainer.layout(0, 0, measuredWidth, measuredHeight);
-
-        if (mRotation == 1 || mRotation == 3) {
-            measuredHeight = mContainer.getMeasuredWidth();
-            measuredWidth = mContainer.getMeasuredHeight();
-        }
-
-        Bitmap r = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888);
-        r.eraseColor(Color.TRANSPARENT);
-
-        Canvas canvas = new Canvas(r);
-
-        if (mRotation != 0) {
-            // do nothing
-            if (mRotation == 1) {
-                canvas.translate(measuredWidth, 0);
-                canvas.rotate(90);
-            } else if (mRotation == 2) {
-                canvas.rotate(180, measuredWidth / 2, measuredHeight / 2);
-            } else {
-                canvas.translate(0, measuredHeight);
-                canvas.rotate(270);
-            }
-        }
-        mContainer.draw(canvas);
-
-        return r;
-    }
     /**
      * Creates an icon with the current content and style.
      * <p/>
