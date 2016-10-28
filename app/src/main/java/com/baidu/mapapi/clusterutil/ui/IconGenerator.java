@@ -73,13 +73,13 @@ public class IconGenerator {
     public Bitmap makeSpecificIcon(){
         int measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 //        int heightMesureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.AT_MOST);
-        mContainer.measure(100, 100);
+        mContainer.measure(100, 100);                                       //TODO measure(measureSpec,measureSpec)和measure(100,100)效果一样
 
 //        int measuredWidth = mContainer.getMeasuredWidth();
 //        int measuredHeight = mContainer.getMeasuredHeight();
 
         int measuredWidth = mContainer.getMeasuredWidth();
-        int measuredHeight = mContainer.getMeasuredHeight()/3;
+        int measuredHeight = mContainer.getMeasuredHeight()/3;              //TODO 无法做到自适应内容
         mContainer.layout(0, 0, measuredWidth, measuredHeight);
 
         if (mRotation == 1 || mRotation == 3) {
@@ -105,6 +105,7 @@ public class IconGenerator {
             }
         }
         mContainer.draw(canvas);
+
         return r;
     }
     /**
@@ -115,8 +116,7 @@ public class IconGenerator {
      */
     public Bitmap makeIcon() {
         int measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-//        int heightMesureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.AT_MOST);
-        mContainer.measure(measureSpec, /*heightMesureSpec*/measureSpec);
+        mContainer.measure(measureSpec, measureSpec);
 
         int measuredWidth = mContainer.getMeasuredWidth();
         int measuredHeight = mContainer.getMeasuredHeight();
@@ -258,7 +258,8 @@ public class IconGenerator {
         if (background != null) {
             Rect rect = new Rect();
             background.getPadding(rect);
-            mContainer.setPadding(rect.left, rect.top, rect.right, rect.bottom);
+//            mContainer.setPadding(rect.left, rect.top, rect.right, rect.bottom);              //TODO 当mContainer的高度可以自适应内容时改回来
+            mContainer.setPadding(0, 0, 0, 0);
         } else {
             mContainer.setPadding(0, 0, 0, 0);
         }
