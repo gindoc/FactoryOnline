@@ -69,15 +69,13 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public LocationClient provideLocationClient(LocationClientOption option , BDLocationListener listener){
+    public LocationClient provideLocationClient(LocationClientOption option){
         LocationClient locationClient = new LocationClient(mApp,option);
-        locationClient.registerLocationListener(listener);
         return locationClient;
     }
     @Provides
-    @Singleton
-    public BDLocationListener provideBDLocationListener(BehaviorSubject subject){
-        return new MyLocationListener(subject);
+    public BDLocationListener provideBDLocationListener(){
+        return new MyLocationListener();
     }
     @Provides
     @Singleton

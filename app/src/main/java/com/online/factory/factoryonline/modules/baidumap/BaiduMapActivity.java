@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.baidumap;
 
+import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -9,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 import com.baidu.mapapi.clusterutil.clustering.Cluster;
 import com.baidu.mapapi.clusterutil.clustering.ClusterItem;
 import com.baidu.mapapi.clusterutil.clustering.ClusterManager;
@@ -17,7 +21,10 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MyLocationConfiguration;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -31,6 +38,8 @@ import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryPoi;
 import com.online.factory.factoryonline.models.LbsCloud;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.io.BufferedReader;
@@ -41,6 +50,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 /**
@@ -54,6 +64,15 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
     MapStatus ms;
     private ClusterManager<MyItem> mClusterManager;
     private PCDSClusterRenderer pcdsClusterRenderer;
+
+    @Inject
+    LocationClient mLocationClient;
+
+    @Inject
+    BDLocationListener mBdLocationListener;
+
+    @Inject
+    BehaviorSubject mBehaviorSubject;
 
     @Inject
     BaiduMapPresent mPresenter;
@@ -85,11 +104,47 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         mAdapter.setOnItemClickListener(this);
     }
 
+    private boolean isFirstLoc = true;
+
     private void initialMap() {
-        ms = new MapStatus.Builder().target(new LatLng(23.04813, 113.742078)).zoom(8).build();
+        ((MyLocationListener) mBdLocationListener).setBdLocationBehaviorSubject(mBehaviorSubject);
+        mLocationClient.registerLocationListener(mBdLocationListener);
+        mBehaviorSubject.compose(this.bindToLifecycle())
+                .subscribe(new RxSubscriber() {
+                    @Override
+                    public void _onNext(Object o) {
+                        BDLocation bdLocation = (BDLocation) o;
+                        Timber.e("纬度：" + bdLocation.getLatitude() + "   精度：" + bdLocation.getLongitude());
+                        // 定位数据
+                        MyLocationData data = new MyLocationData.Builder()
+                                // 定位精度bdLocation.getRadius()
+                                .accuracy(bdLocation.getRadius())
+                                // 此处设置开发者获取到的方向信息，顺时针0-360
+                                .direction(bdLocation.getDirection())
+                                // 经度
+                                .latitude(bdLocation.getLatitude())
+                                // 纬度
+                                .longitude(bdLocation.getLongitude())
+                                // 构建
+                                .build();
+                        mBaiduMap.setMyLocationData(data);
+                        if (isFirstLoc) {
+                            isFirstLoc = false;
+                            LatLng ll = new LatLng(bdLocation.getLatitude(),
+                                    bdLocation.getLongitude());
+                            MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(ll, 18);
+                            mBaiduMap.animateMapStatus(msu);
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {}
+                });
         mBaiduMap = mBinding.bmapView.getMap();
+        mBaiduMap.setMyLocationEnabled(true);
         mBaiduMap.setOnMapLoadedCallback(this);
-        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
+        mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null));
+        mLocationClient.start();
     }
 
     private void startCluster() {
@@ -223,6 +278,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
 
     @Override
     protected void onPause() {
+        mLocationClient.unRegisterLocationListener(mBdLocationListener);
         mBinding.bmapView.onPause();
         super.onPause();
     }
@@ -236,6 +292,8 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
     @Override
     protected void onDestroy() {
         mBinding.bmapView.onDestroy();
+        mLocationClient.stop();
+        mBaiduMap.setMyLocationEnabled(false);
         super.onDestroy();
     }
 }

@@ -9,6 +9,7 @@ import com.baidu.location.Poi;
 import java.util.List;
 
 import rx.subjects.BehaviorSubject;
+import timber.log.Timber;
 
 /**
  * Created by louiszgm on 2016/10/26.
@@ -17,8 +18,11 @@ import rx.subjects.BehaviorSubject;
 public class MyLocationListener implements BDLocationListener {
 
     private BehaviorSubject<BDLocation> bdLocationBehaviorSubject;
-    public MyLocationListener(BehaviorSubject subject) {
-        bdLocationBehaviorSubject = subject;
+    public MyLocationListener() {
+    }
+
+    public void setBdLocationBehaviorSubject(BehaviorSubject<BDLocation> bdLocationBehaviorSubject) {
+        this.bdLocationBehaviorSubject = bdLocationBehaviorSubject;
         bdLocationBehaviorSubject.ofType(BDLocation.class);
     }
 
