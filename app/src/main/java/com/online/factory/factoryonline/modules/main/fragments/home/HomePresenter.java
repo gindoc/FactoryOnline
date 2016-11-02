@@ -5,8 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
-import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
@@ -17,11 +15,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016.02.23

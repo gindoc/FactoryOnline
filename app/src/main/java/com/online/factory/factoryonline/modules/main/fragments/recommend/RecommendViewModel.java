@@ -5,7 +5,6 @@ import android.databinding.Bindable;
 
 import com.online.factory.factoryonline.BR;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
 
@@ -45,12 +44,12 @@ public class RecommendViewModel extends BaseObservable {
 
     @Bindable
     public String getPrice() {
-        return info.getPrice();
+        return info.getPrice()+"/㎡/月";
     }
 
     @Bindable
     public String getArea() {
-        return info.getRange();
+        return info.getRange()+"/㎡";
     }
 
     @Bindable

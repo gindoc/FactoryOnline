@@ -1,19 +1,13 @@
 package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
-import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
-import com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView;
 import com.online.factory.factoryonline.databinding.ItemRecommendListBinding;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
 import javax.inject.Provider;

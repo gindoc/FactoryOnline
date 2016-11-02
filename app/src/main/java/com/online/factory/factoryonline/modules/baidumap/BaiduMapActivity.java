@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.baidumap;
 
+import android.app.Dialog;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.res.AssetManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 

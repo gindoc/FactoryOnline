@@ -28,12 +28,12 @@ public class BaiduMapViewModel extends BaseObservable {
 
     @Bindable
     public String getFactoryPrice() {
-        return factory.getPrice();
+        return factory.getPrice()+"/㎡/月";
     }
 
     @Bindable
     public String getFactoryArea() {
-        return factory.getRange();
+        return factory.getRange()+"/㎡";
     }
 
     @Bindable

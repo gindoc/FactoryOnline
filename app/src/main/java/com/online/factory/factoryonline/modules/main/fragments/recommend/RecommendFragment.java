@@ -2,18 +2,14 @@ package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
 import android.app.Activity;
 import android.content.Context;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
@@ -25,7 +21,6 @@ import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;

@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
 
 import java.io.IOException;
 import java.util.List;

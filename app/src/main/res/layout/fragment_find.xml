@@ -1,51 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
         <variable
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
     </data>
-    <TableLayout android:layout_width="match_parent"
+
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/y85"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/ic_factory"
                 android:gravity="center"
-                android:padding="@dimen/x10"
-                android:onClick="@{()->view.publishRental()}"
-                android:text="发布求租信息"
-                android:textSize="14sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_map"
-                android:gravity="center"
-                android:padding="@dimen/x10"
-                android:onClick="@{()->view.useMap()}"
-                android:text="地图找房"
-                android:textSize="18sp" />
+                <com.online.factory.factoryonline.customview.RoundImageView
+                    android:layout_width="@dimen/x49"
+                    android:layout_height="@dimen/x49"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:src="@drawable/ic_msg_online" />
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/y15"
+                    android:text="发布求租信息"
+                    android:textColor="#575757"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/ic_office"
                 android:gravity="center"
-                android:padding="@dimen/x10"
-                android:text="专人服务"
-                android:textSize="18sp" />
+                android:orientation="vertical">
+
+                <com.online.factory.factoryonline.customview.RoundImageView
+                    android:layout_width="@dimen/x49"
+                    android:layout_height="@dimen/x49"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:src="@drawable/ic_msg_online" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/y15"
+                    android:text="地图找房"
+                    android:textColor="#575757"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.online.factory.factoryonline.customview.RoundImageView
+                    android:layout_width="@dimen/x49"
+                    android:layout_height="@dimen/x49"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:src="@drawable/ic_msg_online" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/y15"
+                    android:text="专人服务"
+                    android:textColor="#575757"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
 
         </TableRow>

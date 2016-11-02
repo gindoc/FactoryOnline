@@ -4,6 +4,7 @@
     xmlns:tool="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel" />
@@ -11,68 +12,114 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
+        android:layout_height="wrap_content"
         android:background="@drawable/button_click_background"
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/x10">
+        android:paddingBottom="@dimen/y11"
+        android:paddingLeft="@dimen/x11"
+        android:paddingRight="@dimen/x15"
+        android:paddingTop="@dimen/y12">
 
         <ImageView
             android:id="@+id/factory_img"
-            android:layout_width="@dimen/x120"
+            android:layout_width="@dimen/x108"
             android:layout_height="@dimen/y80"
-            android:layout_marginRight="@dimen/x10"
+            android:layout_marginRight="@dimen/x15"
             app:imageUrl="@{viewModel.factoryImg}" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y11"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@{viewModel.factoryName}"
-                android:textColor="@android:color/black"
+                android:textColor="#424242"
                 android:textSize="18sp"
-                tool:text="factoryName" />
+                tool:text="南城 带装修独院厂房25000" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y11"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#808080"
+                    android:text='@{viewModel.factoryArea}'
+                    android:textSize="16sp"
+                    tool:text="2500 ㎡" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#df3d3f"
+                    android:textSize="18sp"
+                    android:text="@{viewModel.factoryTotalPrice}"
+                    tool:text="25000元/月" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y11"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#808080"
                     android:text="@{viewModel.addressOverview}"
-                    android:textColor="@android:color/black"
                     android:textSize="16sp"
-                    tool:text="address" />
+                    tool:text="南城 - 雅苑" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="@{viewModel.factoryPrice}"
-                    android:textColor="@android:color/black"
+                    android:textColor="#808080"
                     android:textSize="16sp"
-                    tool:text="price" />
+                    android:text="@{viewModel.factoryPrice}"
+                    tool:text="10元/㎡/月" />
+            </LinearLayout>
 
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/textView2"
+            <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@{viewModel.factoryArea}"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tool:text="area" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/blue_tag"
+                    android:gravity="center"
+                    android:padding="@dimen/x3"
+                    android:text="空间大"
+                    android:layout_marginRight="@dimen/x10"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/green_tag"
+                    android:gravity="center"
+                    android:padding="@dimen/x3"
+                    android:text="空间大"
+                    android:textSize="16sp" />
+            </com.google.android.flexbox.FlexboxLayout>
+
         </LinearLayout>
 
     </LinearLayout>

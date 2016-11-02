@@ -14,8 +14,8 @@ public class Factory extends BaseEntity implements Serializable{
     private String thumbnail_url;
     private List<String> image_urls;
     private List<String> tags;
-    private String price;
-    private String range;
+    private float price;
+    private float range;
     private String description;
     private int id;
     private String address_overview;
@@ -56,19 +56,19 @@ public class Factory extends BaseEntity implements Serializable{
         this.tags = tags;
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public String getRange() {
+    public float getRange() {
         return range;
     }
 
-    public void setRange(String range) {
+    public void setRange(float range) {
         this.range = range;
     }
 
