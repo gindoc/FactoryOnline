@@ -114,7 +114,6 @@ public class VerticalScrollView extends ViewSwitcher implements ViewSwitcher.Vie
                                 @Override
                                 public void onClick(View v) {
                                     if (itemClickListener != null && news.size() > 0 && firstMsgIndex >=0 && secondMsgIndex>=0) {
-//                    itemClickListener.onItemClick(firstMsgIndex % news.size());
                                         Toast.makeText(mContext, "该功能暂未开放，敬请期待", Toast.LENGTH_SHORT).show();
                                     }
                                 }
