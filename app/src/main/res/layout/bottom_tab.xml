@@ -18,7 +18,7 @@
             style="@style/bottom_tab_style"
             android:drawableTop="@drawable/rb_home_drawable_selector"
             android:onClick="onClickHome"
-            android:text="首页"/>
+            android:text="厂房在线"/>
 
 
         <RadioButton

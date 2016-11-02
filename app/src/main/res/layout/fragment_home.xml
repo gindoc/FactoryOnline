@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/tv_city"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/x97"
                 android:layout_height="match_parent"
                 android:drawablePadding="@dimen/x6"
                 android:drawableRight="@drawable/ic_arrow_down"
@@ -31,17 +31,18 @@
                 android:paddingLeft="@dimen/x20"
                 android:paddingRight="@dimen/x19"
                 android:text="东莞"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="#424242"
                 android:textSize="18sp" />
 
             <LinearLayout
                 android:id="@+id/searchview"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/y8"
                 android:layout_marginRight="@dimen/x19"
                 android:layout_marginTop="@dimen/y8"
-                android:layout_weight="1"
                 android:background="@drawable/home_fragment_search_background"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -67,6 +68,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cacheColorHint="@null"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
     </LinearLayout>
 </layout>
