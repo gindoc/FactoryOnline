@@ -182,6 +182,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     private void initSwipeLayout() {
         mBinding.swipe.setColorSchemeResources(R.color.swipe_color_red, R.color.swipe_color_yellow, R.color
                 .swipe_color_blue);                                                      //初始化swipeRefleshLayout
+        mBinding.swipe.setProgressViewEndTarget(true, 300);
         mBinding.swipe.setOnRefreshListener(this);
     }
 

@@ -104,8 +104,6 @@ public class DropDownMenu extends LinearLayout {
         containerView.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         addView(containerView, 2);
 
-        containerView.setBackgroundColor(Color.TRANSPARENT);
-        setBackgroundColor(Color.TRANSPARENT);
     }
 
     /**
