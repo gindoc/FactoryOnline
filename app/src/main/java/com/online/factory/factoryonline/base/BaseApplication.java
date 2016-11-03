@@ -57,7 +57,7 @@ public class BaseApplication extends Application {
         }
 
         //替换系统默认异常处理Handler
-        Thread.setDefaultUncaughtExceptionHandler(new MyUnCaughtExceptionHandler());
+//        Thread.setDefaultUncaughtExceptionHandler(new MyUnCaughtExceptionHandler());
     }
 
     private void enabledStrictMode() {

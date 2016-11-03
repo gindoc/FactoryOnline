@@ -6,8 +6,6 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
-import com.online.factory.factoryonline.models.FactoryPoi;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;

@@ -3,8 +3,6 @@ package com.online.factory.factoryonline.data.remote;
 
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
-import com.online.factory.factoryonline.models.FactoryPoi;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
