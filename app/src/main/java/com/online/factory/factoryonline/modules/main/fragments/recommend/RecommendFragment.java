@@ -50,13 +50,13 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     RecommendCategoryAdapter mDistrictFirCategoryAdapter;  //推荐页面区域一级目录适配器
 
     @Inject
-    RecommendCategoryAdapter mDistrictSecCategoryAdapter;    //推荐页面区域二级目录适配器
+    RecommendWhiteCategoryAdapter mDistrictSecCategoryAdapter;    //推荐页面区域二级目录适配器
 
     @Inject
-    RecommendCategoryAdapter mPriceCategoryAdapter;           //推荐页面的价格目录
+    RecommendWhiteCategoryAdapter mPriceCategoryAdapter;           //推荐页面的价格目录
 
     @Inject
-    RecommendCategoryAdapter mAreaCategoryAdapter;
+    RecommendWhiteCategoryAdapter mAreaCategoryAdapter;
 
     @Inject
     RecommendPresenter mPresenter;
@@ -159,7 +159,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         });
     }
 
-    private void onItemClickAction(RecommendCategoryAdapter adapter, int position) {
+    private void onItemClickAction(RecommendWhiteCategoryAdapter adapter, int position) {
         adapter.getSubject().onNext(position);
         String title = adapter.getData().get(position);
         mBinding.dropDownMenu.setTabText(title);
@@ -172,7 +172,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         popViews.add(mDistrictBinding.getRoot());
         popViews.add(mPriceBinding.getRoot());
         popViews.add(mAreaBinding.getRoot());
-        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews/*, new TextView(getContext())*/);
+        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews);
         mDistrictFirCategoryAdapter.getSubject().onNext(0);
         mDistrictSecCategoryAdapter.getSubject().onNext(0);
         mPriceCategoryAdapter.getSubject().onNext(0);

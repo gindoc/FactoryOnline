@@ -7,6 +7,7 @@
         <import type="android.view.View" />
 
         <import type="android.text.TextUtils" />
+
         <variable
             name="viewModel"
             type="com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendViewModel" />
@@ -19,8 +20,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/y44"
+            android:background="#fff"
             android:gravity="center_vertical"
-            android:background="@{viewModel.isClick?@android:color/white:@color/recommend_category_first_background_selected}"
             android:orientation="vertical">
 
             <LinearLayout
@@ -28,36 +29,35 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/x20">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="@{viewModel.categoryName}"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
-                    android:textColor='@{viewModel.isClick?@color/colorPrimary:@color/recommend_category_first_font}'
+                    android:textColor='@{viewModel.isClick?@color/colorPrimary:@color/recommend_category_second_font}'
                     android:textSize="18sp"
                     tool:text="区域/面积/价格的item" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/gray_oval"
-                    android:padding="@dimen/x3"
                     android:layout_marginRight="@dimen/x10"
                     android:text="@{viewModel.childCategoryNum}"
-                    android:textColor="@android:color/white"
+                    android:textColor="#575757"
+                    android:textSize="16sp"
                     android:visibility='@{TextUtils.isEmpty(viewModel.childCategoryNum)?View.GONE:View.VISIBLE}'
-                    android:textSize="12sp"
                     tool:text="11" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="#dbdbdb" />
+                android:layout_height="1.3dp"
+                android:background="@drawable/recommend_category_line" />
 
         </LinearLayout>
     </RelativeLayout>

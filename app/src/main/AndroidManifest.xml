@@ -41,7 +41,8 @@
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
 
         <activity android:name=".modules.main.MainActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:hardwareAccelerated="false">
 
         </activity>
         <activity android:name=".modules.baidumap.BaiduMapActivity"></activity>
