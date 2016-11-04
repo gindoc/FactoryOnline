@@ -16,4 +16,11 @@ public class LogOutState implements UserState {
     public void openMsg(Context context) {
         context.startActivity(LoginActivity.getStartIntent(context));
     }
+
+    @Override
+    public void openUserDetail(Context context) {
+
+    }
+
+
 }

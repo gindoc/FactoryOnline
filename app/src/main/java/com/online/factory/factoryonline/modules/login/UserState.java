@@ -9,6 +9,5 @@ import android.content.Context;
 public interface UserState {
 
     void openMsg(Context context);
-
-
+    void openUserDetail(Context context);
 }

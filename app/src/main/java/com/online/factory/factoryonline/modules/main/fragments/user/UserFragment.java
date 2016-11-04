@@ -72,6 +72,9 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         return mBinding.getRoot();
     }
 
+    public void clickRoundImage(View view){
+        mLoginContext.openUserDetail(getContext());
+    }
     @Override
     public void onResume() {
         super.onResume();

@@ -29,6 +29,16 @@ public class Saver {
         sharePref = context.getSharedPreferences("saveinfo", Context.MODE_PRIVATE);
     }
 
+    public static boolean getLoginState() {
+        return sharePref.getBoolean("isLogin", false);
+    }
+
+    public static void setLoginState(boolean loginState) {
+        Editor edit = sharePref.edit();
+        edit.putBoolean("isLogin", loginState);
+        edit.commit();
+    }
+
     public static void saveLogin(SharedPreferences sharePref, String user, String password) {
         Editor edit = sharePref.edit();
         edit.putString("user", user);

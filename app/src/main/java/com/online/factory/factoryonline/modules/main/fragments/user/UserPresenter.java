@@ -42,7 +42,9 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
                 .subscribe(new RxSubscriber<UserResponse>() {
                     @Override
                     public void _onNext(UserResponse userResponse) {
-                        getView().showUser(userResponse.getUser());
+                        if (userResponse != null) {
+                            getView().showUser(userResponse.getUser());
+                        }
                     }
 
                     @Override
