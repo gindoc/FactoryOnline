@@ -14,12 +14,27 @@ public class LogOutState implements UserState {
 
     @Override
     public void openMsg(Context context) {
-        context.startActivity(LoginActivity.getStartIntent(context));
+        toLoginActivity(context);
     }
 
     @Override
     public void openUserDetail(Context context) {
+        toLoginActivity(context);
+    }
 
+    @Override
+    public void openPublish(Context context) {
+        toLoginActivity(context);
+    }
+
+    @Override
+    public void openCollection(Context context) {
+        toLoginActivity(context);
+    }
+
+    public void toLoginActivity(Context context) {
+        Toast.makeText(context, "尚未登录，请先登录", Toast.LENGTH_SHORT).show();
+        context.startActivity(LoginActivity.getStartIntent(context));
     }
 
 

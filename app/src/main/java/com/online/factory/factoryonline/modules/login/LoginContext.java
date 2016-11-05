@@ -13,8 +13,6 @@ public class LoginContext {
     public LoginContext() {
         if (Saver.getLoginState()) {
             mState = new LogInState();
-        }else {
-            mState = new LogOutState();
         }
     }
 
@@ -30,5 +28,13 @@ public class LoginContext {
 
     public void openUserDetail(Context context) {
         mState.openUserDetail(context);
+    }
+
+    public void openPublish(Context context) {
+        mState.openPublish(context);
+    }
+
+    public void openCollection(Context context) {
+        mState.openCollection(context);
     }
 }

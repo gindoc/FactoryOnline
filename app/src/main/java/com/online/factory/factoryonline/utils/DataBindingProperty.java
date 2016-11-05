@@ -20,7 +20,15 @@ public class DataBindingProperty {
 
     @BindingAdapter({"imageUrl"})
     public static void setImageScr(ImageView imageView, String url) {
-        Picasso.with(imageView.getContext()).load(url).into(imageView);
+        int id = imageView.getId();
+        switch (id) {
+            case R.id.iv_head_photo:
+                Picasso.with(imageView.getContext()).load(url).placeholder(R.drawable.boy).into(imageView);
+                break;
+            default:
+                Picasso.with(imageView.getContext()).load(url).into(imageView);
+                break;
+        }
     }
 
     @BindingAdapter({"fileUrl"})

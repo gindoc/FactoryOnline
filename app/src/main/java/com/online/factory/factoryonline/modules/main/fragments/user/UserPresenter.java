@@ -42,14 +42,14 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
                 .subscribe(new RxSubscriber<UserResponse>() {
                     @Override
                     public void _onNext(UserResponse userResponse) {
-                        if (userResponse != null) {
+                        if (userResponse.getErro_code() == 200) {
                             getView().showUser(userResponse.getUser());
                         }
                     }
 
                     @Override
                     public void _onError(Throwable throwable) {
-
+//                            throwable.getMessage().contains("401")
                     }
                 });
     }

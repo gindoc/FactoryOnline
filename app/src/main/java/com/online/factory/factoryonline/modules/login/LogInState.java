@@ -24,4 +24,14 @@ public class LogInState implements UserState {
     public void openUserDetail(Context context) {
 
     }
+
+    @Override
+    public void openPublish(Context context) {
+
+    }
+
+    @Override
+    public void openCollection(Context context) {
+
+    }
 }
