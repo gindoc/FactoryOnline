@@ -1,16 +1,12 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
@@ -27,11 +23,17 @@ import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
+import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
+import org.apache.commons.codec.binary.Base64;
+
 import java.util.List;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 
 import rx.subjects.BehaviorSubject;
@@ -91,7 +93,6 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
             }
         });
-
     }
 
     @Nullable

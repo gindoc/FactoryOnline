@@ -29,7 +29,6 @@ import javax.inject.Inject;
 /**
  * Created by louiszgm on 2016/9/30.
  */
-
 public class UserFragment extends BaseFragment<UserContract.View, UserPresenter> implements UserContract.View, BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentUserBinding mBinding;
     private final int SPAN_COUNT = 2;
@@ -146,7 +145,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
             case 2:
 
                 break;
-            case  3:
+            case 3:
                 break;
 
         }
