@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.main.fragments.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -13,12 +14,14 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerGridItemDecoration;
 import com.online.factory.factoryonline.customview.FullyGridLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.databinding.FragmentUserBinding;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.UserBean;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.utils.Saver;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -30,6 +33,7 @@ import javax.inject.Inject;
  * Created by louiszgm on 2016/9/30.
  */
 public class UserFragment extends BaseFragment<UserContract.View, UserPresenter> implements UserContract.View, BaseRecyclerViewAdapter.OnItemClickListener {
+    public static final int TO_LOGIN_ACTIVITY = 101;
     private FragmentUserBinding mBinding;
     private final int SPAN_COUNT = 2;
 
@@ -109,8 +113,19 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
 
     @Override
     public void startLogIn() {
-        startActivity(LoginActivity.getStartIntent(getActivity()));
+        startActivityForResult(LoginActivity.getStartIntent(getActivity()),TO_LOGIN_ACTIVITY);
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TO_LOGIN_ACTIVITY) {
+            User user = Saver.getSerializableObject(SharePreferenceKey.USER);
+            if (user != null) {
+                mBinding.setUser(user);
+            }
+        }
     }
 
     @Override

@@ -4,19 +4,8 @@ package com.online.factory.factoryonline.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.support.annotation.NonNull;
 
-import com.online.factory.factoryonline.data.local.SharePreferenceKey;
-import com.online.factory.factoryonline.models.post.Publish;
-
-import org.apache.commons.codec.binary.Base64;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
+//import org.apache.commons.codec.binary.Base64;
 
 public class Saver {
     private static SharedPreferences sharePref;

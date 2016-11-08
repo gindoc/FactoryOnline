@@ -24,24 +24,17 @@ import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActiv
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
-import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import org.apache.commons.codec.binary.Base64;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 
 import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
+
+//import org.apache.commons.codec.binary.Base64;
 
 /**
  * Created by cwenhui on 2016.02.23
