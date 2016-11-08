@@ -5,7 +5,6 @@ import android.databinding.Bindable;
 
 import com.online.factory.factoryonline.BR;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
 
@@ -15,6 +14,7 @@ import javax.inject.Inject;
 public class RecommendViewModel extends BaseObservable {
     private Factory info;
     private String categoryName;
+    private String childCategoryNum;
     private boolean isClick;
     @Inject
     public RecommendViewModel() {
@@ -45,12 +45,17 @@ public class RecommendViewModel extends BaseObservable {
 
     @Bindable
     public String getPrice() {
-        return info.getPrice();
+        return info.getPrice()+"/㎡/月";
     }
 
     @Bindable
     public String getArea() {
-        return info.getRange();
+        return (int)info.getRange()+"/㎡";
+    }
+
+    @Bindable
+    public String getFactoryTotalPrice() {
+        return info.getRange() * info.getPrice() + "元/月";
     }
 
     @Bindable
@@ -66,6 +71,15 @@ public class RecommendViewModel extends BaseObservable {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
 //        notifyPropertyChanged(BR.categoryName);
+    }
+
+    @Bindable
+    public String getChildCategoryNum() {
+        return childCategoryNum;
+    }
+
+    public void setChildCategoryNum(String childCategoryNum) {
+        this.childCategoryNum = childCategoryNum;
     }
 
     @Bindable

@@ -1,12 +1,11 @@
 package com.online.factory.factoryonline.dagger.modules;
 
-import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.modules.login.fragments.PwdLoginFragment;
-import com.online.factory.factoryonline.modules.login.fragments.SmsLoginFragment;
+import com.online.factory.factoryonline.modules.login.fragments.SMS.SmsLoginFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

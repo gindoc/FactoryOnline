@@ -4,7 +4,6 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
 
@@ -31,9 +30,13 @@ public class HomeViewModel extends BaseObservable {
 
     @Bindable
     public String getFactoryPrice() {
-        return factoryInfo.getPrice();
+        return factoryInfo.getPrice()+"/㎡/月";
     }
 
+    @Bindable
+    public String getFactoryTotalPrice() {
+        return factoryInfo.getPrice() * factoryInfo.getRange() + "元/月";
+    }
 //    @Bindable
 //    public String getFactoryAddress() {
 //        return factoryInfo.getAddress();
@@ -41,7 +44,7 @@ public class HomeViewModel extends BaseObservable {
 
     @Bindable
     public String getFactoryArea() {
-        return factoryInfo.getRange();
+        return (int)factoryInfo.getRange()+"㎡";
     }
 
 

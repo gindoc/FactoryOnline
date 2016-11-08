@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.ImageView;
 
+import com.online.factory.factoryonline.R;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -18,14 +20,27 @@ public class DataBindingProperty {
 
     @BindingAdapter({"imageUrl"})
     public static void setImageScr(ImageView imageView, String url) {
-        Picasso.with(imageView.getContext()).load(url).into(imageView);
+        int id = imageView.getId();
+        switch (id) {
+            case R.id.iv_head_photo:
+                Picasso.with(imageView.getContext()).load(url).placeholder(R.drawable.boy).into(imageView);
+                break;
+            default:
+                Picasso.with(imageView.getContext()).load(url).into(imageView);
+                break;
+        }
     }
 
     @BindingAdapter({"fileUrl"})
     public static void setImageSrc(ImageView imageView, String url) {
         File file = new File(url);
         int imageWidth = imageView.getMeasuredWidth();
-        Picasso.with(imageView.getContext()).load(file).resize(imageWidth, imageWidth).into(imageView);
+        Picasso.with(imageView.getContext())
+                .load(file)
+                .resize(imageWidth, imageWidth)
+                .placeholder(R.drawable.ic_no_pic)
+                .config(Bitmap.Config.RGB_565)
+                .into(imageView);
     }
 
     @BindingAdapter({"imageId"})

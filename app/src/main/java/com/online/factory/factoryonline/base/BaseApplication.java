@@ -12,10 +12,12 @@ import com.online.factory.factoryonline.dagger.modules.ApplicationModule;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.ComponentHolder;
+import com.online.factory.factoryonline.utils.Saver;
 import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
 
+import cn.jpush.sms.SMSSDK;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -41,11 +43,13 @@ public class BaseApplication extends Application {
         }
 //        enabledStrictMode();
         LeakCanary.install(this);
+        Saver.initSaver(this);
 
         getApplicationComponent().inject(this);
 
         // 初始化baiduMap
         SDKInitializer.initialize(this);
+        SMSSDK.getInstance().initSdk(this);
 
         //初始化Timber
         if (BuildConfig.DEBUG) {
@@ -53,7 +57,7 @@ public class BaseApplication extends Application {
         }
 
         //替换系统默认异常处理Handler
-        Thread.setDefaultUncaughtExceptionHandler(new MyUnCaughtExceptionHandler());
+//        Thread.setDefaultUncaughtExceptionHandler(new MyUnCaughtExceptionHandler());
     }
 
     private void enabledStrictMode() {
@@ -85,7 +89,7 @@ public class BaseApplication extends Application {
         @Override
         public void uncaughtException(Thread thread, Throwable ex) {
             ex.printStackTrace();
-            Timber.e(ex.getLocalizedMessage());
+            Timber.e(ex.getMessage());
             if (dataManager == null) {
                 Timber.e("dataManager is null!!!!!!!!!!");
             }

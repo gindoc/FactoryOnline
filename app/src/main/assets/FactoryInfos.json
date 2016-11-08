@@ -1,11 +1,11 @@
 [
   {
-    "title": "gindoc's factory",
-    "description": "xxx",
-    "price": "100万/平米",
-    "range": "1000平米",
+    "title": "南城 带装修独院厂房25000",
+    "description": "南城 - 博苑",
+    "price": "25000/月",
+    "range": "2500",
     "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
-    "address_overview": "四环大道",
+    "address_overview": "南城 - 博苑",
     "image_urls": [
       "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
       "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
@@ -15,12 +15,12 @@
     ]
   },
   {
-    "title": "gindoc's factory2",
+    "title": "道滘 新独院厂房10500平米",
     "description": "xxx",
-    "price": "100万/平米",
-    "range": "1000平米",
+    "price": "105000元/月",
+    "range": "10500",
     "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
-    "address_overview": "四环段",
+    "address_overview": "道滘 - 岳辉苑",
     "image_urls": [
       "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
       "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
@@ -30,12 +30,12 @@
     ]
   },
   {
-    "title": "gindoc's factory3",
+    "title": "石牌 工业区厂房1000平米",
     "description": "xxx",
-    "price": "100万/平米",
-    "range": "1000平米",
+    "price": "20000元/月",
+    "range": "1000",
     "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
-    "address_overview": "环路大道",
+    "address_overview": "石牌",
     "image_urls": [
       "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
       "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
@@ -45,12 +45,12 @@
     ]
   },
   {
-    "title": "gindoc's factory4",
+    "title": "石牌 工业区厂房1000平米",
     "description": "xxx",
-    "price": "100万/平米",
-    "range": "1000平米",
+    "price": "20000元/月",
+    "range": "1000",
     "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
-    "address_overview": "四环路",
+    "address_overview": "石牌",
     "image_urls": [
       "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
       "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
@@ -60,12 +60,12 @@
     ]
   },
   {
-    "title": "gindoc's factory5",
+    "title": "道滘 新独院厂房10500平米",
     "description": "xxx",
-    "price": "100万/平米",
-    "range": "1000平米",
+    "price": "105000元/月",
+    "range": "10500",
     "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
-    "address_overview": "理想大道段",
+    "address_overview": "道滘 - 岳辉苑",
     "image_urls": [
       "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
       "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",

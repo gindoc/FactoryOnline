@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemHomeListBinding;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
 
 import javax.inject.Inject;
 import javax.inject.Provider;

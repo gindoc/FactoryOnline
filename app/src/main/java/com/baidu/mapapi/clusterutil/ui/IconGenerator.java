@@ -65,6 +65,22 @@ public class IconGenerator {
     }
 
     /**
+     * 将View转化成bitmap
+     * @param view  待转化的View
+     * @return
+     */
+    public Bitmap makeStreetIcon(View view) {
+        view.setDrawingCacheEnabled(true);
+        view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.buildDrawingCache();
+        Bitmap cacheBitmap = view.getDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+
+        return bitmap;
+    }
+
+    /**
      * Creates an icon with the current content and style.
      * <p/>
      * This method is useful if a custom view has previously been set, or if text content is not
@@ -214,7 +230,8 @@ public class IconGenerator {
         if (background != null) {
             Rect rect = new Rect();
             background.getPadding(rect);
-            mContainer.setPadding(rect.left, rect.top, rect.right, rect.bottom);
+//            mContainer.setPadding(rect.left, rect.top, rect.right, rect.bottom);              //TODO 当mContainer的高度可以自适应内容时改回来
+            mContainer.setPadding(0, 0, 0, 0);
         } else {
             mContainer.setPadding(0, 0, 0, 0);
         }

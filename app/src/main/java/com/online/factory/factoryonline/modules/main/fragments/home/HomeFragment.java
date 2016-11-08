@@ -1,16 +1,15 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
@@ -23,26 +22,48 @@ import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
+import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
+import com.online.factory.factoryonline.utils.AESUtil;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
+import org.apache.commons.codec.binary.Base64;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.inject.Inject;
 
+import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016.02.23
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
-        .View, HomeRecyclerView.ScrollChangedListener, BaseRecyclerViewAdapter.OnItemClickListener {
+        .View, /*HomeRecyclerView.ScrollChangedListener,*/ BaseRecyclerViewAdapter.OnItemClickListener {
+
+
+    public static float MAX_SCALE_RATE = 0.3f;
+    public static float MAX_TRANSLATIONY = 200;
+    public  float MAX_TOP;
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
     private FragmentFindBinding mFindBinding;
     @Inject
     HomeRecyclerViewAdapter mAdapter;
 
+    @Inject
+    LocationClient locationClient;
+
+    @Inject
+    BehaviorSubject subject;
     @Inject
     public HomeFragment() {
     }
@@ -62,6 +83,18 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
+//        locationClient.start();
+//        locationClient.requestLocation();
+        subject.subscribe(new RxSubscriber<BDLocation>() {
+            @Override
+            public void _onNext(BDLocation bdLocation) {
+                Timber.d("定位成功");
+                mBinding.tvCity.setText(bdLocation.getProvince());
+            }
+
+            @Override
+            public void _onError(Throwable throwable) {}
+        });
     }
 
     @Nullable
@@ -71,14 +104,10 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mHeaderBinding = LayoutHomeHeaderBinding.inflate(inflater);
 
         mBinding.setPresenter(mPresenter);
+        mBinding.setView(this);
         mHeaderBinding.setView(this);
 
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        mBinding.recyclerView.setScrollChangedListener(this);
-        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
-        mBinding.recyclerView.init();
-        mAdapter.setOnItemClickListener(this);
+        initRecyclerView();
 
         findFactory();
         mHeaderBinding.rbFind.setChecked(true); //设置“找房”为选中状态
@@ -88,6 +117,15 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mPresenter.requestFactoryInfo();
 
         return mBinding.getRoot();
+    }
+
+    private void initRecyclerView() {
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+//        mBinding.recyclerView.setScrollChangedListener(this);
+        mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
+//        mBinding.recyclerView.init();
+        mAdapter.setOnItemClickListener(this);
     }
 
     /**
@@ -125,6 +163,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     public void useMap() {
         startActivity(BaiduMapActivity.getStartIntent(getActivity()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void openCityPage() {
+        startActivity(CityActivity.getStartIntent(getContext()));
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
@@ -168,25 +211,39 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.recyclerView.notifyDataSetChanged();
     }
 
-    @Override
-    public void onScrolled(int dy) {
-        Timber.e("dy:%d" , dy);
-        int limit = mBinding.searchview.getHeight();
-        mBinding.coverView.setAlpha(dy / 100f);
-        if (limit > 0) {
-            if (dy <= limit) {
-                Timber.e("1 - dy / (3*limit): %f" , (1 - dy * 1.0f / (3 * limit)));
+    /*@Override
+    public void onScrolled(int dy,boolean isSwipeDown) {
+        Timber.d("dy %d",dy);
+        int limit = 300;
+        int i = dy % 300;
+        float percentage = (float) Math.abs(i) / (float) limit;
+        Timber.d("percentage : %f",percentage);
+        float scale = (float) (percentage*MAX_SCALE_RATE);
+
+        int height = mBinding.coverView.getHeight();
+        float translationY = -percentage*(height-50);
+
+        Timber.d("scale : %f",scale);
+        Timber.d("translationY %f",translationY);
+
+            if(Math.abs(dy) < limit){
+                mBinding.coverView.setAlpha(percentage);
                 ObjectAnimator
-                        .ofFloat(mBinding.searchview, "scaleX", 1 - dy * 1.0f / (3 * limit))
+                        .ofFloat(mBinding.searchview, "scaleX", 1-scale)
                         .setDuration(limit / 700)
                         .start();
-                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", -limit / 100 * dy)
+                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", translationY)
                         .setDuration(limit / 700)
                         .start();
-                Timber.e("translationY   : %d" , -limit / 100 * dy);
+            }else {
+
             }
-        }
-    }
+
+
+
+        Timber.d("height %f",mBinding.searchview.getY());
+        Timber.d("actual scalX %f",mBinding.searchview.getScaleX());
+    }*/
 
     @Override
     public void onItemClick(View view, int position) {

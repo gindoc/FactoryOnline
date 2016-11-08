@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
@@ -12,15 +13,12 @@ import android.support.v7.widget.RecyclerView.State;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 
 import javax.inject.Inject;
 
-/**
- * 
- * @author zhy
- * 
- */
+
 public class DividerGridItemDecoration extends RecyclerView.ItemDecoration
 {
 
@@ -33,6 +31,10 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
         a.recycle();
+    }
+
+    public void setDivider(Drawable divider) {
+        mDivider = divider;
     }
 
     @Override

@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemPhotowallGridBinding;
 
@@ -14,7 +17,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import rx.Subscriber;
 import rx.subjects.BehaviorSubject;
 
 /**
@@ -23,12 +25,13 @@ import rx.subjects.BehaviorSubject;
 public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallAdapter.PhotoWallViewHolder> {
     private static final int TAKE_PICTURE = 1001;
     private static final int SHOW_PICTURE = 1002;
-    Provider<PhotoWallViewModel> provider;
+    Provider<PhotoWallItemViewModel> provider;
     private BehaviorSubject subject;
     private String mDirPath;    // 文件夹路径
+    private List<String> mSelectedItem = new ArrayList<>();
 
     @Inject
-    public PhotoWallAdapter(Context context, Provider<PhotoWallViewModel> provider, BehaviorSubject subject) {
+    public PhotoWallAdapter(Context context, Provider<PhotoWallItemViewModel> provider, BehaviorSubject subject) {
         super(context);
         this.provider = provider;
         this.subject = subject;
@@ -42,34 +45,49 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
         this.mDirPath = mDirPath;
     }
 
+    public List<String> getmSelectedItem() {
+        return mSelectedItem;
+    }
+
     @Override
     public PhotoWallViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemPhotowallGridBinding binding = ItemPhotowallGridBinding.inflate(layoutInflater);
+        ItemPhotowallGridBinding binding = ItemPhotowallGridBinding.inflate(layoutInflater, parent, false);
         return new PhotoWallViewHolder(binding.getRoot(), binding);
     }
 
     @Override
     public void onBindViewHolder(PhotoWallViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
-        final PhotoWallViewModel viewModel = provider.get();
+        final PhotoWallItemViewModel viewModel = provider.get();
+        String imageUrl = mDirPath + "/" + data.get(position);
+        for (String selected : mSelectedItem) {
+            if (selected.equals(imageUrl)) {
+                viewModel.setClick(true);
+            }
+        }
         viewModel.setImgUrl(mDirPath + "/" + data.get(position));
-        ItemPhotowallGridBinding binding = holder.getBinding();
+        final ItemPhotowallGridBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
-
-        subject.subscribe(new Subscriber() {
+        binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onNext(Object o) {
-                Integer position1 = (Integer) o;
-                if (position == position1) {
-                    viewModel.setClick(!viewModel.getIsClick());
+            public void onClick(View v) {
+                String selectedImage = mDirPath + "/" + data.get(position);
+                if (mSelectedItem.size() >= 9) {
+                    Toast.makeText(mContext, "最多选择9张图片", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (mSelectedItem.contains(selectedImage)) {
+                    mSelectedItem.remove(selectedImage);
+                    viewModel.setClick(false);
+                } else {
+                    mSelectedItem.add(selectedImage);
+                    viewModel.setClick(true);
+                }
+                Button finish = (Button) ((ViewGroup) binding.getRoot().getParent().getParent()).findViewById(R.id.btn_finish);
+                if (mSelectedItem.size() > 0) {             //每次点击都判断选中的数目是否大于0
+                    finish.setVisibility(View.VISIBLE);
+                } else {
+                    finish.setVisibility(View.GONE);
                 }
             }
         });

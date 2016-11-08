@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.online.factory.factoryonline.models.ImageFloderBean;
+import com.online.factory.factoryonline.models.ImageFolderBean;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import timber.log.Timber;
-
 /**
  * Created by cwenhui on 2016/10/20.
  */
 
 public class ScanImageUtils {
+
+    public static int CHOOSE_CAPTURE= 1001;
     /**
      * 临时的辅助类，用于防止同一个文件夹的多次扫描
      **/
@@ -28,7 +28,7 @@ public class ScanImageUtils {
     /**
      * 扫描拿到所有的图片文件夹
      **/
-    private static List<ImageFloderBean> mImageFloderBeens = new ArrayList<ImageFloderBean>();
+    private static List<ImageFolderBean> mImageFloderBeens = new ArrayList<ImageFolderBean>();
     /**
      * 存储图片数量最多的文件夹中的图片数量
      **/
@@ -37,18 +37,21 @@ public class ScanImageUtils {
      * 图片数量最多的文件夹
      **/
     private static File maxImgDir;
-//    private static ContentResolver mContentResolver;
-//    private static Cursor mCursor;
+
+
 
 
     /**
      * 获得最大图片数量的文件夹
      * 使用前请先调用scanImages
-     *
      * @return
      */
     public static File getMaxImgDir() {
         return maxImgDir;
+    }
+
+    public static List<ImageFolderBean> getmImageFloderBeens() {
+        return mImageFloderBeens;
     }
 
     static int totalCount = 0;
@@ -71,12 +74,10 @@ public class ScanImageUtils {
                 new String[]{"image/jpeg", "image/png"},
                 MediaStore.Images.Media.DATE_MODIFIED);
 
-        Timber.e("imageCount  :  " + mCursor.getCount());
         while (mCursor.moveToNext()) {
             // 获取图片的路径
             String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
 
-            Timber.e("path  :  " + path);
             // 拿到第一张图片的路径
             if (firstImage == null)
                 firstImage = path;
@@ -85,14 +86,14 @@ public class ScanImageUtils {
             if (parentFile == null)
                 continue;
             String dirPath = parentFile.getAbsolutePath();
-            ImageFloderBean imageFloderBean = null;
+            ImageFolderBean imageFloderBean = null;
             // 利用一个HashSet防止多次扫描同一个文件夹（不加这个判断，图片多起来还是相当恐怖的~~）
             if (mDirPaths.contains(dirPath)) {
                 continue;
             } else {
                 mDirPaths.add(dirPath);
                 // 初始化imageFloder
-                imageFloderBean = new ImageFloderBean();
+                imageFloderBean = new ImageFolderBean();
                 imageFloderBean.setDir(dirPath);
                 imageFloderBean.setFirstImagePath(path);
             }

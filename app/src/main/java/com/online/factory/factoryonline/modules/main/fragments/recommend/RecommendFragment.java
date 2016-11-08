@@ -2,18 +2,14 @@ package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
 import android.app.Activity;
 import android.content.Context;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
@@ -25,7 +21,7 @@ import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryInfo;
+import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -55,13 +51,13 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     RecommendCategoryAdapter mDistrictFirCategoryAdapter;  //推荐页面区域一级目录适配器
 
     @Inject
-    RecommendCategoryAdapter mDistrictSecCategoryAdapter;    //推荐页面区域二级目录适配器
+    RecommendWhiteCategoryAdapter mDistrictSecCategoryAdapter;    //推荐页面区域二级目录适配器
 
     @Inject
-    RecommendCategoryAdapter mPriceCategoryAdapter;           //推荐页面的价格目录
+    RecommendWhiteCategoryAdapter mPriceCategoryAdapter;           //推荐页面的价格目录
 
     @Inject
-    RecommendCategoryAdapter mAreaCategoryAdapter;
+    RecommendWhiteCategoryAdapter mAreaCategoryAdapter;
 
     @Inject
     RecommendPresenter mPresenter;
@@ -120,6 +116,11 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         return mBinding.getRoot();
     }
 
+    public void openMap(View view) {
+        startActivity(BaiduMapActivity.getStartIntent(getActivity()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
@@ -164,7 +165,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         });
     }
 
-    private void onItemClickAction(RecommendCategoryAdapter adapter, int position) {
+    private void onItemClickAction(RecommendWhiteCategoryAdapter adapter, int position) {
         adapter.getSubject().onNext(position);
         String title = adapter.getData().get(position);
         mBinding.dropDownMenu.setTabText(title);
@@ -177,7 +178,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         popViews.add(mDistrictBinding.getRoot());
         popViews.add(mPriceBinding.getRoot());
         popViews.add(mAreaBinding.getRoot());
-        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews/*, new TextView(getContext())*/);
+        mBinding.dropDownMenu.setDropDownMenu(Arrays.asList(headers), popViews);
         mDistrictFirCategoryAdapter.getSubject().onNext(0);
         mDistrictSecCategoryAdapter.getSubject().onNext(0);
         mPriceCategoryAdapter.getSubject().onNext(0);
@@ -187,6 +188,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     private void initSwipeLayout() {
         mBinding.swipe.setColorSchemeResources(R.color.swipe_color_red, R.color.swipe_color_yellow, R.color
                 .swipe_color_blue);                                                      //初始化swipeRefleshLayout
+        mBinding.swipe.setProgressViewEndTarget(true, 300);
         mBinding.swipe.setOnRefreshListener(this);
     }
 

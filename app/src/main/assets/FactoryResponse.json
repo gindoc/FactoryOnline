@@ -1,0 +1,81 @@
+{
+  "erro_code":200,
+  "erro_msg":"成功",
+  "factory":[
+    {
+      "title": "南城 带装修独院厂房25000",
+      "description": "南城 - 博苑",
+      "price": "10",
+      "range": "2500",
+      "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+      "address_overview": "南城 - 博苑",
+      "image_urls": [
+        "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+        "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+        "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+      ]
+    },
+    {
+      "title": "道滘 新独院厂房10500平米",
+      "description": "xxx",
+      "price": "10",
+      "range": "10500",
+      "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+      "address_overview": "道滘 - 岳辉苑",
+      "image_urls": [
+        "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+        "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+        "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+      ]
+    },
+    {
+      "title": "石牌 工业区厂房1000平米",
+      "description": "xxx",
+      "price": "20",
+      "range": "1000",
+      "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+      "address_overview": "石牌",
+      "image_urls": [
+        "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+        "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+        "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+      ]
+    },
+    {
+      "title": "石牌 工业区厂房1000平米",
+      "description": "xxx",
+      "price": "20",
+      "range": "1000",
+      "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+      "address_overview": "石牌",
+      "image_urls": [
+        "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+        "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+        "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+      ]
+    },
+    {
+      "title": "道滘 新独院厂房10500平米",
+      "description": "xxx",
+      "price": "10",
+      "range": "10500",
+      "thumbnail_url": "http://www.cwenhui.com/images/zhuimeng.jpg",
+      "address_overview": "道滘 - 岳辉苑",
+      "image_urls": [
+        "http://img2.imgtn.bdimg.com/it/u=942854440,3976995158&fm=21&gp=0.jpg",
+        "http://img0.imgtn.bdimg.com/it/u=963551012,3660149984&fm=21&gp=0.jpg",
+        "http://img3.imgtn.bdimg.com/it/u=2350713065,2117161376&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=2815259904,1132985057&fm=21&gp=0.jpg",
+        "http://img5.imgtn.bdimg.com/it/u=1204361917,3429196526&fm=21&gp=0.jpg"
+      ]
+    }
+  ]
+}

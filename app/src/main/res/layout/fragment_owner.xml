@@ -1,35 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/y85"
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_factory"
             android:gravity="center"
-            android:padding="@dimen/x10"
-            android:text="发布招租信息"
-            android:textSize="14sp"/>
+            android:orientation="vertical">
 
-        <TextView
+            <com.online.factory.factoryonline.customview.RoundImageView
+                android:layout_width="@dimen/x49"
+                android:layout_height="@dimen/x49"
+                android:layout_marginBottom="@dimen/y10"
+                android:layout_marginTop="@dimen/y10"
+                android:src="@drawable/ic_msg_online" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y15"
+                android:text="发布招租信息"
+                android:textColor="#575757"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_office"
             android:gravity="center"
-            android:padding="@dimen/x10"
-            android:text="专人服务"
-            android:textSize="18sp"/>
+            android:orientation="vertical">
+
+            <com.online.factory.factoryonline.customview.RoundImageView
+                android:layout_width="@dimen/x49"
+                android:layout_height="@dimen/x49"
+                android:layout_marginBottom="@dimen/y10"
+                android:layout_marginTop="@dimen/y10"
+                android:src="@drawable/ic_msg_online" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y15"
+                android:text="专人服务"
+                android:textColor="#575757"
+                android:textSize="18sp" />
+        </LinearLayout>
 
     </TableRow>
 </TableLayout>
