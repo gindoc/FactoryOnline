@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Factory Online</string>
-    <string name="api">https://192.168.0.131</string>
+    <string name="api">http://192.168.0.118:8000/api/v1/</string>
 </resources>

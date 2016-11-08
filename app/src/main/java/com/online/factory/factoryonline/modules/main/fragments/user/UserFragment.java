@@ -143,9 +143,10 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
                 mLoginContext.openCollection(getContext());
                 break;
             case 2:
-
+                Toast.makeText(getContext(), "功能尚未开放，敬请期待", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
+                Toast.makeText(getContext(), "功能尚未开放，敬请期待", Toast.LENGTH_SHORT).show();
                 break;
 
         }

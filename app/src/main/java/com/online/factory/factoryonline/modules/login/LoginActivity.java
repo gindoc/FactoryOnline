@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -31,7 +32,7 @@ import javax.inject.Named;
  */
 
 public class LoginActivity extends BaseActivity implements LoginContract.View{
-
+    public static final int TO_REGIST_ACTIVITY = 99;
 
     private ActivityLoginBinding mBinding;
 
@@ -67,9 +68,18 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     }
 
     public void onCLickSignUp(View view){
-        startActivity(RegistActivity.getStartIntent(this));
+        startActivityForResult(RegistActivity.getStartIntent(this), TO_REGIST_ACTIVITY);
         this.overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RegistActivity.REGIST_SUCCESS && requestCode == TO_REGIST_ACTIVITY) {
+            finish();
+        }
+    }
+
     @Override
     protected BasePresenter createPresent() {
         return presenter;

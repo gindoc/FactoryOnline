@@ -32,6 +32,7 @@ import javax.inject.Named;
  */
 
 public class RegistActivity extends BaseActivity implements RegistContract.View{
+    public static final int REGIST_SUCCESS = 100;
 
     @Inject
     RegistPresenter presenter;
@@ -102,7 +103,9 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
 
     @Override
     public void loginSuccessfully() {
-       startActivity(MainActivity.getStartIntent(this));
+        setResult(REGIST_SUCCESS);
+        finish();
+//        startActivity(MainActivity.getStartIntent(this));
         overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }
 

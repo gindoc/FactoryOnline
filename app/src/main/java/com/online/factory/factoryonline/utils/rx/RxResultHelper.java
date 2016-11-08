@@ -24,10 +24,10 @@ public class RxResultHelper {
                         new Func1<T, Observable<T>>() {
                             @Override
                             public Observable<T> call(T result) {
-                                if(result instanceof Response){
+                                if (result instanceof Response) {
                                     return doResponse((Response) result);
-                                }else {
-                                   return null;
+                                } else {
+                                    return null;
                                 }
                             }
                         }
@@ -39,10 +39,10 @@ public class RxResultHelper {
 
     private static <T> Observable<T> doResponse(Response response) {
         //如果errcode不等于200,则返回的是服务器错误信息
-        if(response.getErro_code() != 200){
+        if (response.getErro_code() != 200) {
             Timber.d("errcode不为200");
             return Observable.error(new ServerException(response.getErro_msg()));
-        }else {
+        } else {
             return (Observable<T>) createData(response);
         }
     }

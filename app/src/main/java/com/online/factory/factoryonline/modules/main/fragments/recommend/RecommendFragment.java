@@ -21,6 +21,7 @@ import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -113,6 +114,11 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         });
 
         return mBinding.getRoot();
+    }
+
+    public void openMap(View view) {
+        startActivity(BaiduMapActivity.getStartIntent(getActivity()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {

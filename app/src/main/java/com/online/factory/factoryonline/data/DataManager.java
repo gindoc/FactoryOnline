@@ -14,14 +14,22 @@ import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.UserResponse;
+import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import okhttp3.Headers;
 import okhttp3.MultipartBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 import rx.Observable;
+import rx.Subscriber;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by louiszgm on 2016/9/29.
@@ -72,6 +80,7 @@ public class DataManager {
 
     /**
      * 请求“推荐的目录”列表
+     *
      * @return
      */
     public Observable<List<JsonObject>> getRecommendDistrictCats() {
@@ -87,6 +96,7 @@ public class DataManager {
 
     /**
      * 请求推荐页面的面积目录
+     *
      * @return
      */
     public Observable<List<String>> getRecommendAreaCats() {
@@ -95,7 +105,8 @@ public class DataManager {
 
     /**
      * 请求服务器，判断该厂房是否被收藏
-     * @param fId   厂房id
+     *
+     * @param fId 厂房id
      * @return
      */
     public Observable<Boolean> isFactoryCollected(int fId) {
@@ -104,25 +115,29 @@ public class DataManager {
 
     /**
      * 注册
+     *
      * @param regist
      * @return
      */
-    public Observable<Response> regist(Regist regist){
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-        if (regist != null) {
-                String registJsonString = new Gson().toJson(regist);
-                builder.addFormDataPart("regist", registJsonString);
-        }
-        return factoryApi.regist(builder.build());
-    }
+//    public Observable<Response> regist(Regist regist) {
+//        MultipartBody.Builder builder = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM);
+//        if (regist != null) {
+////            String registJsonString = new Gson().toJson(regist);
+////            TIME.TIMESTAMP = String.valueOf(System.currentTimeMillis()*1000);
+////            String content = AESUtil.encrypt(registJsonString, TIME.TIMESTAMP, "1234567812345678");
+////            builder.addFormDataPart("regist", /*registJsonString*/content);
+//        }
+//        return factoryApi.regist(builder.build());
+//    }
 
     /**
      * 登录
+     *
      * @param login
      * @return
      */
-    public Observable<UserResponse> login(Login login){
+    public Observable<UserResponse> login(Login login) {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
         if (login != null) {
@@ -134,17 +149,18 @@ public class DataManager {
 
     /**
      * 获取当前登录用户的个人信息
+     *
      * @return
      */
-    public Observable<UserResponse> getUser(){
+    public Observable<UserResponse> getUser() {
         User localUser = Saver.getSerializableObject(SharePreferenceKey.USER);
-        if( localUser!= null){
+        if (localUser != null) {
             UserResponse response = new UserResponse();
             response.setUser(localUser);
             response.setErro_code(200);
             response.setErro_msg("成功");
             return Observable.just(response);
-        }else {
+        } else {
             return factoryApi.getUser();
         }
     }
@@ -164,5 +180,20 @@ public class DataManager {
                 .addFormDataPart("temp_id", "1");
 
         return factoryApi.getSmsCode(builder.build());
+    }
+
+    public Observable<retrofit2.Response<JsonObject>> registing(Regist regist) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        Map<String, String> header = new HashMap<>();
+        if (regist != null) {
+            String registJsonString = new Gson().toJson(regist);
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            String content = AESUtil.encrypt(registJsonString, timestamp, "1234567812345678");
+            builder.addFormDataPart("regist", content);
+            header.put("TIME", timestamp);
+        }
+
+        return factoryApi.registing(header, builder.build());
     }
 }

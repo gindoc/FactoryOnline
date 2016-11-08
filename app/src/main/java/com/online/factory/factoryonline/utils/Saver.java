@@ -64,4 +64,14 @@ public class Saver {
         return EnCodeUtil.objectDecode(base64Publish);
     }
 
+    public static void setToken(String token) {
+        Editor editor = sharePref.edit();
+        editor.putString("token", token);
+        editor.commit();
+    }
+
+    public static String getToken() {
+        return sharePref.getString("token", "");
+    }
+
 }

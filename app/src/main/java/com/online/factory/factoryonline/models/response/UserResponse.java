@@ -10,6 +10,26 @@ import com.online.factory.factoryonline.models.User;
 public class UserResponse extends Response{
     private User user;
 
+    private String timestamp;
+
+    private String token;
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public User getUser() {
         return user;
     }

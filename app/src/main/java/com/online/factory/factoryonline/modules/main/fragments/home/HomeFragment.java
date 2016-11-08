@@ -22,6 +22,7 @@ import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
+import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
@@ -29,6 +30,9 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 
 import org.apache.commons.codec.binary.Base64;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.crypto.Cipher;
@@ -89,9 +93,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
             }
 
             @Override
-            public void _onError(Throwable throwable) {
-
-            }
+            public void _onError(Throwable throwable) {}
         });
     }
 
@@ -102,6 +104,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mHeaderBinding = LayoutHomeHeaderBinding.inflate(inflater);
 
         mBinding.setPresenter(mPresenter);
+        mBinding.setView(this);
         mHeaderBinding.setView(this);
 
         initRecyclerView();
@@ -160,6 +163,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     public void useMap() {
         startActivity(BaiduMapActivity.getStartIntent(getActivity()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void openCityPage() {
+        startActivity(CityActivity.getStartIntent(getContext()));
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="@dimen/x75"
+            android:layout_height="@dimen/x75"
+            android:background="@drawable/toast_tips_bg"
+            android:visibility="gone"
+            android:layout_centerInParent="true" />
+
+        <com.online.factory.factoryonline.customview.IndexListBar
+            android:id="@+id/index_list"
+            android:layout_width="@dimen/x25"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+</layout>

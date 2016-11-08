@@ -76,27 +76,27 @@ public class DataManagerModule {
             String fileName;
             if (path.matches("^(/scrollMsgs)$")) {      //匹配/scrollMsgs
                 fileName = "ScrollMsgs.json";
-            }else if(path.matches("^(/factoryInfos/[1-9]\\d*/[1-9]\\d*)")) {
+            } else if (path.matches("^(/factoryInfos/[1-9]\\d*/[1-9]\\d*)")) {
                 fileName = "FactoryResponse.json";
-            }else if(path.matches("^(/recommendInfos/[1-9]\\d*/[1-9]\\d*)")) {
+            } else if (path.matches("^(/recommendInfos/[1-9]\\d*/[1-9]\\d*)")) {
                 fileName = "RecommendInfos.json";
-            }else if(path.matches("^(/recommendDistrictCats)")) {
+            } else if (path.matches("^(/recommendDistrictCats)")) {
                 fileName = "RecommendDistrictCats.json";
-            }else if(path.matches("^(/recommendPriceCats)")){
+            } else if (path.matches("^(/recommendPriceCats)")) {
                 fileName = "RecommendPriceCats.json";
-            }else if(path.matches("^(/recommendAreaCats)")){
+            } else if (path.matches("^(/recommendAreaCats)")) {
                 fileName = "RecomendAreaCats.json";
-            }else if(path.matches("^(/isFactoryCollected/[0-9]\\d*)")){
+            } else if (path.matches("^(/isFactoryCollected/[0-9]\\d*)")) {
                 fileName = "IsFactoryCollected.json";
-            }else if(path.matches("^(/users)")){
+            } else if (path.matches("^(/users)")) {
                 fileName = "Regist.json";
-            }else if(path.matches("^(/user)")){
+            } else if (path.matches("^(/user)")) {
                 fileName = "UserResponse.json";
-            }else if(path.matches("^(/publicmessages/[1-9]\\d*)")){
+            } else if (path.matches("^(/publicmessages/[1-9]\\d*)")) {
                 fileName = "FactoryResponse.json";
-            }else if (path.matches("^(/factorypoi/[1-9]\\d*)")){
+            } else if (path.matches("^(/factorypoi/[1-9]\\d*)")) {
                 fileName = "FactoryPois.json";
-            }else {
+            } else {
                 fileName = "SlideUrl.json";
             }
             reader = new BufferedReader(new InputStreamReader(assetManager.open(fileName)));
@@ -120,7 +120,7 @@ public class DataManagerModule {
                 String responseString = createResponseBody(chain);
                 Request request = chain.request();
                 Request realRequest = null;
-                Timber.d("requestBody : %s",bodyToString(request.body()));
+                Timber.d("requestBody : %s", bodyToString(request.body()));
                 Response intercepterResponse = null;
                 if (request.url().toString().equals("https://api.sms.jpush.cn/v1/codes")) {
                     String s = "2f0bf84aec9e72e58d647ea2:4930a1ae980aaebb491d152b";
@@ -128,10 +128,12 @@ public class DataManagerModule {
                     String base64_auth_string = Base64.encodeToString(b, Base64.NO_WRAP);
                     realRequest = request.newBuilder().addHeader("Authorization", "Basic " + base64_auth_string).build();
                     Headers headers = realRequest.headers();
-                    for (int i=0;i<headers.size();i++) {
+                    for (int i = 0; i < headers.size(); i++) {
                         Timber.e(headers.get("Authorization"));
                     }
-                }else {
+                } else if (request.url().toString().contains("users")) {
+                    realRequest = request.newBuilder().build();
+                } else {
                     intercepterResponse = new Response.Builder()
                             .code(200)
                             .message(responseString)
@@ -143,11 +145,12 @@ public class DataManagerModule {
                             .build();
                 }
 
-                return intercepterResponse == null?chain.proceed(realRequest):intercepterResponse;
+                return intercepterResponse == null ? chain.proceed(realRequest) : intercepterResponse;
             }
         };
         return BuildConfig.DEBUG ? interceptor : null;
     }
+
     private String bodyToString(final RequestBody request) {
         try {
             final RequestBody copy = request;
@@ -161,6 +164,7 @@ public class DataManagerModule {
             return "did not work";
         }
     }
+
     @Provides
     public OkHttpClient provideHttpClient(@Named("httpLogger") HttpLoggingInterceptor loggingInterceptor,
                                           @Named("localdata") Interceptor localDataInterceptor) {

@@ -5,6 +5,9 @@
     <data>
 
         <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
+        <variable
             name="presenter"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeContract.Presenter" />
     </data>
@@ -34,6 +37,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="#424242"
+                android:onClick="@{()->view.openCityPage()}"
                 android:textSize="18sp" />
 
             <LinearLayout

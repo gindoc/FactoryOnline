@@ -61,6 +61,7 @@
         <activity android:name=".modules.publishRental.PublishRentalActivity" />
         <activity android:name=".modules.album.AlbumActivity"/>
         <activity android:name=".modules.regist.RegistActivity"/>
+        <activity android:name=".modules.city.CityActivity" />
     </application>
 
 </manifest>

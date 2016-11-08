@@ -60,6 +60,7 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/x11"
                 android:paddingRight="@dimen/x17"
+                android:onClick="@{view.openMap}"
                 android:text="地图"
                 android:textColor="#1ab80f"
                 android:textSize="18sp" />

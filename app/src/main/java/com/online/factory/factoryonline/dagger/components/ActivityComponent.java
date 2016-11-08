@@ -5,6 +5,7 @@ package com.online.factory.factoryonline.dagger.components;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
+import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.dagger.modules.ActivityModule;
@@ -32,4 +33,6 @@ public interface ActivityComponent {
     void inject(RegistActivity registActivity);
 
     void inject(BaiduMapActivity baiduMapActivity);
+
+    void inject(CityActivity cityActivity);
 }
