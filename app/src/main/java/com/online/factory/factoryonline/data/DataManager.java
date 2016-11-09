@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.models.City;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.User;
@@ -179,4 +180,7 @@ public class DataManager {
     }
 
 
+    public Observable<List<City>> requestCities() {
+        return factoryApi.getCities();
+    }
 }

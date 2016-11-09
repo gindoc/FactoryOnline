@@ -4,22 +4,22 @@ package com.online.factory.factoryonline.models;
  * Created by cwenhui on 2016/11/8.
  */
 public class City {
-    private String cityName;            // 城市名
-    private String sortLetters;         // 城市名的拼音首字母
+    private String city_name;            // 城市名
+    private String sort_letters;         // 城市名的拼音首字母
 
     public String getCityName() {
-        return cityName;
+        return city_name;
     }
 
     public void setCityName(String cityName) {
-        this.cityName = cityName;
+        this.city_name = cityName;
     }
 
     public String getSortLetters() {
-        return sortLetters;
+        return sort_letters;
     }
 
     public void setSortLetters(String sortLetters) {
-        this.sortLetters = sortLetters;
+        this.sort_letters = sortLetters;
     }
 }

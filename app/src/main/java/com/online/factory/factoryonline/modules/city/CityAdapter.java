@@ -35,14 +35,19 @@ public class CityAdapter extends BaseRecyclerViewAdapter<City, CityAdapter.CityV
         ItemCityListBinding binding = holder.getBinding();
         City city = data.get(position);
         binding.tvCityName.setText(city.getCityName());
-        // 根据position获取分类的首字母的Char ascii值
-        int section = getSectionForPosition(position);
-        // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
-        if (position == getPositionForSection(section)) {
+        if (position != 0) {
+            // 根据position获取分类的首字母的Char ascii值
+            int section = getSectionForPosition(position);
+            // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+            if (position == getPositionForSection(section)) {
+                binding.tvCategory.setVisibility(View.VISIBLE);
+                binding.tvCategory.setText(city.getSortLetters());
+            } else {
+                binding.tvCategory.setVisibility(View.GONE);
+            }
+        }else {
             binding.tvCategory.setVisibility(View.VISIBLE);
             binding.tvCategory.setText(city.getSortLetters());
-        } else {
-            binding.tvCategory.setVisibility(View.GONE);
         }
     }
 

@@ -96,7 +96,9 @@ public class DataManagerModule {
                 fileName = "FactoryResponse.json";
             } else if (path.matches("^(/factorypoi/[1-9]\\d*)")) {
                 fileName = "FactoryPois.json";
-            } else {
+            } else if (path.matches("^(/cities)")){
+                fileName = "Cities.json";
+            }else {
                 fileName = "SlideUrl.json";
             }
             reader = new BufferedReader(new InputStreamReader(assetManager.open(fileName)));
