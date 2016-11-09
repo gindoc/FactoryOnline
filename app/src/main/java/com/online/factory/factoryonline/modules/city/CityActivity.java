@@ -86,7 +86,6 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
         if (position != -1) {
             LinearLayoutManager layoutManager = (LinearLayoutManager) mBinding.recyclerView.getLayoutManager();
             layoutManager.scrollToPositionWithOffset(position, 0);
-//            layoutManager.scrollToPosition(position);
         }
     }
 
@@ -108,9 +107,11 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
             }
         }
         Collections.sort(cities, pinyinComparator);
+
         City city = new City();             //假设当前定位为东莞
         city.setCityName("东莞");
         city.setSortLetters("当前定位");
+
         List<City> cityList = new ArrayList<>();
         cityList.add(city);
         cityList.addAll(cities);

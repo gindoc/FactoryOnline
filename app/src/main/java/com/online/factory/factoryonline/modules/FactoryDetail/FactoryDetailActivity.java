@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
+import com.online.factory.factoryonline.databinding.ActivityFactoryDetail2Binding;
 import com.online.factory.factoryonline.databinding.ActivityFactoryDetailBinding;
 import com.online.factory.factoryonline.models.Factory;
 import com.squareup.picasso.Picasso;
@@ -30,7 +34,8 @@ import javax.inject.Inject;
  */
 public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.View, FactoryDetailPresenter> implements FactoryDetailContract.View {
     public static final String FACTORY_DETIAL = "factory_detail";
-    private ActivityFactoryDetailBinding mBinding;
+    //    private ActivityFactoryDetailBinding mBinding;
+    private ActivityFactoryDetail2Binding mBinding;
 
     @Inject
     FactoryDetailPresenter mPresenter;
@@ -43,17 +48,18 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_factory_detail);
+//        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_factory_detail);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_factory_detail2);
 
         initToolbar();
-        initFactoryDetail();
+//        initFactoryDetail();
         initViewPager();
     }
 
     private void initViewPager() {
         Factory factory = (Factory) getIntent().getSerializableExtra(FACTORY_DETIAL);
         List<String> imageUrls = factory.getImage_urls();
-        for (int i=0; i<imageUrls.size();i++) {
+        for (int i = 0; i < imageUrls.size(); i++) {
             ImageView imageView = new ImageView(FactoryDetailActivity.this);
             imageView.setTag(imageUrls.get(i));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -67,7 +73,23 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     private void initToolbar() {
         mBinding.toolbar.setTitle("");
         setSupportActionBar(mBinding.toolbar);
-        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
+
+        mBinding.appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                MenuItem menuItem = mBinding.toolbar.getMenu().findItem(R.id.collect);
+                if (menuItem != null) {
+                    if (state == State.EXPANDED) {         //展开状态
+                        menuItem.setIcon(R.drawable.ic_collected_with_shadow);
+                        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
+                    } else if (state == State.COLLAPSED) {     //折叠状态
+                        menuItem.setIcon(R.drawable.ic_collected);
+                        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -100,8 +122,6 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                 break;
             case R.id.collect:
                 break;
-            case R.id.share:
-                break;
         }
         return true;
     }
@@ -123,7 +143,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     public void showError(String error) {
     }
 
-    class MyPagerAdapter extends PagerAdapter{
+    class MyPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
@@ -155,7 +175,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         }
     }
 
-    class MyPageListener implements ViewPager.OnPageChangeListener{
+    class MyPageListener implements ViewPager.OnPageChangeListener {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -163,7 +183,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
         @Override
         public void onPageSelected(int position) {
-            mBinding.tvPagerIndex.setText(position+1 + "/" + imageViewsList.size());
+            mBinding.tvPagerIndex.setText(position + 1 + "/" + imageViewsList.size());
         }
 
         @Override
