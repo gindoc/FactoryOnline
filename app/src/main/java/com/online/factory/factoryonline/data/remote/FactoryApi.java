@@ -89,9 +89,6 @@ public interface FactoryApi {
     @GET("/isFactoryCollected/{fId}")
     Observable<Boolean> isFactoryCollected(@Path("fId") int fId);
 
-//    @POST("users/")
-//    Observable<Response> regist(@Body RequestBody requestBody);
-
     @GET("/users/salt/{username}")
     Observable<Response> getSalt(@Path("username") String userName);
 
@@ -111,5 +108,5 @@ public interface FactoryApi {
     Observable<JsonObject> getSmsCode(@Body RequestBody requestBody);
 
     @POST("users/")
-    Observable<retrofit2.Response<JsonObject>> registing(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
+    Observable<retrofit2.Response<JsonObject>> regist(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 }

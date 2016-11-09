@@ -12,7 +12,6 @@ import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
-import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
@@ -23,13 +22,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import okhttp3.Headers;
 import okhttp3.MultipartBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import rx.Observable;
-import rx.Subscriber;
-import rx.subjects.BehaviorSubject;
 
 /**
  * Created by louiszgm on 2016/9/29.
@@ -119,17 +113,19 @@ public class DataManager {
      * @param regist
      * @return
      */
-//    public Observable<Response> regist(Regist regist) {
-//        MultipartBody.Builder builder = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM);
-//        if (regist != null) {
-////            String registJsonString = new Gson().toJson(regist);
-////            TIME.TIMESTAMP = String.valueOf(System.currentTimeMillis()*1000);
-////            String content = AESUtil.encrypt(registJsonString, TIME.TIMESTAMP, "1234567812345678");
-////            builder.addFormDataPart("regist", /*registJsonString*/content);
-//        }
-//        return factoryApi.regist(builder.build());
-//    }
+    public Observable<retrofit2.Response<JsonObject>> regist(Regist regist) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        Map<String, String> header = new HashMap<>();
+        if (regist != null) {
+            String registJsonString = new Gson().toJson(regist);
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            String content = AESUtil.encrypt(registJsonString, timestamp, "1234567812345678");
+            builder.addFormDataPart("regist", content);
+            header.put("TIME", timestamp);
+        }
+        return factoryApi.regist(header, builder.build());
+    }
 
     /**
      * 登录
@@ -182,18 +178,5 @@ public class DataManager {
         return factoryApi.getSmsCode(builder.build());
     }
 
-    public Observable<retrofit2.Response<JsonObject>> registing(Regist regist) {
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-        Map<String, String> header = new HashMap<>();
-        if (regist != null) {
-            String registJsonString = new Gson().toJson(regist);
-            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
-            String content = AESUtil.encrypt(registJsonString, timestamp, "1234567812345678");
-            builder.addFormDataPart("regist", content);
-            header.put("TIME", timestamp);
-        }
 
-        return factoryApi.registing(header, builder.build());
-    }
 }

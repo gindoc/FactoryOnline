@@ -1,8 +1,7 @@
 package com.online.factory.factoryonline.utils;
 
-//import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64;
 
-import android.databinding.repacked.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;

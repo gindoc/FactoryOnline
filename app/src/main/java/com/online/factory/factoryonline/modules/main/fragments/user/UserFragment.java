@@ -121,10 +121,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TO_LOGIN_ACTIVITY) {
-            User user = Saver.getSerializableObject(SharePreferenceKey.USER);
-            if (user != null) {
-                mBinding.setUser(user);
-            }
+            mPresenter.getUser();
         }
     }
 
