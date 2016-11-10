@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/gray_oval"
+                    android:background="@drawable/gray_deeper_rectangle_background"
                     android:padding="@dimen/x3"
                     android:layout_marginRight="@dimen/x10"
                     android:text="@{viewModel.childCategoryNum}"
