@@ -121,7 +121,8 @@ public class DataManager {
         if (regist != null) {
             String registJsonString = new Gson().toJson(regist);
             String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
-            String content = AESUtil.encrypt(registJsonString, timestamp, "1234567812345678");
+            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String content = AESUtil.encrypt(registJsonString, timestamp, iv.toString());
             builder.addFormDataPart("regist", content);
             header.put("TIME", timestamp);
         }
@@ -134,14 +135,19 @@ public class DataManager {
      * @param login
      * @return
      */
-    public Observable<UserResponse> login(Login login) {
+    public Observable<retrofit2.Response<JsonObject>> login(Login login) {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
+        Map<String, String> header = new HashMap<>();
         if (login != null) {
             String loginJsonString = new Gson().toJson(login);
-            builder.addFormDataPart("login", loginJsonString);
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String content = AESUtil.encrypt(loginJsonString, timestamp, iv.toString());
+            builder.addFormDataPart("login", content);
+            header.put("TIME", timestamp);
         }
-        return factoryApi.login(builder.build());
+        return factoryApi.login(header, builder.build());
     }
 
     /**

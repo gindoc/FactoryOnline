@@ -92,7 +92,7 @@ public class SmsLoginFragment extends BaseFragment<SmsLoginContract.View, SmsLog
                 try {
                     if (Validate.validatePhoneNum(getInputPhoneNum())) {
                         login.setUser_name(getInputPhoneNum());
-                        login.setLogin_key_md5(MD5.getMD5(getInputPwd()));
+                        login.setPwd(getInputPwd());
                         login.setLogin_type(1);
                         ((LoginActivity) getActivity()).login(login);
                     }

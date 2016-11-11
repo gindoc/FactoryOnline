@@ -52,7 +52,8 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                         JsonObject body = response.body();
                         if (body.get("erro_code").toString().equals("200")) {
                             String str_user = body.get("user").toString();
-                            str_user = AESUtil.desEncrypt(str_user, timestamp, "1234567812345678");
+                            StringBuilder iv = new StringBuilder(timestamp).reverse();
+                            str_user = AESUtil.desEncrypt(str_user, timestamp, iv.toString());
                             User user = new Gson().fromJson(str_user, User.class);
                             Saver.saveSerializableObject(user, SharePreferenceKey.USER);
                             Saver.setToken(body.get("token").toString());

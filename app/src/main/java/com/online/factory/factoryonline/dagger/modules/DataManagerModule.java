@@ -133,7 +133,7 @@ public class DataManagerModule {
                     for (int i = 0; i < headers.size(); i++) {
                         Timber.e(headers.get("Authorization"));
                     }
-                } else if (request.url().toString().contains("users")) {
+                } else if (request.url().toString().contains("users")||request.url().toString().contains("user")) {
                     realRequest = request.newBuilder().build();
                 } else {
                     intercepterResponse = new Response.Builder()

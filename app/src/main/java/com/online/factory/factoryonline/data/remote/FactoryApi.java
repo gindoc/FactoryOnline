@@ -93,8 +93,8 @@ public interface FactoryApi {
     @GET("/users/salt/{username}")
     Observable<Response> getSalt(@Path("username") String userName);
 
-    @POST("/user")
-    Observable<UserResponse> login(@Body RequestBody requestBody);
+    @POST("user/")
+    Observable<retrofit2.Response<JsonObject>> login(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
     @GET("/user")
     Observable<UserResponse> getUser();

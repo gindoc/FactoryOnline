@@ -12,23 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MyLocationConfiguration;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.map.UiSettings;
-import com.baidu.mapapi.model.LatLng;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
 import com.online.factory.factoryonline.databinding.ActivityFactoryDetailBinding;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
-import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -36,9 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import rx.subjects.BehaviorSubject;
-import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016/10/17.
@@ -55,17 +40,6 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     private List<ImageView> imageViewsList = new ArrayList<>();
 
-    BaiduMap mBaiduMap;
-
-    @Inject
-    LocationClient mLocationClient;
-
-    @Inject
-    BDLocationListener mBdLocationListener;
-
-    @Inject
-    BehaviorSubject mBehaviorSubject;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
@@ -79,60 +53,16 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     }
 
     private void initBaiduMap() {
-        ((MyLocationListener) mBdLocationListener).setBdLocationBehaviorSubject(mBehaviorSubject);
-        mLocationClient.registerLocationListener(mBdLocationListener);
-        mBehaviorSubject.compose(this.bindToLifecycle())
-                .subscribe(new RxSubscriber() {
-                    @Override
-                    public void _onNext(Object o) {
-                        BDLocation bdLocation = (BDLocation) o;
-                        Timber.e("纬度：" + bdLocation.getLatitude() + "   精度：" + bdLocation.getLongitude());
-                        // 定位数据
-                        MyLocationData data = new MyLocationData.Builder()
-                                // 定位精度bdLocation.getRadius()
-                                .accuracy(bdLocation.getRadius())
-                                // 此处设置开发者获取到的方向信息，顺时针0-360
-                                .direction(bdLocation.getDirection())
-                                // 经度
-                                .latitude(bdLocation.getLatitude())
-                                // 纬度
-                                .longitude(bdLocation.getLongitude())
-                                // 构建
-                                .build();
-                        mBaiduMap.setMyLocationData(data);
-                        double latitude = bdLocation.getLatitude();
-                        double longitude = bdLocation.getLongitude();
-                        LatLng ll = new LatLng(latitude, longitude);
-                        MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(ll, 18);
-                        mBaiduMap.animateMapStatus(msu);
-
-                        mLocationClient.unRegisterLocationListener(mBdLocationListener);
-
-                        StringBuilder api = new StringBuilder("http://api.map.baidu.com/staticimage?center=");
-                        api.append(longitude+","+latitude);
-                        api.append("&width=" + mBinding.ivMapview.getWidth());
-                        api.append("&height=" + mBinding.ivMapview.getHeight());
-                        api.append("&zoom=18");
-                        api.append("&markers=");
-                        api.append(longitude+","+latitude);
-                        Picasso.with(FactoryDetailActivity.this).load(api.toString()).into(mBinding.ivMapview);
-                    }
-
-                    @Override
-                    public void _onError(Throwable throwable) {
-                    }
-                });
-
-        mBinding.mapview.showZoomControls(false);       //关闭缩放按钮
-        mBaiduMap = mBinding.mapview.getMap();
-        mBaiduMap.setMyLocationEnabled(true);
-
-        UiSettings settings = mBaiduMap.getUiSettings();
-        settings.setAllGesturesEnabled(false);          //关闭一切手势操作
-
-        mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null));
-        mLocationClient.start();
-
+        StringBuilder api = new StringBuilder("http://api.map.baidu.com/staticimage?center=");
+        double longitude = 113.716352;
+        double latitude = 23.046693;
+        api.append(longitude+","+latitude);
+        api.append("&width=" + 450);
+        api.append("&height=" + 240);
+        api.append("&zoom=18");
+        api.append("&markers=");
+        api.append(longitude+","+latitude);
+        Picasso.with(FactoryDetailActivity.this).load(api.toString()).into(mBinding.ivMapview);
     }
 
     private void initViewPager() {
@@ -270,24 +200,4 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         }
     }
 
-    @Override
-    protected void onPause() {
-        mLocationClient.unRegisterLocationListener(mBdLocationListener);
-        mBinding.mapview.onPause();
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        mBinding.mapview.onResume();
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        mBinding.mapview.onDestroy();
-        mLocationClient.stop();
-        mBaiduMap.setMyLocationEnabled(false);
-        super.onDestroy();
-    }
 }

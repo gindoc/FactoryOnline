@@ -18,6 +18,7 @@ import com.online.factory.factoryonline.utils.MD5;
 import com.online.factory.factoryonline.utils.Validate;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by louiszgm on 2016/9/30.
@@ -30,6 +31,10 @@ public class PwdLoginFragment  extends BaseFragment{
     public PwdLoginFragment() {
         setTitle("普通登录");
     }
+
+    @Inject
+    @Named("device_id")
+    String device_id;
 
     @Nullable
     @Override
@@ -47,8 +52,9 @@ public class PwdLoginFragment  extends BaseFragment{
                 try {
                     if(Validate.validatePhoneNum(getInputPhoneNum())){
                         login.setUser_name(getInputPhoneNum());
-                        login.setLogin_key_md5(MD5.getMD5(getInputPwd()));
+                        login.setPwd(getInputPwd());
                         login.setLogin_type(2);
+                        login.setDevice_id(device_id);
                         ((LoginActivity)getActivity()).login(login);
                     }
                 } catch (ValidateException e) {
