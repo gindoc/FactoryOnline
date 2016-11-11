@@ -51,6 +51,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_publish_rental);
 
@@ -179,6 +180,8 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             mBinding.tvPickImg.setVisibility(View.GONE);
             mBinding.ivPicMore.setVisibility(View.VISIBLE);
             mBinding.ivSelectedImg.setClickable(true);
+
+            mPresenter.uploadImages(mSelectedImage);
         }
     }
 

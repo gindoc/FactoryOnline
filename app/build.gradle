@@ -97,4 +97,6 @@ dependencies {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
     compile files('libs/jsms_android-1.1.0.jar')
+    compile 'com.qiniu:qiniu-android-sdk:7.2.+'
+    compile "com.qiniu:happy-dns:0.2.10"
 }

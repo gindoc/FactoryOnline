@@ -17,6 +17,10 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.qiniu.android.common.Zone;
+import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 
 import javax.inject.Singleton;
 
@@ -95,5 +99,16 @@ public class ApplicationModule {
         option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
         option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
         return option;
+    }
+
+    @Provides
+    @Singleton
+    public UploadManager provideUploadManager() {
+        Configuration config = new Configuration.Builder()
+                .zone(Zone.zone1) // 设置区域，指定不同区域的上传域名、备用域名、备用IP。默认 Zone.zone0
+                .build();
+        // 重用uploadManager。一般地，只需要创建一个uploadManager对象
+        UploadManager uploadManager = new UploadManager(config);
+        return uploadManager;
     }
 }

@@ -1,6 +1,7 @@
 package com.online.factory.factoryonline.data.remote;
 
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.City;
 import com.online.factory.factoryonline.models.Factory;
@@ -19,6 +20,7 @@ import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -113,4 +115,7 @@ public interface FactoryApi {
 
     @GET("/cities")
     Observable<List<City>> getCities();
+
+    @GET("uploadToken")
+    Observable<JsonObject> getUploadToken(@Query("pic") /*JsonArray jsonArray*/String json);
 }
