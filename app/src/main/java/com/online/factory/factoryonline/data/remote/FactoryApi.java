@@ -16,6 +16,7 @@ import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
@@ -116,6 +117,6 @@ public interface FactoryApi {
     @GET("/cities")
     Observable<List<City>> getCities();
 
-    @GET("uploadToken")
-    Observable<JsonObject> getUploadToken(@Query("pic") /*JsonArray jsonArray*/String json);
+    @GET("qiniutokens/{tokenType}")
+    Observable<JsonObject> getToken(@Path("tokenType") String tokenType, @Query("bucket")String bucket);
 }

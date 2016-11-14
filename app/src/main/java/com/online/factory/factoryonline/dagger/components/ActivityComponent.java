@@ -12,6 +12,7 @@ import com.online.factory.factoryonline.dagger.modules.ActivityModule;
 import com.online.factory.factoryonline.dagger.modules.FragmentModule;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
+import com.online.factory.factoryonline.modules.report.ReportActivity;
 
 import dagger.Subcomponent;
 
@@ -38,4 +39,6 @@ public interface ActivityComponent {
     void inject(CityActivity cityActivity);
 
     void inject(PublishRentalActivity publishRentalActivity);
+
+    void inject(ReportActivity reportActivity);
 }

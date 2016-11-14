@@ -1,10 +1,17 @@
 package com.online.factory.factoryonline.modules.publishRental;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.data.remote.Consts;
+import com.online.factory.factoryonline.utils.BitmapManager;
+import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -13,6 +20,9 @@ import com.qiniu.android.storage.UploadManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -43,25 +53,32 @@ public class PublishRentalPresenter extends BasePresenter<PublishRentalContract.
 
     @Override
     public void uploadImages(final List<String> mSelectedImage) {
-        final List<String> images = new ArrayList<>();
+        final List<String> compressedImages = new ArrayList<>();                    // 压缩后的图片的名字
         for (String image : mSelectedImage) {
-            image = "factory_" + UUID.randomUUID()+".jpg";
-            images.add(image);
+            Bitmap bitmap = BitmapManager.getSmallBitmap(image);                     // 压缩图片，生成bitmap
+            File file = FileUtils.createTempImage((Context) getView());
+            try {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));   // 用bitmap生成文件
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            compressedImages.add(file.toString());
         }
-        final String json = new Gson().toJson(mSelectedImage);
-        mDataManager.uploadImages(json)
+        mDataManager.requestToken(Consts.uploadToken)
                 .compose(getView().<JsonObject>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new RxSubscriber<JsonObject>() {
                     @Override
                     public void _onNext(JsonObject jsonObject) {
-                        Timber.e(jsonObject.toString());
-                        JsonArray jsonArray = jsonObject.getAsJsonArray("uploadToken");         //拿upToken
-                        for (int i = 0; i < jsonArray.size(); i++) {
-                            mUploadManager.put(mSelectedImage.get(i), images.get(i), /*jsonArray.get(i)*/"o33Z_126boXseVzZ4GrN3fKbKfZADg4SrAtddImq:DeJrBNmCo9ZQQrRXLwhHvKannyY=:eyJzY29wZSI6InBpY3MiLCJkZWFkbGluZSI6MTQ3ODg2MjI2MX0=".toString(), new UpCompletionHandler() {
+                        String token = jsonObject.get("token").getAsString();
+                        for (int i = 0; i < compressedImages.size(); i++) {
+                            String serverImageName = "factory_"+UUID.randomUUID() + ".jpg";
+                            mUploadManager.put(compressedImages.get(i), serverImageName, token, new UpCompletionHandler() {
                                 @Override
                                 public void complete(String key, ResponseInfo info, JSONObject response) {
-                                    Timber.e("key" + key + "  isOk:" + info.isOK()+"   reponse "+response.toString());
+                                    if (response != null) {
+                                        Timber.e("key" + key + "  isOk:" + info.isOK() + "   reponse " + response.toString());
+                                    }
                                 }
                             }, null);
                         }

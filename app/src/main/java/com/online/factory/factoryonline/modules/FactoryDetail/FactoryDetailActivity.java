@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.FactoryDetail;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
 import com.online.factory.factoryonline.databinding.ActivityFactoryDetailBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.modules.report.ReportActivity;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -45,6 +47,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_factory_detail);
+        mBinding.setView(this);
 
         initToolbar();
         initFactoryDetail();
@@ -112,6 +115,11 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         mViewModel.setFactory(factory);
         mBinding.setViewModel(mViewModel);
 
+    }
+
+    public void openReportPage() {      //举报
+        startActivity(ReportActivity.getStartIntent(this));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     @Override

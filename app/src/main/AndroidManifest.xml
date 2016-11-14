@@ -62,6 +62,7 @@
         <activity android:name=".modules.album.AlbumActivity"/>
         <activity android:name=".modules.regist.RegistActivity"/>
         <activity android:name=".modules.city.CityActivity" />
+        <activity android:name=".modules.report.ReportActivity" />
     </application>
 
 </manifest>

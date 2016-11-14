@@ -135,7 +135,7 @@ public class DataManagerModule {
                     }
                 } else if (request.url().toString().contains("users")
                         || request.url().toString().contains("user")
-                        || request.url().toString().contains("uploadToken")) {
+                        || request.url().toString().contains("qiniutokens")) {
                     realRequest = request.newBuilder().build();
                 } else {
                     intercepterResponse = new Response.Builder()

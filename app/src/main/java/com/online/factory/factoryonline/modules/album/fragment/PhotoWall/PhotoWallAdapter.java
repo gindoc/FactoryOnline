@@ -29,6 +29,7 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
     private BehaviorSubject subject;
     private String mDirPath;    // 文件夹路径
     private List<String> mSelectedItem = new ArrayList<>();
+    private List<String> readyToUpload = new ArrayList<>();
 
     @Inject
     public PhotoWallAdapter(Context context, Provider<PhotoWallItemViewModel> provider, BehaviorSubject subject) {
@@ -72,7 +73,7 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
             @Override
             public void onClick(View v) {
                 String selectedImage = mDirPath + "/" + data.get(position);
-                if (mSelectedItem.size() >= 9) {
+                if (mSelectedItem.size() >= 9 && !mSelectedItem.contains(selectedImage)) {
                     Toast.makeText(mContext, "最多选择9张图片", Toast.LENGTH_SHORT).show();
                     return;
                 }

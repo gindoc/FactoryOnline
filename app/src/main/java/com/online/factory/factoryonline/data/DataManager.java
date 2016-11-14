@@ -190,7 +190,7 @@ public class DataManager {
         return factoryApi.getCities();
     }
 
-    public Observable<JsonObject> uploadImages(String json) {
-        return factoryApi.getUploadToken(json);
+    public Observable<JsonObject> requestToken(String tokenType){
+        return factoryApi.getToken(tokenType, null);
     }
 }

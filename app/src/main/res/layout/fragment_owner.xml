@@ -6,7 +6,7 @@
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y85"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:weightSum="3">
 
@@ -22,38 +22,15 @@
                 android:layout_height="@dimen/x49"
                 android:layout_marginBottom="@dimen/y10"
                 android:layout_marginTop="@dimen/y10"
-                android:src="@drawable/ic_msg_online" />
+                android:src="@drawable/ic_publish_factory" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/y15"
-                android:text="发布招租信息"
-                android:textColor="#575757"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <com.online.factory.factoryonline.customview.RoundImageView
-                android:layout_width="@dimen/x49"
-                android:layout_height="@dimen/x49"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginTop="@dimen/y10"
-                android:src="@drawable/ic_msg_online" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/y15"
-                android:text="专人服务"
-                android:textColor="#575757"
-                android:textSize="18sp" />
+                android:text="我要发布"
+                android:textColor="#424242"
+                android:textSize="16sp" />
         </LinearLayout>
 
     </TableRow>

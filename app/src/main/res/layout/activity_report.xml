@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y45"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_arrow_left_green"
+                android:gravity="center_vertical"
+                android:text="返回"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="举报"
+                android:textColor="#424242"
+                android:textSize="22sp" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@android:color/transparent"
+                android:text="下一步"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <include layout="@layout/line" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y32"
+                    android:background="#f5f5f5"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:text="举报房源"
+                    android:textColor="#808080"
+                    android:textSize="16sp" />
+
+                <include layout="@layout/line" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:padding="@dimen/x15"
+                    android:text="大岭山大塘工业园新出带装修2楼2500平方出租.有办公室"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <include layout="@layout/line" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y32"
+                    android:background="#f5f5f5"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:text="举报内容"
+                    android:textColor="#808080"
+                    android:textSize="16sp" />
+
+                <include layout="@layout/line" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y44"
+                    android:drawableLeft="@drawable/gray_oval_outline"
+                    android:drawablePadding="@dimen/x15"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:text="厂房位置有误"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/x15"
+                    android:background="#dbdbdb" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y44"
+                    android:drawableLeft="@drawable/gray_oval_outline"
+                    android:drawablePadding="@dimen/x15"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:text="房源价格不符"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/x15"
+                    android:background="#dbdbdb" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y44"
+                    android:drawableLeft="@drawable/gray_oval_outline"
+                    android:drawablePadding="@dimen/x15"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:text="发布人电话有误"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/x15"
+                    android:background="#dbdbdb" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y44"
+                    android:drawableLeft="@drawable/ic_selected"
+                    android:drawablePadding="@dimen/x15"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:text="图片或面积有误"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/x15"
+                    android:background="#dbdbdb" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y44"
+                    android:drawableLeft="@drawable/gray_oval_outline"
+                    android:drawablePadding="@dimen/x15"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:text="其他"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <include layout="@layout/line" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y32"
+                    android:background="#f5f5f5"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:text="我要吐槽"
+                    android:textColor="#808080"
+                    android:textSize="16sp" />
+
+                <include layout="@layout/line" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y85"
+                    android:layout_margin="@dimen/x10"
+                    android:background="#f5f5f5"
+                    android:gravity="top|left"
+                    android:hint="请详细描述你的投诉内容（字数200以内）"
+                    android:padding="@dimen/x10"
+                    android:focusable="false"
+                    android:textColorHint="#999999"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+</layout>

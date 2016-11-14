@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity" />
+
+        <variable
             name="viewModel"
             type="com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailViewModel" />
     </data>
@@ -467,6 +471,7 @@
                             android:src="@drawable/ic_phone_outline" />
 
                         <Button
+                            android:id="@+id/btn_report"
                             android:layout_width="@dimen/x58"
                             android:layout_height="@dimen/y29"
                             android:layout_alignParentRight="true"
@@ -475,6 +480,7 @@
                             android:background="@drawable/red_outline_rectangle_5r"
                             android:gravity="center"
                             android:text="举报"
+                            android:onClick="@{()->view.openReportPage()}"
                             android:textColor="#ec5252"
                             android:textSize="18sp" />
                     </RelativeLayout>

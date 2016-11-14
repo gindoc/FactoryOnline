@@ -24,6 +24,7 @@ import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.Pho
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.io.File;
@@ -33,6 +34,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016/10/19.
@@ -91,7 +94,17 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
         mPresenter.getPhotos();
 
+        mAdapter.getSubject().subscribe(new RxSubscriber() {
+            @Override
+            public void _onNext(Object o) {
+                mAdapter.getmSelectedItem().get((Integer) o);
+            }
 
+            @Override
+            public void _onError(Throwable throwable) {
+                Timber.e(throwable.getMessage());
+            }
+        });
         return mBinding.getRoot();
     }
 
@@ -139,7 +152,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     public void takePic(View view) {
-        if (mAdapter.getData().size() >= 9) {
+        if (mAdapter.getmSelectedItem().size() >= 9) {
             Toast.makeText(getContext(), "最多选择9张图片", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -154,7 +167,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) {
-            Toast.makeText(getContext(), "拍照出错了...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "未拍摄有图片...", Toast.LENGTH_SHORT).show();
             return;
         }
         if (requestCode == ScanImageUtils.CHOOSE_CAPTURE) {

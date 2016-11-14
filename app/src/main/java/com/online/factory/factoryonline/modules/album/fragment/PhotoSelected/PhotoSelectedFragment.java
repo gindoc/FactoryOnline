@@ -77,7 +77,8 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popFragmentWithResult();
+//                popFragmentWithResult();
+                finish();
             }
         });
     }
