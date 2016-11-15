@@ -1,7 +1,6 @@
 package com.online.factory.factoryonline.data.remote;
 
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.City;
 import com.online.factory.factoryonline.models.Factory;
@@ -119,4 +118,7 @@ public interface FactoryApi {
 
     @GET("qiniutokens/{tokenType}")
     Observable<JsonObject> getToken(@Path("tokenType") String tokenType, @Query("bucket")String bucket);
+
+    @DELETE("images/{imageKey}")
+    Observable<JsonObject> deleteImage(@Path("imageKey")String imageKey);
 }

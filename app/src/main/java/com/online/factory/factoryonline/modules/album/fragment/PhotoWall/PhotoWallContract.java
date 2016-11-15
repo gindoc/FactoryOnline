@@ -18,9 +18,17 @@ public interface PhotoWallContract {
         void hideLoadingDialog();
 
         void initRecyclerview(File maxImgDir, int imgCount, List<ImageFolderBean> beanList);
+
+        void removeUploadedImage(String imageKey);
+
+        void addImageKey(String imageKey);
     }
 
     interface Presenter extends IBasePresenter {
         void getPhotos();
+
+        void deleteImage(String imageKey);
+
+        void uploadImage(List<String> readyToUpload);
     }
 }

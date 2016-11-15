@@ -63,6 +63,8 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Inject
     PhotoSelectedFragment photoSelectedFragment;
 
+    private List<String> imageKeys = new ArrayList<>();
+
     @Inject
     public PhotoWallFragment() {
     }
@@ -88,6 +90,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
                 .SELECTED_PHOTO);
         if (requestCode == PublishRentalActivity.TO_PHOTO_SELECTED && selectedImage.size()>0) {
             toPhotoSelectedFragment((ArrayList<String>) selectedImage);
+            // TODO: 2016/11/14  此处应该加上imagekey传过去
         }
         initToolBar();
         initRecyclerview();
@@ -97,7 +100,8 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mAdapter.getSubject().subscribe(new RxSubscriber() {
             @Override
             public void _onNext(Object o) {
-                mAdapter.getmSelectedItem().get((Integer) o);
+                String imageKey = imageKeys.get((Integer) o);
+                mPresenter.deleteImage(imageKey);
             }
 
             @Override
@@ -152,7 +156,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     public void takePic(View view) {
-        if (mAdapter.getmSelectedItem().size() >= 9) {
+        if (mAdapter.getUploadedItem().size() >= 9) {
             Toast.makeText(getContext(), "最多选择9张图片", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -174,7 +178,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             File picture = new File(mImageCapturePath);
             if (picture.length() > 0) {
                 Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
-                ArrayList<String> selectedImagePath = (ArrayList<String>) mAdapter.getmSelectedItem();
+                ArrayList<String> selectedImagePath = (ArrayList<String>) mAdapter.getUploadedItem();
                 selectedImagePath.add(mImageCapturePath);
                 toPhotoSelectedFragment(selectedImagePath);
             }
@@ -182,10 +186,11 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     public void toPhotoSelectedFragment() {
-        toPhotoSelectedFragment((ArrayList<String>) mAdapter.getmSelectedItem());
+        toPhotoSelectedFragment((ArrayList<String>) mAdapter.getUploadedItem());
     }
 
     private void toPhotoSelectedFragment(ArrayList<String> selectedImagePath) {
+        // TODO: 2016/11/14 此处应该传一个imagekeys过去
         Bundle bundle = new Bundle();
         bundle.putStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO, selectedImagePath);
         //传送已选图片的路径给PhotoSelectedFragment
@@ -219,8 +224,8 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         } else if (requestCode == PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT && resultCode ==
                 TO_PHOTOSELECTED_FRAGMENT && data != null) {
             List<String> selectedImage = data.getStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO);
-            mAdapter.getmSelectedItem().clear();
-            mAdapter.getmSelectedItem().addAll(selectedImage);
+            mAdapter.getUploadedItem().clear();
+            mAdapter.getUploadedItem().addAll(selectedImage);
             mBinding.recyclerView.notifyDataSetChanged();
         }
     }
@@ -237,11 +242,22 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
         List<String> selectedImage = (List<String>) getArguments().get(PhotoSelectedFragment.SELECTED_PHOTO);
         if (selectedImage != null) {
-            mAdapter.getmSelectedItem().clear();
-            mAdapter.getmSelectedItem().addAll(selectedImage);
+            mAdapter.getUploadedItem().clear();
+            mAdapter.getUploadedItem().addAll(selectedImage);
             mBinding.btnFinish.setVisibility(View.VISIBLE);
         }
         mBinding.recyclerView.notifyDataSetChanged();
+    }
+
+    @Override
+    public void removeUploadedImage(String imageKey) {
+        mAdapter.getUploadedItem().remove(imageKeys.indexOf(imageKey));
+        imageKeys.remove(imageKey);
+    }
+
+    @Override
+    public void addImageKey(String imageKey) {
+        imageKeys.add(imageKey);
     }
 
 }

@@ -28,7 +28,7 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
     Provider<PhotoWallItemViewModel> provider;
     private BehaviorSubject subject;
     private String mDirPath;    // 文件夹路径
-    private List<String> mSelectedItem = new ArrayList<>();
+    private List<String> uploadedItem = new ArrayList<>();
     private List<String> readyToUpload = new ArrayList<>();
 
     @Inject
@@ -46,8 +46,8 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
         this.mDirPath = mDirPath;
     }
 
-    public List<String> getmSelectedItem() {
-        return mSelectedItem;
+    public List<String> getUploadedItem() {
+        return uploadedItem;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
         super.onBindViewHolder(holder, position);
         final PhotoWallItemViewModel viewModel = provider.get();
         String imageUrl = mDirPath + "/" + data.get(position);
-        for (String selected : mSelectedItem) {
+        for (String selected : uploadedItem) {
             if (selected.equals(imageUrl)) {
                 viewModel.setClick(true);
             }
@@ -73,19 +73,22 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
             @Override
             public void onClick(View v) {
                 String selectedImage = mDirPath + "/" + data.get(position);
-                if (mSelectedItem.size() >= 9 && !mSelectedItem.contains(selectedImage)) {
+                if (uploadedItem.size() + readyToUpload.size() >= 9 && !uploadedItem.contains
+                        (selectedImage) && !readyToUpload.contains(selectedImage)) {
                     Toast.makeText(mContext, "最多选择9张图片", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (mSelectedItem.contains(selectedImage)) {
-                    mSelectedItem.remove(selectedImage);
+                if (uploadedItem.contains(selectedImage)) {
+                    subject.onNext(uploadedItem.indexOf(selectedImage));
+//                    uploadedItem.remove(selectedImage);
                     viewModel.setClick(false);
                 } else {
-                    mSelectedItem.add(selectedImage);
+                    readyToUpload.add(selectedImage);
+//                    uploadedItem.add(selectedImage);
                     viewModel.setClick(true);
                 }
                 Button finish = (Button) ((ViewGroup) binding.getRoot().getParent().getParent()).findViewById(R.id.btn_finish);
-                if (mSelectedItem.size() > 0) {             //每次点击都判断选中的数目是否大于0
+                if (uploadedItem.size()+readyToUpload.size() > 0) {             //每次点击都判断选中的数目是否大于0
                     finish.setVisibility(View.VISIBLE);
                 } else {
                     finish.setVisibility(View.GONE);

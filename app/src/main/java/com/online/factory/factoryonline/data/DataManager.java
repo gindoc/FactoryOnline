@@ -193,4 +193,8 @@ public class DataManager {
     public Observable<JsonObject> requestToken(String tokenType){
         return factoryApi.getToken(tokenType, null);
     }
+
+    public Observable<JsonObject> deleteImage(String imageKey) {
+        return factoryApi.deleteImage(imageKey);
+    }
 }
