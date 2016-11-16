@@ -63,7 +63,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Inject
     PhotoSelectedFragment photoSelectedFragment;
 
-    private List<String> imageKeys = new ArrayList<>();
+    private ArrayList<String> uploadedImageKeys = new ArrayList<>();
 
     @Inject
     public PhotoWallFragment() {
@@ -86,11 +86,11 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mTakePicBinding.setView(this);
 
         int requestCode = getArguments().getInt(PublishRentalActivity.REQUEST_CODE);
-        List<String> selectedImage = getArguments().getStringArrayList(PhotoSelectedFragment
-                .SELECTED_PHOTO);
-        if (requestCode == PublishRentalActivity.TO_PHOTO_SELECTED && selectedImage.size()>0) {
-            toPhotoSelectedFragment((ArrayList<String>) selectedImage);
-            // TODO: 2016/11/14  此处应该加上imagekey传过去
+        List<String> uploadedImage = getArguments().getStringArrayList(PhotoSelectedFragment
+                .UPLOADED_PHOTO);
+        uploadedImageKeys = getArguments().getStringArrayList(PhotoSelectedFragment.IMAGE_KEYS);
+        if (requestCode == PublishRentalActivity.TO_PHOTO_SELECTED && uploadedImage.size() > 0) {
+            toPhotoSelectedFragment((ArrayList<String>) uploadedImage);
         }
         initToolBar();
         initRecyclerview();
@@ -100,7 +100,9 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mAdapter.getSubject().subscribe(new RxSubscriber() {
             @Override
             public void _onNext(Object o) {
-                String imageKey = imageKeys.get((Integer) o);
+                List<String> orderedImageKeys = mAdapter.getOrderedImageKey();
+                String imageKey = orderedImageKeys.get((Integer) o);
+//                String imageKey = uploadedImageKeys.get((Integer) o);
                 mPresenter.deleteImage(imageKey);
             }
 
@@ -156,7 +158,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     public void takePic(View view) {
-        if (mAdapter.getUploadedItem().size() >= 9) {
+        if (mAdapter.getUploadedItem().size() + mAdapter.getReadyToUpload().size() >= 9) {
             Toast.makeText(getContext(), "最多选择9张图片", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -178,24 +180,32 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             File picture = new File(mImageCapturePath);
             if (picture.length() > 0) {
                 Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
-                ArrayList<String> selectedImagePath = (ArrayList<String>) mAdapter.getUploadedItem();
-                selectedImagePath.add(mImageCapturePath);
-                toPhotoSelectedFragment(selectedImagePath);
+//                ArrayList<String> selectedImagePath = (ArrayList<String>) mAdapter.getUploadedItem();
+                ArrayList<String> readyToUpload = (ArrayList<String>) mAdapter.getReadyToUpload();
+                readyToUpload.add(mImageCapturePath);
+//                toPhotoSelectedFragment(readyToUpload);
+                mPresenter.uploadImage(readyToUpload);
             }
         }
     }
 
     public void toPhotoSelectedFragment() {
-        toPhotoSelectedFragment((ArrayList<String>) mAdapter.getUploadedItem());
+        mPresenter.uploadImage(mAdapter.getReadyToUpload());
+//        toPhotoSelectedFragment((ArrayList<String>) mAdapter.getUploadedItem());
     }
 
-    private void toPhotoSelectedFragment(ArrayList<String> selectedImagePath) {
-        // TODO: 2016/11/14 此处应该传一个imagekeys过去
+    public void toPhotoSelectedFragment(ArrayList<String> selectedImagePath) {
         Bundle bundle = new Bundle();
-        bundle.putStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO, selectedImagePath);
+        bundle.putStringArrayList(PhotoSelectedFragment.UPLOADED_PHOTO, selectedImagePath);
+        bundle.putStringArrayList(PhotoSelectedFragment.IMAGE_KEYS, uploadedImageKeys);
         //传送已选图片的路径给PhotoSelectedFragment
         photoSelectedFragment.setArguments(bundle);
         startForResult(photoSelectedFragment, PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT);
+    }
+
+    @Override
+    public void addImageKeyToOrderedImageKeys(String imageKey) {
+        mAdapter.getOrderedImageKey().add(imageKey);
     }
 
     public void switchAlbum(View view) {
@@ -223,7 +233,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             mBinding.recyclerView.notifyDataSetChanged();
         } else if (requestCode == PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT && resultCode ==
                 TO_PHOTOSELECTED_FRAGMENT && data != null) {
-            List<String> selectedImage = data.getStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO);
+            List<String> selectedImage = data.getStringArrayList(PhotoSelectedFragment.UPLOADED_PHOTO);
             mAdapter.getUploadedItem().clear();
             mAdapter.getUploadedItem().addAll(selectedImage);
             mBinding.recyclerView.notifyDataSetChanged();
@@ -240,7 +250,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mAdapter.setmDirPath(maxImgDir.getAbsolutePath());
         photoFolderFragment.setmFolderBeens(beanList);
 
-        List<String> selectedImage = (List<String>) getArguments().get(PhotoSelectedFragment.SELECTED_PHOTO);
+        List<String> selectedImage = (List<String>) getArguments().get(PhotoSelectedFragment.UPLOADED_PHOTO);
         if (selectedImage != null) {
             mAdapter.getUploadedItem().clear();
             mAdapter.getUploadedItem().addAll(selectedImage);
@@ -251,13 +261,22 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     @Override
     public void removeUploadedImage(String imageKey) {
-        mAdapter.getUploadedItem().remove(imageKeys.indexOf(imageKey));
-        imageKeys.remove(imageKey);
+        mAdapter.getUploadedItem().remove(uploadedImageKeys.indexOf(imageKey));
+        uploadedImageKeys.remove(imageKey);
     }
 
     @Override
-    public void addImageKey(String imageKey) {
-        imageKeys.add(imageKey);
+    public void isToPhotoSlectedPage(String imageKey) {
+        if (uploadedImageKeys == null) {
+            uploadedImageKeys = new ArrayList<>();
+        }
+        if (imageKey != null) {
+            uploadedImageKeys.add(imageKey);
+        }
+        if (uploadedImageKeys.size() == mAdapter.getReadyToUpload().size() + mAdapter.getUploadedItem().size()) {
+            mAdapter.getUploadedItem().addAll(mAdapter.getReadyToUpload());
+            toPhotoSelectedFragment((ArrayList<String>) mAdapter.getUploadedItem());
+        }
     }
 
 }

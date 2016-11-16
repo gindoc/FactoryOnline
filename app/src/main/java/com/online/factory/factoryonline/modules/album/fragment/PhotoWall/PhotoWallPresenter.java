@@ -22,6 +22,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,21 +71,17 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
                 .compose(getView().<String>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
+                .subscribe(new RxSubscriber<String>() {
                     @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Timber.e(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(String o) {
+                    public void _onNext(String s) {
                         getView().hideLoadingDialog();
                         getView().initRecyclerview(ScanImageUtils.getMaxImgDir(), ScanImageUtils
                                 .getTotalCount(), ScanImageUtils.getmImageFloderBeens());
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
                     }
                 });
     }
@@ -115,27 +113,35 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
                     @Override
                     public void _onNext(JsonObject jsonObject) {
                         String token = jsonObject.get("token").getAsString();
+                        if (readyToUpload.size() == 0) {
+                            getView().isToPhotoSlectedPage(null);
+                            return;
+                        }
                         for (int i = 0; i < readyToUpload.size(); i++) {
                             // 压缩图片，生成bitmap
-                            Bitmap bitmap = BitmapManager.getSmallBitmap(readyToUpload.get(i));
-                            File file = FileUtils.createTempImage((Context) getView());
-                            try {           // 用bitmap生成文件
-                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
+//                            String imagePath = readyToUpload.get(i);
+//                            Bitmap bitmap = BitmapManager.getSmallBitmap(imagePath);
+//                            File file = FileUtils.createTempImage(context);
+//                            try {           // 用bitmap生成文件
+//                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
+//                            } catch (FileNotFoundException e) {
+//                                e.printStackTrace();
+//                            }
+
                             String imageKey = "factory_" + UUID.randomUUID() + ".jpg";
-                            mUploadManager.put(file, imageKey, token, new UpCompletionHandler() {
+                            getView().addImageKeyToOrderedImageKeys(imageKey);
+                            mUploadManager.put(/*file*/readyToUpload.get(i), imageKey, token, new UpCompletionHandler() {
                                 @Override
                                 public void complete(String key, ResponseInfo info, JSONObject response) {
                                     if (response != null) {
                                         Timber.e("key:%s  info:%s   response:%s", key, info.toString(),
                                                 response.toString());
-                                        getView().addImageKey(key);
+                                        getView().isToPhotoSlectedPage(key);
                                     }
                                 }
                             }, null);
                         }
+
                     }
 
                     @Override

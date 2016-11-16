@@ -17,6 +17,7 @@ import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -119,6 +120,7 @@ public interface FactoryApi {
     @GET("qiniutokens/{tokenType}")
     Observable<JsonObject> getToken(@Path("tokenType") String tokenType, @Query("bucket")String bucket);
 
-    @DELETE("images/{imageKey}")
+//    @DELETE("images/{imageKey}")
+    @HTTP(method = "delete", path = "images/{imageKey}", hasBody = false)
     Observable<JsonObject> deleteImage(@Path("imageKey")String imageKey);
 }

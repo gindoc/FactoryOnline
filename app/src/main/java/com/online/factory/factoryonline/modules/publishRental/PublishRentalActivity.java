@@ -6,9 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -48,6 +46,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
     @Inject
     PublishRentalPresenter mPresenter;
     private List<String> mSelectedImage = new ArrayList<>();
+    private List<String> imageKeys = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,8 +90,9 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PublishRentalActivity.this, AlbumActivity.class);
-                intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
+                intent.putStringArrayListExtra(PhotoSelectedFragment.UPLOADED_PHOTO, (ArrayList<String>)
                         mSelectedImage);
+                intent.putStringArrayListExtra(PhotoSelectedFragment.IMAGE_KEYS, (ArrayList<String>) imageKeys);
                 intent.putExtra(REQUEST_CODE, TO_PHOTO_SELECTED);
                 startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
             }
@@ -127,15 +127,16 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     public void pickMore() {
         Intent intent = new Intent(this, AlbumActivity.class);
-        intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
+        intent.putStringArrayListExtra(PhotoSelectedFragment.UPLOADED_PHOTO, (ArrayList<String>)
                 mSelectedImage);
+        intent.putStringArrayListExtra(PhotoSelectedFragment.IMAGE_KEYS, (ArrayList<String>) imageKeys);
         intent.putExtra(REQUEST_CODE, TO_PHOTO_WALL);
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
     }
 
    /* public void viewSelectedImage() {
         Intent intent = new Intent(this, AlbumActivity.class);
-        intent.putStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
+        intent.putStringArrayListExtra(PhotoSelectedFragment.UPLOADED_PHOTO, (ArrayList<String>)
                 mSelectedImage);
         intent.putExtra(REQUEST_CODE, TO_PHOTO_SELECTED);
         startActivityForResult(intent, TO_PHOTO_WALL_PICK_IMAGE);
@@ -163,7 +164,9 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == TO_PHOTO_WALL_PICK_IMAGE && resultCode == ALBUM_ACTIVITY_RESULT_OK && data != null) {
             mSelectedImage.clear();
-            mSelectedImage.addAll(data.getStringArrayListExtra(PhotoSelectedFragment.SELECTED_PHOTO));
+            mSelectedImage.addAll(data.getStringArrayListExtra(PhotoSelectedFragment.UPLOADED_PHOTO));
+            imageKeys.clear();
+            imageKeys.addAll(data.getStringArrayListExtra(PhotoSelectedFragment.IMAGE_KEYS));
             loadSelectedImage();
         }
     }
@@ -181,7 +184,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             mBinding.ivPicMore.setVisibility(View.VISIBLE);
             mBinding.ivSelectedImg.setClickable(true);
 
-            mPresenter.uploadImages(mSelectedImage);
+//            mPresenter.uploadImages(mSelectedImage);
         }
     }
 
@@ -227,6 +230,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             }
         }
         publish.setPics(mSelectedImage.toArray(new String[mSelectedImage.size()]));
+        // TODO: 2016/11/15 是否需要保存imagekeys?
         return publish;
     }
 }

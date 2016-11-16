@@ -1,6 +1,5 @@
 package com.online.factory.factoryonline.utils;
 
-import android.databinding.repacked.apache.commons.codec.binary.Base64;
 import android.support.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 
-//import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64;
 
 /**
  * Created by louiszgm on 2016/10/24.

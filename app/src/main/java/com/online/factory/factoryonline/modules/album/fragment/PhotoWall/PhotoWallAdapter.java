@@ -30,6 +30,7 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
     private String mDirPath;    // 文件夹路径
     private List<String> uploadedItem = new ArrayList<>();
     private List<String> readyToUpload = new ArrayList<>();
+    private List<String> orderedImageKey = new ArrayList<>();
 
     @Inject
     public PhotoWallAdapter(Context context, Provider<PhotoWallItemViewModel> provider, BehaviorSubject subject) {
@@ -48,6 +49,14 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
 
     public List<String> getUploadedItem() {
         return uploadedItem;
+    }
+
+    public List<String> getReadyToUpload() {
+        return readyToUpload;
+    }
+
+    public List<String> getOrderedImageKey() {
+        return orderedImageKey;
     }
 
     @Override
@@ -81,6 +90,9 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
                 if (uploadedItem.contains(selectedImage)) {
                     subject.onNext(uploadedItem.indexOf(selectedImage));
 //                    uploadedItem.remove(selectedImage);
+                    viewModel.setClick(false);
+                } else if (readyToUpload.contains(selectedImage)) {
+                    readyToUpload.remove(selectedImage);
                     viewModel.setClick(false);
                 } else {
                     readyToUpload.add(selectedImage);

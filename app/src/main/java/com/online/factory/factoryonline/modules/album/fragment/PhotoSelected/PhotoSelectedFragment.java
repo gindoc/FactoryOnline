@@ -27,7 +27,8 @@ import javax.inject.Inject;
  */
 public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.View, PhotoSelectedPresenter> implements PhotoSelectedContract.View {
     public static final int FROM_PHOTOWALL_FRAGMENT = 101;
-    public static final String SELECTED_PHOTO = "selectedPhoto";
+    public static final String UPLOADED_PHOTO = "uploadedPhoto";
+    public static final String IMAGE_KEYS = "imageKeys";
 
     @Inject
     PhotoSelectedPresenter mPresenter;
@@ -39,6 +40,7 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
     PhotoSelectedAdapter mAdapter;
 
     private List<String> mSelectedPhotoPath = new ArrayList<>();
+    private List<String> imageKeys = new ArrayList<>();
 
     @Inject
     public PhotoSelectedFragment() {
@@ -61,7 +63,9 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mFooterBinding.setView(this);
 
         mSelectedPhotoPath.clear();
-        mSelectedPhotoPath.addAll(getArguments().getStringArrayList(SELECTED_PHOTO));
+        mSelectedPhotoPath.addAll(getArguments().getStringArrayList(UPLOADED_PHOTO));
+        imageKeys.clear();
+        imageKeys.addAll(getArguments().getStringArrayList(IMAGE_KEYS));
 
         mBinding.tvTitle.setText("已选"+mSelectedPhotoPath.size()+"张图片");
         initRecyclerView();
@@ -98,7 +102,8 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         Bundle bundle = new Bundle();
         mSelectedPhotoPath.clear();
         mSelectedPhotoPath.addAll(mAdapter.getData());
-        bundle.putStringArrayList(SELECTED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        bundle.putStringArrayList(UPLOADED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        bundle.putStringArrayList(IMAGE_KEYS, (ArrayList<String>) imageKeys);
         setFramgentResult(PhotoWallFragment.TO_PHOTOSELECTED_FRAGMENT, bundle);
         pop();
     }
@@ -107,7 +112,8 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         Intent intent = new Intent();
         mSelectedPhotoPath.clear();
         mSelectedPhotoPath.addAll(mAdapter.getData());
-        intent.putStringArrayListExtra(SELECTED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        intent.putStringArrayListExtra(UPLOADED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        intent.putStringArrayListExtra(IMAGE_KEYS, (ArrayList<String>) imageKeys);
         getActivity().setResult(PublishRentalActivity.ALBUM_ACTIVITY_RESULT_OK, intent);
         getActivity().finish();
     }
