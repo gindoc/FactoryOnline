@@ -102,7 +102,8 @@
                     android:layout_height="@dimen/x49"
                     android:layout_marginBottom="@dimen/y10"
                     android:layout_marginTop="@dimen/y10"
-                    android:src="@drawable/ic_steel" />
+                    android:src="@drawable/ic_tin"
+                    android:id="@+id/roundImageView" />
 
                 <TextView
                     android:layout_width="wrap_content"
