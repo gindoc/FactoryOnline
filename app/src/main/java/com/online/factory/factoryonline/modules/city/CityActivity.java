@@ -5,29 +5,31 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.LinearLayoutManager;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
-import com.online.factory.factoryonline.customview.IndexListBar;
 import com.online.factory.factoryonline.databinding.ActivityCityBinding;
-import com.online.factory.factoryonline.models.City;
-import com.online.factory.factoryonline.utils.CharacterParser;
-import com.online.factory.factoryonline.utils.PinyinComparator;
+import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import javax.inject.Inject;
+
+import rx.subjects.BehaviorSubject;
+import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016/11/7.
  */
 
-public class CityActivity extends BaseActivity<CityContract.View, CityPresenter> implements CityContract.View, IndexListBar.OnTouchingLetterChangedListener {
+public class CityActivity extends BaseActivity<CityContract.View, CityPresenter> implements CityContract.View/*, IndexListBar.OnTouchingLetterChangedListener*/ {
 
     private ActivityCityBinding mBinding;
 
@@ -37,16 +39,25 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
     @Inject
     CityAdapter mAdapter;
 
+    @Inject
+    LocationClient mLocationClient;
+
+    @Inject
+    BDLocationListener mBdLocationListener;
+
+    @Inject
+    BehaviorSubject mBehaviorSubject;
+
     /**
      * 汉字转换成拼音的类
      **/
-    private CharacterParser characterParser;
+//    private CharacterParser characterParser;
 
     /**
      * 根据拼音来排列ListView里面的数据类
      **/
-    @Inject
-    PinyinComparator pinyinComparator;
+//    @Inject
+//    PinyinComparator pinyinComparator;
 
 
     @Override
@@ -55,14 +66,38 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_city);
 
-        characterParser = CharacterParser.getInstance();
+//        characterParser = CharacterParser.getInstance();
 
-        mPresenter.requestCityList();
+//        mPresenter.requestCityList();
 
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.indexList.setOnTouchingLetterChangedListener(this);
-        mBinding.indexList.setTextView(mBinding.tvTips);
+//        mBinding.recyclerView.setAdapter(mAdapter);
+//        mBinding.indexList.setOnTouchingLetterChangedListener(this);
+//        mBinding.indexList.setTextView(mBinding.tvTips);
 
+        locating();
+    }
+
+    private void locating() {
+        ((MyLocationListener) mBdLocationListener).setBdLocationBehaviorSubject(mBehaviorSubject);
+        mLocationClient.registerLocationListener(mBdLocationListener);
+        mLocationClient.start();            // 启动定位
+
+        mBehaviorSubject.compose(this.bindToLifecycle())
+                .subscribe(new RxSubscriber() {
+                    @Override
+                    public void _onNext(Object o) {
+                        BDLocation bdLocation = (BDLocation) o;
+                        mBinding.tvCurrentCity.setText(bdLocation.getAddress().city);
+                        if (mLocationClient.isStarted()) {
+                            mLocationClient.stop();
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 
     @Override
@@ -79,7 +114,7 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
     public void showError(String error) {
     }
 
-    @Override
+    /*@Override
     public void onTouchingLetterChanged(String s) {
         // 该字母首次出现的位置
         int position = mAdapter.getPositionForSection(s.charAt(0));
@@ -87,14 +122,14 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
             LinearLayoutManager layoutManager = (LinearLayoutManager) mBinding.recyclerView.getLayoutManager();
             layoutManager.scrollToPositionWithOffset(position, 0);
         }
-    }
+    }*/
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, CityActivity.class);
         return intent;
     }
 
-    @Override
+    /*@Override
     public void initCityList(List<City> cities) {
         for (City city : cities) {
             String pinyin = characterParser.getSpelling(city.getCityName());
@@ -117,5 +152,17 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
         cityList.addAll(cities);
         mAdapter.setData(cityList);
         mBinding.recyclerView.notifyDataSetChanged();
+    }*/
+
+    @Override
+    protected void onPause() {
+        mLocationClient.unRegisterLocationListener(mBdLocationListener);
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mLocationClient.stop();
+        super.onDestroy();
     }
 }

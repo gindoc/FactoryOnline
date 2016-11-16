@@ -273,7 +273,6 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
 
     @Override
     public void onMapLoaded() {
-        // TODO Auto-generated method stub
         ms = new MapStatus.Builder().zoom(12).build();
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
     }
