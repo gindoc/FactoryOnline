@@ -22,8 +22,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +30,7 @@ import javax.inject.Inject;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -87,6 +86,7 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
     }
 
     public void deleteImage(final String imageKey) {
+        getView().showLoadingDialog();
         dataManager.deleteImage(imageKey)
                 .compose(getView().<JsonObject>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
@@ -95,6 +95,7 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
                     @Override
                     public void _onNext(JsonObject jsonObject) {
                         getView().removeUploadedImage(imageKey);
+                        getView().hideLoadingDialog();
                     }
 
                     @Override
@@ -102,46 +103,64 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
                         Timber.e(throwable.getMessage());
                     }
                 });
+    }
+
+    private void zipAndUpload(final String token, List<String> readyToUpload) {
+        Observable.from(readyToUpload)
+                .compose(getView().<String>getBindToLifecycle())
+                .flatMap(new Func1<String, Observable<File>>() {
+                    @Override
+                    public Observable<File> call(String s) {
+                        Bitmap bitmap = BitmapManager.compressImage(s, 320, 480);
+                        File file = FileUtils.createTempImage(context);
+                        try {           // 用bitmap生成文件
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        return Observable.just(file);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<File>() {
+                    @Override
+                    public void _onNext(File file) {
+                        String imageKey = "factory_" + UUID.randomUUID() + ".jpg";
+                        getView().addImageKeyToOrderedImageKeys(imageKey);
+                        mUploadManager.put(file, imageKey, token, new UpCompletionHandler() {
+                            @Override
+                            public void complete(String key, ResponseInfo info, JSONObject response) {
+                                if (response != null) {
+                                    getView().isToPhotoSlectedPage(key);
+                                }
+                            }
+                        }, null);
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable);
+                    }
+                });
+
     }
 
     @Override
     public void uploadImage(final List<String> readyToUpload) {
+        getView().showLoadingDialog();
+        if (readyToUpload.size() == 0) {
+            getView().isToPhotoSlectedPage(null);
+            return;
+        }
         dataManager.requestToken(Consts.uploadToken)
                 .compose(getView().<JsonObject>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscriber<JsonObject>() {
                     @Override
                     public void _onNext(JsonObject jsonObject) {
-                        String token = jsonObject.get("token").getAsString();
-                        if (readyToUpload.size() == 0) {
-                            getView().isToPhotoSlectedPage(null);
-                            return;
-                        }
-                        for (int i = 0; i < readyToUpload.size(); i++) {
-                            // 压缩图片，生成bitmap
-//                            String imagePath = readyToUpload.get(i);
-//                            Bitmap bitmap = BitmapManager.getSmallBitmap(imagePath);
-//                            File file = FileUtils.createTempImage(context);
-//                            try {           // 用bitmap生成文件
-//                                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
-//                            } catch (FileNotFoundException e) {
-//                                e.printStackTrace();
-//                            }
-
-                            String imageKey = "factory_" + UUID.randomUUID() + ".jpg";
-                            getView().addImageKeyToOrderedImageKeys(imageKey);
-                            mUploadManager.put(/*file*/readyToUpload.get(i), imageKey, token, new UpCompletionHandler() {
-                                @Override
-                                public void complete(String key, ResponseInfo info, JSONObject response) {
-                                    if (response != null) {
-                                        Timber.e("key:%s  info:%s   response:%s", key, info.toString(),
-                                                response.toString());
-                                        getView().isToPhotoSlectedPage(key);
-                                    }
-                                }
-                            }, null);
-                        }
-
+                        zipAndUpload(jsonObject.get("token").getAsString(), readyToUpload);
                     }
 
                     @Override
@@ -150,4 +169,71 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
                     }
                 });
     }
+    /*@Override
+    public void uploadImage(final List<String> readyToUpload) {
+        getView().showLoadingDialog();
+        if (readyToUpload.size() == 0) {
+            getView().isToPhotoSlectedPage(null);
+            return;
+        }
+        dataManager.requestToken(Consts.uploadToken)
+                .compose(getView().<JsonObject>getBindToLifecycle())
+                .flatMap(new Func1<JsonObject, Observable<String>>() {
+                    @Override
+                    public Observable<String> call(JsonObject jsonObject) {
+                        Observable<String> tokenObervable = Observable.just(jsonObject.get("token").getAsString());
+                        Observable<String> pathObservable = Observable.from(readyToUpload);
+                        return Observable.combineLatest(tokenObervable, pathObservable, new Func2<String, String, String>() {
+                            @Override
+                            public String call(String token, String path) {
+                                return token + "," + path;
+                            }
+                        });
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.computation())
+                .flatMap(new Func1<String, Observable<String>>() {
+                    @Override
+                    public Observable<String> call(String s) {
+                        long start = System.currentTimeMillis();
+                        String[] tokenAndPath = s.split(",");
+                        // 压缩图片，生成bitmap
+                        String imagePath = tokenAndPath[1];
+//                        Bitmap bitmap = BitmapManager.getSmallBitmap(imagePath);
+                        Bitmap bitmap = BitmapManager.compressImage(imagePath, 320, 480);
+                        File file = FileUtils.createTempImage(context);
+                        try {           // 用bitmap生成文件
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                        long end = System.currentTimeMillis();
+                        Timber.e("耗费的时间：%d", end - start);
+                        return Observable.just(tokenAndPath[0] + "," + file.toString());
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void _onNext(String s) {
+                        String[] tokenAndFile = s.split(",");
+                        String imageKey = "factory_" + UUID.randomUUID() + ".jpg";
+                        getView().addImageKeyToOrderedImageKeys(imageKey);
+                        mUploadManager.put(tokenAndFile[1], imageKey, tokenAndFile[0], new UpCompletionHandler() {
+                            @Override
+                            public void complete(String key, ResponseInfo info, JSONObject response) {
+                                if (response != null) {
+                                    getView().isToPhotoSlectedPage(key);
+                                }
+                            }
+                        }, null);
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }*/
 }

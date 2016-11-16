@@ -63,7 +63,8 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Inject
     PhotoSelectedFragment photoSelectedFragment;
 
-    private ArrayList<String> uploadedImageKeys = new ArrayList<>();
+    private ArrayList<String> uploadedImageKeys = new ArrayList<>();        // 已上传的imagekey
+    private List<String> orderedImageKeys = new ArrayList<>();               // 排序好的imagekey，包含已上传的imagekey和准备上传图片的imagekey
 
     @Inject
     public PhotoWallFragment() {
@@ -89,6 +90,9 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         List<String> uploadedImage = getArguments().getStringArrayList(PhotoSelectedFragment
                 .UPLOADED_PHOTO);
         uploadedImageKeys = getArguments().getStringArrayList(PhotoSelectedFragment.IMAGE_KEYS);
+        if (uploadedImageKeys != null) {                            // 如果有传已上传图片的imagekey过来，则加入到排序好的imagekeys中
+            orderedImageKeys.addAll(uploadedImageKeys);
+        }
         if (requestCode == PublishRentalActivity.TO_PHOTO_SELECTED && uploadedImage.size() > 0) {
             toPhotoSelectedFragment((ArrayList<String>) uploadedImage);
         }
@@ -100,9 +104,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mAdapter.getSubject().subscribe(new RxSubscriber() {
             @Override
             public void _onNext(Object o) {
-                List<String> orderedImageKeys = mAdapter.getOrderedImageKey();
-                String imageKey = orderedImageKeys.get((Integer) o);
-//                String imageKey = uploadedImageKeys.get((Integer) o);
+                String imageKey = uploadedImageKeys.get((Integer) o);           // 删除已上传的image时，已上传的imagekeys是排序好的（在上传完毕时排序好）
                 mPresenter.deleteImage(imageKey);
             }
 
@@ -180,10 +182,8 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             File picture = new File(mImageCapturePath);
             if (picture.length() > 0) {
                 Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
-//                ArrayList<String> selectedImagePath = (ArrayList<String>) mAdapter.getUploadedItem();
                 ArrayList<String> readyToUpload = (ArrayList<String>) mAdapter.getReadyToUpload();
                 readyToUpload.add(mImageCapturePath);
-//                toPhotoSelectedFragment(readyToUpload);
                 mPresenter.uploadImage(readyToUpload);
             }
         }
@@ -191,21 +191,26 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     public void toPhotoSelectedFragment() {
         mPresenter.uploadImage(mAdapter.getReadyToUpload());
-//        toPhotoSelectedFragment((ArrayList<String>) mAdapter.getUploadedItem());
     }
 
     public void toPhotoSelectedFragment(ArrayList<String> selectedImagePath) {
         Bundle bundle = new Bundle();
         bundle.putStringArrayList(PhotoSelectedFragment.UPLOADED_PHOTO, selectedImagePath);
         bundle.putStringArrayList(PhotoSelectedFragment.IMAGE_KEYS, uploadedImageKeys);
-        //传送已选图片的路径给PhotoSelectedFragment
-        photoSelectedFragment.setArguments(bundle);
+        photoSelectedFragment.setArguments(bundle);                              // 传送已选图片的路径给PhotoSelectedFragment
         startForResult(photoSelectedFragment, PhotoSelectedFragment.FROM_PHOTOWALL_FRAGMENT);
     }
 
+    /**
+     * 每次上传图片前，都将图片的imagekey加入到排序好的imagekeys中
+     * @param imageKey    准备上传的图片的imagekey
+     */
     @Override
     public void addImageKeyToOrderedImageKeys(String imageKey) {
-        mAdapter.getOrderedImageKey().add(imageKey);
+        if (orderedImageKeys == null) {
+            orderedImageKeys = new ArrayList<>();
+        }
+        orderedImageKeys.add(imageKey);
     }
 
     public void switchAlbum(View view) {
@@ -236,7 +241,13 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             List<String> selectedImage = data.getStringArrayList(PhotoSelectedFragment.UPLOADED_PHOTO);
             mAdapter.getUploadedItem().clear();
             mAdapter.getUploadedItem().addAll(selectedImage);
+            mAdapter.getReadyToUpload().clear();
             mBinding.recyclerView.notifyDataSetChanged();
+            uploadedImageKeys = data.getStringArrayList(PhotoSelectedFragment.IMAGE_KEYS);
+            if (uploadedImageKeys != null) {
+                orderedImageKeys.clear();
+                orderedImageKeys.addAll(uploadedImageKeys);
+            }
         }
     }
 
@@ -259,12 +270,30 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         mBinding.recyclerView.notifyDataSetChanged();
     }
 
+    /**
+     * 每次删完图片后都将图片从已上传的图片列表中移除，并将图片的imagekey从“已上传图片的imagekeys”和“排序好的imagekeys”中移除
+     * @param imageKey
+     */
     @Override
     public void removeUploadedImage(String imageKey) {
         mAdapter.getUploadedItem().remove(uploadedImageKeys.indexOf(imageKey));
         uploadedImageKeys.remove(imageKey);
+        orderedImageKeys.remove(imageKey);
+        if (mAdapter.getUploadedItem().size() + mAdapter.getReadyToUpload().size() > 0) {
+            mBinding.btnFinish.setVisibility(View.VISIBLE);
+        }else {
+            mBinding.btnFinish.setVisibility(View.GONE);
+        }
     }
 
+    /**
+     * 每次上传图片完后，都将图片的imagekey添加到“已上传图片的imagekeys”，并判断是否上传完毕
+     * 判断的依据是：“已上传图片的imagekeys”的大小是否等于“准备上传图片的列表”大小+“已上传图片的列表”大小
+     * 如果上传完毕，则做两件事：
+     * 1、将“准备上传图片的列表”添加到“已上传图片的列表”
+     * 2、将“已上传图片的imagekeys”清空，并将“排序好的imagekeys”添加到“已上传图片的imagekeys”，这样“已上传图片的imagekeys”就是排序好的了
+     * @param imageKey
+     */
     @Override
     public void isToPhotoSlectedPage(String imageKey) {
         if (uploadedImageKeys == null) {
@@ -274,7 +303,10 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             uploadedImageKeys.add(imageKey);
         }
         if (uploadedImageKeys.size() == mAdapter.getReadyToUpload().size() + mAdapter.getUploadedItem().size()) {
+            hideLoadingDialog();
             mAdapter.getUploadedItem().addAll(mAdapter.getReadyToUpload());
+            uploadedImageKeys.clear();
+            uploadedImageKeys.addAll(orderedImageKeys);
             toPhotoSelectedFragment((ArrayList<String>) mAdapter.getUploadedItem());
         }
     }
