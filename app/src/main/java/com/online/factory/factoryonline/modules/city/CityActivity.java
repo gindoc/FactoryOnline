@@ -58,8 +58,6 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
      **/
 //    @Inject
 //    PinyinComparator pinyinComparator;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
@@ -83,11 +81,10 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
         mLocationClient.start();            // 启动定位
 
         mBehaviorSubject.compose(this.bindToLifecycle())
-                .subscribe(new RxSubscriber() {
+                .subscribe(new RxSubscriber<BDLocation>() {
                     @Override
-                    public void _onNext(Object o) {
-                        BDLocation bdLocation = (BDLocation) o;
-                        mBinding.tvCurrentCity.setText(bdLocation.getAddress().city);
+                    public void _onNext(BDLocation bdLocation) {
+                        mBinding.tvCurrentCity.setText(bdLocation.getCity());
                         if (mLocationClient.isStarted()) {
                             mLocationClient.stop();
                         }
