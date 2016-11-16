@@ -27,10 +27,10 @@ ext {
     minSdkVersion = 19
     targetSdkVersion = 23
     compileSdkVersion = 23
-    buildToolsVersion = '24.0.3'
+    buildToolsVersion = '23.0.3'
 
     // App dependencies
-    supportLibraryVersion = '24.2.1'
+    supportLibraryVersion = '23.1.1'
     guavaVersion = '18.0'
     rxLifeCycleVersion = '0.8.0'
     rxjavaVersion = '1.2.0'
