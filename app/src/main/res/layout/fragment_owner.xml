@@ -1,37 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TableRow
+    <data>
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
+    </data>
+
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="3">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-            <com.online.factory.factoryonline.customview.RoundImageView
-                android:layout_width="@dimen/x49"
-                android:layout_height="@dimen/x49"
-                android:layout_marginBottom="@dimen/y10"
-                android:layout_marginTop="@dimen/y10"
-                android:src="@drawable/ic_publish_factory" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->view.publishRental()}"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/y15"
-                android:text="我要发布"
-                android:textColor="#424242"
-                android:textSize="16sp" />
-        </LinearLayout>
+                <com.online.factory.factoryonline.customview.RoundImageView
+                    android:layout_width="@dimen/x49"
+                    android:layout_height="@dimen/x49"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:src="@drawable/ic_publish_factory" />
 
-    </TableRow>
-</TableLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/y15"
+                    android:text="我要发布"
+                    android:textColor="#424242"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </TableRow>
+    </TableLayout>
+</layout>

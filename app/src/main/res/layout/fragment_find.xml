@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+    <!--<data>
 
         <variable
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
-    </data>
+    </data>-->
 
     <TableLayout
         android:layout_width="match_parent"
@@ -22,7 +22,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="@{()->view.publishRental()}"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -46,7 +45,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:onClick="@{()->view.useMap()}"
                 android:gravity="center"
                 android:orientation="vertical">
 

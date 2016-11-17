@@ -18,6 +18,7 @@ import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerView
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.databinding.FragmentFindBinding;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
+import com.online.factory.factoryonline.databinding.FragmentOwnerBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
@@ -48,7 +49,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public float MAX_TOP;
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
-    private FragmentFindBinding mFindBinding;
+//    private FragmentFindBinding mFindBinding;
+    private FragmentOwnerBinding mOwnBinding;
     @Inject
     HomeRecyclerViewAdapter mAdapter;
 
@@ -143,9 +145,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
      */
     public void findFactory() {
         mHeaderBinding.rolePick.removeAllViews();
-        mFindBinding = FragmentFindBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
-        mFindBinding.setView(this);
-
+//        mFindBinding = FragmentFindBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
+//        mFindBinding.setView(this);
+        LayoutInflater.from(getContext()).inflate(R.layout.fragment_find, mHeaderBinding.rolePick);
     }
 
     /**
@@ -161,7 +163,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
      */
     public void isOwner() {
         mHeaderBinding.rolePick.removeAllViews();
-        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_owner, mHeaderBinding.rolePick);
+        mOwnBinding = FragmentOwnerBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
+        mOwnBinding.setView(this);
     }
 
     public void publishRental() {

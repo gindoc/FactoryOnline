@@ -57,14 +57,13 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         initView();
         mBinding.setView(this);
 
-        initToolBar();
     }
 
     private void initView() {
         Publish publish = Saver.getSerializableObject(SharePreferenceKey.PUBLISH);
         if (publish != null) {
             mBinding.tvDistrict.setText(publish.getDistrict_id() + "");
-            mBinding.etAddress.setText(publish.getAddress());
+            mBinding.etDetailAddress.setText(publish.getAddress());
             if (publish.getRange() != 0) {
                 mBinding.etRange.setText(publish.getRange() + "");
             }
@@ -72,7 +71,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
                 mBinding.etPrice.setText(publish.getPrice() + "");
             }
             mBinding.etTitle.setText(publish.getTitle());
-            mBinding.tvDescription.setText(publish.getDescription());
+            mBinding.etDescription.setText(publish.getDescription());
             mBinding.etContactName.setText(publish.getContact_name());
             mBinding.etContactNum.setText(publish.getContact_num());
             mSelectedImage.clear();
@@ -100,11 +99,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         mBinding.ivSelectedImg.setClickable(false);
     }
 
-    private void initToolBar() {
-        mBinding.toolbar.setTitle("");
-        setSupportActionBar(mBinding.toolbar);
-        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-    }
+
 
     @Override
     protected PublishRentalPresenter createPresent() {
@@ -195,11 +190,11 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             int districtId = (int) mBinding.tvDistrict.getTag();
             publish.setDistrict_id(districtId);
         }
-        String address = mBinding.etAddress.getText().toString();
+        String address = mBinding.etDetailAddress.getText().toString();
         String range = mBinding.etRange.getText().toString();
         String price = mBinding.etPrice.getText().toString();
         String title = mBinding.etTitle.getText().toString();
-        String description = mBinding.tvDescription.getText().toString();
+        String description = mBinding.etDescription.getText().toString();
         String contactName = mBinding.etContactName.getText().toString();
         String contactNum = mBinding.etContactNum.getText().toString();
         if (!TextUtils.isEmpty(address)) {
