@@ -20,6 +20,7 @@ import com.online.factory.factoryonline.modules.login.LogInState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.MD5;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.Validate;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -92,6 +93,11 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
         setResult(REGIST_SUCCESS);
         finish();
         overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
+    }
+
+    @Override
+    public void userExisted() {
+        Toast.makeText(this, "该手机号已被注册，请联系警察叔叔！！Orz...", Toast.LENGTH_SHORT).show();
     }
 
     private String getMd5Pwd(String inputPwd, String salt) {

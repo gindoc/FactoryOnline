@@ -2,7 +2,9 @@ package com.online.factory.factoryonline.modules.main.fragments.user;
 
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.models.response.UserResponse;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -25,12 +27,14 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
 
     @Override
     public void logIn() {
-        mViewRef.get().startLogIn();
+        getView().startLogIn();
     }
 
     @Override
     public void logOut() {
-        mViewRef.get().refreshWhenLogOut();
+        Saver.setLoginState(false);
+        Saver.saveSerializableObject(null, SharePreferenceKey.USER);
+        getView().refreshWhenLogOut();
     }
 
     @Override

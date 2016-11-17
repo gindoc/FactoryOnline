@@ -10,7 +10,7 @@ import java.io.Serializable;
 @JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS)
 public class User implements Serializable{
     private int id;
-    private String userName;
+    private String username;
     private String phoneNum;
     private int publish_count;
     private long regist_time;
@@ -30,11 +30,11 @@ public class User implements Serializable{
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getPhoneNum() {

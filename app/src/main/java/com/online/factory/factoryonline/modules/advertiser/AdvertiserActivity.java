@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.databinding.ActivityAdvertiserBinding;
+import com.online.factory.factoryonline.modules.record.RecordActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -36,6 +37,12 @@ public class AdvertiserActivity extends BaseActivity<AdvertiserContract.View, Ad
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_advertiser);
+        mBinding.setView(this);
+    }
+
+    public void openRecordPage() {
+        startActivity(RecordActivity.getIntent(this));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     @Override

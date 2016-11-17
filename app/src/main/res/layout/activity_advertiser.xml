@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.advertiser.AdvertiserActivity" />
+    </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/advertiser_background"/>
+                android:src="@drawable/advertiser_background" />
 
             <com.online.factory.factoryonline.customview.RoundImageView
                 android:layout_width="@dimen/x62"
@@ -28,8 +34,9 @@
                 app:border_outside_color="@android:color/white"
                 app:border_thickness="@dimen/x2"
                 app:layout_anchor="@+id/iv_advertiser"
-                app:layout_anchorGravity="bottom|center"/>
+                app:layout_anchorGravity="bottom|center" />
         </android.support.design.widget.CoordinatorLayout>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +46,8 @@
             android:paddingLeft="@dimen/x15"
             android:text="返回"
             android:textColor="#424242"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/tv_advertiser_name"
             android:layout_width="match_parent"
@@ -49,7 +57,7 @@
             android:gravity="center"
             android:text="蜡笔小新"
             android:textColor="#424242"
-            android:textSize="22sp"/>
+            android:textSize="22sp" />
 
         <LinearLayout
             android:id="@+id/ll_choice"
@@ -58,8 +66,7 @@
             android:layout_below="@id/tv_advertiser_name"
             android:layout_marginTop="@dimen/y15"
             android:background="@android:color/white"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/x15">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -67,46 +74,49 @@
                 android:background="@android:color/white"
                 android:drawableRight="@drawable/ic_right"
                 android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x15"
+                android:onClick="@{()->view.openRecordPage()}"
                 android:paddingRight="@dimen/x20"
                 android:text="近期发布15条记录"
                 android:textColor="#424242"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#dbdbdb"/>
+                android:background="#dbdbdb" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y44"
                 android:background="@android:color/white"
                 android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x15"
                 android:paddingRight="@dimen/x20"
                 android:text="0条被删除"
                 android:textColor="#424242"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#dbdbdb"/>
+                android:background="#dbdbdb" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y44"
                 android:background="@android:color/white"
-                android:drawableRight="@drawable/ic_right"
                 android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x15"
                 android:paddingRight="@dimen/x20"
                 android:text="1条被举报"
                 android:textColor="#424242"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#dbdbdb"/>
+                android:background="#dbdbdb" />
         </LinearLayout>
 
         <RelativeLayout
@@ -118,7 +128,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="#f4f4f4"/>
+                android:background="#f4f4f4" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -141,7 +151,7 @@
                     android:paddingTop="@dimen/x5"
                     android:text="发送短信"
                     android:textColor="#5ca6ed"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -157,7 +167,7 @@
                     android:paddingTop="@dimen/x5"
                     android:text="发送短信"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
             </LinearLayout>
         </RelativeLayout>
 

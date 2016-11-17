@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import okhttp3.Headers;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by louiszgm on 2016/10/21.
@@ -48,21 +49,31 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                     @Override
                     public void _onNext(retrofit2.Response<JsonObject> response) {
                         Headers headers = response.headers();
-                        String timestamp = headers.values("TIME") != null && headers.size() > 1 ? headers.values("TIME").get(0) : null;
                         JsonObject body = response.body();
-                        if (body.get("erro_code").toString().equals("200")) {
-                            String str_user = body.get("user").toString();
+                        String errCode = body.get("erro_code").toString();
+                        if (errCode.equals("200")) {
+                            loginContext.setmState(new LogInState());
+
+                            String timestamp = headers.values("TIME") != null && headers.size() > 1 ? headers.values("TIME").get(0) : null;
+                            String str_user = body.get("user").getAsString();
                             StringBuilder iv = new StringBuilder(timestamp).reverse();
                             str_user = AESUtil.desEncrypt(str_user, timestamp, iv.toString());
+                            str_user = str_user.substring(0, str_user.indexOf("}")+1);
                             User user = new Gson().fromJson(str_user, User.class);
+
                             Saver.saveSerializableObject(user, SharePreferenceKey.USER);
                             Saver.setToken(body.get("token").toString());
+                            Saver.setLoginState(true);
+
                             getView().registSuccessfully();
+                        } else if (errCode.equals("300")) {
+                            getView().userExisted();
                         }
                     }
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
                     }
                 });
 

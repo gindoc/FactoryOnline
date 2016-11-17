@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.customview.DividerGridItemDecoration;
 import com.online.factory.factoryonline.customview.FullyGridLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
@@ -118,17 +119,11 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TO_LOGIN_ACTIVITY) {
-            mPresenter.getUser();
-        }
-    }
-
-    @Override
     public void refreshWhenLogOut() {
         Toast.makeText(getContext(), "注销成功", Toast.LENGTH_SHORT).show();
         mLoginContext.setmState(new LogOutState());
+        mBinding.tvUsername.setText("");
+        mBinding.ivHeadPhoto.setImageResource(R.drawable.boy);
     }
 
     @Override
@@ -159,6 +154,14 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
                 break;
             case 3:
                 Toast.makeText(getContext(), "功能尚未开放，敬请期待", Toast.LENGTH_SHORT).show();
+                CustomDialog.createMessageDialog(getContext(), "确定退出吗？", new CustomDialog.ReturnResults() {
+                    @Override
+                    public void result(Object o) {
+                        if (o.equals("YES")) {
+                            mPresenter.logOut();
+                        }
+                    }
+                }).show();
                 break;
 
         }

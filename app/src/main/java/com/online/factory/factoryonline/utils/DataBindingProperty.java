@@ -4,6 +4,7 @@ import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.online.factory.factoryonline.R;
@@ -23,7 +24,11 @@ public class DataBindingProperty {
         int id = imageView.getId();
         switch (id) {
             case R.id.iv_head_photo:
-                Picasso.with(imageView.getContext()).load(url).placeholder(R.drawable.boy).into(imageView);
+                if (!TextUtils.isEmpty(url)) {
+                    Picasso.with(imageView.getContext()).load(url).placeholder(R.drawable.boy).into(imageView);
+                }else {
+                    Picasso.with(imageView.getContext()).load(R.drawable.boy).into(imageView);
+                }
                 break;
             default:
                 Picasso.with(imageView.getContext()).load(url).into(imageView);

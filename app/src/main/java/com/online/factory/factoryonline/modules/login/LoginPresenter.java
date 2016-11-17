@@ -38,7 +38,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     @Override
     public void login(Login loginBean) {
         dataManager.login(loginBean)
-//                .compose(RxResultHelper.<retrofit2.Response<JsonObject>>handleResult())
                 .compose(getView().<retrofit2.Response<JsonObject>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -50,12 +49,17 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                         JsonObject body = response.body();
                         if (body.get("erro_code").toString().equals("200")) {
                             loginContext.setmState(new LogInState());
-                            String str_user = body.get("user").toString();
+
+                            String str_user = body.get("user").getAsString();
                             StringBuilder iv = new StringBuilder(timestamp).reverse();
                             str_user = AESUtil.desEncrypt(str_user, timestamp, iv.toString());
+                            str_user = str_user.substring(0, str_user.indexOf("}") + 1);
                             User user = new Gson().fromJson(str_user, User.class);
+
                             Saver.saveSerializableObject(user, SharePreferenceKey.USER);
                             Saver.setToken(body.get("token").toString());
+                            Saver.setLoginState(true);
+
                             getView().loginSuccessfully();
                         }
                     }
