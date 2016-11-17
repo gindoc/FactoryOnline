@@ -63,6 +63,7 @@
         <activity android:name=".modules.regist.RegistActivity"/>
         <activity android:name=".modules.city.CityActivity" />
         <activity android:name=".modules.report.ReportActivity" />
+        <activity android:name=".modules.advertiser.AdvertiserActivity" />
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/coordinator_advertiser_pic"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y200"
+            android:layout_height="@dimen/y146"
             android:background="@android:color/white">
 
             <ImageView
@@ -47,7 +47,7 @@
             android:layout_below="@id/coordinator_advertiser_pic"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="GIndoc"
+            android:text="蜡笔小新"
             android:textColor="#424242"
             android:textSize="22sp"/>
 

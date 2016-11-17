@@ -71,6 +71,18 @@
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="top|center"
+                    android:gravity="center"
+                    android:text="厂房详情"
+                    android:textColor="#424242"
+                    android:textSize="22sp"
+                    android:visibility="gone"
+                    app:layout_collapseMode="pin" />
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
@@ -337,9 +349,9 @@
                         android:padding="@dimen/x15">
 
                         <TextView
+                            android:id="@+id/tv_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ellipsize="end"
                             android:lineSpacingExtra="@dimen/y3"
                             android:maxLines="3"
                             android:text='@{viewModel.description}'
@@ -348,11 +360,13 @@
                             tool:text="\u3000\u3000交通便利，紧邻S358省道，可提供6000平方米停车场，可提供2500平方米大型外广告位，载货电梯3台，配电充足，宿舍按需配置交通便利，紧邻S358省道，可提供6000平方米停车场，可提供2500平方米大型外广告位，载货电梯3台，配电充足，宿舍按需配置" />
 
                         <Button
+                            android:id="@+id/btn_expand_desc"
                             android:layout_width="@dimen/x86"
                             android:layout_height="@dimen/y27"
                             android:layout_marginTop="@dimen/y10"
                             android:background="@drawable/green_rectangle_outline_background"
                             android:gravity="center"
+                            android:onClick="@{()->view.expandDesc()}"
                             android:text="查看全部"
                             android:textColor="#1ab80f"
                             android:textSize="14sp" />
@@ -395,9 +409,9 @@
                             android:id="@+id/iv_mapview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="fitXY"
                             android:background="#dbdbdb"
-                            android:padding="1px" />
+                            android:padding="1px"
+                            android:scaleType="fitXY" />
                     </FrameLayout>
 
                     <TextView
@@ -435,6 +449,7 @@
                             android:layout_marginBottom="@dimen/y13"
                             android:layout_marginLeft="@dimen/x26"
                             android:layout_marginTop="@dimen/y15"
+                            android:onClick="@{()->view.openAdvertiserPage()}"
                             android:padding="@dimen/x6"
                             android:src="@drawable/photo_head"
                             app:border_outside_color="#CCCCCD"
@@ -479,8 +494,8 @@
                             android:layout_marginRight="@dimen/x23"
                             android:background="@drawable/red_outline_rectangle_5r"
                             android:gravity="center"
-                            android:text="举报"
                             android:onClick="@{()->view.openReportPage()}"
+                            android:text="举报"
                             android:textColor="#ec5252"
                             android:textSize="18sp" />
                     </RelativeLayout>

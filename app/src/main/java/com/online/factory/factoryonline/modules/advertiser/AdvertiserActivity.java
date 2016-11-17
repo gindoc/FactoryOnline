@@ -1,5 +1,7 @@
 package com.online.factory.factoryonline.modules.advertiser;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,8 @@ import com.online.factory.factoryonline.databinding.ActivityAdvertiserBinding;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * Author: GIndoc on 2016/11/16 21:22
@@ -23,6 +27,10 @@ public class AdvertiserActivity extends BaseActivity<AdvertiserContract.View, Ad
     AdevertiserPresenter mPresenter;
 
     private ActivityAdvertiserBinding mBinding;
+
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, AdvertiserActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +50,6 @@ public class AdvertiserActivity extends BaseActivity<AdvertiserContract.View, Ad
 
     @Override
     public void showError(String error) {
-
+        Timber.e(error);
     }
 }
