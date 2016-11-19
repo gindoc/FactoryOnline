@@ -1,6 +1,5 @@
 package com.online.factory.factoryonline.modules.FactoryDetail;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,8 +20,8 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
 import com.online.factory.factoryonline.databinding.ActivityFactoryDetailBinding;
 import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.modules.advertiser.AdvertiserActivity;
-import com.online.factory.factoryonline.modules.report.ReportActivity;
+import com.online.factory.factoryonline.modules.FactoryDetail.advertiser.AdvertiserActivity;
+import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 

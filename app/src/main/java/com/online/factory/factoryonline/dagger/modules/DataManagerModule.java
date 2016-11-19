@@ -98,6 +98,8 @@ public class DataManagerModule {
                 fileName = "FactoryPois.json";
             } else if (path.matches("^(/cities)")){
                 fileName = "Cities.json";
+            } else if (path.matches("^(/areas)")){
+                fileName = "Areas.json";
             }else {
                 fileName = "SlideUrl.json";
             }
@@ -136,7 +138,8 @@ public class DataManagerModule {
                 } else if (request.url().toString().contains("users")
                         || request.url().toString().contains("user")
                         || request.url().toString().contains("qiniutokens")
-                        || request.url().toString().contains("images")) {
+                        || request.url().toString().contains("images")
+                        || request.url().toString().contains("wantedmessages")) {
                     realRequest = request.newBuilder().build();
                 } else {
                     intercepterResponse = new Response.Builder()

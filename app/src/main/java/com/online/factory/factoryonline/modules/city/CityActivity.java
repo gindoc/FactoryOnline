@@ -127,8 +127,8 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
     }
 
     /*@Override
-    public void initCityList(List<City> cities) {
-        for (City city : cities) {
+    public void initCityList(List<CityBean> cities) {
+        for (CityBean city : cities) {
             String pinyin = characterParser.getSpelling(city.getCityName());
             String sortString = pinyin.substring(0, 1).toUpperCase();
             // 正则表达式，判断首字母是否是英文字母
@@ -140,11 +140,11 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
         }
         Collections.sort(cities, pinyinComparator);
 
-        City city = new City();             //假设当前定位为东莞
+        CityBean city = new CityBean();             //假设当前定位为东莞
         city.setCityName("东莞");
         city.setSortLetters("当前定位");
 
-        List<City> cityList = new ArrayList<>();
+        List<CityBean> cityList = new ArrayList<>();
         cityList.add(city);
         cityList.addAll(cities);
         mAdapter.setData(cityList);

@@ -6,10 +6,14 @@ import android.graphics.BitmapFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.data.remote.Consts;
+import com.online.factory.factoryonline.models.Area;
+import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
@@ -81,6 +85,55 @@ public class PublishRentalPresenter extends BasePresenter<PublishRentalContract.
                                     }
                                 }
                             }, null);
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
+
+    public void getArea(final int area_id) {
+        mDataManager.getAreas()
+                .compose(getView().<JsonObject>getBindToLifecycle())
+                .flatMap(new Func1<JsonObject, Observable<Area>>() {
+                    @Override
+                    public Observable<Area> call(JsonObject jsonObject) {
+                        List<Area> areas = new Gson().fromJson(jsonObject.get("child"),
+                                new TypeToken<List<Area>>() {}.getType());
+                        return Observable.from(areas);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Area>() {
+                    @Override
+                    public void _onNext(Area area) {
+                        if (area.getId() == area_id) {
+                            getView().setArea(area.getName());
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+
+    }
+
+    public void publishMessage(Publish publish) {
+        mDataManager.publishMessage(publish)
+                .compose(getView().<JsonObject>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<JsonObject>() {
+                    @Override
+                    public void _onNext(JsonObject jsonObject) {
+                        if (jsonObject.get("erro_code").toString().equals("200")) {
+
                         }
                     }
 

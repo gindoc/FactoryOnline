@@ -9,7 +9,7 @@ import com.online.factory.factoryonline.base.IBaseView;
 
 public interface CityContract {
     interface View extends IBaseView{
-//        void initCityList(List<City> cities);
+//        void initCityList(List<CityBean> cities);
     }
 
     interface Presenter extends IBasePresenter {

@@ -6,7 +6,7 @@
 
         <variable
             name="view"
-            type="com.online.factory.factoryonline.modules.advertiser.AdvertiserActivity" />
+            type="com.online.factory.factoryonline.modules.FactoryDetail.advertiser.AdvertiserActivity" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_width="@dimen/x62"
                 android:layout_height="@dimen/x62"
                 android:src="@drawable/photo_head"
-                app:border_outside_color="@android:color/white"
+                app:border_inside_color="@android:color/white"
                 app:border_thickness="@dimen/x2"
                 app:layout_anchor="@+id/iv_advertiser"
                 app:layout_anchorGravity="bottom|center" />
@@ -39,7 +39,7 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/header_height"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/ic_left_black"
             android:gravity="center"

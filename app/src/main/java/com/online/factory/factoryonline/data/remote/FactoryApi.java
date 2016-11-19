@@ -2,9 +2,10 @@ package com.online.factory.factoryonline.data.remote;
 
 
 import com.google.gson.JsonObject;
-import com.online.factory.factoryonline.models.City;
+import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.Response;
@@ -15,7 +16,6 @@ import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.HeaderMap;
@@ -115,12 +115,18 @@ public interface FactoryApi {
     Observable<retrofit2.Response<JsonObject>> regist(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
     @GET("/cities")
-    Observable<List<City>> getCities();
+    Observable<List<CityBean>> getCities();
 
     @GET("qiniutokens/{tokenType}")
-    Observable<JsonObject> getToken(@Path("tokenType") String tokenType, @Query("bucket")String bucket);
+    Observable<JsonObject> getToken(@Path("tokenType") String tokenType, @Query("bucket") String bucket);
 
-//    @DELETE("images/{imageKey}")
+    //    @DELETE("images/{imageKey}/")
     @HTTP(method = "delete", path = "images/{imageKey}", hasBody = false)
-    Observable<JsonObject> deleteImage(@Path("imageKey")String imageKey);
+    Observable<JsonObject> deleteImage(@Path("imageKey") String imageKey);
+
+    @GET("/areas")
+    Observable<JsonObject> getAreas();
+
+    @POST("wantedmessages/")
+    Observable<JsonObject> publishMessage(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 }

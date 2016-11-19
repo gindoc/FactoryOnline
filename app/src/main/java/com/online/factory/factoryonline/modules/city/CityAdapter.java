@@ -4,11 +4,10 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemCityListBinding;
-import com.online.factory.factoryonline.models.City;
+import com.online.factory.factoryonline.models.CityBean;
 
 import javax.inject.Inject;
 
@@ -16,7 +15,7 @@ import javax.inject.Inject;
  * Created by cwenhui on 2016/11/8.
  */
 
-public class CityAdapter extends BaseRecyclerViewAdapter<City, CityAdapter.CityViewHolder> {
+public class CityAdapter extends BaseRecyclerViewAdapter<CityBean, CityAdapter.CityViewHolder> {
 
     @Inject
     public CityAdapter(Context context) {
@@ -33,7 +32,7 @@ public class CityAdapter extends BaseRecyclerViewAdapter<City, CityAdapter.CityV
     public void onBindViewHolder(CityViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         ItemCityListBinding binding = holder.getBinding();
-        City city = data.get(position);
+        CityBean city = data.get(position);
         binding.tvCityName.setText(city.getCityName());
         if (position != 0) {
             // 根据position获取分类的首字母的Char ascii值

@@ -11,11 +11,12 @@ import java.util.List;
 
 public interface PublishRentalContract {
     interface View extends IBaseView{
-
-
+        void setArea(String name);
     }
 
     interface Prensenter extends IBasePresenter{
-        public void uploadImages(List<String> mSelectedImage);
+        void uploadImages(List<String> mSelectedImage);
+
+        void getArea(int area_id);
     }
 }

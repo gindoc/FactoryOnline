@@ -69,7 +69,7 @@ import static com.online.factory.factoryonline.modules.baidumap.PCDSAlgorithm.MA
  * Created by louiszgm on 2016/10/18.
  * P: province
  *
- * C: City
+ * C: CityBean
  *
  * D:District
  *

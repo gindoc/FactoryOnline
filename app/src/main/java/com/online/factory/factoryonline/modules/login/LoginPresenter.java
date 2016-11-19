@@ -44,13 +44,13 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                 .subscribe(new RxSubscriber<retrofit2.Response<JsonObject>>() {
                     @Override
                     public void _onNext(retrofit2.Response<JsonObject> response) {
-                        Headers headers = response.headers();
-                        String timestamp = headers.values("TIME") != null && headers.size() > 1 ? headers.values("TIME").get(0) : null;
                         JsonObject body = response.body();
                         if (body.get("erro_code").toString().equals("200")) {
                             loginContext.setmState(new LogInState());
 
                             String str_user = body.get("user").getAsString();
+                            Headers headers = response.headers();
+                            String timestamp = headers.values("TIME") != null && headers.size() > 1 ? headers.values("TIME").get(0) : null;
                             StringBuilder iv = new StringBuilder(timestamp).reverse();
                             str_user = AESUtil.desEncrypt(str_user, timestamp, iv.toString());
                             str_user = str_user.substring(0, str_user.indexOf("}") + 1);

@@ -34,7 +34,7 @@ public class ToolbarAlphaBehavior extends CoordinatorLayout.Behavior<Toolbar> {
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, Toolbar toolbar, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         startOffset = 0;
-        endOffset = context.getResources().getDimensionPixelOffset(R.dimen.header_height) - toolbar.getHeight();
+        endOffset = context.getResources().getDimensionPixelOffset(R.dimen.theme_header_height) - toolbar.getHeight();
         offset += dyConsumed;
         Toast.makeText(context,"123",Toast.LENGTH_SHORT).show();
         if (offset <= startOffset) {  //alpha为0

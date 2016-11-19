@@ -1,6 +1,7 @@
 <resources>
 
     <style name="AppTheme" parent="AppTheme.Base">
+        <item name="actionBarSize">@dimen/header_height</item>
     </style>
 
     <!-- app启动页的背景. -->
@@ -73,4 +74,10 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="publish_tags_page_style">
+        <item name="android:layout_width">@dimen/x80</item>
+        <item name="android:layout_height">@dimen/x80</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
 </resources>

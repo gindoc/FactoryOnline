@@ -61,9 +61,13 @@
         <activity android:name=".modules.album.AlbumActivity"/>
         <activity android:name=".modules.regist.RegistActivity"/>
         <activity android:name=".modules.city.CityActivity" />
-        <activity android:name=".modules.report.ReportActivity" />
-        <activity android:name=".modules.advertiser.AdvertiserActivity" />
-        <activity android:name=".modules.record.RecordActivity" />
+        <activity android:name=".modules.FactoryDetail.report.ReportActivity" />
+        <activity android:name=".modules.FactoryDetail.advertiser.AdvertiserActivity" />
+        <activity android:name=".modules.FactoryDetail.advertiser.record.RecordActivity" />
+        <activity android:name=".modules.publishRental.area.AreaActivity" />
+        <activity android:name=".modules.publishRental.RentType.RentTypeActivity" />
+        <activity android:name=".modules.publishRental.PrePay.PrePayActivity" />
+        <activity android:name=".modules.publishRental.tag.TagActivity" />
     </application>
 
 </manifest>

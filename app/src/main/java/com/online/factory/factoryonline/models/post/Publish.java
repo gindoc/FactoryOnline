@@ -9,8 +9,7 @@ import java.io.Serializable;
  */
 
 public class Publish extends BaseEntity implements Serializable {
-    private int district_id;
-    private int street_id;
+    private int area_id;
     private String address;
     private float price;
     private float range;
@@ -19,21 +18,26 @@ public class Publish extends BaseEntity implements Serializable {
     private String contact_name;
     private String contact_num;
     private String[] pics;
+    private String geohash;
+    private int city_id;
+    private String pre_pay;
+    private String rent_type;
+    private String[] tags;
 
-    public int getDistrict_id() {
-        return district_id;
+    public String[] getTags() {
+        return tags;
     }
 
-    public void setDistrict_id(int district_id) {
-        this.district_id = district_id;
+    public void setTags(String[] tags) {
+        this.tags = tags;
     }
 
-    public int getStreet_id() {
-        return street_id;
+    public int getArea_id() {
+        return area_id;
     }
 
-    public void setStreet_id(int street_id) {
-        this.street_id = street_id;
+    public void setArea_id(int area_id) {
+        this.area_id = area_id;
     }
 
     public String getAddress() {
@@ -102,5 +106,37 @@ public class Publish extends BaseEntity implements Serializable {
 
     public Publish() {
 
+    }
+
+    public String getPre_pay() {
+        return pre_pay;
+    }
+
+    public void setPre_pay(String pre_pay) {
+        this.pre_pay = pre_pay;
+    }
+
+    public String getRent_type() {
+        return rent_type;
+    }
+
+    public void setRent_type(String rent_type) {
+        this.rent_type = rent_type;
+    }
+
+    public String getGeohash() {
+        return geohash;
+    }
+
+    public void setGeohash(String geohash) {
+        this.geohash = geohash;
+    }
+
+    public int getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(int city_id) {
+        this.city_id = city_id;
     }
 }

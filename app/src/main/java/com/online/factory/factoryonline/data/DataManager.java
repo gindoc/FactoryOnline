@@ -5,11 +5,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
-import com.online.factory.factoryonline.models.City;
+import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;
+import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
@@ -186,7 +187,7 @@ public class DataManager {
     }
 
 
-    public Observable<List<City>> requestCities() {
+    public Observable<List<CityBean>> requestCities() {
         return factoryApi.getCities();
     }
 
@@ -197,4 +198,24 @@ public class DataManager {
     public Observable<JsonObject> deleteImage(String imageKey) {
         return factoryApi.deleteImage(imageKey);
     }
+
+    public Observable<JsonObject> getAreas() {
+        return factoryApi.getAreas();
+    }
+
+    public Observable<JsonObject> publishMessage(Publish publish) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        Map<String, String> header = new HashMap<>();
+        if (publish != null) {
+//            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            header.put("Authorization", "Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7");
+//            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String publishJsonString = new Gson().toJson(publish);
+//            String content = AESUtil.encrypt(publishJsonString, timestamp, iv.toString());
+            builder.addFormDataPart("publish", publishJsonString);
+        }
+        return factoryApi.publishMessage(header, builder.build());
+    }
+
 }

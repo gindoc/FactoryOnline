@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="rent_type">
+        <item>整租</item>
+        <item>分租</item>
+    </string-array>
+
+    <string-array name="pre_pay">
+        <item>一压一付</item>
+        <item>两压一付</item>
+        <item>三压一付</item>
+        <item>首交半年</item>
+        <item>首交一年</item>
+    </string-array>
+</resources>

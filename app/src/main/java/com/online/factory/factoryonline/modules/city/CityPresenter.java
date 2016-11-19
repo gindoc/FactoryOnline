@@ -21,12 +21,12 @@ public class CityPresenter extends BasePresenter<CityContract.View> implements C
     @Override
     public void requestCityList() {
         /*dataManager.requestCities()
-                .compose(getView().<List<City>>getBindToLifecycle())
+                .compose(getView().<List<CityBean>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<List<City>>() {
+                .subscribe(new RxSubscriber<List<CityBean>>() {
                     @Override
-                    public void _onNext(List<City> cities) {
+                    public void _onNext(List<CityBean> cities) {
                         getView().initCityList(cities);
                     }
 
