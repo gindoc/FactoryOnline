@@ -12,6 +12,12 @@ import java.util.List;
 public interface PublishRentalContract {
     interface View extends IBaseView{
         void setArea(String name);
+
+        void createLoading();
+
+        void finishLoading();
+
+        void publishSuccess();
     }
 
     interface Prensenter extends IBasePresenter{

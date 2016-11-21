@@ -90,17 +90,8 @@
                         android:layout_below="@+id/iv_pick_img"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/y10"
-                        android:text="点击上传图片"
-                        android:textColor="@android:color/white"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_pick_img"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/y5"
-                        android:text="0/9"
+                        android:gravity="center"
+                        android:text="点击上传图片\n0/9"
                         android:textColor="@android:color/white"
                         android:textSize="18sp" />
 
@@ -409,38 +400,42 @@
                                 android:onClick="@{()->view.openTagPage()}"
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal">
-                                <!--<TextView
+
+                                <TextView
+                                    android:id="@+id/tv_tag_tip"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="选择三个适合您的标签"
                                     android:textColor="#999"
-                                    android:textSize="18sp" />-->
-
+                                    android:textSize="18sp" />
                                 <TextView
+                                    android:id="@+id/tv_tag1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/x5"
                                     android:background="@drawable/blue_tag"
                                     android:padding="@dimen/x5"
-                                    android:text="条件好"
-                                    android:textColor="#ccc" />
+                                    android:visibility="invisible"
+                                    android:textColor="#2b91f0" />
 
                                 <TextView
+                                    android:id="@+id/tv_tag2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/x5"
                                     android:background="@drawable/green_tag"
                                     android:padding="@dimen/x5"
-                                    android:text="地理好"
-                                    android:textColor="#ccc" />
+                                    android:visibility="invisible"
+                                    android:textColor="#29ad15" />
 
                                 <TextView
+                                    android:id="@+id/tv_tag3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/green_tag"
+                                    android:background="@drawable/yellow_tag"
                                     android:padding="@dimen/x5"
-                                    android:text="价格低"
-                                    android:textColor="#ccc" />
+                                    android:visibility="invisible"
+                                    android:textColor="#edba1d" />
                             </LinearLayout>
 
 
@@ -545,10 +540,10 @@
                         android:layout_width="@dimen/x280"
                         android:layout_height="@dimen/y44"
                         android:layout_gravity="center"
-                        android:background="@drawable/gray_solid_rectangle_with_db"
+                        android:background="@drawable/green_rectangle_solid_with_corner"
                         android:onClick="@{()->view.submit()}"
                         android:text="确认发布"
-                        android:textColor="#999"
+                        android:textColor="@android:color/white"
                         android:textSize="22sp" />
                 </FrameLayout>
 

@@ -9,6 +9,7 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/rl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/tags_background">
@@ -19,14 +20,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{view.finishSelected}"
             android:background="@drawable/finish_select_tag" />
 
         <CheckBox
-            android:id="@+id/rb_cost_effective"
+            android:id="@+id/cb_cost_effective"
             style="@style/publish_tags_page_style"
             android:layout_marginLeft="@dimen/x70"
             android:layout_marginTop="@dimen/y30"
+            android:text="性价高"
+            android:textColor="@android:color/transparent"
             android:background="@drawable/cost_effective_state_backgroud"
             android:onClick="@{view.onClick}" />
 
@@ -34,6 +38,8 @@
             android:id="@+id/rb_large_space"
             style="@style/publish_tags_page_style"
             android:layout_alignParentRight="true"
+            android:text="空间大"
+            android:textColor="@android:color/transparent"
             android:layout_marginRight="@dimen/x35"
             android:layout_marginTop="@dimen/y20"
             android:background="@drawable/large_space_state_background"
@@ -42,7 +48,9 @@
         <CheckBox
             android:id="@+id/rb_original_landlord"
             style="@style/publish_tags_page_style"
-            android:layout_below="@id/rb_cost_effective"
+            android:layout_below="@id/cb_cost_effective"
+            android:text="原房东"
+            android:textColor="@android:color/transparent"
             android:layout_marginLeft="@dimen/x35"
             android:background="@drawable/original_landlord_state_background"
             android:onClick="@{view.onClick}" />
@@ -53,6 +61,8 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/rb_large_space"
             android:layout_marginRight="@dimen/x30"
+            android:text="环境好"
+            android:textColor="@android:color/transparent"
             android:layout_marginTop="@dimen/y30"
             android:background="@drawable/environment_well_state_background"
             android:onClick="@{view.onClick}" />
@@ -62,6 +72,8 @@
             style="@style/publish_tags_page_style"
             android:layout_centerInParent="true"
             android:layout_marginTop="104dp"
+            android:text="交通便利"
+            android:textColor="@android:color/transparent"
             android:background="@drawable/convenient_transportation_state_background"
             android:onClick="@{view.onClick}" />
 
@@ -71,6 +83,8 @@
             android:layout_above="@id/btn_finish_select_tag"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="@dimen/y50"
+            android:text="楼层多"
+            android:textColor="@android:color/transparent"
             android:layout_marginRight="@dimen/x60"
             android:background="@drawable/more_floor_state_background"
             android:onClick="@{view.onClick}" />
@@ -81,6 +95,8 @@
             android:layout_above="@id/btn_finish_select_tag"
             android:layout_marginBottom="@dimen/y20"
             android:layout_marginLeft="@dimen/x70"
+            android:text="新建房"
+            android:textColor="@android:color/transparent"
             android:background="@drawable/new_house_state_background"
             android:onClick="@{view.onClick}" />
 

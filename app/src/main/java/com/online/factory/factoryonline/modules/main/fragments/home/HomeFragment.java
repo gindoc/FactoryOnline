@@ -84,7 +84,6 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         super.onCreate(savedInstanceState);
 
         locating();
-
     }
 
     private void locating() {

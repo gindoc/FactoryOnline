@@ -86,6 +86,12 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
                 Timber.e("focus changed");
             }
         });
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+            }
+        });
 
         // 获取反地理编码对象
         geoCoder = GeoCoder.newInstance();
@@ -186,16 +192,15 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     public void openTagPage() {
         Intent intent = TagActivity.getStartIntent(this);
-//        intent.pu
+        intent.putStringArrayListExtra(TagActivity.SELECTED_TAG, new ArrayList<String>(tags));
         startActivityForResult(intent, TO_TAGS_SELECTED);
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
+
     public void submit() {
-        checkContent();
-//        Publish publish =
-//        if (publish != null) {
-//            mPresenter.publishMessage(publish);
-//        }
+        if (checkContent()) {
+            getGeoHash("东莞", mBinding.tvArea.getText().toString() + mBinding.etDetailAddress.getText().toString());
+        }
     }
 
     @Override
@@ -209,10 +214,6 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         return true;
     }
 
-    public void savePublishRental() {
-        Publish publish = savePublish();
-        Saver.saveSerializableObject(publish, SharePreferenceKey.PUBLISH);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -224,7 +225,20 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             imageKeys.addAll(data.getStringArrayListExtra(PhotoSelectedFragment.IMAGE_KEYS));
             loadSelectedImage();
         } else if (requestCode == TO_TAGS_SELECTED && resultCode == RESULT_OK && data != null) {
-//            tags.add(data.getStringArrayListExtra());
+            mBinding.tvTagTip.setVisibility(View.VISIBLE);
+            mBinding.tvTag1.setVisibility(View.GONE);
+            mBinding.tvTag2.setVisibility(View.GONE);
+            mBinding.tvTag3.setVisibility(View.GONE);
+            tags.clear();
+            tags.addAll(data.getStringArrayListExtra(TagActivity.SELECTED_TAG));
+            if (tags.size() > 0) {
+                mBinding.tvTagTip.setVisibility(View.GONE);
+            }
+            for (int i = 0; i < tags.size(); i++) {
+                TextView tvTag = (TextView) mBinding.llTags.getChildAt(i + 1);
+                tvTag.setVisibility(View.VISIBLE);
+                tvTag.setText(tags.get(i));
+            }
         } else if (requestCode == TO_AREA_SELECTED && resultCode == RESULT_OK && data != null) {
             Area area = (Area) data.getSerializableExtra(AreaActivity.SELECTED_AREA);
             mBinding.tvArea.setText(area.getName());
@@ -255,7 +269,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         }
     }
 
-    private Publish checkContent() {
+    private boolean checkContent() {
         publish = new Publish();
         try {
             publish.setTitle(checkCont(mBinding.etTitle, "请输入标题"));
@@ -273,9 +287,6 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             if (!TextUtils.isEmpty(checkCont(mBinding.tvArea, "请选择发布的镇区"))) {
                 publish.setArea_id((Integer) mBinding.tvArea.getTag());
             }
-            tags.add("123");
-            tags.add("456");
-            tags.add("789");
             if (tags.size() > 0) {
                 publish.setTags(tags.toArray(new String[tags.size()]));
             } else {
@@ -287,17 +298,16 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
                 throw new Exception("请选择您需要的厂房图片");
             }
             publish.setCity_id(305);
-            getGeoHash("东莞", mBinding.tvArea.getText().toString() + mBinding.etDetailAddress.getText().toString());
-            return publish;
+            return true;
         } catch (ValidateException e) {
             Toast.makeText(this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
-            return null;
+            return false;
         } catch (NumberFormatException nfe) {
             Toast.makeText(this, "请输入正确的面积或价格", Toast.LENGTH_SHORT).show();
-            return null;
+            return false;
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            return null;
+            return false;
         }
     }
 
@@ -308,6 +318,11 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         return textView.getText().toString();
     }
 
+
+     /*public void savePublishRental() {
+        Publish publish = savePublish();
+        Saver.saveSerializableObject(publish, SharePreferenceKey.PUBLISH);
+    }
     @NonNull
     private Publish savePublish() {
         Publish publish = new Publish();
@@ -355,11 +370,27 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         publish.setPics(mSelectedImage.toArray(new String[mSelectedImage.size()]));
         // TODO: 2016/11/15 是否需要保存imagekeys?
         return publish;
-    }
+    }*/
 
     @Override
     public void setArea(String name) {
         mBinding.tvArea.setText(name);
+    }
+
+    @Override
+    public void createLoading() {
+        CustomDialog.createLoadingDialog(this).show();
+    }
+
+    @Override
+    public void finishLoading() {
+        CustomDialog.dismissDialog();
+    }
+
+    @Override
+    public void publishSuccess() {
+        finish();
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     public void getGeoHash(String city, String address) {

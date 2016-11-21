@@ -125,6 +125,7 @@ public class PublishRentalPresenter extends BasePresenter<PublishRentalContract.
     }
 
     public void publishMessage(Publish publish) {
+        getView().createLoading();
         mDataManager.publishMessage(publish)
                 .compose(getView().<JsonObject>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
@@ -133,7 +134,8 @@ public class PublishRentalPresenter extends BasePresenter<PublishRentalContract.
                     @Override
                     public void _onNext(JsonObject jsonObject) {
                         if (jsonObject.get("erro_code").toString().equals("200")) {
-
+                            getView().finishLoading();
+                            getView().publishSuccess();
                         }
                     }
 
