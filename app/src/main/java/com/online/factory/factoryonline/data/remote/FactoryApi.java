@@ -18,8 +18,10 @@ import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
+import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -102,10 +104,13 @@ public interface FactoryApi {
      * @return
      */
     @GET("wantedmessages/{id}/collection/")
-    Observable<CollectionResponse> isFactoryCollected(@HeaderMap Map<String, String> currentTime, @Path("id") int id);
+    Observable<CollectionResponse> isFactoryCollected(@Header("Authorization") String header, @Path("id") int id);
 
     @POST("wantedmessages/{id}/collection/")
-    Observable<Response> changeCollectionState(@HeaderMap Map<String, String> header, @Path("id") int id);
+    Observable<Response> postCollectionState(@Header("Authorization") String header, @Path("id") int id);
+
+    @DELETE("wantedmessages/{id}/collection/")
+    Observable<Response> deleteCollectionState(@Header("Authorization") String header, @Path("id") int id);
 
     @GET("/users/salt/{username}")
     Observable<Response> getSalt(@Path("username") String userName);

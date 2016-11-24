@@ -233,7 +233,11 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                 overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
                 break;
             case R.id.collect:
-                mPresenter.changeCollectionState(item, Integer.parseInt(wantedMessage.getId()));
+                if (isCollected) {
+                    mPresenter.deleteCollectionState(item, Integer.parseInt(wantedMessage.getId()));
+                } else {
+                    mPresenter.postCollectionState(item, Integer.parseInt(wantedMessage.getId()));
+                }
                 break;
         }
         return true;

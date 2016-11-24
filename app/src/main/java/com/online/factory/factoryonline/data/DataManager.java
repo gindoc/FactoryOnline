@@ -151,15 +151,15 @@ public class DataManager {
      * @return
      */
     public Observable<CollectionResponse> isFactoryCollected(int id) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Authorization", "Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7");
-        return factoryApi.isFactoryCollected(header, id);
+        return factoryApi.isFactoryCollected("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
     }
 
-    public Observable<Response> changeCollectionState(int id) {
-        Map<String, String> header = new HashMap<>();
-        header.put("Authorization", "Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7");
-        return factoryApi.changeCollectionState(header, id);
+    public Observable<Response> postCollectionState(int id) {
+        return factoryApi.postCollectionState("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+    }
+
+    public Observable<Response> deleteCollectionState(int id) {
+        return factoryApi.deleteCollectionState("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
     }
     /**
      * 注册

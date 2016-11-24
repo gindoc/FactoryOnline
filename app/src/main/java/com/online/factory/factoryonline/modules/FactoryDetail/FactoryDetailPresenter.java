@@ -2,7 +2,6 @@ package com.online.factory.factoryonline.modules.FactoryDetail;
 
 import android.view.MenuItem;
 
-import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
@@ -12,9 +11,7 @@ import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 /**
@@ -52,8 +49,28 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
                 });
     }
 
-    public void changeCollectionState(final MenuItem item, int id) {
-        dataManager.changeCollectionState(id)
+    public void postCollectionState(final MenuItem item, int id) {
+        dataManager.postCollectionState(id)
+                .compose(getView().<Response>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Response>() {
+                    @Override
+                    public void _onNext(Response response) {
+                        if (response.getErro_code() == 200) {
+                            getView().toogleCollectionState(item);
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
+
+    public void deleteCollectionState(final MenuItem item, int id) {
+        dataManager.deleteCollectionState(id)
                 .compose(getView().<Response>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
