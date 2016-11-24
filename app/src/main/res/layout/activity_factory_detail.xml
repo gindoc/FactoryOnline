@@ -256,7 +256,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="16小时前"
+                            android:text="@{viewModel.createTime}"
                             android:textColor="#424242"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -296,7 +296,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="整租"
+                            android:text="@{viewModel.rentType}"
                             android:textColor="#424242"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -312,7 +312,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="两押一付"
+                            android:text="@{viewModel.prePay}"
                             android:textColor="#424242"
                             android:textSize="16sp"
                             android:textStyle="bold" />
@@ -553,7 +553,7 @@
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_toRightOf="@id/iv_contact_people"
                 android:paddingTop="@dimen/y2"
-                android:text="Mr. GIndoc"
+                android:text="@{viewModel.contactName}"
                 android:textColor="#424242"
                 android:textSize="16sp" />
 
@@ -565,7 +565,7 @@
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_marginTop="@dimen/y1"
                 android:layout_toRightOf="@id/iv_contact_people"
-                android:text="13888888888"
+                android:text="@{viewModel.contactNum}"
                 android:textColor="#424242"
                 android:textSize="14sp" />
 

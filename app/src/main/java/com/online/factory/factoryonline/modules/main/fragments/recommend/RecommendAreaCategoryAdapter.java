@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
-import com.online.factory.factoryonline.databinding.ItemRecommendCategoryBinding;
 import com.online.factory.factoryonline.databinding.ItemRecommendCategoryWhiteBinding;
 import com.online.factory.factoryonline.models.Area;
 
@@ -19,11 +18,11 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by cwenhui on 2016.11.3
  */
-public class RecommendWhiteCategoryAdapter extends BaseRecyclerViewAdapter<String, RecommendWhiteCategoryAdapter.RecommendCategoryViewHolder> {
+public class RecommendAreaCategoryAdapter extends BaseRecyclerViewAdapter<Area, RecommendAreaCategoryAdapter.RecommendCategoryViewHolder> {
     private Provider<RecommendViewModel> provider;
     private BehaviorSubject subject;
     @Inject
-    public RecommendWhiteCategoryAdapter(Context context, Provider<RecommendViewModel> provider, BehaviorSubject subject) {
+    public RecommendAreaCategoryAdapter(Context context, Provider<RecommendViewModel> provider, BehaviorSubject subject) {
         super(context);
         this.provider = provider;
         this.subject = subject;
@@ -43,8 +42,8 @@ public class RecommendWhiteCategoryAdapter extends BaseRecyclerViewAdapter<Strin
     public void onBindViewHolder(RecommendCategoryViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final RecommendViewModel viewModel = provider.get();
-        String cat = data.get(position);
-        viewModel.setCategoryName(cat);
+        Area area = data.get(position);
+        viewModel.setCategoryName(area.getName());
         ItemRecommendCategoryWhiteBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
         subject.subscribe(new Subscriber() {

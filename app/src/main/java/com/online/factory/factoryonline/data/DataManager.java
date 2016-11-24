@@ -3,17 +3,19 @@ package com.online.factory.factoryonline.data;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.CityBean;
-import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.User;
+import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
@@ -32,11 +34,14 @@ import rx.Observable;
  */
 public class DataManager {
     private FactoryApi factoryApi;
+    private LocalApi localApi;
 
     @Inject
-    public DataManager(FactoryApi api) {
+    public DataManager(FactoryApi api, LocalApi localApi) {
         this.factoryApi = api;
+        this.localApi = localApi;
     }
+
 
     /**
      * 请求首页轮播图片url
@@ -64,14 +69,52 @@ public class DataManager {
     }
 
     /**
-     * 请求“推荐”列表
+     * 请求推荐列表
      *
-     * @param pageNo   第几页
-     * @param pageSize 每页的大小
+     * @param since             客户端缓存的信息中，update_time最大的时间戳
+     * @param max               发出请求时的当前时间戳
+     * @param page              请求的页码，如果不输，默认为1
+     * @param maxrange           筛选的最大边界
+     * @param minrange          筛选边界的最小值
+     * @param filterType        筛选类型1.区域筛选2.价格筛选3.面积筛选
+     * @param areaId             筛选的区域id
+     * @param networkSate       网络状态，true为网络正常，false为网络连接失败
+     */
+    public Observable<RecommendResponse> getRecommendInfos(int since, long max, int page, float maxrange, float minrange, int filterType, int areaId, boolean networkSate) {
+        if (networkSate) {
+            if (filterType == 0) {
+                return factoryApi.getRecommendInfos(since, max, page, null, null, null, null);
+            }
+            return factoryApi.getRecommendInfos(since, max, page, maxrange, minrange, filterType, areaId);
+        } else {
+            List<WantedMessage> wantedMessages = localApi.queryWantedMessages(page);
+            RecommendResponse response = new RecommendResponse();
+                response.setErro_code(200);
+                response.setErro_msg("成功");
+                response.setCount(0);
+                response.setNext("");
+                response.setWantedMessages(wantedMessages);
+            return Observable.just(response);
+        }
+    }
+
+    public Observable<RecommendResponse> getRecommendInfosWithoutIds(int pageNo, List<Integer> ids) {
+        List<WantedMessage> wantedMessages = localApi.queryWantedMessagesWithoutIds(pageNo, ids);
+        RecommendResponse response = new RecommendResponse();
+        response.setErro_code(200);
+        response.setErro_msg("成功");
+        response.setCount(0);
+        response.setNext("");
+        response.setWantedMessages(wantedMessages);
+        return Observable.just(response);
+    }
+
+    /**
+     * 获取数据库WantedMessage表中
      * @return
      */
-    public Observable<List<Factory>> getRecommendInfos(int pageNo, int pageSize) {
-        return factoryApi.getRecommendInfos(pageNo, pageSize);
+    public Observable<Integer> getMaxUpdateTime() {
+        return Observable.just(localApi.queryMaxUpdateTime());
     }
 
     /**
@@ -191,7 +234,7 @@ public class DataManager {
         return factoryApi.getCities();
     }
 
-    public Observable<JsonObject> requestToken(String tokenType){
+    public Observable<JsonObject> requestToken(String tokenType) {
         return factoryApi.getToken(tokenType, null);
     }
 

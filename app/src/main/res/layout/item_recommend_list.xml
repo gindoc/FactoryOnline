@@ -5,6 +5,10 @@
 
     <data>
 
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendViewModel"/>
@@ -105,7 +109,8 @@
                     android:background="@drawable/blue_tag"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:text="空间大"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}'
                     android:layout_marginRight="@dimen/x10"
                     android:textSize="16sp" />
 
@@ -115,8 +120,18 @@
                     android:background="@drawable/green_tag"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:text="空间大"
+                    android:layout_marginRight="@dimen/x10"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}'
                     android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/yellow_tag"
+                    android:gravity="center"
+                    android:padding="@dimen/x3"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}'/>
             </com.google.android.flexbox.FlexboxLayout>
 
         </LinearLayout>

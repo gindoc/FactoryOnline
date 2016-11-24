@@ -2,14 +2,13 @@ package com.online.factory.factoryonline.utils;
 
 import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.widget.ImageView;
-
+import org.apache.commons.codec.binary.Base64;
 import com.online.factory.factoryonline.R;
-import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
+
 
 import java.io.File;
 
@@ -25,13 +24,17 @@ public class DataBindingProperty {
         switch (id) {
             case R.id.iv_head_photo:
                 if (!TextUtils.isEmpty(url)) {
-                    Picasso.with(imageView.getContext()).load(url).placeholder(R.drawable.boy).into(imageView);
+                    String decodedUrl = new String(Base64.decodeBase64(url.getBytes()));
+                    Picasso.with(imageView.getContext()).load(decodedUrl).placeholder(R.drawable.boy).into(imageView);
                 }else {
                     Picasso.with(imageView.getContext()).load(R.drawable.boy).into(imageView);
                 }
                 break;
             default:
-                Picasso.with(imageView.getContext()).load(url).into(imageView);
+                if (!TextUtils.isEmpty(url)) {
+                    String decodedUrl = new String(Base64.decodeBase64(url.getBytes()));
+                    Picasso.with(imageView.getContext()).load(decodedUrl).into(imageView);
+                }
                 break;
         }
     }

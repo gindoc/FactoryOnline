@@ -16,7 +16,6 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
-import com.online.factory.factoryonline.databinding.FragmentFindBinding;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.FragmentOwnerBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
@@ -269,7 +268,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         Intent intent = new Intent();
         intent.setClass(getContext(), FactoryDetailActivity.class);
         Factory factory = mAdapter.getData().get(position);
-        intent.putExtra(FactoryDetailActivity.FACTORY_DETIAL, factory);
+        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, factory);
         startActivity(intent);
     }
 }

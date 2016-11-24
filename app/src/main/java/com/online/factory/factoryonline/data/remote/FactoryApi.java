@@ -8,6 +8,7 @@ import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.UserResponse;
 
@@ -53,14 +54,23 @@ public interface FactoryApi {
 
     /**
      * 请求“推荐”列表
-     *
-     * @param pageNo   第几页
-     * @param pageSize 每页的大小
+     * @param since      客户端缓存的信息中，update_time最大的时间戳
+     * @param max        发出请求时的当前时间戳
+     * @param page       请求的页码，如果不输，默认为1
+     * @param maxrange   筛选的最大边界
+     * @param minrange   筛选边界的最小值
+     * @param filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
+     * @param areaId     筛选的区域id
      * @return
      */
-    @GET("/recommendInfos/{pageNo}/{pageSize}")
-    Observable<List<Factory>> getRecommendInfos(@Path("pageNo") int pageNo, @Path("pageSize") int
-            pageSize);
+    @GET("wantedmessages/recommend")
+    Observable<RecommendResponse> getRecommendInfos(@Query("since") int since,
+                                                    @Query("max") long max,
+                                                    @Query("page") int page,
+                                                    @Query("maxrange") Float maxrange,
+                                                    @Query("minrange") Float minrange,
+                                                    @Query("filterType") Integer filterType,
+                                                    @Query("areaId") Integer areaId);
 
     /**
      * 请求“推荐的目录”列表

@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.dagger.modules;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.util.Base64;
@@ -7,8 +8,10 @@ import android.util.Base64;
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 import com.online.factory.factoryonline.BuildConfig;
 import com.online.factory.factoryonline.R;
+import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.utils.ComponentHolder;
+import com.online.factory.factoryonline.utils.DBManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -203,5 +206,12 @@ public class DataManagerModule {
         return retrofit.create(FactoryApi.class);
     }
 
-
+    @Provides
+    public DBManager provideDBManager(Context context) {
+        return new DBManager(context);
+    }
+    @Provides
+    public LocalApi provideLocalApi(DBManager dbManager) {
+        return new LocalApi(dbManager);
+    }
 }

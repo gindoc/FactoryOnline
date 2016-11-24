@@ -3,8 +3,13 @@ package com.online.factory.factoryonline.modules.FactoryDetail;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.online.factory.factoryonline.models.Contacter;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.WantedMessage;
+import com.online.factory.factoryonline.utils.TimeUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,13 +20,17 @@ import javax.inject.Inject;
 
 public class FactoryDetailViewModel extends BaseObservable {
     private Factory factory;
+    private Contacter contacter;
+    private WantedMessage wantedMessage;
 
     @Inject
     public FactoryDetailViewModel() {
     }
 
-    public void setFactory(Factory factory) {
-        this.factory = factory;
+    public void setWantedMessage(WantedMessage wantedMessage) {
+        this.wantedMessage = wantedMessage;
+        this.factory = wantedMessage.getFactory();
+        this.contacter = wantedMessage.getContacter();
     }
 
     @Bindable
@@ -57,5 +66,30 @@ public class FactoryDetailViewModel extends BaseObservable {
     @Bindable
     public String getAddressOverview() {
         return factory.getAddress_overview();
+    }
+
+    @Bindable
+    public String getCreateTime() {
+        return TimeUtil.vagueTime(wantedMessage.getCreated_time());
+    }
+
+    @Bindable
+    public String getRentType() {
+        return factory.getRent_type();
+    }
+
+    @Bindable
+    public String getPrePay() {
+        return factory.getPre_pay();
+    }
+
+    @Bindable
+    public String getContactName() {
+        return "联系人:"+contacter.getName();
+    }
+
+    @Bindable
+    public String getContactNum() {
+        return contacter.getPhone_num();
     }
 }

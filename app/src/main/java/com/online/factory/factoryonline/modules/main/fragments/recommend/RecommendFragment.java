@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,7 +10,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
@@ -20,7 +24,10 @@ import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterPriceAreaBinding;
+import com.online.factory.factoryonline.models.Area;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.WantedMessage;
+import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -37,8 +44,7 @@ import timber.log.Timber;
  * Created by louiszgm on 2016/9/30.
  */
 public class RecommendFragment extends BaseFragment<RecommendContract.View, RecommendPresenter> implements
-        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener {
-
+        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentRecommendBinding mBinding;
     private LayoutRecommendFilterDistrictBinding mDistrictBinding;
     private LayoutRecommendFilterPriceAreaBinding mPriceBinding;
@@ -51,7 +57,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     RecommendCategoryAdapter mDistrictFirCategoryAdapter;  //推荐页面区域一级目录适配器
 
     @Inject
-    RecommendWhiteCategoryAdapter mDistrictSecCategoryAdapter;    //推荐页面区域二级目录适配器
+    RecommendAreaCategoryAdapter mDistrictSecCategoryAdapter;    //推荐页面区域二级目录适配器
 
     @Inject
     RecommendWhiteCategoryAdapter mPriceCategoryAdapter;           //推荐页面的价格目录
@@ -62,11 +68,11 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Inject
     RecommendPresenter mPresenter;
 
-
-    private int pageNo = 1;
-    private int pageSize = 5;
-    private boolean isInit = true;      //true为下拉加载或初始化，false为上拉刷新
-    private Map<String, List<String>> mDistrictCategories;
+    private int downPage = 1;
+    private int upPage = 1;
+    private Map<String, List<Area>> mDistrictCategories;
+    private List<WantedMessage> wantedMessages = new ArrayList<>();
+    private List<Integer> ids = new ArrayList<>();
 
     @Inject
     public RecommendFragment() {
@@ -78,10 +84,17 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle
             savedInstanceState) {
+        downPage = 1;
+        upPage = 1;
         mBinding = FragmentRecommendBinding.inflate(inflater);
         mDistrictBinding = LayoutRecommendFilterDistrictBinding.inflate(inflater);
         mPriceBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
@@ -113,6 +126,16 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             }
         });
 
+        ViewTreeObserver viewTreeObserver = getActivity().getWindow().getDecorView().getViewTreeObserver();
+        viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int height = mBinding.dropDownMenu.getChildAt(0).getHeight();
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                lp.setMargins(0, height, 0, 0);
+                mBinding.swipe.setLayoutParams(lp);
+            }
+        });
         return mBinding.getRoot();
     }
 
@@ -124,16 +147,16 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer,
-                container, false));
+        mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer, container, false));
         mBinding.recyclerView.setOnPageListener(this);
+        mAdapter.setOnItemClickListener(this);
 
         mDistrictBinding.recyclerviewFirstCat.setAdapter(mDistrictFirCategoryAdapter);         //初始化推荐页面的一级目录
         mDistrictFirCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 String key = mDistrictFirCategoryAdapter.getData().get(position);
-                List<String> sec = mDistrictCategories.get(key);
+                List<Area> sec = mDistrictCategories.get(key);
                 mDistrictSecCategoryAdapter.setData(sec);
                 mDistrictBinding.recyclerviewSecondCat.notifyDataSetChanged();
                 mDistrictFirCategoryAdapter.getSubject().onNext(position);
@@ -144,7 +167,10 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mDistrictSecCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                onItemClickAction(mDistrictSecCategoryAdapter, position);
+                mDistrictSecCategoryAdapter.getSubject().onNext(position);
+                String title = mDistrictSecCategoryAdapter.getData().get(position).getName();
+                mBinding.dropDownMenu.setTabText(title);
+                mBinding.dropDownMenu.closeMenu();
             }
         });
 
@@ -193,7 +219,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     }
 
     private void requestRecommendMsg() {
-        mPresenter.requestRecommendList(pageNo, pageSize, isInit);                      // 请求推荐列表
+        mPresenter.initRecommendList();                                                     // 请求推荐列表
         mPresenter.requestDistrictCategories();                                           //请求推荐页面的目录
         mPresenter.requestPriceCategories();                                              //请求推荐页面的价格目录
         mPresenter.requestAreaCategories();
@@ -212,14 +238,27 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Override
     public void showError(String error) {
         Timber.e(error);
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void loadRecommendList(List<Factory> recommendList) {
-        if (isInit) {
-            mAdapter.setData(recommendList);
+    public void loadRecommendList(List<WantedMessage> recommendList, boolean action) {
+        List<Factory> factories = new ArrayList<Factory>();
+        if (action) {
+            for (WantedMessage wantedMessage : recommendList) {
+                factories.add(wantedMessage.getFactory());
+                ids.add(Integer.parseInt(wantedMessage.getId()));
+            }
+            downPage++;
+            wantedMessages.addAll(0, recommendList);
+            mAdapter.getData().addAll(0, factories);
         } else {
-            mAdapter.addData(recommendList);
+            for (WantedMessage wantedMessage : recommendList) {
+                factories.add(wantedMessage.getFactory());
+            }
+            upPage++;
+            wantedMessages.addAll(recommendList);
+            mAdapter.getData().addAll(factories);
         }
         mBinding.recyclerView.notifyDataSetChanged();
     }
@@ -236,10 +275,10 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     }
 
     @Override
-    public void loadRecommendDistrictCategories(Map<String, List<String>> cats) {
+    public void loadRecommendDistrictCategories(Map<String, List<Area>> cats) {
         mDistrictCategories = cats;
         List<String> firstCat = new ArrayList<>();
-        for (Map.Entry<String, List<String>> fir : cats.entrySet()) {
+        for (Map.Entry<String, List<Area>> fir : cats.entrySet()) {
             firstCat.add(fir.getKey());
         }
         mDistrictFirCategoryAdapter.setData(firstCat);
@@ -263,16 +302,14 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void onRefresh() {
-        pageNo = 1;
-        isInit = true;
-        mPresenter.requestRecommendList(pageNo, pageSize, isInit);
+        mPresenter.requestRecommendListByNet(downPage, 0, 0, 0, 0);
     }
 
     @Override
     public void onPage() {
-        isInit = false;
         mBinding.recyclerView.showLoadingFooter();
-        mPresenter.requestRecommendList(++pageNo, pageSize, isInit);
+//        mPresenter.requestRecommendListByDB(upPage);
+        mPresenter.requestRecommendListByDBWithoutIds(upPage, ids);
     }
 
     private void hideKeyboard() {
@@ -302,4 +339,12 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         hideKeyboard();
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent(getContext(), FactoryDetailActivity.class);
+        WantedMessage wantedMessage = wantedMessages.get(position);
+        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, wantedMessage);
+        startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
 }

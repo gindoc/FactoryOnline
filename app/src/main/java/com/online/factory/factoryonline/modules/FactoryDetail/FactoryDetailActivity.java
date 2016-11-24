@@ -20,10 +20,13 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
 import com.online.factory.factoryonline.databinding.ActivityFactoryDetailBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.advertiser.AdvertiserActivity;
 import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
+
+import org.apache.commons.codec.binary.Base64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,7 @@ import javax.inject.Inject;
  * Created by cwenhui on 2016/10/17.
  */
 public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.View, FactoryDetailPresenter> implements FactoryDetailContract.View {
-    public static final String FACTORY_DETIAL = "factory_detail";
+    public static final String WANTED_MESSAGE = "WANTED_MESSAGE";
     private ActivityFactoryDetailBinding mBinding;
 
     @Inject
@@ -57,29 +60,28 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         initFactoryDetail();
         initViewPager();
         initBaiduMap();
-
-
     }
 
     private void initBaiduMap() {
         StringBuilder api = new StringBuilder("http://api.map.baidu.com/staticimage?center=");
         double longitude = 113.716352;
         double latitude = 23.046693;
-        api.append(longitude + "," + latitude);
-        api.append("&width=" + 450);
-        api.append("&height=" + 240);
-        api.append("&zoom=18");
-        api.append("&markers=");
-        api.append(longitude + "," + latitude);
+        api.append(longitude).append(",").append(latitude)
+                .append("&width=" + 450)
+                .append("&height=" + 240)
+                .append("&zoom=18")
+                .append("&markers=")
+                .append(longitude).append(",").append(latitude);
         Picasso.with(FactoryDetailActivity.this).load(api.toString()).into(mBinding.ivMapview);
     }
 
     private void initViewPager() {
-        Factory factory = (Factory) getIntent().getSerializableExtra(FACTORY_DETIAL);
+        WantedMessage wantedMessage = (WantedMessage) getIntent().getParcelableExtra(WANTED_MESSAGE);
+        Factory factory = wantedMessage.getFactory();
         List<String> imageUrls = factory.getImage_urls();
         for (int i = 0; i < imageUrls.size(); i++) {
             ImageView imageView = new ImageView(FactoryDetailActivity.this);
-            imageView.setTag(imageUrls.get(i));
+            imageView.setTag(new String(Base64.decodeBase64(imageUrls.get(i).getBytes())));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageViewsList.add(imageView);
         }
@@ -119,8 +121,8 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     @Override
     public void initFactoryDetail() {
-        Factory factory = (Factory) getIntent().getSerializableExtra(FACTORY_DETIAL);
-        mViewModel.setFactory(factory);
+        WantedMessage wantedMessage = (WantedMessage) getIntent().getParcelableExtra(WANTED_MESSAGE);
+        mViewModel.setWantedMessage(wantedMessage);
         mBinding.setViewModel(mViewModel);
 
         mBinding.tvDescription.setMaxLines(Integer.MAX_VALUE);
@@ -223,7 +225,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = imageViewsList.get(position);
-
+            String url = (String) imageView.getTag();
             Picasso.with(FactoryDetailActivity.this)
                     .load((String) imageView.getTag())
                     .placeholder(R.drawable.ic_msg_online)
