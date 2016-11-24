@@ -50,7 +50,7 @@ public class DBManager {
                 ids = sb.toString().substring(1);
             }
             c = db.rawQuery("SELECT * FROM (WantedMessage INNER JOIN Factory ON factoryId = Factory.id)  " +
-                    "INNER JOIN Contacter ON contacterId = Contacter.id AND id NOT IN (?) ORDER BY id desc LIMIT 10 OFFSET ?",
+                    "INNER JOIN Contacter ON contacterId = Contacter.id AND WantedMessage.id NOT IN (?) ORDER BY id desc LIMIT 10 OFFSET ?",
                     new String[]{ids, String.valueOf(pageNo*10-10)});
             List<WantedMessage> wantedMessages = new ArrayList<>();
             WantedMessage wantedMessage;

@@ -23,6 +23,7 @@ import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.advertiser.AdvertiserActivity;
 import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
+import com.online.factory.factoryonline.utils.GeoHash;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -47,7 +48,11 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     FactoryDetailViewModel mViewModel;
 
     private List<ImageView> imageViewsList = new ArrayList<>();
-    private boolean isDescExpanded = false;
+    private boolean isDescExpanded = false;             // 描述内容展开状态
+    private boolean isCollected = false;                // 收藏状态
+    private AppBarStateChangeListener.State appBarState = AppBarStateChangeListener.State.EXPANDED;    // appBar展开状态
+    private WantedMessage wantedMessage;
+    private Factory factory;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +60,8 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_factory_detail);
         mBinding.setView(this);
+        wantedMessage = getIntent().getParcelableExtra(WANTED_MESSAGE);
+        factory = wantedMessage.getFactory();
 
         initToolbar();
         initFactoryDetail();
@@ -63,9 +70,12 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     }
 
     private void initBaiduMap() {
+        String geohash = factory.getGeohash();
+        GeoHash geoHash = new GeoHash();
+        double[] latAndLon = geoHash.decode(geohash);
         StringBuilder api = new StringBuilder("http://api.map.baidu.com/staticimage?center=");
-        double longitude = 113.716352;
-        double latitude = 23.046693;
+        double longitude = latAndLon[1];
+        double latitude = latAndLon[0];
         api.append(longitude).append(",").append(latitude)
                 .append("&width=" + 450)
                 .append("&height=" + 240)
@@ -76,8 +86,6 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     }
 
     private void initViewPager() {
-        WantedMessage wantedMessage = (WantedMessage) getIntent().getParcelableExtra(WANTED_MESSAGE);
-        Factory factory = wantedMessage.getFactory();
         List<String> imageUrls = factory.getImage_urls();
         for (int i = 0; i < imageUrls.size(); i++) {
             ImageView imageView = new ImageView(FactoryDetailActivity.this);
@@ -99,17 +107,27 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 MenuItem menuItem = mBinding.toolbar.getMenu().findItem(R.id.collect);
-                if (menuItem != null) {
-                    if (state == State.EXPANDED) {         //展开状态
+                if (menuItem == null) return;
+                if (state == State.EXPANDED) {         //展开状态
+                    appBarState = state;
+                    if (isCollected) {
                         menuItem.setIcon(R.drawable.ic_collected_with_shadow);
-                        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
-                        mBinding.tvTitle.setVisibility(View.GONE);
-                    } else if (state == State.COLLAPSED) {     //折叠状态
-                        menuItem.setIcon(R.drawable.ic_collected);
-                        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-                        mBinding.tvTitle.setVisibility(View.VISIBLE);
+                    }else {
+                        menuItem.setIcon(R.drawable.ic_collect_with_shadow);
                     }
+                    mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
+                    mBinding.tvTitle.setVisibility(View.GONE);
+                } else if (state == State.COLLAPSED) {     //折叠状态
+                    appBarState = state;
+                    if (isCollected) {
+                        menuItem.setIcon(R.drawable.ic_collected);
+                    }else {
+                        menuItem.setIcon(R.drawable.ic_collect);
+                    }
+                    mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+                    mBinding.tvTitle.setVisibility(View.VISIBLE);
                 }
+
             }
         });
     }
@@ -121,7 +139,6 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     @Override
     public void initFactoryDetail() {
-        WantedMessage wantedMessage = (WantedMessage) getIntent().getParcelableExtra(WANTED_MESSAGE);
         mViewModel.setWantedMessage(wantedMessage);
         mBinding.setViewModel(mViewModel);
 
@@ -148,6 +165,34 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         });
 
 
+    }
+
+    @Override
+    public void refleshCollectionState(MenuItem item, boolean state) {
+        isCollected = state;
+        if (state) {
+            item.setIcon(R.drawable.ic_collected_with_shadow);
+        } else {
+            item.setIcon(R.drawable.ic_collect_with_shadow);
+        }
+    }
+
+    @Override
+    public void toogleCollectionState(MenuItem item) {
+        isCollected = !isCollected;
+        if (appBarState == AppBarStateChangeListener.State.COLLAPSED) {
+            if (isCollected) {
+                item.setIcon(R.drawable.ic_collected);
+            }else {
+                item.setIcon(R.drawable.ic_collect);
+            }
+        } else if (appBarState == AppBarStateChangeListener.State.EXPANDED) {
+            if (isCollected) {
+                item.setIcon(R.drawable.ic_collected_with_shadow);
+            } else {
+                item.setIcon(R.drawable.ic_collect_with_shadow);
+            }
+        }
     }
 
     public void openReportPage() {      //举报
@@ -188,6 +233,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                 overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
                 break;
             case R.id.collect:
+                mPresenter.changeCollectionState(item, Integer.parseInt(wantedMessage.getId()));
                 break;
         }
         return true;
@@ -197,7 +243,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem item = menu.findItem(R.id.collect);
-        mPresenter.isCollected(0, item);
+        mPresenter.isCollected(Integer.parseInt(wantedMessage.getId()), item);
         return true;
     }
 
@@ -225,7 +271,6 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = imageViewsList.get(position);
-            String url = (String) imageView.getTag();
             Picasso.with(FactoryDetailActivity.this)
                     .load((String) imageView.getTag())
                     .placeholder(R.drawable.ic_msg_online)

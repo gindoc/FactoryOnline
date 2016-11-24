@@ -6,6 +6,7 @@ import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.post.Publish;
+import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
@@ -97,11 +98,14 @@ public interface FactoryApi {
     /**
      * 请求服务器，判断该厂房是否被收藏
      *
-     * @param fId 厂房id
+     * @param id    wantedMessageId
      * @return
      */
-    @GET("/isFactoryCollected/{fId}")
-    Observable<Boolean> isFactoryCollected(@Path("fId") int fId);
+    @GET("wantedmessages/{id}/collection/")
+    Observable<CollectionResponse> isFactoryCollected(@HeaderMap Map<String, String> currentTime, @Path("id") int id);
+
+    @POST("wantedmessages/{id}/collection/")
+    Observable<Response> changeCollectionState(@HeaderMap Map<String, String> header, @Path("id") int id);
 
     @GET("/users/salt/{username}")
     Observable<Response> getSalt(@Path("username") String userName);
@@ -139,4 +143,6 @@ public interface FactoryApi {
 
     @POST("wantedmessages/")
     Observable<JsonObject> publishMessage(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
+
+
 }

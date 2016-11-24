@@ -308,7 +308,6 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Override
     public void onPage() {
         mBinding.recyclerView.showLoadingFooter();
-//        mPresenter.requestRecommendListByDB(upPage);
         mPresenter.requestRecommendListByDBWithoutIds(upPage, ids);
     }
 

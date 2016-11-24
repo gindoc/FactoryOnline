@@ -13,9 +13,11 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
+import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
+import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
@@ -145,13 +147,20 @@ public class DataManager {
     /**
      * 请求服务器，判断该厂房是否被收藏
      *
-     * @param fId 厂房id
+     * @param id    wantedMessageId
      * @return
      */
-    public Observable<Boolean> isFactoryCollected(int fId) {
-        return factoryApi.isFactoryCollected(fId);
+    public Observable<CollectionResponse> isFactoryCollected(int id) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Authorization", "Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7");
+        return factoryApi.isFactoryCollected(header, id);
     }
 
+    public Observable<Response> changeCollectionState(int id) {
+        Map<String, String> header = new HashMap<>();
+        header.put("Authorization", "Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7");
+        return factoryApi.changeCollectionState(header, id);
+    }
     /**
      * 注册
      *

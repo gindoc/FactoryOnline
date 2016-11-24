@@ -13,6 +13,10 @@ public interface FactoryDetailContract {
 
     interface View extends IBaseView{
         void initFactoryDetail();
+
+        void refleshCollectionState(MenuItem item, boolean state);
+
+        void toogleCollectionState(MenuItem item);
     }
 
     interface Presenter extends IBasePresenter{

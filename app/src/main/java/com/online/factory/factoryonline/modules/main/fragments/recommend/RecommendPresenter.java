@@ -46,6 +46,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void initRecommendList() {
+        getView().startLoading();
         dataManager.getMaxUpdateTime()
                 .compose(getView().<Integer>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
@@ -138,7 +139,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void requestRecommendListByDBWithoutIds(int pageNo, List<Integer> ids) {
-        getView().startLoading();
+//        getView().startLoading();
         dataManager.getRecommendInfosWithoutIds(pageNo, ids)
                 .compose(getView().<RecommendResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
@@ -161,7 +162,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void requestRecommendListByDB(int pageNo) {
-        getView().startLoading();
+//        getView().startLoading();
         dataManager.getRecommendInfos(0, 0, pageNo, 0, 0, 0, 0, false)
                 .compose(getView().<RecommendResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
