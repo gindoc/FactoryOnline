@@ -5,6 +5,8 @@ import com.online.factory.factoryonline.base.IBaseView;
 import com.online.factory.factoryonline.models.ImageFolderBean;
 
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,9 +20,21 @@ public interface PhotoWallContract {
         void hideLoadingDialog();
 
         void initRecyclerview(File maxImgDir, int imgCount, List<ImageFolderBean> beanList);
+
+        void removeUploadedImage(String imageKey);
+
+        void isToPhotoSlectedPage(String imageKey);
+
+        void toPhotoSelectedFragment(ArrayList<String> selectedImagePath);
+
+        void addImageKeyToOrderedImageKeys(String imageKey);
     }
 
     interface Presenter extends IBasePresenter {
         void getPhotos();
+
+        void deleteImage(String imageKey);
+
+        void uploadImage(List<String> readyToUpload);
     }
 }

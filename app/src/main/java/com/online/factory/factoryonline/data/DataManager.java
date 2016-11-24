@@ -3,20 +3,26 @@ package com.online.factory.factoryonline.data;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
-import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.User;
+import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.post.Login;
+import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
-import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.UserResponse;
+import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -28,11 +34,14 @@ import rx.Observable;
  */
 public class DataManager {
     private FactoryApi factoryApi;
+    private LocalApi localApi;
 
     @Inject
-    public DataManager(FactoryApi api) {
+    public DataManager(FactoryApi api, LocalApi localApi) {
         this.factoryApi = api;
+        this.localApi = localApi;
     }
+
 
     /**
      * 请求首页轮播图片url
@@ -60,18 +69,57 @@ public class DataManager {
     }
 
     /**
-     * 请求“推荐”列表
+     * 请求推荐列表
      *
-     * @param pageNo   第几页
-     * @param pageSize 每页的大小
+     * @param since             客户端缓存的信息中，update_time最大的时间戳
+     * @param max               发出请求时的当前时间戳
+     * @param page              请求的页码，如果不输，默认为1
+     * @param maxrange           筛选的最大边界
+     * @param minrange          筛选边界的最小值
+     * @param filterType        筛选类型1.区域筛选2.价格筛选3.面积筛选
+     * @param areaId             筛选的区域id
+     * @param networkSate       网络状态，true为网络正常，false为网络连接失败
+     */
+    public Observable<RecommendResponse> getRecommendInfos(int since, long max, int page, float maxrange, float minrange, int filterType, int areaId, boolean networkSate) {
+        if (networkSate) {
+            if (filterType == 0) {
+                return factoryApi.getRecommendInfos(since, max, page, null, null, null, null);
+            }
+            return factoryApi.getRecommendInfos(since, max, page, maxrange, minrange, filterType, areaId);
+        } else {
+            List<WantedMessage> wantedMessages = localApi.queryWantedMessages(page);
+            RecommendResponse response = new RecommendResponse();
+                response.setErro_code(200);
+                response.setErro_msg("成功");
+                response.setCount(0);
+                response.setNext("");
+                response.setWantedMessages(wantedMessages);
+            return Observable.just(response);
+        }
+    }
+
+    public Observable<RecommendResponse> getRecommendInfosWithoutIds(int pageNo, List<Integer> ids) {
+        List<WantedMessage> wantedMessages = localApi.queryWantedMessagesWithoutIds(pageNo, ids);
+        RecommendResponse response = new RecommendResponse();
+        response.setErro_code(200);
+        response.setErro_msg("成功");
+        response.setCount(0);
+        response.setNext("");
+        response.setWantedMessages(wantedMessages);
+        return Observable.just(response);
+    }
+
+    /**
+     * 获取数据库WantedMessage表中
      * @return
      */
-    public Observable<List<Factory>> getRecommendInfos(int pageNo, int pageSize) {
-        return factoryApi.getRecommendInfos(pageNo, pageSize);
+    public Observable<Integer> getMaxUpdateTime() {
+        return Observable.just(localApi.queryMaxUpdateTime());
     }
 
     /**
      * 请求“推荐的目录”列表
+     *
      * @return
      */
     public Observable<List<JsonObject>> getRecommendDistrictCats() {
@@ -87,6 +135,7 @@ public class DataManager {
 
     /**
      * 请求推荐页面的面积目录
+     *
      * @return
      */
     public Observable<List<String>> getRecommendAreaCats() {
@@ -95,7 +144,8 @@ public class DataManager {
 
     /**
      * 请求服务器，判断该厂房是否被收藏
-     * @param fId   厂房id
+     *
+     * @param fId 厂房id
      * @return
      */
     public Observable<Boolean> isFactoryCollected(int fId) {
@@ -104,47 +154,60 @@ public class DataManager {
 
     /**
      * 注册
+     *
      * @param regist
      * @return
      */
-    public Observable<Response> regist(Regist regist){
+    public Observable<retrofit2.Response<JsonObject>> regist(Regist regist) {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
+        Map<String, String> header = new HashMap<>();
         if (regist != null) {
-                String registJsonString = new Gson().toJson(regist);
-                builder.addFormDataPart("regist", registJsonString);
+            String registJsonString = new Gson().toJson(regist);
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String content = AESUtil.encrypt(registJsonString, timestamp, iv.toString());
+            builder.addFormDataPart("regist", content);
+            header.put("TIME", timestamp);
         }
-        return factoryApi.regist(builder.build());
+        return factoryApi.regist(header, builder.build());
     }
 
     /**
      * 登录
+     *
      * @param login
      * @return
      */
-    public Observable<UserResponse> login(Login login){
+    public Observable<retrofit2.Response<JsonObject>> login(Login login) {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
+        Map<String, String> header = new HashMap<>();
         if (login != null) {
             String loginJsonString = new Gson().toJson(login);
-            builder.addFormDataPart("login", loginJsonString);
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String content = AESUtil.encrypt(loginJsonString, timestamp, iv.toString());
+            builder.addFormDataPart("login", content);
+            header.put("TIME", timestamp);
         }
-        return factoryApi.login(builder.build());
+        return factoryApi.login(header, builder.build());
     }
 
     /**
      * 获取当前登录用户的个人信息
+     *
      * @return
      */
-    public Observable<UserResponse> getUser(){
+    public Observable<UserResponse> getUser() {
         User localUser = Saver.getSerializableObject(SharePreferenceKey.USER);
-        if( localUser!= null){
+        if (localUser != null) {
             UserResponse response = new UserResponse();
             response.setUser(localUser);
             response.setErro_code(200);
             response.setErro_msg("成功");
             return Observable.just(response);
-        }else {
+        } else {
             return factoryApi.getUser();
         }
     }
@@ -165,4 +228,37 @@ public class DataManager {
 
         return factoryApi.getSmsCode(builder.build());
     }
+
+
+    public Observable<List<CityBean>> requestCities() {
+        return factoryApi.getCities();
+    }
+
+    public Observable<JsonObject> requestToken(String tokenType) {
+        return factoryApi.getToken(tokenType, null);
+    }
+
+    public Observable<JsonObject> deleteImage(String imageKey) {
+        return factoryApi.deleteImage(imageKey);
+    }
+
+    public Observable<JsonObject> getAreas() {
+        return factoryApi.getAreas();
+    }
+
+    public Observable<JsonObject> publishMessage(Publish publish) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        Map<String, String> header = new HashMap<>();
+        if (publish != null) {
+//            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            header.put("Authorization", "Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7");
+//            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String publishJsonString = new Gson().toJson(publish);
+//            String content = AESUtil.encrypt(publishJsonString, timestamp, iv.toString());
+            builder.addFormDataPart("publish", publishJsonString);
+        }
+        return factoryApi.publishMessage(header, builder.build());
+    }
+
 }

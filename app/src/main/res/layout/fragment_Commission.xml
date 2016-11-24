@@ -29,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/y15"
                 android:text="悬赏信息"
-                android:textColor="#575757"
-                android:textSize="18sp" />
+                android:textColor="#424242"
+                android:textSize="16sp" />
         </LinearLayout>
     </TableRow>
 </TableLayout>

@@ -1,31 +1,30 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 
 import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
-import com.online.factory.factoryonline.databinding.FragmentFindBinding;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
+import com.online.factory.factoryonline.databinding.FragmentOwnerBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
+import com.online.factory.factoryonline.modules.city.CityActivity;
+import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -37,19 +36,20 @@ import javax.inject.Inject;
 import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
+//import org.apache.commons.codec.binary.Base64;
+
 /**
  * Created by cwenhui on 2016.02.23
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
         .View, /*HomeRecyclerView.ScrollChangedListener,*/ BaseRecyclerViewAdapter.OnItemClickListener {
-
-
     public static float MAX_SCALE_RATE = 0.3f;
     public static float MAX_TRANSLATIONY = 200;
-    public  float MAX_TOP;
+    public float MAX_TOP;
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
-    private FragmentFindBinding mFindBinding;
+//    private FragmentFindBinding mFindBinding;
+    private FragmentOwnerBinding mOwnBinding;
     @Inject
     HomeRecyclerViewAdapter mAdapter;
 
@@ -58,6 +58,10 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Inject
     BehaviorSubject subject;
+
+    @Inject
+    BDLocationListener mBdLocationListener;
+
     @Inject
     public HomeFragment() {
     }
@@ -77,21 +81,30 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
-//        locationClient.start();
-//        locationClient.requestLocation();
-        subject.subscribe(new RxSubscriber<BDLocation>() {
-            @Override
-            public void _onNext(BDLocation bdLocation) {
-                Timber.d("定位成功");
-                mBinding.tvCity.setText(bdLocation.getProvince());
-            }
 
-            @Override
-            public void _onError(Throwable throwable) {
+        locating();
+    }
 
-            }
-        });
+    private void locating() {
+        ((MyLocationListener) mBdLocationListener).setBdLocationBehaviorSubject(subject);
+        locationClient.registerLocationListener(mBdLocationListener);
+        locationClient.start();            // 启动定位
+        subject.compose(this.bindToLifecycle())
+                .subscribe(new RxSubscriber<BDLocation>() {
+                    @Override
+                    public void _onNext(BDLocation bdLocation) {
+                        Timber.d("定位成功");
+                        mBinding.tvCity.setText(bdLocation.getCity());
+                        if (locationClient.isStarted()) {
+                            locationClient.stop();
+                        }
+                    }
 
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 
     @Nullable
@@ -101,6 +114,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mHeaderBinding = LayoutHomeHeaderBinding.inflate(inflater);
 
         mBinding.setPresenter(mPresenter);
+        mBinding.setView(this);
         mHeaderBinding.setView(this);
 
         initRecyclerView();
@@ -129,9 +143,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
      */
     public void findFactory() {
         mHeaderBinding.rolePick.removeAllViews();
-        mFindBinding = FragmentFindBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
-        mFindBinding.setView(this);
-
+//        mFindBinding = FragmentFindBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
+//        mFindBinding.setView(this);
+        LayoutInflater.from(getContext()).inflate(R.layout.fragment_find, mHeaderBinding.rolePick);
     }
 
     /**
@@ -147,7 +161,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
      */
     public void isOwner() {
         mHeaderBinding.rolePick.removeAllViews();
-        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_owner, mHeaderBinding.rolePick);
+        mOwnBinding = FragmentOwnerBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
+        mOwnBinding.setView(this);
     }
 
     public void publishRental() {
@@ -162,6 +177,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
+    public void openCityPage() {
+        startActivity(CityActivity.getStartIntent(getContext()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -171,13 +191,20 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Override
     public void onPause() {
+        locationClient.unRegisterLocationListener(mBdLocationListener);
         super.onPause();
         mHeaderBinding.slideShowView.stopPlay();
         mHeaderBinding.scrollTxtView.stopAutoScroll();
     }
 
     @Override
-    public <T>LifecycleTransformer<T> getBindToLifecycle() {
+    public void onDestroy() {
+        locationClient.stop();
+        super.onDestroy();
+    }
+
+    @Override
+    public <T> LifecycleTransformer<T> getBindToLifecycle() {
         return bindToLifecycle();
     }
 
@@ -241,7 +268,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         Intent intent = new Intent();
         intent.setClass(getContext(), FactoryDetailActivity.class);
         Factory factory = mAdapter.getData().get(position);
-        intent.putExtra(FactoryDetailActivity.FACTORY_DETIAL, factory);
+        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, factory);
         startActivity(intent);
     }
 }

@@ -1,24 +1,32 @@
 package com.online.factory.factoryonline.modules.FactoryDetail;
 
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
 import com.online.factory.factoryonline.databinding.ActivityFactoryDetailBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.WantedMessage;
+import com.online.factory.factoryonline.modules.FactoryDetail.advertiser.AdvertiserActivity;
+import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
+
+import org.apache.commons.codec.binary.Base64;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +37,7 @@ import javax.inject.Inject;
  * Created by cwenhui on 2016/10/17.
  */
 public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.View, FactoryDetailPresenter> implements FactoryDetailContract.View {
-    public static final String FACTORY_DETIAL = "factory_detail";
+    public static final String WANTED_MESSAGE = "WANTED_MESSAGE";
     private ActivityFactoryDetailBinding mBinding;
 
     @Inject
@@ -37,25 +45,43 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     @Inject
     FactoryDetailViewModel mViewModel;
+
     private List<ImageView> imageViewsList = new ArrayList<>();
+    private boolean isDescExpanded = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_factory_detail);
+        mBinding.setView(this);
 
         initToolbar();
         initFactoryDetail();
         initViewPager();
+        initBaiduMap();
+    }
+
+    private void initBaiduMap() {
+        StringBuilder api = new StringBuilder("http://api.map.baidu.com/staticimage?center=");
+        double longitude = 113.716352;
+        double latitude = 23.046693;
+        api.append(longitude).append(",").append(latitude)
+                .append("&width=" + 450)
+                .append("&height=" + 240)
+                .append("&zoom=18")
+                .append("&markers=")
+                .append(longitude).append(",").append(latitude);
+        Picasso.with(FactoryDetailActivity.this).load(api.toString()).into(mBinding.ivMapview);
     }
 
     private void initViewPager() {
-        Factory factory = (Factory) getIntent().getSerializableExtra(FACTORY_DETIAL);
+        WantedMessage wantedMessage = (WantedMessage) getIntent().getParcelableExtra(WANTED_MESSAGE);
+        Factory factory = wantedMessage.getFactory();
         List<String> imageUrls = factory.getImage_urls();
-        for (int i=0; i<imageUrls.size();i++) {
+        for (int i = 0; i < imageUrls.size(); i++) {
             ImageView imageView = new ImageView(FactoryDetailActivity.this);
-            imageView.setTag(imageUrls.get(i));
+            imageView.setTag(new String(Base64.decodeBase64(imageUrls.get(i).getBytes())));
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageViewsList.add(imageView);
         }
@@ -67,7 +93,25 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     private void initToolbar() {
         mBinding.toolbar.setTitle("");
         setSupportActionBar(mBinding.toolbar);
-        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
+
+        mBinding.appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+                MenuItem menuItem = mBinding.toolbar.getMenu().findItem(R.id.collect);
+                if (menuItem != null) {
+                    if (state == State.EXPANDED) {         //展开状态
+                        menuItem.setIcon(R.drawable.ic_collected_with_shadow);
+                        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
+                        mBinding.tvTitle.setVisibility(View.GONE);
+                    } else if (state == State.COLLAPSED) {     //折叠状态
+                        menuItem.setIcon(R.drawable.ic_collected);
+                        mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+                        mBinding.tvTitle.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -77,10 +121,55 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     @Override
     public void initFactoryDetail() {
-        Factory factory = (Factory) getIntent().getSerializableExtra(FACTORY_DETIAL);
-        mViewModel.setFactory(factory);
+        WantedMessage wantedMessage = (WantedMessage) getIntent().getParcelableExtra(WANTED_MESSAGE);
+        mViewModel.setWantedMessage(wantedMessage);
         mBinding.setViewModel(mViewModel);
 
+        mBinding.tvDescription.setMaxLines(Integer.MAX_VALUE);
+        ViewTreeObserver observer = mBinding.tvDescription.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int i = mBinding.tvDescription.getLineCount();
+                if (mBinding.tvDescription.getLineCount() <= 3) {
+                    mBinding.btnExpandDesc.setVisibility(View.GONE);
+                } else {
+                    mBinding.tvDescription.setMaxLines(3);
+                    mBinding.tvDescription.setEllipsize(TextUtils.TruncateAt.END);
+                    ViewTreeObserver viewTreeObserver = mBinding.tvDescription.getViewTreeObserver();
+                    if (viewTreeObserver == null) return;
+                    if (Build.VERSION.SDK_INT < 16) {
+                        viewTreeObserver.removeGlobalOnLayoutListener(this);
+                    } else {
+                        viewTreeObserver.removeOnGlobalLayoutListener(this);
+                    }
+                }
+            }
+        });
+
+
+    }
+
+    public void openReportPage() {      //举报
+        startActivity(ReportActivity.getStartIntent(this));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void openAdvertiserPage() {
+        startActivity(AdvertiserActivity.getStartIntent(this));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void expandDesc() {
+        if (!isDescExpanded) {
+            mBinding.tvDescription.setMaxLines(Integer.MAX_VALUE);
+            mBinding.btnExpandDesc.setText("收起部分");
+            isDescExpanded = true;
+        } else {
+            mBinding.tvDescription.setMaxLines(3);
+            mBinding.btnExpandDesc.setText("查看全部");
+            isDescExpanded = false;
+        }
     }
 
     @Override
@@ -99,8 +188,6 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                 overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
                 break;
             case R.id.collect:
-                break;
-            case R.id.share:
                 break;
         }
         return true;
@@ -123,7 +210,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     public void showError(String error) {
     }
 
-    class MyPagerAdapter extends PagerAdapter{
+    class MyPagerAdapter extends PagerAdapter {
 
         @Override
         public int getCount() {
@@ -138,7 +225,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = imageViewsList.get(position);
-
+            String url = (String) imageView.getTag();
             Picasso.with(FactoryDetailActivity.this)
                     .load((String) imageView.getTag())
                     .placeholder(R.drawable.ic_msg_online)
@@ -155,7 +242,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         }
     }
 
-    class MyPageListener implements ViewPager.OnPageChangeListener{
+    class MyPageListener implements ViewPager.OnPageChangeListener {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -163,11 +250,12 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
         @Override
         public void onPageSelected(int position) {
-            mBinding.tvPagerIndex.setText(position+1 + "/" + imageViewsList.size());
+            mBinding.tvPagerIndex.setText(position + 1 + "/" + imageViewsList.size());
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
         }
     }
+
 }

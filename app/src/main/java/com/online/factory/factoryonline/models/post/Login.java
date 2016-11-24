@@ -7,7 +7,7 @@ package com.online.factory.factoryonline.models.post;
 public class Login {
     private String user_name;
 
-    private String login_key_md5;
+    private String pwd;
 
     private String device_id;
 
@@ -29,12 +29,12 @@ public class Login {
         this.user_name = user_name;
     }
 
-    public String getLogin_key_md5() {
-        return login_key_md5;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setLogin_key_md5(String login_key_md5) {
-        this.login_key_md5 = login_key_md5;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     public int getLogin_type() {

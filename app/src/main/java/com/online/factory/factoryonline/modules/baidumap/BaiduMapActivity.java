@@ -1,14 +1,10 @@
 package com.online.factory.factoryonline.modules.baidumap;
 
-import android.app.Dialog;
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 
@@ -28,25 +24,17 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
-import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ActivityBaidumapBinding;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.FactoryPoi;
-import com.online.factory.factoryonline.models.LbsCloud;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -236,7 +224,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         Intent intent = new Intent();
         intent.setClass(this, FactoryDetailActivity.class);
         Factory factory = mAdapter.getData().get(position);
-        intent.putExtra(FactoryDetailActivity.FACTORY_DETIAL, factory);
+        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, factory);
         startActivity(intent);
     }
 
@@ -273,7 +261,6 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
 
     @Override
     public void onMapLoaded() {
-        // TODO Auto-generated method stub
         ms = new MapStatus.Builder().zoom(12).build();
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(ms));
     }

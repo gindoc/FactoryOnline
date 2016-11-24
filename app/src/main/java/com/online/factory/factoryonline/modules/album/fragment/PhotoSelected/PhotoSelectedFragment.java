@@ -15,19 +15,24 @@ import com.online.factory.factoryonline.databinding.ItemPhotoSelectedFooterBindi
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016.02.23
  */
 public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.View, PhotoSelectedPresenter> implements PhotoSelectedContract.View {
     public static final int FROM_PHOTOWALL_FRAGMENT = 101;
-    public static final String SELECTED_PHOTO = "selectedPhoto";
+    public static final String UPLOADED_PHOTO = "uploadedPhoto";
+    public static final String IMAGE_KEYS = "imageKeys";
 
     @Inject
     PhotoSelectedPresenter mPresenter;
@@ -39,6 +44,7 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
     PhotoSelectedAdapter mAdapter;
 
     private List<String> mSelectedPhotoPath = new ArrayList<>();
+    private List<String> imageKeys = new ArrayList<>();
 
     @Inject
     public PhotoSelectedFragment() {
@@ -60,8 +66,11 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mBinding.setView(this);
         mFooterBinding.setView(this);
 
+        Bundle bundle = getArguments();
         mSelectedPhotoPath.clear();
-        mSelectedPhotoPath.addAll(getArguments().getStringArrayList(SELECTED_PHOTO));
+        mSelectedPhotoPath.addAll(bundle.getStringArrayList(UPLOADED_PHOTO));
+        imageKeys.clear();
+        imageKeys.addAll(bundle.getStringArrayList(IMAGE_KEYS));
 
         mBinding.tvTitle.setText("已选"+mSelectedPhotoPath.size()+"张图片");
         initRecyclerView();
@@ -77,7 +86,7 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popFragmentWithResult();
+                finish();
             }
         });
     }
@@ -87,6 +96,19 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mBinding.recyclerView.addFooter(mFooterBinding.getRoot());
+
+        mAdapter.getSubject().subscribe(new RxSubscriber() {
+            @Override
+            public void _onNext(Object o) {
+                String imageKey = imageKeys.get((Integer) o);
+                mPresenter.deleteImage(imageKey);
+            }
+
+            @Override
+            public void _onError(Throwable throwable) {
+                Timber.e(throwable.getMessage());
+            }
+        });
     }
 
     public void addPhoto() {
@@ -97,7 +119,8 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         Bundle bundle = new Bundle();
         mSelectedPhotoPath.clear();
         mSelectedPhotoPath.addAll(mAdapter.getData());
-        bundle.putStringArrayList(SELECTED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        bundle.putStringArrayList(UPLOADED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        bundle.putStringArrayList(IMAGE_KEYS, new ArrayList<>(imageKeys));
         setFramgentResult(PhotoWallFragment.TO_PHOTOSELECTED_FRAGMENT, bundle);
         pop();
     }
@@ -106,7 +129,8 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
         Intent intent = new Intent();
         mSelectedPhotoPath.clear();
         mSelectedPhotoPath.addAll(mAdapter.getData());
-        intent.putStringArrayListExtra(SELECTED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        intent.putStringArrayListExtra(UPLOADED_PHOTO, (ArrayList<String>) mSelectedPhotoPath);
+        intent.putStringArrayListExtra(IMAGE_KEYS, new ArrayList<>(imageKeys));
         getActivity().setResult(PublishRentalActivity.ALBUM_ACTIVITY_RESULT_OK, intent);
         getActivity().finish();
     }
@@ -125,4 +149,11 @@ public class PhotoSelectedFragment extends BaseFragment<PhotoSelectedContract.Vi
     public void showError(String error) {
     }
 
+    @Override
+    public void removeUploadedImage(String imageKey) {
+        mAdapter.getData().remove(imageKeys.indexOf(imageKey));
+        imageKeys.remove(imageKey);
+        mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.tvTitle.setText("已选" + mAdapter.getData().size() + "张图片");
+    }
 }

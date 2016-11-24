@@ -35,12 +35,14 @@ public class AlbumActivity extends BaseActivity {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_album);
-        List<String> selectedImage = getIntent().getStringArrayListExtra(PhotoSelectedFragment
-                .SELECTED_PHOTO);
-        if (selectedImage != null) {
+        List<String> uploadedImage = getIntent().getStringArrayListExtra(PhotoSelectedFragment
+                .UPLOADED_PHOTO);
+        List<String> imageKey = getIntent().getStringArrayListExtra(PhotoSelectedFragment.IMAGE_KEYS);
+        if (uploadedImage != null) {
             Bundle bundle = new Bundle();
-            bundle.putStringArrayList(PhotoSelectedFragment.SELECTED_PHOTO, (ArrayList<String>)
-                    selectedImage);
+            bundle.putStringArrayList(PhotoSelectedFragment.UPLOADED_PHOTO, (ArrayList<String>)
+                    uploadedImage);
+            bundle.putStringArrayList(PhotoSelectedFragment.IMAGE_KEYS, (ArrayList<String>) imageKey);
             int requestCode = getIntent().getIntExtra(PublishRentalActivity.REQUEST_CODE,
                     PublishRentalActivity.TO_PHOTO_WALL);
             bundle.putInt(PublishRentalActivity.REQUEST_CODE, requestCode);

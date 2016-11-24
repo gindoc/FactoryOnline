@@ -10,13 +10,13 @@ import com.online.factory.factoryonline.models.post.Regist;
 
 public interface RegistContract {
 
-    interface View extends IBaseView{
-        void registSuccessfully(String salt);
+    interface View extends IBaseView {
+        void registSuccessfully();
 
-        void loginSuccessfully();
+        void userExisted();
     }
 
-    interface Presenter extends IBasePresenter{
+    interface Presenter extends IBasePresenter {
         void regist(Regist regist);
     }
 }

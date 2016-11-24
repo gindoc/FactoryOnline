@@ -1,6 +1,6 @@
 {
-  "erro_code":200,
-  "erro_msg":"成功",
+  "erro_code":401,
+  "erro_msg":"错误",
   "user":
     {
       "userName": "13377783999",

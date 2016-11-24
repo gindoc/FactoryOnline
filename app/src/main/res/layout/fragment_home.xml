@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
+
+        <variable
             name="presenter"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeContract.Presenter" />
     </data>
@@ -17,24 +21,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y45"
+            android:layout_height="@dimen/header_height"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_city"
+            <LinearLayout
                 android:layout_width="@dimen/x97"
                 android:layout_height="match_parent"
-                android:drawablePadding="@dimen/x6"
-                android:drawableRight="@drawable/ic_arrow_down"
                 android:gravity="center"
-                android:paddingLeft="@dimen/x20"
-                android:paddingRight="@dimen/x19"
-                android:text="东莞"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textColor="#424242"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:onClick="@{()->view.openCityPage()}"
+                    android:text="正在定位"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x6"
+                    android:src="@drawable/ic_arrow_down" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/searchview"

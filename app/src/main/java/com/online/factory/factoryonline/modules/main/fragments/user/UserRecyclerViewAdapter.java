@@ -26,7 +26,7 @@ public class UserRecyclerViewAdapter extends BaseRecyclerViewAdapter<UserBean, U
 
     @Override
     public UerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemUserGridBinding binding = ItemUserGridBinding.inflate(layoutInflater);
+        ItemUserGridBinding binding = ItemUserGridBinding.inflate(layoutInflater, parent, false);
         return new UerViewHolder(binding.getRoot(), binding);
     }
 

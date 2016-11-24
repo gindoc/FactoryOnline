@@ -5,8 +5,12 @@ import android.databinding.Bindable;
 
 import com.online.factory.factoryonline.BR;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.Tag;
+
+import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Created by cwenhui on 2016.02.23
@@ -14,6 +18,7 @@ import javax.inject.Inject;
 public class RecommendViewModel extends BaseObservable {
     private Factory info;
     private String categoryName;
+    private String childCategoryNum;
     private boolean isClick;
     @Inject
     public RecommendViewModel() {
@@ -32,15 +37,11 @@ public class RecommendViewModel extends BaseObservable {
     public boolean getIsClick(){
         return isClick;
     }
+
     @Bindable
     public String getName() {
         return info.getTitle();
     }
-
-//    @Bindable
-//    public String getAddress() {
-//        return info.getAddress();
-//    }
 
     @Bindable
     public String getPrice() {
@@ -49,7 +50,12 @@ public class RecommendViewModel extends BaseObservable {
 
     @Bindable
     public String getArea() {
-        return info.getRange()+"/㎡";
+        return (int)info.getRange()+"/㎡";
+    }
+
+    @Bindable
+    public String getFactoryTotalPrice() {
+        return info.getRange() * info.getPrice() + "元/月";
     }
 
     @Bindable
@@ -64,11 +70,49 @@ public class RecommendViewModel extends BaseObservable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-//        notifyPropertyChanged(BR.categoryName);
+    }
+
+    @Bindable
+    public String getChildCategoryNum() {
+        return childCategoryNum;
+    }
+
+    public void setChildCategoryNum(String childCategoryNum) {
+        this.childCategoryNum = childCategoryNum;
     }
 
     @Bindable
     public String getAddressOverview() {
         return info.getAddress_overview();
+    }
+
+    @Bindable
+    public String getTag1() {
+        List<Tag> tags = info.getTags();
+        if (tags != null && tags.size()>=1) {
+            return info.getTags().get(0).getName();
+        }else {
+            return null;
+        }
+    }
+
+    @Bindable
+    public String getTag2() {
+        List<Tag> tags = info.getTags();
+        if (tags != null && tags.size()>=2) {
+            return info.getTags().get(1).getName();
+        }else {
+            return null;
+        }
+    }
+
+    @Bindable
+    public String getTag3() {
+        List<Tag> tags = info.getTags();
+        if (tags != null && tags.size()>=3) {
+            return info.getTags().get(2).getName();
+        }else {
+            return null;
+        }
     }
 }

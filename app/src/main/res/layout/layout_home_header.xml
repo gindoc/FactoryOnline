@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/x10"
                 android:gravity="center_vertical"
-                android:text="悬赏"
+                android:text="优质厂房"
                 android:drawableLeft="@drawable/ic_greate_factory"
                 android:drawablePadding="6dp"
                 android:textColor="#1ab80f"

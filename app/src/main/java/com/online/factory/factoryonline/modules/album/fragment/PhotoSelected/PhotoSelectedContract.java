@@ -8,8 +8,10 @@ import com.online.factory.factoryonline.base.IBaseView;
  */
 public interface PhotoSelectedContract {
     interface View extends IBaseView{
+        void removeUploadedImage(String imageKey);
     }
 
     interface Presenter extends IBasePresenter {
+        void deleteImage(String imageKey);
     }
 }

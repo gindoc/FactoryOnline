@@ -9,6 +9,9 @@ import android.widget.Toast;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemRecommendCategoryBinding;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 

@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+    <!--<data>
 
         <variable
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
-    </data>
+    </data>-->
 
     <TableLayout
         android:layout_width="match_parent"
@@ -30,15 +30,15 @@
                     android:layout_height="@dimen/x49"
                     android:layout_marginBottom="@dimen/y10"
                     android:layout_marginTop="@dimen/y10"
-                    android:src="@drawable/ic_msg_online" />
+                    android:src="@drawable/ic_standar" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/y15"
-                    android:text="发布求租信息"
-                    android:textColor="#575757"
-                    android:textSize="18sp" />
+                    android:text="标准"
+                    android:textColor="#424242"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -53,15 +53,15 @@
                     android:layout_height="@dimen/x49"
                     android:layout_marginBottom="@dimen/y10"
                     android:layout_marginTop="@dimen/y10"
-                    android:src="@drawable/ic_msg_online" />
+                    android:src="@drawable/ic_open_space" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/y15"
-                    android:text="地图找房"
-                    android:textColor="#575757"
-                    android:textSize="18sp" />
+                    android:text="空地"
+                    android:textColor="#424242"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -76,18 +76,41 @@
                     android:layout_height="@dimen/x49"
                     android:layout_marginBottom="@dimen/y10"
                     android:layout_marginTop="@dimen/y10"
-                    android:src="@drawable/ic_msg_online" />
+                    android:src="@drawable/ic_steel" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/y15"
-                    android:text="专人服务"
-                    android:textColor="#575757"
-                    android:textSize="18sp" />
+                    android:text="钢结构"
+                    android:textColor="#424242"
+                    android:textSize="16sp" />
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <com.online.factory.factoryonline.customview.RoundImageView
+                    android:layout_width="@dimen/x49"
+                    android:layout_height="@dimen/x49"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginTop="@dimen/y10"
+                    android:src="@drawable/ic_tin"
+                    android:id="@+id/roundImageView" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/y15"
+                    android:text="铁皮房"
+                    android:textColor="#424242"
+                    android:textSize="16sp" />
+            </LinearLayout>
         </TableRow>
     </TableLayout>
 </layout>

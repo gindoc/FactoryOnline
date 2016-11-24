@@ -2,20 +2,27 @@ package com.online.factory.factoryonline.data.remote;
 
 
 import com.google.gson.JsonObject;
+import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.UserResponse;
 
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -23,18 +30,23 @@ import rx.Observable;
  */
 public interface FactoryApi {
 
-    /** 请求首页轮播图片url **/
+    /**
+     * 请求首页轮播图片url
+     **/
     @GET("/indexPicUrls")
     Observable<JsonObject> getIndexPicUrls();
 
-    /** 请求首页自动滚动的在线消息 **/
+    /**
+     * 请求首页自动滚动的在线消息
+     **/
     @GET("/scrollMsgs")
     Observable<List<News>> getScrollMsgs();
 
     /**
      * 请求首页“猜你喜欢”列表
-     * @param pageNo    第几页
-     * @param pageSize  每页的大小
+     *
+     * @param pageNo   第几页
+     * @param pageSize 每页的大小
      * @return
      */
     @GET("/factoryInfos/{pageNo}/{pageSize}")
@@ -42,16 +54,27 @@ public interface FactoryApi {
 
     /**
      * 请求“推荐”列表
-     * @param pageNo    第几页
-     * @param pageSize  每页的大小
+     * @param since      客户端缓存的信息中，update_time最大的时间戳
+     * @param max        发出请求时的当前时间戳
+     * @param page       请求的页码，如果不输，默认为1
+     * @param maxrange   筛选的最大边界
+     * @param minrange   筛选边界的最小值
+     * @param filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
+     * @param areaId     筛选的区域id
      * @return
      */
-    @GET("/recommendInfos/{pageNo}/{pageSize}")
-    Observable<List<Factory>> getRecommendInfos(@Path("pageNo") int pageNo, @Path("pageSize") int
-            pageSize);
+    @GET("wantedmessages/recommend")
+    Observable<RecommendResponse> getRecommendInfos(@Query("since") int since,
+                                                    @Query("max") long max,
+                                                    @Query("page") int page,
+                                                    @Query("maxrange") Float maxrange,
+                                                    @Query("minrange") Float minrange,
+                                                    @Query("filterType") Integer filterType,
+                                                    @Query("areaId") Integer areaId);
 
     /**
      * 请求“推荐的目录”列表
+     *
      * @return
      */
     @GET("/recommendDistrictCats")
@@ -65,6 +88,7 @@ public interface FactoryApi {
 
     /**
      * 请求推荐页面的面积目录
+     *
      * @return
      */
     @GET("/recommendAreaCats")
@@ -72,20 +96,18 @@ public interface FactoryApi {
 
     /**
      * 请求服务器，判断该厂房是否被收藏
-     * @param fId   厂房id
+     *
+     * @param fId 厂房id
      * @return
      */
     @GET("/isFactoryCollected/{fId}")
     Observable<Boolean> isFactoryCollected(@Path("fId") int fId);
 
-    @POST("/users")
-    Observable<Response> regist(@Body RequestBody requestBody);
-
     @GET("/users/salt/{username}")
-    Observable<Response> getSalt(@Path("username")String userName);
+    Observable<Response> getSalt(@Path("username") String userName);
 
-    @POST("/user")
-    Observable<UserResponse> login(@Body RequestBody requestBody);
+    @POST("user/")
+    Observable<retrofit2.Response<JsonObject>> login(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
     @GET("/user")
     Observable<UserResponse> getUser();
@@ -98,4 +120,23 @@ public interface FactoryApi {
 
     @POST("https://api.sms.jpush.cn/v1/codes")
     Observable<JsonObject> getSmsCode(@Body RequestBody requestBody);
+
+    @POST("users/")
+    Observable<retrofit2.Response<JsonObject>> regist(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
+
+    @GET("/cities")
+    Observable<List<CityBean>> getCities();
+
+    @GET("qiniutokens/{tokenType}")
+    Observable<JsonObject> getToken(@Path("tokenType") String tokenType, @Query("bucket") String bucket);
+
+    //    @DELETE("images/{imageKey}/")
+    @HTTP(method = "delete", path = "images/{imageKey}", hasBody = false)
+    Observable<JsonObject> deleteImage(@Path("imageKey") String imageKey);
+
+    @GET("/areas")
+    Observable<JsonObject> getAreas();
+
+    @POST("wantedmessages/")
+    Observable<JsonObject> publishMessage(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 }

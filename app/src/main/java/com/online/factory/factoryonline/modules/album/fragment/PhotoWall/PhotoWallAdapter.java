@@ -23,12 +23,11 @@ import rx.subjects.BehaviorSubject;
  * Created by cwenhui on 2016/10/20.
  */
 public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallAdapter.PhotoWallViewHolder> {
-    private static final int TAKE_PICTURE = 1001;
-    private static final int SHOW_PICTURE = 1002;
     Provider<PhotoWallItemViewModel> provider;
     private BehaviorSubject subject;
     private String mDirPath;    // 文件夹路径
-    private List<String> mSelectedItem = new ArrayList<>();
+    private List<String> uploadedItem = new ArrayList<>();
+    private List<String> readyToUpload = new ArrayList<>();
 
     @Inject
     public PhotoWallAdapter(Context context, Provider<PhotoWallItemViewModel> provider, BehaviorSubject subject) {
@@ -45,8 +44,12 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
         this.mDirPath = mDirPath;
     }
 
-    public List<String> getmSelectedItem() {
-        return mSelectedItem;
+    public List<String> getUploadedItem() {
+        return uploadedItem;
+    }
+
+    public List<String> getReadyToUpload() {
+        return readyToUpload;
     }
 
     @Override
@@ -60,7 +63,7 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
         super.onBindViewHolder(holder, position);
         final PhotoWallItemViewModel viewModel = provider.get();
         String imageUrl = mDirPath + "/" + data.get(position);
-        for (String selected : mSelectedItem) {
+        for (String selected : uploadedItem) {
             if (selected.equals(imageUrl)) {
                 viewModel.setClick(true);
             }
@@ -72,19 +75,23 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
             @Override
             public void onClick(View v) {
                 String selectedImage = mDirPath + "/" + data.get(position);
-                if (mSelectedItem.size() >= 9) {
+                if (uploadedItem.size() + readyToUpload.size() >= 9 && !uploadedItem.contains
+                        (selectedImage) && !readyToUpload.contains(selectedImage)) {
                     Toast.makeText(mContext, "最多选择9张图片", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (mSelectedItem.contains(selectedImage)) {
-                    mSelectedItem.remove(selectedImage);
+                if (uploadedItem.contains(selectedImage)) {                 // 如果已上传，则请求接口删除
+                    subject.onNext(uploadedItem.indexOf(selectedImage));
                     viewModel.setClick(false);
-                } else {
-                    mSelectedItem.add(selectedImage);
+                } else if (readyToUpload.contains(selectedImage)) {         // 如果未上传，当已选中，则取消选中
+                    readyToUpload.remove(selectedImage);
+                    viewModel.setClick(false);
+                } else {                                                      // 如果未选中，则选中并加入准备上传列表
+                    readyToUpload.add(selectedImage);
                     viewModel.setClick(true);
                 }
                 Button finish = (Button) ((ViewGroup) binding.getRoot().getParent().getParent()).findViewById(R.id.btn_finish);
-                if (mSelectedItem.size() > 0) {             //每次点击都判断选中的数目是否大于0
+                if (uploadedItem.size()+readyToUpload.size() > 0) {             //每次点击都判断选中的数目是否大于0
                     finish.setVisibility(View.VISIBLE);
                 } else {
                     finish.setVisibility(View.GONE);

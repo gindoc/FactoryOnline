@@ -19,4 +19,19 @@ public class LogInState implements UserState {
             baseActivity.startWithPop(MsgFragment.newInstance());
         }
     }
+
+    @Override
+    public void openUserDetail(Context context) {
+
+    }
+
+    @Override
+    public void openPublish(Context context) {
+
+    }
+
+    @Override
+    public void openCollection(Context context) {
+
+    }
 }

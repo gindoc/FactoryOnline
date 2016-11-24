@@ -5,18 +5,23 @@ import android.view.MenuItem;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
 import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subjects.BehaviorSubject;
 
 /**
  * Created by cwenhui on 2016/10/18.
  */
 public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.View> implements FactoryDetailContract.Presenter{
     private DataManager dataManager;
+
+    @Inject
+    BehaviorSubject subject;
 
     @Inject
     public FactoryDetailPresenter(DataManager dataManager) {
@@ -34,11 +39,22 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
                     @Override
                     public void call(Boolean aBoolean) {
                         if (aBoolean) {
-                            item.setIcon(R.drawable.ic_collected);
+                            item.setIcon(R.drawable.ic_collected_with_shadow);
                         }else{
-                            item.setIcon(R.drawable.ic_collect);
+                            item.setIcon(R.drawable.ic_collect_with_shadow);
                         }
                     }
                 });
+        subject.subscribe(new RxSubscriber() {
+            @Override
+            public void _onNext(Object o) {
+
+            }
+
+            @Override
+            public void _onError(Throwable throwable) {
+
+            }
+        });
     }
 }

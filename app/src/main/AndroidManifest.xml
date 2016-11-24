@@ -41,7 +41,8 @@
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
 
         <activity android:name=".modules.main.MainActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:hardwareAccelerated="false">
 
         </activity>
         <activity android:name=".modules.baidumap.BaiduMapActivity"></activity>
@@ -52,7 +53,6 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -60,6 +60,14 @@
         <activity android:name=".modules.publishRental.PublishRentalActivity" />
         <activity android:name=".modules.album.AlbumActivity"/>
         <activity android:name=".modules.regist.RegistActivity"/>
+        <activity android:name=".modules.city.CityActivity" />
+        <activity android:name=".modules.FactoryDetail.report.ReportActivity" />
+        <activity android:name=".modules.FactoryDetail.advertiser.AdvertiserActivity" />
+        <activity android:name=".modules.FactoryDetail.advertiser.record.RecordActivity" />
+        <activity android:name=".modules.publishRental.area.AreaActivity" />
+        <activity android:name=".modules.publishRental.RentType.RentTypeActivity" />
+        <activity android:name=".modules.publishRental.PrePay.PrePayActivity" />
+        <activity android:name=".modules.publishRental.tag.TagActivity" />
     </application>
 
 </manifest>

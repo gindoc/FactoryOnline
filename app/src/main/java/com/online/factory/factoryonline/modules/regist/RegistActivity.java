@@ -20,6 +20,7 @@ import com.online.factory.factoryonline.modules.login.LogInState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.MD5;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.Validate;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -32,6 +33,7 @@ import javax.inject.Named;
  */
 
 public class RegistActivity extends BaseActivity implements RegistContract.View{
+    public static final int REGIST_SUCCESS = 100;
 
     @Inject
     RegistPresenter presenter;
@@ -87,23 +89,19 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
     }
 
     @Override
-    public void registSuccessfully(String salt) {
-        Toast.makeText(this,"注册成功！随后将自动跳转!",Toast.LENGTH_SHORT).show();
-        final Login loginBean = new Login();
-        loginBean.setLogin_key_md5(getMd5Pwd(getInputPwd(),salt));
-        loginBean.setLogin_type(2);
-        loginBean.setUser_name(getInputPhoneNum());
-        presenter.login(loginBean);
+    public void registSuccessfully() {
+        setResult(REGIST_SUCCESS);
+        finish();
+        overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
+    }
+
+    @Override
+    public void userExisted() {
+        Toast.makeText(this, "该手机号已被注册，请联系警察叔叔！！Orz...", Toast.LENGTH_SHORT).show();
     }
 
     private String getMd5Pwd(String inputPwd, String salt) {
         return MD5.getMD5(MD5.getMD5(inputPwd)+salt);
-    }
-
-    @Override
-    public void loginSuccessfully() {
-       startActivity(MainActivity.getStartIntent(this));
-        overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }
 
     private String getInputPhoneNum() {
