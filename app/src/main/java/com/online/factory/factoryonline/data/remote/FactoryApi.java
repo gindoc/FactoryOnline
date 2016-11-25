@@ -26,6 +26,7 @@ import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import rx.Observable;
 
 /**
@@ -56,25 +57,19 @@ public interface FactoryApi {
     Observable<FactoryResponse> getFactoryInfos(@Path("pageNo") int pageNo, @Path("pageSize") int pageSize);
 
     /**
-     * 请求“推荐”列表
-     * @param since      客户端缓存的信息中，update_time最大的时间戳
-     * @param max        发出请求时的当前时间戳
-     * @param page       请求的页码，如果不输，默认为1
-     * @param maxrange   筛选的最大边界
-     * @param minrange   筛选边界的最小值
-     * @param filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
-     * @param areaId     筛选的区域id
+     * 请求推荐列表
+     * since      客户端缓存的信息中，update_time最大的时间戳
+     * max        发出请求时的当前时间戳
+     * page       请求的页码，如果不输，默认为1
+     * maxrange   筛选的最大边界
+     * minrange   筛选边界的最小值
+     * filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
+     * areaId     筛选的区域id
+     * @param params
      * @return
      */
     @GET("wantedmessages/recommend")
-    Observable<RecommendResponse> getRecommendInfos(@Query("since") int since,
-                                                    @Query("max") long max,
-                                                    @Query("page") int page,
-                                                    @Query("maxrange") Float maxrange,
-                                                    @Query("minrange") Float minrange,
-                                                    @Query("filterType") Integer filterType,
-                                                    @Query("areaId") Integer areaId);
-
+    Observable<RecommendResponse> getRecommendInfos(@QueryMap Map<String, Object> params);
     /**
      * 请求“推荐的目录”列表
      *

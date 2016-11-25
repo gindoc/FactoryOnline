@@ -27,7 +27,7 @@ public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factor
 
     @Override
     public RecommendViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemRecommendListBinding binding = ItemRecommendListBinding.inflate(layoutInflater);
+        ItemRecommendListBinding binding = ItemRecommendListBinding.inflate(layoutInflater, parent, false);
         View view = binding.getRoot();
         return new RecommendViewHolder(view, binding);
     }

@@ -20,7 +20,6 @@
             android:onClick="onClickHome"
             android:text="厂房在线"/>
 
-
         <RadioButton
             android:id="@+id/rb_recommend"
             style="@style/bottom_tab_style"

@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x6"
-                    android:src="@drawable/ic_arrow_down" />
+                    android:src="@drawable/ic_location_arrow_down" />
             </LinearLayout>
 
             <LinearLayout

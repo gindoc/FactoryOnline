@@ -17,6 +17,7 @@ import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -53,7 +54,10 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                 .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
                     @Override
                     public Observable<RecommendResponse> call(Integer integer) {
-                        return dataManager.getRecommendInfos(integer, System.currentTimeMillis() / 1000, 1, 0, 0, 0, 0, true);
+                        Map<String, Object> params = new HashMap<String, Object>();
+                        params.put("since", integer);
+                        params.put("max", System.currentTimeMillis() / 1000);
+                        return dataManager.getRecommendInfos(params, true);
                     }
                 })
                 .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
@@ -101,11 +105,14 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
         view.startLoading();
         dataManager.getMaxUpdateTime()
                 .compose(getView().<Integer>getBindToLifecycle())
-                .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
                     @Override
                     public Observable<RecommendResponse> call(Integer integer) {
-                        return dataManager.getRecommendInfos(integer, System.currentTimeMillis()/1000, page, maxrange, minrange, filterType, areaId, true);
+                        Map<String, Object> params = new HashMap<String, Object>();
+                        params.put("since", integer);
+                        params.put("max", System.currentTimeMillis() / 1000);
+                        params.put("page", page);
+                        return dataManager.getRecommendInfos(params, true);
                     }
                 })
                 .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
@@ -117,6 +124,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         return Observable.just(response.getWantedMessages());
                     }
                 })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscriber<List<WantedMessage>>() {
                     @Override
@@ -139,7 +147,6 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void requestRecommendListByDBWithoutIds(int pageNo, List<Integer> ids) {
-//        getView().startLoading();
         dataManager.getRecommendInfosWithoutIds(pageNo, ids)
                 .compose(getView().<RecommendResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
@@ -162,8 +169,9 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void requestRecommendListByDB(int pageNo) {
-//        getView().startLoading();
-        dataManager.getRecommendInfos(0, 0, pageNo, 0, 0, 0, 0, false)
+        Map<String, Object> params = new HashMap<>();
+        params.put("page", pageNo);
+        dataManager.getRecommendInfos(params, false)
                 .compose(getView().<RecommendResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -250,4 +258,31 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                     }
                 });
     }
+
+//    public void filter(final int pageNo, final int areaId, final int max, final int min, final int filterType) {
+//        dataManager.getMaxUpdateTime()
+//                .compose(getView().<Integer>getBindToLifecycle())
+//                .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
+//                    @Override
+//                    public Observable<RecommendResponse> call(Integer integer) {
+//                        return dataManager.getRecommendInfos(integer, System.currentTimeMillis()/1000, pageNo, max, min, filterType, areaId, true);
+//                    }
+//                })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RxSubscriber<RecommendResponse>() {
+//                    @Override
+//                    public void _onNext(RecommendResponse response) {
+//                        if (response.getErro_code() == 200) {
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void _onError(Throwable throwable) {
+//                        Timber.e(throwable.getMessage());
+//                    }
+//                });
+//    }
+
 }

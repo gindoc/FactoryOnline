@@ -96,5 +96,9 @@ public interface RecommendContract {
          * 请求推荐页面的面积目录
          */
         void requestAreaCategories();
+
+//        void filter(int pageNo, int areaId, int max, int min, int filterType);
+
+
     }
 }
