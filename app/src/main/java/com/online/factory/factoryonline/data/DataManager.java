@@ -18,6 +18,7 @@ import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.models.response.SearchResponse;
 import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
@@ -267,4 +268,7 @@ public class DataManager {
         return factoryApi.publishMessage(header, builder.build());
     }
 
+    public Observable<SearchResponse> search(String s) {
+        return factoryApi.search(s);
+    }
 }

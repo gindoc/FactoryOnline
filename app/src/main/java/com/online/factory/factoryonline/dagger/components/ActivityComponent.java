@@ -16,6 +16,7 @@ import com.online.factory.factoryonline.modules.publishRental.RentType.RentTypeA
 import com.online.factory.factoryonline.modules.publishRental.area.AreaActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
 import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
+import com.online.factory.factoryonline.modules.search.SearchActivity;
 
 import dagger.Subcomponent;
 
@@ -50,4 +51,6 @@ public interface ActivityComponent {
     void inject(RentTypeActivity rentTypeActivity);
 
     void inject(PrePayActivity prePayActivity);
+
+    void inject(SearchActivity searchActivity);
 }

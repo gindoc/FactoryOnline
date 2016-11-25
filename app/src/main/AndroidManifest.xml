@@ -68,6 +68,7 @@
         <activity android:name=".modules.publishRental.RentType.RentTypeActivity" />
         <activity android:name=".modules.publishRental.PrePay.PrePayActivity" />
         <activity android:name=".modules.publishRental.tag.TagActivity" />
+        <activity android:name=".modules.search.SearchActivity" />
     </application>
 
 </manifest>

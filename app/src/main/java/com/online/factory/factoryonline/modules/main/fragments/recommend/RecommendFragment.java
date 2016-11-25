@@ -29,6 +29,7 @@ import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
+import com.online.factory.factoryonline.modules.search.SearchActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -141,6 +142,11 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     public void openMap(View view) {
         startActivity(BaiduMapActivity.getStartIntent(getActivity()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void openSearchPage(View view) {
+        startActivity(SearchActivity.getStartIntent(getContext()));
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
