@@ -40,7 +40,7 @@ public class SmsLoginFragment extends BaseFragment<SmsLoginContract.View, SmsLog
 
     @Inject
     public SmsLoginFragment() {
-        setTitle("短信验证登录");
+        setTitle("短信登录");
     }
 
     @Nullable

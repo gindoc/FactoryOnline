@@ -13,9 +13,10 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
@@ -74,6 +75,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     private Map<String, List<Area>> mDistrictCategories;
     private List<WantedMessage> wantedMessages = new ArrayList<>();
     private List<Integer> ids = new ArrayList<>();
+//    private Filter recommendFilter = new Filter();
+//    private int filterPage = 1;
 
     @Inject
     public RecommendFragment() {
@@ -174,9 +177,13 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             @Override
             public void onItemClick(View view, int position) {
                 mDistrictSecCategoryAdapter.getSubject().onNext(position);
-                String title = mDistrictSecCategoryAdapter.getData().get(position).getName();
+                Area area = mDistrictSecCategoryAdapter.getData().get(position);
+                String title = area.getName();
+//                recommendFilter.setAreaId(area.getId());
                 mBinding.dropDownMenu.setTabText(title);
                 mBinding.dropDownMenu.closeMenu();
+//                filterPage = 1;
+//                mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
             }
         });
 
@@ -308,7 +315,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void onRefresh() {
-        mPresenter.requestRecommendListByNet(downPage, 0, 0, 0, 0);
+        mPresenter.requestRecommendListByNet(downPage/*, 0, 0, 0, 0*/);
     }
 
     @Override
@@ -351,5 +358,44 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, wantedMessage);
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    class Filter{
+        JsonObject maxranges;
+        JsonObject minranges;
+        JsonArray filtertype;
+        int areaId = -1;
+
+        public int getAreaId() {
+            return areaId;
+        }
+
+        public void setAreaId(int areaId) {
+            this.areaId = areaId;
+        }
+
+        public JsonObject getMaxranges() {
+            return maxranges;
+        }
+
+        public void setMaxranges(JsonObject maxranges) {
+            this.maxranges = maxranges;
+        }
+
+        public JsonObject getMinranges() {
+            return minranges;
+        }
+
+        public void setMinranges(JsonObject minranges) {
+            this.minranges = minranges;
+        }
+
+        public JsonArray getFiltertype() {
+            return filtertype;
+        }
+
+        public void setFiltertype(JsonArray filtertype) {
+            this.filtertype = filtertype;
+        }
     }
 }

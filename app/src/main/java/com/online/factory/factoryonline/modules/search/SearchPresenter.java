@@ -21,7 +21,7 @@ import timber.log.Timber;
  * email : 735506583@qq.com
  * FOR   :
  */
-public class SearchPresenter extends BasePresenter<SearchContract.View> {
+public class SearchPresenter extends BasePresenter<SearchContract.View> implements SearchContract.Presenter{
     private DataManager dataManager;
     private LocalApi localApi;
 
@@ -34,7 +34,6 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> {
     public void loadSearchHistory() {
         Set<String> history = localApi.getSearchHistory();
         getView().initSearchHistory(history);
-
     }
 
     public void clearHistory() {

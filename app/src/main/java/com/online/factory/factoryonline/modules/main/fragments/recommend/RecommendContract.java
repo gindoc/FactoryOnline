@@ -59,15 +59,15 @@ public interface RecommendContract {
         void initRecommendList();
 
         /**
-         * 从网络请求推荐列表（下拉刷新）
+         * 从网络请求推荐列表（下拉刷新）,结果插入数据库
          *
          * @param page       请求的页码，如果不输，默认为1
-         * @param maxrange   筛选的最大边界
-         * @param minrange   筛选边界的最小值
-         * @param filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
-         * @param areaId     筛选的区域id
+//         * @param maxrange   筛选的最大边界
+//         * @param minrange   筛选边界的最小值
+//         * @param filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
+//         * @param areaId     筛选的区域id
          */
-        void requestRecommendListByNet(int page, float maxrange, float minrange, int filterType, int areaId);
+        void requestRecommendListByNet(int page/*, float maxrange, float minrange, int filterType, int areaId*/);
 
         /**
          * 从数据库请求推荐列表

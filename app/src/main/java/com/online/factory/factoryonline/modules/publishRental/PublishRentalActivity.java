@@ -79,20 +79,6 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         initView();
         mBinding.setView(this);
 
-        ViewTreeObserver observer = getWindow().getDecorView().getViewTreeObserver();
-        observer.addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
-            @Override
-            public void onGlobalFocusChanged(View oldFocus, View newFocus) {
-                Timber.e("focus changed");
-            }
-        });
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-
-            }
-        });
-
         // 获取反地理编码对象
         geoCoder = GeoCoder.newInstance();
         // 设置查询结果监听者
@@ -317,60 +303,6 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         }
         return textView.getText().toString();
     }
-
-
-     /*public void savePublishRental() {
-        Publish publish = savePublish();
-        Saver.saveSerializableObject(publish, SharePreferenceKey.PUBLISH);
-    }
-    @NonNull
-    private Publish savePublish() {
-        Publish publish = new Publish();
-        if (mBinding.tvArea.getTag() != null) {
-            int areaId = (int) mBinding.tvArea.getTag();
-            publish.setArea_id(areaId);
-        }
-
-        String title = mBinding.etTitle.getText().toString();
-        String description = mBinding.etDescription.getText().toString();
-        String area = mBinding.tvArea.getText().toString();
-        String address = mBinding.etDetailAddress.getText().toString();
-        String range = mBinding.etRange.getText().toString();
-        String price = mBinding.etPrice.getText().toString();
-        String contactName = mBinding.etContactName.getText().toString();
-        String contactNum = mBinding.etContactNum.getText().toString();
-
-        if (!TextUtils.isEmpty(address)) {
-            publish.setAddress(address);
-        }
-        if (!TextUtils.isEmpty(range)) {
-            publish.setRange(Float.parseFloat(range));
-        }
-        if (!TextUtils.isEmpty(price)) {
-            publish.setPrice(Float.parseFloat(price));
-        }
-        if (!TextUtils.isEmpty(title)) {
-            publish.setTitle(title);
-        }
-        if (!TextUtils.isEmpty(description)) {
-            publish.setDescription(description);
-        }
-        if (!TextUtils.isEmpty(contactName)) {
-            publish.setContact_num(contactName);
-        }
-        if (!TextUtils.isEmpty(contactNum)) {
-            try {
-                Validate.validatePhoneNum(contactNum);
-                publish.setContact_num(contactNum);
-            } catch (ValidateException e) {
-                CustomDialog.createAlertDialog(this, "请输入正确的手机号", contactNum).show();
-                e.printStackTrace();
-            }
-        }
-        publish.setPics(mSelectedImage.toArray(new String[mSelectedImage.size()]));
-        // TODO: 2016/11/15 是否需要保存imagekeys?
-        return publish;
-    }*/
 
     @Override
     public void setArea(String name) {

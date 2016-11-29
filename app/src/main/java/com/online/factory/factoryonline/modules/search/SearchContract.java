@@ -20,6 +20,12 @@ public interface SearchContract {
     }
 
     interface Presenter extends IBasePresenter {
+        void loadSearchHistory();
 
+        void clearHistory();
+
+        void cacheHistory(String history);
+
+        void search(final String s);
     }
 }

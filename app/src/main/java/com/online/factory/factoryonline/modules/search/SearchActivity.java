@@ -74,13 +74,15 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
         mPresenter.loadSearchHistory();
 
         attachListenerForEdittext();
+
     }
 
 
-    public void cancelSearch(View view) {
+    public void cancelSearch() {
         mBinding.etSearch.setText("");
         mBinding.llSearchHistory.setVisibility(View.VISIBLE);
         mBinding.recyclerView.setVisibility(View.GONE);
+        mBinding.ivClear.setVisibility(View.GONE);
         mPresenter.loadSearchHistory();
     }
 
@@ -100,13 +102,73 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
     }
 
     @Override
+    public void loadSearchList(List<WantedMessage> wantedMessages) {
+        if (wantedMessages != null && wantedMessages.size() > 0) {
+            mBinding.llSearchHistory.setVisibility(View.GONE);
+            mBinding.recyclerView.setVisibility(View.VISIBLE);
+            mAdapter.getData().clear();
+            mAdapter.setData(wantedMessages);
+            mBinding.recyclerView.notifyDataSetChanged();
+        } else {
+            mPresenter.loadSearchHistory();
+            mAdapter.getData().clear();
+            mBinding.recyclerView.notifyDataSetChanged();
+            Toast.makeText(this, "搜索不到相关结果", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void attachListenerForEdittext() {
+        RxTextView.textChangeEvents(mBinding.etSearch)
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .filter(new Func1<TextViewTextChangeEvent, Boolean>() {
+                    @Override
+                    public Boolean call(TextViewTextChangeEvent textViewTextChangeEvent) {
+                        return !TextUtils.isEmpty(textViewTextChangeEvent.text());
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<TextViewTextChangeEvent>() {
+                    @Override
+                    public void _onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
+                        mBinding.ivClear.setVisibility(View.VISIBLE);
+                        mPresenter.search(textViewTextChangeEvent.text().toString());
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+
+        mBinding.etSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
+                    mPresenter.cacheHistory(mBinding.etSearch.getText().toString());
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);        // 隐藏软键盘
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_DEL && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (mBinding.etSearch.getText().length() == 1) {
+                        mBinding.ivClear.setVisibility(View.GONE);
+                        cancelSearch();
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
     public void initSearchHistory(Set<String> history) {
         mBinding.flexbox.removeAllViews();
-        if (history==null || history.size() == 0) {
+        if (history == null || history.size() == 0) {
             mBinding.tvClear.setVisibility(View.GONE);
             mBinding.tvTips.setText("暂无搜索历史");
             return;
         }
+        mBinding.tvClear.setVisibility(View.VISIBLE);
+        mBinding.tvTips.setText("搜索记录");
         for (String s : history) {
             TextView tvHistory = new TextView(this);
             FlexboxLayout.LayoutParams lp = new FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT);
@@ -124,57 +186,5 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
             tvHistory.setText(s);
             mBinding.flexbox.addView(tvHistory);
         }
-    }
-
-    @Override
-    public void loadSearchList(List<WantedMessage> wantedMessages) {
-        if (wantedMessages != null && wantedMessages.size() > 0) {
-            mBinding.llSearchHistory.setVisibility(View.GONE);
-            mBinding.recyclerView.setVisibility(View.VISIBLE);
-            mAdapter.getData().clear();
-            mAdapter.setData(wantedMessages);
-            mBinding.recyclerView.notifyDataSetChanged();
-        }else {
-            mPresenter.loadSearchHistory();
-            mAdapter.getData().clear();
-            mBinding.recyclerView.notifyDataSetChanged();
-            Toast.makeText(this,"搜索不到相关结果",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void attachListenerForEdittext() {
-        RxTextView.textChangeEvents(mBinding.etSearch)
-                .debounce(400, TimeUnit.MILLISECONDS)
-                .filter(new Func1<TextViewTextChangeEvent, Boolean>() {
-                    @Override
-                    public Boolean call(TextViewTextChangeEvent textViewTextChangeEvent) {
-                        return !TextUtils.isEmpty(textViewTextChangeEvent.text());
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<TextViewTextChangeEvent>() {
-                    @Override
-                    public void _onNext(TextViewTextChangeEvent textViewTextChangeEvent) {
-                        mPresenter.search(textViewTextChangeEvent.text().toString());
-                    }
-
-                    @Override
-                    public void _onError(Throwable throwable) {
-                        Timber.e(throwable.getMessage());
-                    }
-                });
-        mBinding.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    mPresenter.cacheHistory(v.getText().toString());
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);        // 隐藏软键盘
-//                    mPresenter.loadSearchHistory();
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 }
