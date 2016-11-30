@@ -13,6 +13,7 @@ import com.online.factory.factoryonline.models.Area;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
+import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -39,7 +41,6 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
         .Presenter {
     private DataManager dataManager;
     private LocalApi localApi;
-
 
     @Inject
     public RecommendPresenter(DataManager dataManager, LocalApi localApi) {
@@ -96,12 +97,8 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     /**
      * 请求推荐列表
      * @param page          请求的页码，如果不输，默认为1
-//     * @param maxrange      筛选的最大边界
-//     * @param minrange      筛选边界的最小值
-//     * @param filterType    筛选类型1.区域筛选2.价格筛选3.面积筛选
-//     * @param areaId        筛选的区域id
      */
-    public void requestRecommendListByNet(final int page/*, final float maxrange, final float minrange, final int filterType, final int areaId*/) {
+    public void requestRecommendListByNet(final int page) {
         getView().startLoading();
         dataManager.getMaxUpdateTime()
                 .compose(getView().<Integer>getBindToLifecycle())
@@ -147,7 +144,9 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void filterRecommendListByNet(final int pageNo, final RecommendFragment.Filter filter){
-        getView().startLoading();
+        if (pageNo == 1) {
+            getView().startLoading();
+        }
         dataManager.getMaxUpdateTime()
                 .compose(getView().<Integer>getBindToLifecycle())
                 .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
@@ -161,33 +160,32 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                             params.put("area_id", filter.getAreaId());
                         }
                         if (filter.getMaxranges() != null) {
-                            params.put("maxranges", filter.getMaxranges().getAsString());
+                            params.put("maxranges", filter.getMaxranges().toString());
                         }
                         if (filter.getMinranges() != null) {
-                            params.put("minranges", filter.getMinranges().getAsString());
+                            params.put("minranges", filter.getMinranges().toString());
                         }
                         if (filter.getFiltertype() != null && filter.getFiltertype().size() > 0) {
-                            params.put("filtertype", filter.getFiltertype().getAsString());
+                            JsonArray ja = new JsonArray();
+                            for (String s : filter.getFiltertype()) {
+                                ja.add(Integer.parseInt(s));
+                            }
+                            params.put("filtertype", ja.toString());
                         }
                         return dataManager.getRecommendInfos(params, true);
                     }
                 })
-                .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
-                    @Override
-                    public Observable<List<WantedMessage>> call(RecommendResponse response) {
-                        if (response.getErro_code() == 200) {
-                            localApi.insertWantedMessages(response.getWantedMessages());
-                        }
-                        return Observable.just(response.getWantedMessages());
-                    }
-                })
+                .compose(RxResultHelper.<RecommendResponse>handleResult())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<List<WantedMessage>>() {
+                .subscribe(new RxSubscriber<RecommendResponse>() {
                     @Override
-                    public void _onNext(List<WantedMessage> wantedMessages) {
-                        if (wantedMessages.size() > 0) {
-                            getView().loadRecommendList(wantedMessages, true);
+                    public void _onNext(RecommendResponse response) {
+                        List<WantedMessage> wantedMessages = response.getWantedMessages();
+                        if (pageNo == 1) {
+                            getView().loadFilterResult(wantedMessages, response.getCount());
+                        } else if (pageNo > 1) {
+                            getView().loadPullUpResultWithFilter(wantedMessages);
                         }
                         getView().cancelLoading();
                     }
@@ -196,6 +194,8 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                     public void _onError(Throwable throwable) {
                         if (throwable instanceof ConnectException) {
                             getView().showError("网络连接失败，请检查你的网络！！！");
+                        } else if (throwable instanceof HttpException && throwable.getMessage().contains("404")) {
+                            getView().showError("没有更多数据了");
                         }
                         Timber.e(throwable.getMessage());
                         getView().cancelLoading();
@@ -249,7 +249,6 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                 });
     }
 
-
     /**
      * 请求推荐页面的目录
      */
@@ -264,6 +263,10 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         Map<String, List<Area>> categories = new TreeMap<String, List<Area>>();
                         List<Area> areas = new Gson().fromJson(jsonObject.get("child"),
                                 new TypeToken<List<Area>>() {}.getType());
+                        Area area = new Area();
+                        area.setId(-1);
+                        area.setName("不限");
+                        areas.add(0, area);
                         categories.put("区域", areas);
                         getView().loadRecommendDistrictCategories(categories);
                     }
@@ -316,31 +319,5 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                     }
                 });
     }
-
-//    public void filter(final int pageNo, final int areaId, final int max, final int min, final int filterType) {
-//        dataManager.getMaxUpdateTime()
-//                .compose(getView().<Integer>getBindToLifecycle())
-//                .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
-//                    @Override
-//                    public Observable<RecommendResponse> call(Integer integer) {
-//                        return dataManager.getRecommendInfos(integer, System.currentTimeMillis()/1000, pageNo, max, min, filterType, areaId, true);
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new RxSubscriber<RecommendResponse>() {
-//                    @Override
-//                    public void _onNext(RecommendResponse response) {
-//                        if (response.getErro_code() == 200) {
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void _onError(Throwable throwable) {
-//                        Timber.e(throwable.getMessage());
-//                    }
-//                });
-//    }
 
 }

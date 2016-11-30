@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemRecommendListBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -15,7 +16,7 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factory, RecommendRecyclerViewAdapter.RecommendViewHolder> {
+public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMessage, RecommendRecyclerViewAdapter.RecommendViewHolder> {
 
     private Provider<RecommendViewModel> provider;
 
@@ -36,7 +37,8 @@ public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factor
     public void onBindViewHolder(RecommendViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         RecommendViewModel viewModel = provider.get();
-        Factory info = data.get(position);
+        WantedMessage wantedMessage = data.get(position);
+        Factory info = wantedMessage.getFactory();
         viewModel.setInfo(info);
         ItemRecommendListBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
