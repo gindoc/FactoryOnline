@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemHomeListBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -15,7 +16,7 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factory, HomeRecyclerViewAdapter.HomeViewHolder> {
+public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMessage, HomeRecyclerViewAdapter.HomeViewHolder> {
 
     private Provider<HomeViewModel> provider;
 
@@ -35,7 +36,7 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factory, Ho
     public void onBindViewHolder(HomeViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         HomeViewModel viewModel = provider.get();
-        Factory info = (Factory) data.get(position);
+        Factory info = (Factory) data.get(position).getFactory();
         viewModel.setFactoryInfo(info);
         ItemHomeListBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);

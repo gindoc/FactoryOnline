@@ -10,6 +10,7 @@ import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.SearchResponse;
@@ -151,4 +152,7 @@ public interface FactoryApi {
 
     @GET("users/{user_id}")
     Observable<PublishUserResponse> getUserById(@Path("user_id")int userId);
+
+    @GET("wantedmessages/home")
+    Observable<HomeResponse> getHomeInfos();
 }

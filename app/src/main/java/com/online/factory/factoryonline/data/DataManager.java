@@ -17,6 +17,7 @@ import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.SearchResponse;
@@ -275,5 +276,9 @@ public class DataManager {
 
     public Observable<PublishUserResponse> getUserById(int userId) {
         return factoryApi.getUserById(userId);
+    }
+
+    public Observable<HomeResponse> getHomeInfos() {
+        return factoryApi.getHomeInfos();
     }
 }

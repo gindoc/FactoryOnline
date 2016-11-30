@@ -7,6 +7,7 @@ import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -73,7 +74,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 });
     }
 
-    public void requestFactoryInfo() {
+    /*public void requestFactoryInfo() {
         dataManager.getFactoryInfos(1, 5)
                 .compose(RxResultHelper.<FactoryResponse>handleResult())
                 .compose(getView().<FactoryResponse>getBindToLifecycle())
@@ -82,7 +83,26 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 .subscribe(new RxSubscriber<FactoryResponse>() {
                     @Override
                     public void _onNext(FactoryResponse factoryResponse) {
-                        getView().initRecyclerView(factoryResponse.getFactory());
+                        getView().loadWantedMessages(factoryResponse.getFactory());
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+
+                    }
+                });
+    }*/
+
+    public void requestWantedMessages() {
+        dataManager.getHomeInfos()
+                .compose(getView().<HomeResponse>getBindToLifecycle())
+                .compose(RxResultHelper.<HomeResponse>handleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<HomeResponse>() {
+                    @Override
+                    public void _onNext(HomeResponse homeResponse) {
+                        getView().loadWantedMessages(homeResponse.getWantedMessages());
                     }
 
                     @Override

@@ -4,6 +4,7 @@ import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import java.util.List;
 
@@ -16,10 +17,23 @@ public interface HomeContract {
 
         void initScrollTextView(List<News> newses);
 
-        void initRecyclerView(List<Factory> infos);
+        void loadWantedMessages(List<WantedMessage> wantedMessages);
     }
 
     interface Presenter extends IBasePresenter {
+        /**
+         * 获取首页轮播图地址
+         */
+        void requestIndexPicUrls();
 
+        /**
+         * 获取最新动态
+         */
+        void requestScrollMsg();
+
+        /**
+         * 获取首页厂房列表
+         */
+        void requestWantedMessages();
     }
 }

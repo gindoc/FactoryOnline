@@ -21,6 +21,7 @@ import com.online.factory.factoryonline.databinding.FragmentOwnerBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
@@ -120,7 +121,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
         mPresenter.requestIndexPicUrls();
         mPresenter.requestScrollMsg();
-        mPresenter.requestFactoryInfo();
+        mPresenter.requestWantedMessages();
 
         return mBinding.getRoot();
     }
@@ -216,8 +217,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     }
 
     @Override
-    public void initRecyclerView(List<Factory> infos) {
-        mAdapter.setData(infos);
+    public void loadWantedMessages(List<WantedMessage> wantedMessages) {
+        mAdapter.setData(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
     }
 
@@ -225,8 +226,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void onItemClick(View view, int position) {
         Intent intent = new Intent();
         intent.setClass(getContext(), FactoryDetailActivity.class);
-        Factory factory = mAdapter.getData().get(position);
-        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, factory);
+        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, mAdapter.getData().get(position));
         startActivity(intent);
     }
 }
