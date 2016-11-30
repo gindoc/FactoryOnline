@@ -2,26 +2,23 @@ package com.online.factory.factoryonline.modules.FactoryDetail;
 
 import android.view.MenuItem;
 
-import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.models.response.CollectionResponse;
+import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
 import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import rx.subjects.BehaviorSubject;
+import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016/10/18.
  */
 public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.View> implements FactoryDetailContract.Presenter{
     private DataManager dataManager;
-
-    @Inject
-    BehaviorSubject subject;
 
     @Inject
     public FactoryDetailPresenter(DataManager dataManager) {
@@ -32,29 +29,63 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
     @Override
     public void isCollected(int fId, final MenuItem item) {
         dataManager.isFactoryCollected(fId)
-                .compose(getView().<Boolean>getBindToLifecycle())
+                .compose(getView().<CollectionResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Boolean>() {
+                .subscribe(new RxSubscriber<CollectionResponse>() {
                     @Override
-                    public void call(Boolean aBoolean) {
-                        if (aBoolean) {
-                            item.setIcon(R.drawable.ic_collected_with_shadow);
-                        }else{
-                            item.setIcon(R.drawable.ic_collect_with_shadow);
+                    public void _onNext(CollectionResponse response) {
+                        if (response.getErro_code() == 200 && response.isCollect()) {
+                            getView().refleshCollectionState(item, response.isCollect());
+                        } else{
+                            getView().refleshCollectionState(item, false);
                         }
                     }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
                 });
-        subject.subscribe(new RxSubscriber() {
-            @Override
-            public void _onNext(Object o) {
+    }
 
-            }
+    public void postCollectionState(final MenuItem item, int id) {
+        dataManager.postCollectionState(id)
+                .compose(getView().<Response>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Response>() {
+                    @Override
+                    public void _onNext(Response response) {
+                        if (response.getErro_code() == 200) {
+                            getView().toogleCollectionState(item);
+                        }
+                    }
 
-            @Override
-            public void _onError(Throwable throwable) {
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
 
-            }
-        });
+    public void deleteCollectionState(final MenuItem item, int id) {
+        dataManager.deleteCollectionState(id)
+                .compose(getView().<Response>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Response>() {
+                    @Override
+                    public void _onNext(Response response) {
+                        if (response.getErro_code() == 200) {
+                            getView().toogleCollectionState(item);
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 }

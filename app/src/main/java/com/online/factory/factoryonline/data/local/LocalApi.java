@@ -2,8 +2,15 @@ package com.online.factory.factoryonline.data.local;
 
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.utils.DBManager;
+import com.online.factory.factoryonline.utils.Saver;
 
+import org.antlr.runtime.tree.Tree;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.inject.Inject;
 
@@ -35,5 +42,19 @@ public class LocalApi {
 
     public List<WantedMessage> queryWantedMessagesWithoutIds(int pageNo, List<Integer> ids) {
         return dbManager.queryWantedMessagesWithoutIds(pageNo, ids);
+    }
+
+    public Set<String> getSearchHistory() {
+        return Saver.getSearchHistory();
+    }
+
+    public void addSearchHistory(String history) {
+        Set<String> histories = getSearchHistory();
+        histories.add(history);
+        Saver.setSearchHistory(histories);
+    }
+
+    public void clearSearchHistory() {
+        Saver.setSearchHistory(new HashSet<String>());
     }
 }

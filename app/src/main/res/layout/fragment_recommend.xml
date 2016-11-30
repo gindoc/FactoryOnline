@@ -23,6 +23,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/ll_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/x5"
@@ -30,6 +31,7 @@
                 android:layout_marginRight="@dimen/x11"
                 android:layout_marginTop="@dimen/x5"
                 android:layout_weight="1"
+                android:onClick="@{view.openSearchPage}"
                 android:background="@drawable/home_fragment_search_background"
                 android:gravity="center">
 

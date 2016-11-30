@@ -13,9 +13,12 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
+import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
+import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.models.response.SearchResponse;
 import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
@@ -70,30 +73,27 @@ public class DataManager {
 
     /**
      * 请求推荐列表
-     *
-     * @param since             客户端缓存的信息中，update_time最大的时间戳
-     * @param max               发出请求时的当前时间戳
-     * @param page              请求的页码，如果不输，默认为1
-     * @param maxrange           筛选的最大边界
-     * @param minrange          筛选边界的最小值
-     * @param filterType        筛选类型1.区域筛选2.价格筛选3.面积筛选
-     * @param areaId             筛选的区域id
-     * @param networkSate       网络状态，true为网络正常，false为网络连接失败
+     * since      客户端缓存的信息中，update_time最大的时间戳
+     * max        发出请求时的当前时间戳
+     * page       请求的页码，如果不输，默认为1
+     * maxrange   筛选的最大边界
+     * minrange   筛选边界的最小值
+     * filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
+     * areaId     筛选的区域id
+     * @param params
+     * @return
      */
-    public Observable<RecommendResponse> getRecommendInfos(int since, long max, int page, float maxrange, float minrange, int filterType, int areaId, boolean networkSate) {
-        if (networkSate) {
-            if (filterType == 0) {
-                return factoryApi.getRecommendInfos(since, max, page, null, null, null, null);
-            }
-            return factoryApi.getRecommendInfos(since, max, page, maxrange, minrange, filterType, areaId);
+    public Observable<RecommendResponse> getRecommendInfos(Map<String, Object> params, boolean action) {
+        if (action){
+            return factoryApi.getRecommendInfos(params);
         } else {
-            List<WantedMessage> wantedMessages = localApi.queryWantedMessages(page);
+            List<WantedMessage> wantedMessages = localApi.queryWantedMessages((Integer) params.get("page"));
             RecommendResponse response = new RecommendResponse();
-                response.setErro_code(200);
-                response.setErro_msg("成功");
-                response.setCount(0);
-                response.setNext("");
-                response.setWantedMessages(wantedMessages);
+            response.setErro_code(200);
+            response.setErro_msg("成功");
+            response.setCount(0);
+            response.setNext("");
+            response.setWantedMessages(wantedMessages);
             return Observable.just(response);
         }
     }
@@ -110,7 +110,7 @@ public class DataManager {
     }
 
     /**
-     * 获取数据库WantedMessage表中
+     * 获取数据库WantedMessage表中最大的updateTime
      * @return
      */
     public Observable<Integer> getMaxUpdateTime() {
@@ -145,13 +145,20 @@ public class DataManager {
     /**
      * 请求服务器，判断该厂房是否被收藏
      *
-     * @param fId 厂房id
+     * @param id    wantedMessageId
      * @return
      */
-    public Observable<Boolean> isFactoryCollected(int fId) {
-        return factoryApi.isFactoryCollected(fId);
+    public Observable<CollectionResponse> isFactoryCollected(int id) {
+        return factoryApi.isFactoryCollected("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
     }
 
+    public Observable<Response> postCollectionState(int id) {
+        return factoryApi.postCollectionState("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+    }
+
+    public Observable<Response> deleteCollectionState(int id) {
+        return factoryApi.deleteCollectionState("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+    }
     /**
      * 注册
      *
@@ -261,4 +268,7 @@ public class DataManager {
         return factoryApi.publishMessage(header, builder.build());
     }
 
+    public Observable<SearchResponse> search(String s) {
+        return factoryApi.search(s);
+    }
 }

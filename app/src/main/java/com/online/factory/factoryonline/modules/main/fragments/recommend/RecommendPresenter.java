@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
 import com.bluelinelabs.logansquare.LoganSquare;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -17,6 +18,7 @@ import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -46,13 +48,17 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void initRecommendList() {
+        getView().startLoading();
         dataManager.getMaxUpdateTime()
                 .compose(getView().<Integer>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
                     @Override
                     public Observable<RecommendResponse> call(Integer integer) {
-                        return dataManager.getRecommendInfos(integer, System.currentTimeMillis() / 1000, 1, 0, 0, 0, 0, true);
+                        Map<String, Object> params = new HashMap<String, Object>();
+                        params.put("since", integer);
+                        params.put("max", System.currentTimeMillis() / 1000);
+                        return dataManager.getRecommendInfos(params, true);
                     }
                 })
                 .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
@@ -90,21 +96,23 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     /**
      * 请求推荐列表
      * @param page          请求的页码，如果不输，默认为1
-     * @param maxrange      筛选的最大边界
-     * @param minrange      筛选边界的最小值
-     * @param filterType    筛选类型1.区域筛选2.价格筛选3.面积筛选
-     * @param areaId        筛选的区域id
+//     * @param maxrange      筛选的最大边界
+//     * @param minrange      筛选边界的最小值
+//     * @param filterType    筛选类型1.区域筛选2.价格筛选3.面积筛选
+//     * @param areaId        筛选的区域id
      */
-    public void requestRecommendListByNet(final int page, final float maxrange, final float minrange, final int filterType, final int areaId) {
-        final RecommendContract.View view = getView();
-        view.startLoading();
+    public void requestRecommendListByNet(final int page/*, final float maxrange, final float minrange, final int filterType, final int areaId*/) {
+        getView().startLoading();
         dataManager.getMaxUpdateTime()
                 .compose(getView().<Integer>getBindToLifecycle())
-                .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
                     @Override
                     public Observable<RecommendResponse> call(Integer integer) {
-                        return dataManager.getRecommendInfos(integer, System.currentTimeMillis()/1000, page, maxrange, minrange, filterType, areaId, true);
+                        Map<String, Object> params = new HashMap<String, Object>();
+                        params.put("since", integer);
+                        params.put("max", System.currentTimeMillis() / 1000);
+                        params.put("page", page);
+                        return dataManager.getRecommendInfos(params, true);
                     }
                 })
                 .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
@@ -116,6 +124,64 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         return Observable.just(response.getWantedMessages());
                     }
                 })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<List<WantedMessage>>() {
+                    @Override
+                    public void _onNext(List<WantedMessage> wantedMessages) {
+                        if (wantedMessages.size() > 0) {
+                            getView().loadRecommendList(wantedMessages, true);
+                        }
+                        getView().cancelLoading();
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        if (throwable instanceof ConnectException) {
+                            getView().showError("网络连接失败，请检查你的网络！！！");
+                        }
+                        Timber.e(throwable.getMessage());
+                        getView().cancelLoading();
+                    }
+                });
+    }
+
+    public void filterRecommendListByNet(final int pageNo, final RecommendFragment.Filter filter){
+        getView().startLoading();
+        dataManager.getMaxUpdateTime()
+                .compose(getView().<Integer>getBindToLifecycle())
+                .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
+                    @Override
+                    public Observable<RecommendResponse> call(Integer integer) {
+                        Map<String, Object> params = new HashMap<String, Object>();
+                        params.put("since", integer);
+                        params.put("max", System.currentTimeMillis() / 1000);
+                        params.put("page", pageNo);
+                        if (filter.getAreaId() != -1) {
+                            params.put("area_id", filter.getAreaId());
+                        }
+                        if (filter.getMaxranges() != null) {
+                            params.put("maxranges", filter.getMaxranges().getAsString());
+                        }
+                        if (filter.getMinranges() != null) {
+                            params.put("minranges", filter.getMinranges().getAsString());
+                        }
+                        if (filter.getFiltertype() != null && filter.getFiltertype().size() > 0) {
+                            params.put("filtertype", filter.getFiltertype().getAsString());
+                        }
+                        return dataManager.getRecommendInfos(params, true);
+                    }
+                })
+                .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
+                    @Override
+                    public Observable<List<WantedMessage>> call(RecommendResponse response) {
+                        if (response.getErro_code() == 200) {
+                            localApi.insertWantedMessages(response.getWantedMessages());
+                        }
+                        return Observable.just(response.getWantedMessages());
+                    }
+                })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscriber<List<WantedMessage>>() {
                     @Override
@@ -138,7 +204,6 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void requestRecommendListByDBWithoutIds(int pageNo, List<Integer> ids) {
-        getView().startLoading();
         dataManager.getRecommendInfosWithoutIds(pageNo, ids)
                 .compose(getView().<RecommendResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
@@ -161,8 +226,9 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
     }
 
     public void requestRecommendListByDB(int pageNo) {
-        getView().startLoading();
-        dataManager.getRecommendInfos(0, 0, pageNo, 0, 0, 0, 0, false)
+        Map<String, Object> params = new HashMap<>();
+        params.put("page", pageNo);
+        dataManager.getRecommendInfos(params, false)
                 .compose(getView().<RecommendResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -182,6 +248,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                     }
                 });
     }
+
 
     /**
      * 请求推荐页面的目录
@@ -249,4 +316,31 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                     }
                 });
     }
+
+//    public void filter(final int pageNo, final int areaId, final int max, final int min, final int filterType) {
+//        dataManager.getMaxUpdateTime()
+//                .compose(getView().<Integer>getBindToLifecycle())
+//                .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
+//                    @Override
+//                    public Observable<RecommendResponse> call(Integer integer) {
+//                        return dataManager.getRecommendInfos(integer, System.currentTimeMillis()/1000, pageNo, max, min, filterType, areaId, true);
+//                    }
+//                })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RxSubscriber<RecommendResponse>() {
+//                    @Override
+//                    public void _onNext(RecommendResponse response) {
+//                        if (response.getErro_code() == 200) {
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void _onError(Throwable throwable) {
+//                        Timber.e(throwable.getMessage());
+//                    }
+//                });
+//    }
+
 }

@@ -13,9 +13,10 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
@@ -29,6 +30,7 @@ import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
+import com.online.factory.factoryonline.modules.search.SearchActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -73,6 +75,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     private Map<String, List<Area>> mDistrictCategories;
     private List<WantedMessage> wantedMessages = new ArrayList<>();
     private List<Integer> ids = new ArrayList<>();
+//    private Filter recommendFilter = new Filter();
+//    private int filterPage = 1;
 
     @Inject
     public RecommendFragment() {
@@ -144,6 +148,11 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
+    public void openSearchPage(View view) {
+        startActivity(SearchActivity.getStartIntent(getContext()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
@@ -168,9 +177,13 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             @Override
             public void onItemClick(View view, int position) {
                 mDistrictSecCategoryAdapter.getSubject().onNext(position);
-                String title = mDistrictSecCategoryAdapter.getData().get(position).getName();
+                Area area = mDistrictSecCategoryAdapter.getData().get(position);
+                String title = area.getName();
+//                recommendFilter.setAreaId(area.getId());
                 mBinding.dropDownMenu.setTabText(title);
                 mBinding.dropDownMenu.closeMenu();
+//                filterPage = 1;
+//                mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
             }
         });
 
@@ -302,13 +315,12 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void onRefresh() {
-        mPresenter.requestRecommendListByNet(downPage, 0, 0, 0, 0);
+        mPresenter.requestRecommendListByNet(downPage/*, 0, 0, 0, 0*/);
     }
 
     @Override
     public void onPage() {
         mBinding.recyclerView.showLoadingFooter();
-//        mPresenter.requestRecommendListByDB(upPage);
         mPresenter.requestRecommendListByDBWithoutIds(upPage, ids);
     }
 
@@ -346,5 +358,44 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, wantedMessage);
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    class Filter{
+        JsonObject maxranges;
+        JsonObject minranges;
+        JsonArray filtertype;
+        int areaId = -1;
+
+        public int getAreaId() {
+            return areaId;
+        }
+
+        public void setAreaId(int areaId) {
+            this.areaId = areaId;
+        }
+
+        public JsonObject getMaxranges() {
+            return maxranges;
+        }
+
+        public void setMaxranges(JsonObject maxranges) {
+            this.maxranges = maxranges;
+        }
+
+        public JsonObject getMinranges() {
+            return minranges;
+        }
+
+        public void setMinranges(JsonObject minranges) {
+            this.minranges = minranges;
+        }
+
+        public JsonArray getFiltertype() {
+            return filtertype;
+        }
+
+        public void setFiltertype(JsonArray filtertype) {
+            this.filtertype = filtertype;
+        }
     }
 }

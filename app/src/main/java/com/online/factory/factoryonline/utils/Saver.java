@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
 //import org.apache.commons.codec.binary.Base64;
 
 public class Saver {
@@ -63,4 +67,13 @@ public class Saver {
         return sharePref.getString("token", "");
     }
 
+    public static Set<String> getSearchHistory() {
+        return sharePref.getStringSet("searchHistory", new HashSet<String>());
+    }
+
+    public static void setSearchHistory(Set<String> history) {
+        Editor editor = sharePref.edit();
+        editor.putStringSet("searchHistory", history);
+        editor.commit();
+    }
 }

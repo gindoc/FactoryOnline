@@ -29,7 +29,7 @@ public class PwdLoginFragment  extends BaseFragment{
     private FragmentLoginbyPwdBinding mBinding;
     @Inject
     public PwdLoginFragment() {
-        setTitle("普通登录");
+        setTitle("账号登录");
     }
 
     @Inject
