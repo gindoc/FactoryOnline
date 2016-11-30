@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
@@ -148,4 +149,6 @@ public interface FactoryApi {
     @GET("wantedmessages/search")
     Observable<SearchResponse> search(@Query("key") String s);
 
+    @GET("users/{user_id}")
+    Observable<PublishUserResponse> getUserById(@Path("user_id")int userId);
 }

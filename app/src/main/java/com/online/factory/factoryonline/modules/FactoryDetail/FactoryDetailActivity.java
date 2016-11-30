@@ -20,6 +20,8 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
 import com.online.factory.factoryonline.databinding.ActivityFactoryDetailBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.User;
+import com.online.factory.factoryonline.models.UserPublic;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.advertiser.AdvertiserActivity;
 import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
@@ -67,6 +69,8 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         initFactoryDetail();
         initViewPager();
         initBaiduMap();
+
+        mPresenter.getPublishUser(Integer.parseInt(wantedMessage.getOwner_id()));
     }
 
     private void initBaiduMap() {
@@ -193,6 +197,11 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                 item.setIcon(R.drawable.ic_collect_with_shadow);
             }
         }
+    }
+
+    @Override
+    public void initPublishUser(UserPublic userPublic) {
+        mBinding.setUserPublic(userPublic);
     }
 
     public void openReportPage() {      //举报

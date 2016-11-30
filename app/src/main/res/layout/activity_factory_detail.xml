@@ -6,6 +6,9 @@
     <data>
 
         <variable
+            name="userPublic"
+            type="com.online.factory.factoryonline.models.UserPublic" />
+        <variable
             name="view"
             type="com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity" />
 
@@ -451,7 +454,7 @@
                             android:layout_marginTop="@dimen/y15"
                             android:onClick="@{()->view.openAdvertiserPage()}"
                             android:padding="@dimen/x6"
-                            android:src="@drawable/photo_head"
+                            app:imageUrl="@{userPublic.avatar}"
                             app:border_outside_color="#CCCCCD"
                             app:border_thickness="1dp" />
 
@@ -462,7 +465,7 @@
                             android:layout_alignTop="@id/iv_publish_people"
                             android:layout_marginLeft="@dimen/x15"
                             android:layout_toRightOf="@id/iv_publish_people"
-                            android:text="发布人:蜡笔小新"
+                            android:text='@{"发布人："+userPublic.username}'
                             android:textColor="#424242"
                             android:textSize="18sp" />
 

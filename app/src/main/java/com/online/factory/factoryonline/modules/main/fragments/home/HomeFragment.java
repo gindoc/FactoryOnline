@@ -42,13 +42,9 @@ import timber.log.Timber;
  * Created by cwenhui on 2016.02.23
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
-        .View, /*HomeRecyclerView.ScrollChangedListener,*/ BaseRecyclerViewAdapter.OnItemClickListener {
-    public static float MAX_SCALE_RATE = 0.3f;
-    public static float MAX_TRANSLATIONY = 200;
-    public float MAX_TOP;
+        .View, BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
-//    private FragmentFindBinding mFindBinding;
     private FragmentOwnerBinding mOwnBinding;
     @Inject
     HomeRecyclerViewAdapter mAdapter;
@@ -132,9 +128,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     private void initRecyclerView() {
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-//        mBinding.recyclerView.setScrollChangedListener(this);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
-//        mBinding.recyclerView.init();
         mAdapter.setOnItemClickListener(this);
     }
 
@@ -143,8 +137,6 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
      */
     public void findFactory() {
         mHeaderBinding.rolePick.removeAllViews();
-//        mFindBinding = FragmentFindBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
-//        mFindBinding.setView(this);
         LayoutInflater.from(getContext()).inflate(R.layout.fragment_find, mHeaderBinding.rolePick);
     }
 
@@ -228,40 +220,6 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mAdapter.setData(infos);
         mBinding.recyclerView.notifyDataSetChanged();
     }
-
-    /*@Override
-    public void onScrolled(int dy,boolean isSwipeDown) {
-        Timber.d("dy %d",dy);
-        int limit = 300;
-        int i = dy % 300;
-        float percentage = (float) Math.abs(i) / (float) limit;
-        Timber.d("percentage : %f",percentage);
-        float scale = (float) (percentage*MAX_SCALE_RATE);
-
-        int height = mBinding.coverView.getHeight();
-        float translationY = -percentage*(height-50);
-
-        Timber.d("scale : %f",scale);
-        Timber.d("translationY %f",translationY);
-
-            if(Math.abs(dy) < limit){
-                mBinding.coverView.setAlpha(percentage);
-                ObjectAnimator
-                        .ofFloat(mBinding.searchview, "scaleX", 1-scale)
-                        .setDuration(limit / 700)
-                        .start();
-                ObjectAnimator.ofFloat(mBinding.searchview, "translationY", translationY)
-                        .setDuration(limit / 700)
-                        .start();
-            }else {
-
-            }
-
-
-
-        Timber.d("height %f",mBinding.searchview.getY());
-        Timber.d("actual scalX %f",mBinding.searchview.getScaleX());
-    }*/
 
     @Override
     public void onItemClick(View view, int position) {
