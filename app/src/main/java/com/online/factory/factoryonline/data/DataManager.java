@@ -14,6 +14,7 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
+import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
@@ -221,11 +222,11 @@ public class DataManager {
         }
     }
 
-    public Observable<FactoryResponse> getStreetFactories(int streetId) {
-        return factoryApi.getStreetFactories(streetId);
+    public Observable<RecommendResponse> getStreetFactories(Map<String, Object> params) {
+        return factoryApi.getStreetFactories(params);
     }
 
-    public Observable<FactoryPoiResponse> getLatLngs(int cityId) {
+    public Observable<BaiduMapResponse> getLatLngs(int cityId) {
         return factoryApi.getLatLngs(cityId);
     }
 

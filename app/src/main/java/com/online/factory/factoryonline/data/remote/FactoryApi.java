@@ -3,12 +3,10 @@ package com.online.factory.factoryonline.data.remote;
 
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.CityBean;
-import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
-import com.online.factory.factoryonline.models.post.Publish;
+import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
-import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
@@ -119,11 +117,11 @@ public interface FactoryApi {
     @GET("/user")
     Observable<UserResponse> getUser();
 
-    @GET("/publicmessages/{streetId}")
-    Observable<FactoryResponse> getStreetFactories(@Path("streetId") int streetId);
+    @GET("wantedmessages/recommend")
+    Observable<RecommendResponse> getStreetFactories(@QueryMap Map<String, Object> params);
 
-    @GET("/factorypoi/{cityId}")
-    Observable<FactoryPoiResponse> getLatLngs(@Path("cityId") int cityId);
+    @GET("factorypois/district/{city_id}")
+    Observable<BaiduMapResponse> getLatLngs(@Path("city_id") int cityId);
 
     @POST("https://api.sms.jpush.cn/v1/codes")
     Observable<JsonObject> getSmsCode(@Body RequestBody requestBody);

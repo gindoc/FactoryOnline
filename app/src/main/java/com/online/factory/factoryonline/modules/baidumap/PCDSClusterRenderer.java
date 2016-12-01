@@ -293,7 +293,8 @@ public class PCDSClusterRenderer<T extends ClusterItem> implements
      * Determine whether the cluster should be rendered as individual markers or a cluster.
      */
     protected boolean shouldRenderAsCluster(Cluster<T> cluster) {
-        return cluster.getSize() > MIN_CLUSTER_SIZE;
+//        return cluster.getSize() > MIN_CLUSTER_SIZE;
+        return true;
     }
 
     /**
