@@ -14,6 +14,8 @@ import java.util.TreeSet;
 
 import javax.inject.Inject;
 
+import rx.Observable;
+
 /**
  * 作者: GIndoc
  * 日期: 2016/11/21 17:00
@@ -56,5 +58,13 @@ public class LocalApi {
 
     public void clearSearchHistory() {
         Saver.setSearchHistory(new HashSet<String>());
+    }
+
+    public void insertHomeWantedMessages(List<WantedMessage> wantedMessages) {
+        dbManager.insertHomeWantedMessages(wantedMessages);
+    }
+
+    public Observable<List<WantedMessage>> queryHomeWantedMessages() {
+        return Observable.just(dbManager.queryHomeWantedMessages());
     }
 }

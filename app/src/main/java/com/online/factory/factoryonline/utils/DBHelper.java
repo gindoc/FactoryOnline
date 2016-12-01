@@ -19,6 +19,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS WantedMessage "
                 + "(id INTEGER PRIMARY KEY AUTOINCREMENT, created_time INTEGER, isCollect INTEGER, factoryId INTEGER, contacterId INTEGER, " +
                 "update_time INTEGER NOT NULL, delete_id VARCHAR, update_id VARCHAR, owner_id VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS HomeWantedMessage "
+                + "(id INTEGER PRIMARY KEY AUTOINCREMENT, created_time INTEGER, isCollect INTEGER, factoryId INTEGER, contacterId INTEGER, " +
+                "update_time INTEGER NOT NULL, delete_id VARCHAR, update_id VARCHAR, owner_id VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS Factory (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, image_urls VARCHAR, thumbnail_url VARCHAR, price REAL, " +
                 "range REAL, tags VARCHAR, description VARCHAR, address_overview VARCHAR, pre_pay VARCHAR, rent_type VARCHAR, geohash VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS Contacter (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, phone_num VARCHAR)");

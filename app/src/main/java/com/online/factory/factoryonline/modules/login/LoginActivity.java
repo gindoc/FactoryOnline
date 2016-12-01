@@ -42,8 +42,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     @Inject
     BaseFragmentPagerAdapter adapter;
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
-        return intent;
+        return new Intent(context, LoginActivity.class);
     }
 
     @Override

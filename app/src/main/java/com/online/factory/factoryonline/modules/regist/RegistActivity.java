@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -50,6 +51,10 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_regist);
+
+        mBinding.toolbar.setTitle("");
+        setSupportActionBar(mBinding.toolbar);
+        mBinding.toolbar.setNavigationIcon(R.drawable.ic_green_close);
         handleRegistAction();
     }
 
@@ -105,17 +110,24 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
     }
 
     private String getInputPhoneNum() {
-        Editable phone_num = mBinding.etPhonenum.getEditText().getEditableText();
-        return phone_num == null ? null:phone_num.toString();
+        return mBinding.etPhonenum.getText().toString();
     }
 
     private String getInputPwd(){
-        Editable pwd = mBinding.etPwd.getEditText().getEditableText();
-        return pwd == null ? null:pwd.toString();
+        return mBinding.etPwd.getText().toString();
     }
 
     private String getInputVertifyCode(){
-        Editable code = mBinding.etVerificationcode.getEditText().getEditableText();
-        return code == null ? null:code.toString();
+        return mBinding.etVerificationcode.getText().toString();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+        }
+        return true;
     }
 }

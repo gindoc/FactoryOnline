@@ -5,19 +5,24 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.models.News;
-import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016.02.23
@@ -25,10 +30,12 @@ import rx.schedulers.Schedulers;
 public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter {
 
     private DataManager dataManager;
+    private LocalApi localApi;
 
     @Inject
-    public HomePresenter(DataManager dataManager) {
+    public HomePresenter(DataManager dataManager, LocalApi localApi) {
         this.dataManager = dataManager;
+        this.localApi = localApi;
     }
 
     public void requestIndexPicUrls() {
@@ -74,40 +81,53 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 });
     }
 
-    /*public void requestFactoryInfo() {
-        dataManager.getFactoryInfos(1, 5)
-                .compose(RxResultHelper.<FactoryResponse>handleResult())
-                .compose(getView().<FactoryResponse>getBindToLifecycle())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<FactoryResponse>() {
-                    @Override
-                    public void _onNext(FactoryResponse factoryResponse) {
-                        getView().loadWantedMessages(factoryResponse.getFactory());
-                    }
-
-                    @Override
-                    public void _onError(Throwable throwable) {
-
-                    }
-                });
-    }*/
-
     public void requestWantedMessages() {
         dataManager.getHomeInfos()
                 .compose(getView().<HomeResponse>getBindToLifecycle())
                 .compose(RxResultHelper.<HomeResponse>handleResult())
+                .flatMap(new Func1<HomeResponse, Observable<List<WantedMessage>>>() {
+                    @Override
+                    public Observable<List<WantedMessage>> call(HomeResponse homeResponse) {
+                        localApi.insertHomeWantedMessages(homeResponse.getWantedMessages());
+                        return Observable.just(homeResponse.getWantedMessages());
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<HomeResponse>() {
+                .subscribe(new RxSubscriber<List<WantedMessage>>() {
                     @Override
-                    public void _onNext(HomeResponse homeResponse) {
-                        getView().loadWantedMessages(homeResponse.getWantedMessages());
+                    public void _onNext(List<WantedMessage> wantedMessages) {
+                        if (wantedMessages.size() > 0) {
+                            getView().loadWantedMessages(wantedMessages);
+                        }else {
+                            onError(new ConnectException());
+                        }
+
                     }
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable instanceof ConnectException) {
+                            requestHomeWantedMessagesByDB();
+                        }
+                    }
+                });
+    }
 
+    private void requestHomeWantedMessagesByDB() {
+        localApi.queryHomeWantedMessages()
+                .compose(getView().<List<WantedMessage>>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<List<WantedMessage>>() {
+                    @Override
+                    public void _onNext(List<WantedMessage> wantedMessages) {
+                        getView().loadWantedMessages(wantedMessages);
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
                     }
                 });
     }

@@ -106,13 +106,11 @@ public class SmsLoginFragment extends BaseFragment<SmsLoginContract.View, SmsLog
     }
 
     private String getInputPhoneNum() {
-        Editable phone_num = mBinding.etPhonenum.getEditText().getEditableText();
-        return phone_num == null ? null : phone_num.toString();
+        return mBinding.etPhonenum.getText().toString();
     }
 
     private String getInputPwd() {
-        Editable pwd = mBinding.etVerificationcode.getEditText().getEditableText();
-        return pwd == null ? null : pwd.toString();
+        return mBinding.etVerificationcode.getText().toString();
     }
 
     private Timer mTimer;
