@@ -1,4 +1,4 @@
-package com.online.factory.factoryonline.modules.publication;
+package com.online.factory.factoryonline.modules.collection;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
@@ -12,15 +12,15 @@ import java.util.List;
  * 作用:
  */
 
-public interface PublicationContract {
+public interface CollectionContract {
     interface View extends IBaseView{
 
-        void loadPublicationList(List<WantedMessage> wantedMessages);
+        void loadCollectionList(List<WantedMessage> wantedMessages);
 
         void loadNextUrlAndCount(String next, int count);
     }
 
     interface Presenter extends IBasePresenter{
-        void requestPublications(String next);
+
     }
 }

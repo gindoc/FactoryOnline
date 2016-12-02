@@ -1,6 +1,7 @@
 package com.online.factory.factoryonline.data;
 
 
+import com.google.common.base.Functions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.LocalApi;
@@ -19,6 +20,7 @@ import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
+import com.online.factory.factoryonline.models.response.MyCollectionResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
@@ -156,21 +158,21 @@ public class DataManager {
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
-        return factoryApi.isFactoryCollected(token, id);
+        return factoryApi.isFactoryCollected(token, timestamp, id);
     }
 
     public Observable<Response> postCollectionState(int id) {
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
-        return factoryApi.postCollectionState(token, id);
+        return factoryApi.postCollectionState(token, timestamp, id);
     }
 
     public Observable<Response> deleteCollectionState(int id) {
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
-        return factoryApi.deleteCollectionState(token, id);
+        return factoryApi.deleteCollectionState(token, timestamp, id);
     }
     /**
      * 注册
@@ -303,4 +305,14 @@ public class DataManager {
         token = "Token " + token;
         return factoryApi.getPublications(next, token, timestamp);
     }
+
+    public Observable<MyCollectionResponse> requestCollections(String next) {
+        String token = Saver.getToken().replace("\"", "");
+        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        token = AESUtil.encrypt(token, timestamp, iv.toString());
+        token = "Token " + token;
+        return factoryApi.getCollections(next, token, timestamp);
+    }
+
 }

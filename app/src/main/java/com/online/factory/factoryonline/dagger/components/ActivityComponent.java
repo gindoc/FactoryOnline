@@ -6,6 +6,7 @@ import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActiv
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
+import com.online.factory.factoryonline.modules.collection.CollectionActivity;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.dagger.modules.ActivityModule;
@@ -56,4 +57,6 @@ public interface ActivityComponent {
     void inject(SearchActivity searchActivity);
 
     void inject(PublicationActivity publicationActivity);
+
+    void inject(CollectionActivity collectionActivity);
 }

@@ -9,6 +9,7 @@ import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
+import com.online.factory.factoryonline.models.response.MyCollectionResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
@@ -102,13 +103,13 @@ public interface FactoryApi {
      * @return
      */
     @GET("wantedmessages/{id}/collection/")
-    Observable<CollectionResponse> isFactoryCollected(@Header("Authorization") String header, @Path("id") int id);
+    Observable<CollectionResponse> isFactoryCollected(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
 
     @POST("wantedmessages/{id}/collection/")
-    Observable<Response> postCollectionState(@Header("Authorization") String header, @Path("id") int id);
+    Observable<Response> postCollectionState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
 
     @DELETE("wantedmessages/{id}/collection/")
-    Observable<Response> deleteCollectionState(@Header("Authorization") String header, @Path("id") int id);
+    Observable<Response> deleteCollectionState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
 
     @GET("/users/salt/{username}")
     Observable<Response> getSalt(@Path("username") String userName);
@@ -158,4 +159,7 @@ public interface FactoryApi {
 
     @GET
     Observable<PublicationResponse> getPublications(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
+
+    @GET
+    Observable<MyCollectionResponse> getCollections(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
 }

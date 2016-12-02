@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.modules.collection.CollectionActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.main.fragments.msg.MsgFragment;
 import com.online.factory.factoryonline.modules.publication.PublicationActivity;
@@ -33,6 +34,6 @@ public class LogInState implements UserState {
 
     @Override
     public void openCollection(Context context) {
-
+        context.startActivity(CollectionActivity.getStartIntent(context));
     }
 }
