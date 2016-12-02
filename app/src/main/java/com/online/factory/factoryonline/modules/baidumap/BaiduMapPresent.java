@@ -33,9 +33,8 @@ public class BaiduMapPresent extends BasePresenter<BaiduMapConstract.View> imple
 
     /**
      * 请求推荐列表
-     * @param page          请求的页码，如果不输，默认为1
      */
-    public void requestWantedMessagesByNet(final int page, final int areaId) {
+    public void requestWantedMessagesByNet(final String url, final int areaId) {
         dataManager.getMaxUpdateTime()
                 .compose(getView().<Integer>getBindToLifecycle())
                 .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
@@ -44,10 +43,9 @@ public class BaiduMapPresent extends BasePresenter<BaiduMapConstract.View> imple
                         Map<String, Object> params = new HashMap<String, Object>();
                         params.put("since", integer);
                         params.put("max", System.currentTimeMillis() / 1000);
-                        params.put("page", page);
                         params.put("area_id", areaId);
                         params.put("filtertype", "[1]");
-                        return dataManager.getStreetFactories(params);
+                        return dataManager.getStreetFactories(url, params);
                     }
                 })
                 .compose(RxResultHelper.<RecommendResponse>handleResult())
@@ -57,6 +55,7 @@ public class BaiduMapPresent extends BasePresenter<BaiduMapConstract.View> imple
                     @Override
                     public void _onNext(RecommendResponse response) {
                         getView().loadWantedMessages(response.getWantedMessages());
+                        getView().loadNextUrlAndCount(response.getNext());
                     }
 
                     @Override

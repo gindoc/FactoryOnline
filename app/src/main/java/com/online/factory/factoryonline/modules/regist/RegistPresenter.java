@@ -62,7 +62,8 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                             User user = new Gson().fromJson(str_user, User.class);
 
                             Saver.saveSerializableObject(user, SharePreferenceKey.USER);
-                            Saver.setToken(body.get("token").toString());
+                            String token = AESUtil.desEncrypt(body.get("token").toString(), timestamp, iv.toString());
+                            Saver.setToken(token);
                             Saver.setLoginState(true);
 
                             getView().registSuccessfully();

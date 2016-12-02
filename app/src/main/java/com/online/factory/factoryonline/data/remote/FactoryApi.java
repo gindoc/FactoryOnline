@@ -9,6 +9,7 @@ import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
+import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.SearchResponse;
@@ -28,6 +29,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -117,8 +119,8 @@ public interface FactoryApi {
     @GET("/user")
     Observable<UserResponse> getUser();
 
-    @GET("wantedmessages/recommend")
-    Observable<RecommendResponse> getStreetFactories(@QueryMap Map<String, Object> params);
+    @GET
+    Observable<RecommendResponse> getStreetFactories(@Url String next, @QueryMap Map<String, Object> params);
 
     @GET("factorypois/district/{city_id}")
     Observable<BaiduMapResponse> getLatLngs(@Path("city_id") int cityId);
@@ -153,4 +155,7 @@ public interface FactoryApi {
 
     @GET("wantedmessages/home")
     Observable<HomeResponse> getHomeInfos();
+
+    @GET
+    Observable<PublicationResponse> getPublications(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
 }

@@ -2,11 +2,14 @@ package com.online.factory.factoryonline.modules.baidumap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -27,6 +30,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityBaidumapBinding;
 import com.online.factory.factoryonline.models.MapPoi;
 import com.online.factory.factoryonline.models.WantedMessage;
@@ -47,7 +51,8 @@ import timber.log.Timber;
 /**
  * Created by louiszgm on 2016/10/13.
  */
-public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, BaiduMapPresent> implements BaiduMap.OnMapLoadedCallback, BaiduMapConstract.View, BaseRecyclerViewAdapter.OnItemClickListener {
+public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, BaiduMapPresent> implements BaiduMap.OnMapLoadedCallback,
+        BaiduMapConstract.View, BaseRecyclerViewAdapter.OnItemClickListener, OnPageListener {
 
     private ActivityBaidumapBinding mBinding;
 
@@ -55,7 +60,6 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
     MapStatus ms;
     private ClusterManager<MyItem> mClusterManager;
     private PCDSClusterRenderer pcdsClusterRenderer;
-//    private List<MapPoi> mMapPois;
 
     @Inject
     LocationClient mLocationClient;
@@ -70,8 +74,12 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
     BaiduMapPresent mPresenter;
 
     @Inject
+    Resources resources;
+
+    @Inject
     MapRecyclerViewAdapter mAdapter;
-    private int pageNo = 1;
+    private String mNext = null;
+    private int clickedAreaId;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, BaiduMapActivity.class);
@@ -88,12 +96,18 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
 
         startCluster();
 
+        initToolbar();
+
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setPageFooter(R.layout.layout_recyclerview_footer);
+        mBinding.recyclerView.setOnPageListener(this);
+        mAdapter.setOnItemClickListener(this);
+    }
+
+    private void initToolbar() {
         mBinding.toolbar.setTitle("");
         setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
     }
 
     private boolean isFirstLoc = true;
@@ -159,6 +173,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
     public void loadWantedMessages(List<WantedMessage> wantedMessages) {
         mAdapter.setData(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.hideLoadingFooter();
     }
 
     public void retract() {
@@ -185,8 +200,9 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
                 if (currentZoom >= 13) {
                     MyItem item = ((ArrayList<MyItem>) cluster.getItems()).get(0);
                     int areaId = item.getMapPoi().getArea_id();
-                    pageNo = 1;
-                    mPresenter.requestWantedMessagesByNet(pageNo, areaId);
+                    String url = resources.getString(R.string.api) + "wantedmessages/recommend";
+                    mPresenter.requestWantedMessagesByNet(url, areaId);
+                    clickedAreaId = areaId;
                     mBinding.toolbar.setVisibility(View.GONE);
                     mBinding.llFactoryList.setVisibility(View.VISIBLE);
                 } else {
@@ -200,8 +216,9 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
             @Override
             public boolean onClusterItemClick(MyItem item) {
                 int areaId = item.getMapPoi().getArea_id();
-                pageNo = 1;
-                mPresenter.requestWantedMessagesByNet(pageNo, areaId);
+                String url = resources.getString(R.string.api) + "wantedmessages/recommend";
+                mPresenter.requestWantedMessagesByNet(url, areaId);
+                clickedAreaId = areaId;
                 mBinding.toolbar.setVisibility(View.GONE);
                 mBinding.llFactoryList.setVisibility(View.VISIBLE);
                 return true;
@@ -212,6 +229,11 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
             results.add(new MyItem(mapPoi));
         }
         mClusterManager.addItems(results);
+    }
+
+    @Override
+    public void loadNextUrlAndCount(String next) {
+        mNext = next;
     }
 
     @Override
@@ -230,6 +252,17 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         WantedMessage wantedMessage = mAdapter.getData().get(position);
         intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, wantedMessage);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPage() {
+        mBinding.recyclerView.showLoadingFooter();
+        if (!TextUtils.isEmpty(mNext)) {
+            mPresenter.requestWantedMessagesByNet(mNext, clickedAreaId);
+        }else {
+            Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            mBinding.recyclerView.hideLoadingFooter();
+        }
     }
 
     /**

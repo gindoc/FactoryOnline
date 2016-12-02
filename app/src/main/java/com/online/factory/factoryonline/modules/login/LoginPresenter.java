@@ -57,7 +57,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                             User user = new Gson().fromJson(str_user, User.class);
 
                             Saver.saveSerializableObject(user, SharePreferenceKey.USER);
-                            Saver.setToken(body.get("token").toString());
+                            String token = AESUtil.desEncrypt(body.get("token").getAsString(), timestamp, iv.toString());
+                            Saver.setToken(token);
                             Saver.setLoginState(true);
 
                             getView().loginSuccessfully();

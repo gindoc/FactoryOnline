@@ -19,6 +19,7 @@ import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
+import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.SearchResponse;
@@ -148,19 +149,28 @@ public class DataManager {
     /**
      * 请求服务器，判断该厂房是否被收藏
      *
-     * @param id    wantedMessageId
+     * @param id wantedMessageId
      * @return
      */
     public Observable<CollectionResponse> isFactoryCollected(int id) {
-        return factoryApi.isFactoryCollected("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.isFactoryCollected(token, id);
     }
 
     public Observable<Response> postCollectionState(int id) {
-        return factoryApi.postCollectionState("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.postCollectionState(token, id);
     }
 
     public Observable<Response> deleteCollectionState(int id) {
-        return factoryApi.deleteCollectionState("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.deleteCollectionState(token, id);
     }
     /**
      * 注册
@@ -222,8 +232,8 @@ public class DataManager {
         }
     }
 
-    public Observable<RecommendResponse> getStreetFactories(Map<String, Object> params) {
-        return factoryApi.getStreetFactories(params);
+    public Observable<RecommendResponse> getStreetFactories(String url, Map<String, Object> params) {
+        return factoryApi.getStreetFactories(url, params);
     }
 
     public Observable<BaiduMapResponse> getLatLngs(int cityId) {
@@ -261,12 +271,14 @@ public class DataManager {
                 .setType(MultipartBody.FORM);
         Map<String, String> header = new HashMap<>();
         if (publish != null) {
-//            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
-            header.put("Authorization", "Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7");
-//            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            StringBuilder iv = new StringBuilder(timestamp).reverse();
             String publishJsonString = new Gson().toJson(publish);
-//            String content = AESUtil.encrypt(publishJsonString, timestamp, iv.toString());
             builder.addFormDataPart("publish", publishJsonString);
+
+            String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+            header.put("Authorization", token);
+            header.put("TIME", timestamp);
         }
         return factoryApi.publishMessage(header, builder.build());
     }
@@ -281,5 +293,14 @@ public class DataManager {
 
     public Observable<HomeResponse> getHomeInfos() {
         return factoryApi.getHomeInfos();
+    }
+
+    public Observable<PublicationResponse> requestPublications(String next) {
+        String token = Saver.getToken().replace("\"", "");
+        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        token = AESUtil.encrypt(token, timestamp, iv.toString());
+        token = "Token " + token;
+        return factoryApi.getPublications(next, token, timestamp);
     }
 }
