@@ -8,6 +8,8 @@ import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWa
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
+import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
+import com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo.PersonalInfoFragment;
 
 import dagger.Subcomponent;
 
@@ -27,4 +29,8 @@ public interface FragmentComponent {
     void inject(PhotoFolderFragment photoFolderFragment);
 
     void inject(PhotoSelectedFragment photoSelectedFragment);
+
+    void inject(ModifyNameFragment modifyNameFragment);
+
+    void inject(PersonalInfoFragment personalInfoFragment);
 }

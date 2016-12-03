@@ -11,6 +11,7 @@ import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.dagger.modules.ActivityModule;
 import com.online.factory.factoryonline.dagger.modules.FragmentModule;
+import com.online.factory.factoryonline.modules.personalInfo.PersonalInfoActivity;
 import com.online.factory.factoryonline.modules.publication.PublicationActivity;
 import com.online.factory.factoryonline.modules.publishRental.PrePay.PrePayActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
@@ -65,4 +66,6 @@ public interface ActivityComponent {
     void inject(SettingActivity settingActivity);
 
     void inject(QRCodeActivity qrCodeActivity);
+
+    void inject(PersonalInfoActivity personalInfoActivity);
 }

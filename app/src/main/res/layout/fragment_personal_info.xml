@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo.PersonalInfoFragment" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height"
+            android:background="@android:color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_arrow_left_green"
+                android:gravity="center_vertical"
+                android:onClick="@{()->view.finish()}"
+                android:text="返回"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="个人信息"
+                android:textColor="#424242"
+                android:textSize="22sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y44"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/x15"
+                android:paddingRight="@dimen/x15">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="头像"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <com.online.factory.factoryonline.customview.RoundImageView
+                    android:layout_width="@dimen/x29"
+                    android:layout_height="@dimen/x29"
+                    android:src="@drawable/boy"
+                    app:border_outside_color="#999"
+                    app:border_thickness="1px" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/x15"
+                android:background="#ccc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y44"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/x15"
+                android:onClick="@{()->view.modifyName()}"
+                android:paddingRight="@dimen/x15">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="名字"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/x5"
+                    android:drawableRight="@drawable/ic_right"
+                    android:text="晨灿"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="@dimen/y10"
+                android:background="#ccc" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y44"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/x15"
+                    android:paddingRight="@dimen/x15">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="绑定账号"
+                        android:textColor="#424242"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="137*****800"
+                        android:textColor="#424242"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="@dimen/x15"
+                    android:background="#ccc" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y44"
+                    android:drawableRight="@drawable/ic_right"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x15"
+                    android:paddingRight="@dimen/x15"
+                    android:text="修改密码"
+                    android:textColor="#424242"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="@dimen/y20"
+                android:background="#ccc" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y44"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:text="退出登录"
+                android:textColor="#424242"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
