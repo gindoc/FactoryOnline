@@ -19,6 +19,8 @@ import com.online.factory.factoryonline.modules.publishRental.area.AreaActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
 import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
+import com.online.factory.factoryonline.modules.setting.SettingActivity;
+import com.online.factory.factoryonline.modules.setting.qrcode.QRCodeActivity;
 
 import dagger.Subcomponent;
 
@@ -59,4 +61,8 @@ public interface ActivityComponent {
     void inject(PublicationActivity publicationActivity);
 
     void inject(CollectionActivity collectionActivity);
+
+    void inject(SettingActivity settingActivity);
+
+    void inject(QRCodeActivity qrCodeActivity);
 }

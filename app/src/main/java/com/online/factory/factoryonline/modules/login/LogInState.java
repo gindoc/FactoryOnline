@@ -8,6 +8,7 @@ import com.online.factory.factoryonline.modules.collection.CollectionActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.main.fragments.msg.MsgFragment;
 import com.online.factory.factoryonline.modules.publication.PublicationActivity;
+import com.online.factory.factoryonline.modules.setting.SettingActivity;
 
 /**
  * Created by louiszgm on 2016/9/30.
@@ -35,5 +36,10 @@ public class LogInState implements UserState {
     @Override
     public void openCollection(Context context) {
         context.startActivity(CollectionActivity.getStartIntent(context));
+    }
+
+    @Override
+    public void openSetting(Context context) {
+        context.startActivity(SettingActivity.getStartIntent(context));
     }
 }

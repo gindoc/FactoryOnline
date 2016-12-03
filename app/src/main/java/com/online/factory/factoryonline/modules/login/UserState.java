@@ -15,4 +15,6 @@ public interface UserState {
     void openPublish(Context context);
 
     void openCollection(Context context);
+
+    void openSetting(Context context);
 }

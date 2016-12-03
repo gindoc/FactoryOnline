@@ -153,15 +153,15 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
                 Toast.makeText(getContext(), "功能尚未开放，敬请期待", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
-                Toast.makeText(getContext(), "功能尚未开放，敬请期待", Toast.LENGTH_SHORT).show();
-                CustomDialog.createMessageDialog(getContext(), "确定退出吗？", new CustomDialog.ReturnResults() {
+                mLoginContext.openSetting(getContext());
+                /*CustomDialog.createMessageDialog(getContext(), "确定退出吗？", new CustomDialog.ReturnResults() {
                     @Override
                     public void result(Object o) {
                         if (o.equals("YES")) {
                             mPresenter.logOut();
                         }
                     }
-                }).show();
+                }).show();*/
                 break;
 
         }

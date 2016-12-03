@@ -37,4 +37,8 @@ public class LoginContext {
     public void openCollection(Context context) {
         mState.openCollection(context);
     }
+
+    public void openSetting(Context context) {
+        mState.openSetting(context);
+    }
 }
