@@ -162,6 +162,7 @@
                     android:paddingLeft="@dimen/x15"
                     android:paddingRight="@dimen/x15"
                     android:text="修改密码"
+                    android:onClick="@{()->view.modifyPwd()}"
                     android:textColor="#424242"
                     android:textSize="18sp" />
             </LinearLayout>

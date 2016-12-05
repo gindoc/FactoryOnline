@@ -10,6 +10,7 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
+import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.annotation.Nonnull;
@@ -24,9 +25,11 @@ import javax.inject.Inject;
 public class PersonalInfoFragment extends BaseFragment {
     private FragmentPersonalInfoBinding mBinding;
 
-
     @Inject
     ModifyNameFragment modifyNameFragment;
+
+    @Inject
+    ModifyPwdFragment modifyPwdFragment;
 
     @Inject
     public PersonalInfoFragment() {
@@ -60,6 +63,10 @@ public class PersonalInfoFragment extends BaseFragment {
 
     public void modifyName() {
         start(modifyNameFragment);
+    }
+
+    public void modifyPwd(){
+        start(modifyPwdFragment);
     }
 
     public void finish() {

@@ -92,6 +92,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
                     @Override
                     public void _onNext(BDLocation bdLocation) {
                         Timber.d("定位成功");
+                        if (bdLocation.getCity() == null) {
+                            return;
+                        }
                         mBinding.tvCity.setText(bdLocation.getCity());
                         if (locationClient.isStarted()) {
                             locationClient.stop();

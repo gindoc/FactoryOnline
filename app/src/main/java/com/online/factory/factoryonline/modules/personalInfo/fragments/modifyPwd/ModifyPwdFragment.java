@@ -1,4 +1,4 @@
-package com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName;
+package com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BasePresenter;
-import com.online.factory.factoryonline.databinding.FragmentModifyNameBinding;
+import com.online.factory.factoryonline.databinding.FragmentModifyPwdBinding;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.annotation.Nonnull;
@@ -16,15 +16,15 @@ import javax.inject.Inject;
 
 /**
  * 作者: GIndoc
- * 日期: 2016/12/3 15:57
+ * 日期: 2016/12/3 18:02
  * 作用:
  */
 
-public class ModifyNameFragment extends BaseFragment {
-    private FragmentModifyNameBinding mBinding;
+public class ModifyPwdFragment extends BaseFragment {
+    private FragmentModifyPwdBinding mBinding;
 
     @Inject
-    public ModifyNameFragment() {
+    public ModifyPwdFragment() {
     }
 
     @Override
@@ -36,9 +36,8 @@ public class ModifyNameFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mBinding = FragmentModifyNameBinding.inflate(inflater);
+        mBinding = FragmentModifyPwdBinding.inflate(inflater);
         mBinding.setView(this);
-
         return mBinding.getRoot();
     }
 
@@ -50,7 +49,6 @@ public class ModifyNameFragment extends BaseFragment {
     @Nonnull
     @Override
     public LifecycleTransformer bindUntilEvent(@Nonnull Object event) {
-        return bindToLifecycle();
+        return null;
     }
-
 }
