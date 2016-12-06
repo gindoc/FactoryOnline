@@ -115,7 +115,7 @@ public interface FactoryApi {
     Observable<Response> getSalt(@Path("username") String userName);
 
     @POST("user/")
-    Observable<retrofit2.Response<JsonObject>> login(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
+    Observable<retrofit2.Response<JsonObject>>login(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
     @GET("/user")
     Observable<UserResponse> getUser();
@@ -126,8 +126,8 @@ public interface FactoryApi {
     @GET("factorypois/district/{city_id}")
     Observable<BaiduMapResponse> getLatLngs(@Path("city_id") int cityId);
 
-    @POST("https://api.sms.jpush.cn/v1/codes")
-    Observable<JsonObject> getSmsCode(@Body RequestBody requestBody);
+    @GET("smses/{template_type}")
+    Observable<Response> getSmsCode(@Path("template_type") String type, @Query("address") String phoneNum);
 
     @POST("users/")
     Observable<retrofit2.Response<JsonObject>> regist(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);

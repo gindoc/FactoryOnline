@@ -143,7 +143,8 @@ public class DataManagerModule {
                         || request.url().toString().contains("qiniutokens")
                         || request.url().toString().contains("images")
                         || request.url().toString().contains("wantedmessages")
-                        || request.url().toString().contains("factorypois/district/")) {
+                        || request.url().toString().contains("factorypois/district/")
+                        || request.url().toString().contains("smses")) {
                     realRequest = request.newBuilder().build();
                 } else {
                     intercepterResponse = new Response.Builder()

@@ -57,6 +57,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     public void login(Login loginBean){
         presenter.login(loginBean);
     }
+
     private void setUpTabs() {
         mBinding.viewpager.setAdapter(adapter);
         adapter.setFragments(fragments);

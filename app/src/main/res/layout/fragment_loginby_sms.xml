@@ -121,6 +121,7 @@
                 android:background="@drawable/green_rectangle_outline_with_large_corner"
                 android:text="获取验证码"
                 android:textColor="#1ab80f"
+                android:focusable="true"
                 android:textSize="12sp" />
         </LinearLayout>
 

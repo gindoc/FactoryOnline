@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -15,47 +14,58 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityRegistBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
-import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
-import com.online.factory.factoryonline.modules.login.LogInState;
-import com.online.factory.factoryonline.modules.login.LoginContext;
-import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.MD5;
-import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.Validate;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import javax.annotation.Nonnull;
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import timber.log.Timber;
 
 /**
  * Created by louiszgm on 2016/10/21.
  */
 
-public class RegistActivity extends BaseActivity implements RegistContract.View{
+public class RegistActivity extends BaseActivity<RegistContract.View, RegistPresenter> implements RegistContract.View{
     public static final int REGIST_SUCCESS = 100;
 
     @Inject
     RegistPresenter presenter;
+
     @Inject
     @Named("device_id")
     String device_id;
+
     private ActivityRegistBinding mBinding;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RegistActivity.class);
         return intent;
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_regist);
+        mBinding.setView(this);
 
+        initToolbar();
+        handleRegistAction();
+    }
+
+    private void initToolbar() {
         mBinding.toolbar.setTitle("");
         setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_green_close);
-        handleRegistAction();
     }
 
     private void handleRegistAction() {
@@ -67,7 +77,7 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
                     regist.setPhone_num(getInputPhoneNum());
                     regist.setPwd(getInputPwd());
                     regist.setDevice_id(device_id);
-                    regist.setVertify_code(123456);
+                    regist.setVerify_code(getInputVertifyCode());
                     if(Validate.validatePhoneNum(getInputPhoneNum())){
                         presenter.regist(regist);
                     }
@@ -78,9 +88,20 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
         });
     }
 
+    public void getVerifyCode() {
+        try {
+            if (Validate.validatePhoneNum(getInputPhoneNum())) {
+                mBinding.tvGetVertifycode.setClickable(false);
+                mPresenter.getSmsCode(getInputPhoneNum());
+            }
+        } catch (ValidateException e) {
+            e.printStackTrace();
+            showError(e.getMessage());
+        }
+    }
 
     @Override
-    protected BasePresenter createPresent() {
+    protected RegistPresenter createPresent() {
         return presenter;
     }
 
@@ -88,6 +109,7 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
     public <T> LifecycleTransformer<T> getBindToLifecycle() {
         return bindToLifecycle();
     }
+
     @Override
     public void showError(String error) {
         Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
@@ -105,8 +127,32 @@ public class RegistActivity extends BaseActivity implements RegistContract.View{
         Toast.makeText(this, "该手机号已被注册，请联系警察叔叔！！Orz...", Toast.LENGTH_SHORT).show();
     }
 
-    private String getMd5Pwd(String inputPwd, String salt) {
-        return MD5.getMD5(MD5.getMD5(inputPwd)+salt);
+    @Override
+    public void refleshSmsButton() {
+        Observable.interval(1, TimeUnit.SECONDS)
+                .compose(this.<Long>getBindToLifecycle())
+                .filter(new Func1<Long, Boolean>() {
+                    @Override
+                    public Boolean call(Long aLong) {
+                        return aLong <= 120;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Long>() {
+                    @Override
+                    public void _onNext(Long aLong) {
+                        mBinding.tvGetVertifycode.setText(120 - aLong + "s");
+                        if (aLong == 120) {
+                            mBinding.tvGetVertifycode.setText("重新获取");
+                            mBinding.tvGetVertifycode.setClickable(true);
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 
     private String getInputPhoneNum() {

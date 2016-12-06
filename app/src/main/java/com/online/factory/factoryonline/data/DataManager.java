@@ -242,13 +242,8 @@ public class DataManager {
         return factoryApi.getLatLngs(cityId);
     }
 
-    public Observable<JsonObject> getSmsCode(String phoneNum) {
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-        builder.addFormDataPart("mobile", phoneNum)
-                .addFormDataPart("temp_id", "1");
-
-        return factoryApi.getSmsCode(builder.build());
+    public Observable<Response> getSmsCode(String phoneNum, String smsType) {
+        return factoryApi.getSmsCode(smsType, phoneNum);
     }
 
 

@@ -8,6 +8,7 @@ import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
+import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.modules.login.LogInState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
@@ -79,5 +80,24 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                 });
 
 
+    }
+
+    public void getSmsCode(String phoneNum) {
+        dataManager.getSmsCode(phoneNum, "1")
+                .compose(getView().<Response>getBindToLifecycle())
+                .compose(RxResultHelper.<Response>handleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Response>() {
+                    @Override
+                    public void _onNext(Response response) {
+                        getView().refleshSmsButton();
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 }

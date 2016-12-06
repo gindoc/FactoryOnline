@@ -8,9 +8,10 @@ import com.online.factory.factoryonline.base.IBaseView;
  */
 public interface SmsLoginContract {
     interface View extends IBaseView{
-
+        void refleshSmsButton();
     }
     interface Presenter extends IBasePresenter{
+
         void getSmsCode(String phoneNum);
     }
 }

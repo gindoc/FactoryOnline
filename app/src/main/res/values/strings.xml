@@ -3,4 +3,8 @@
     <string name="api">http://45.76.69.192:8000/api/v1/</string>
     <!--<string name="api">http://192.168.0.118:8001/api/v1/</string>-->
 
+    <!--permission strings-->
+    <string name="permission_deny_again_title">权限设置</string>
+    <string name="permission_deny_again_positive">设置</string>
+    <string name="permission_deny_again_nagative">取消</string>
 </resources>

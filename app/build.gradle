@@ -99,8 +99,8 @@ dependencies {
     }
     compile 'com.qiniu:qiniu-android-sdk:7.2.+'
     compile 'com.qiniu:happy-dns:0.2.10'
-    //zxing
 
+    //zxing
     //    compile "com.google.zxing:zxing-parent:3.3.0"
     compile 'com.google.zxing:core:3.3.0'
 
