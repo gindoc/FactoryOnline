@@ -18,7 +18,7 @@
             android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tool:src="@drawable/demo"
+            tool:src="@drawable/ic_no_pic"
             app:fileUrl="@{viewModel.imageUrl}"
             android:scaleType="centerCrop"/>
         <ImageView

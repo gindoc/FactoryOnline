@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Created by louiszgm on 2016/9/30.
@@ -53,6 +54,8 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                        getView().showUser(null);
 //                            throwable.getMessage().contains("401")
                     }
                 });

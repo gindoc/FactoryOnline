@@ -128,6 +128,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
 
     @Override
     public void showUser(User user) {
+        mBinding.tvUsername.setText("");        //设置用户信息前先初始化，防止注销用户后之前的用户名还在
         mBinding.setUser(user);
     }
 

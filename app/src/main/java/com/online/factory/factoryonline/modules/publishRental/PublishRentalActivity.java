@@ -242,7 +242,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         if (mSelectedImage.size() > 0) {
             File file = new File(mSelectedImage.get(0));
             Picasso.with(this).load(file)
-                    .placeholder(R.drawable.demo)
+                    .placeholder(R.drawable.publish_rental_background)
                     .resize(mBinding.ivSelectedImg.getMeasuredWidth(), mBinding.ivSelectedImg.getMeasuredHeight())
                     .config(Bitmap.Config.RGB_565)
                     .into(mBinding.ivSelectedImg);

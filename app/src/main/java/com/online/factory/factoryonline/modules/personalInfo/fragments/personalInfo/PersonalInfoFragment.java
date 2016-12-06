@@ -5,10 +5,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -22,14 +26,20 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class PersonalInfoFragment extends BaseFragment {
+public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View, PersonalInfoPresenter> implements PersonalInfoContract.View {
     private FragmentPersonalInfoBinding mBinding;
+
+    @Inject
+    PersonalInfoPresenter mPresenter;
 
     @Inject
     ModifyNameFragment modifyNameFragment;
 
     @Inject
     ModifyPwdFragment modifyPwdFragment;
+
+    @Inject
+    LoginContext mLoginContext;
 
     @Inject
     public PersonalInfoFragment() {
@@ -41,24 +51,19 @@ public class PersonalInfoFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    protected PersonalInfoPresenter createPresent() {
+        return mPresenter;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentPersonalInfoBinding.inflate(inflater);
         mBinding.setView(this);
+        mBinding.setPresenter(mPresenter);
 
         return mBinding.getRoot();
-    }
-
-    @Override
-    protected BasePresenter createPresent() {
-        return null;
-    }
-
-    @Nonnull
-    @Override
-    public LifecycleTransformer bindUntilEvent(@Nonnull Object event) {
-        return bindToLifecycle();
     }
 
     public void modifyName() {
@@ -71,5 +76,22 @@ public class PersonalInfoFragment extends BaseFragment {
 
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    public void refreshWhenLogOut() {
+        Toast.makeText(getContext(), "注销成功", Toast.LENGTH_SHORT).show();
+        mLoginContext.setmState(new LogOutState());
+        getActivity().finish();
+    }
+
+    @Override
+    public <T> LifecycleTransformer<T> getBindToLifecycle() {
+        return bindToLifecycle();
+    }
+
+    @Override
+    public void showError(String error) {
+
     }
 }

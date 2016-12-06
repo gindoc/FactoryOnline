@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/y15"
-                    android:text="标准"
+                    android:text="我要厂房"
                     android:textColor="#424242"
                     android:textSize="16sp" />
             </LinearLayout>

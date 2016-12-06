@@ -17,17 +17,19 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.databinding.FragmentCommissionBinding;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.FragmentOwnerBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
-import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.modules.agent.AgentActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
+import com.online.factory.factoryonline.utils.TimeUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -48,6 +50,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
     private FragmentOwnerBinding mOwnBinding;
+    private FragmentCommissionBinding mCommissionBinding;
     @Inject
     HomeRecyclerViewAdapter mAdapter;
 
@@ -81,6 +84,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         super.onCreate(savedInstanceState);
 
         locating();
+
     }
 
     private void locating() {
@@ -150,7 +154,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
      */
     public void getCommission() {
         mHeaderBinding.rolePick.removeAllViews();
-        LayoutInflater.from(getActivity()).inflate(R.layout.fragment_commission, mHeaderBinding.rolePick);
+        mCommissionBinding = FragmentCommissionBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
+        mCommissionBinding.setView(this);
     }
 
     /**
@@ -166,6 +171,12 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         Activity activity = getActivity();
         Intent intent = new Intent(activity, PublishRentalActivity.class);
         startActivity(intent);
+        activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void openAgentPage() {
+        Activity activity = getActivity();
+        startActivity(AgentActivity.getStartIntent(activity));
         activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 

@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.dagger.components;
 
 
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.modules.agent.AgentActivity;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
@@ -68,4 +69,6 @@ public interface ActivityComponent {
     void inject(QRCodeActivity qrCodeActivity);
 
     void inject(PersonalInfoActivity personalInfoActivity);
+
+    void inject(AgentActivity agentActivity);
 }

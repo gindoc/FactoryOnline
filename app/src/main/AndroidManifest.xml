@@ -76,6 +76,7 @@
         <activity android:name=".modules.setting.copyright.CopyrightActivity" />
         <activity android:name=".modules.setting.qrcode.QRCodeActivity" />
         <activity android:name=".modules.personalInfo.PersonalInfoActivity" />
+        <activity android:name=".modules.agent.AgentActivity" />
     </application>
 
 </manifest>
