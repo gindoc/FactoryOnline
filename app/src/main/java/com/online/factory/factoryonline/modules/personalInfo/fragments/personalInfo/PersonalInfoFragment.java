@@ -11,6 +11,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
@@ -66,6 +67,12 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
         return mBinding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.getUser();
+    }
+
     public void modifyName() {
         start(modifyNameFragment);
     }
@@ -83,6 +90,11 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
         Toast.makeText(getContext(), "注销成功", Toast.LENGTH_SHORT).show();
         mLoginContext.setmState(new LogOutState());
         getActivity().finish();
+    }
+
+    @Override
+    public void showUser(User user) {
+        mBinding.setUser(user);
     }
 
     @Override

@@ -41,22 +41,20 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
     @Override
     public void getUser() {
         dataManager.getUser()
+                .compose(getView().<UserResponse>getBindToLifecycle())
                 .compose(RxResultHelper.<UserResponse>handleResult())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscriber<UserResponse>() {
                     @Override
                     public void _onNext(UserResponse userResponse) {
-                        if (userResponse.getErro_code() == 200) {
-                            getView().showUser(userResponse.getUser());
-                        }
+                        getView().showUser(userResponse.getUser());
                     }
 
                     @Override
                     public void _onError(Throwable throwable) {
                         Timber.e(throwable.getMessage());
                         getView().showUser(null);
-//                            throwable.getMessage().contains("401")
                     }
                 });
     }

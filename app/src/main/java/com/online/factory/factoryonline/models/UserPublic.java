@@ -1,11 +1,13 @@
 package com.online.factory.factoryonline.models;
 
+import com.bluelinelabs.logansquare.annotation.JsonObject;
+
 /**
  * 作者: GIndoc
  * 日期: 2016/11/30 16:10
  * 作用: 发布人model
  */
-
+@JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS)
 public class UserPublic {
     private int publish_count;
     private int id;

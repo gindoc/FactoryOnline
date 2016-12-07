@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.personalInfo.fragments.personal
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
+import com.online.factory.factoryonline.models.User;
 
 /**
  * 作者: GIndoc
@@ -13,6 +14,8 @@ public interface PersonalInfoContract {
     interface View extends IBaseView{
 
         void refreshWhenLogOut();
+
+        void showUser(User user);
     }
 
     interface Presenter extends IBasePresenter {
