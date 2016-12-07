@@ -18,6 +18,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
 
+import pub.devrel.easypermissions.EasyPermissions;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 

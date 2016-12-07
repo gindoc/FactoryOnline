@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.main.fragments.home;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
@@ -28,6 +30,7 @@ import com.online.factory.factoryonline.modules.agent.AgentActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
+import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.utils.TimeUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
@@ -47,6 +50,7 @@ import timber.log.Timber;
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
         .View, BaseRecyclerViewAdapter.OnItemClickListener {
+    public static final int PERMISSION_REQUEST_CODE = 199;
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
     private FragmentOwnerBinding mOwnBinding;
@@ -83,8 +87,33 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
 
-        locating();
+        checkPermission();
 
+    }
+
+    private void checkPermission() {
+        performCodeWithPermission(getString(R.string.permission_location_rationale), PERMISSION_REQUEST_CODE,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        locating();
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_location_deny_again), PERMISSION_REQUEST_CODE);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            locating();
+        }
     }
 
     private void locating() {

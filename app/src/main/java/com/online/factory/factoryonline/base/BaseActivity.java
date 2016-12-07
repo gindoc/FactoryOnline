@@ -159,6 +159,21 @@ public abstract class BaseActivity<V , T extends BasePresenter<V>> extends Suppo
                 .show();
     }
 
+    /**
+     * 跳转设置弹框 建议在权限被设置为不在询问时弹出 提示用户前往设置页面打开权限
+     * @param tips 提示信息
+     * @param requestCode 页面返回时onActivityResult的requestCode
+     */
+    protected void alertAppSetPermission(String tips, int requestCode) {
+        new AppSettingsDialog.Builder(this, tips)
+                .setTitle(getString(R.string.permission_deny_again_title))
+                .setPositiveButton(getString(R.string.permission_deny_again_positive))
+                .setNegativeButton(getString(R.string.permission_deny_again_nagative), null)
+                .setRequestCode(requestCode)
+                .build()
+                .show();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

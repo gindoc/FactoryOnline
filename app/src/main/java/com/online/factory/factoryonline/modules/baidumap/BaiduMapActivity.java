@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.baidumap;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -29,6 +30,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityBaidumapBinding;
@@ -53,6 +55,7 @@ import timber.log.Timber;
  */
 public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, BaiduMapPresent> implements BaiduMap.OnMapLoadedCallback,
         BaiduMapConstract.View, BaseRecyclerViewAdapter.OnItemClickListener, OnPageListener {
+    public static final int PERMISSION_REQUEST_CODE = 199;
 
     private ActivityBaidumapBinding mBinding;
 
@@ -93,6 +96,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         mBinding.setView(this);
 
         initialMap();
+        checkPermission();
 
         startCluster();
 
@@ -150,7 +154,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         mBaiduMap.setMyLocationEnabled(true);
         mBaiduMap.setOnMapLoadedCallback(this);
         mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null));
-        mLocationClient.start();
+//        mLocationClient.start();
     }
 
     private void startCluster() {
@@ -331,5 +335,30 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
             finish();
         }
         return true;
+    }
+
+    private void checkPermission() {
+        performCodeWithPermission(getString(R.string.permission_location_rationale), PERMISSION_REQUEST_CODE,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        mLocationClient.start();
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_location_deny_again), PERMISSION_REQUEST_CODE);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            mLocationClient.start();
+        }
     }
 }

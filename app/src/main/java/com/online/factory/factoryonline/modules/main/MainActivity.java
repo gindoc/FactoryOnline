@@ -37,10 +37,11 @@ public class MainActivity extends BaseActivity {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.bottomTab.rbHome.setChecked(true);
+
         loadRootFragment(R.id.tab_content, homeFragment);
-        
     }
 
     @Override

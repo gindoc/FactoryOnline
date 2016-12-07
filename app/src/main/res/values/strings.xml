@@ -7,4 +7,9 @@
     <string name="permission_deny_again_title">权限设置</string>
     <string name="permission_deny_again_positive">设置</string>
     <string name="permission_deny_again_nagative">取消</string>
+    <string name="permission_location_rationale">请允许打开GPS，否则定位功能将无法使用</string>
+    <string name="permission_location_deny_again">打开应用程序修改应用程序的定位权限</string>
+
+    <string name="permission_storage_rationale">请授权读写权限，否则拍照功能和相册功能将无法使用</string>
+    <string name="permission_storage_deny_again">打开应用程序修改应用程序的读写权限</string>
 </resources>

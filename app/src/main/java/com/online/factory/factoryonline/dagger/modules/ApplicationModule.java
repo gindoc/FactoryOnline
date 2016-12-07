@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.dagger.modules;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,6 +27,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import pub.devrel.easypermissions.EasyPermissions;
 import rx.subjects.BehaviorSubject;
 
 /**
@@ -66,9 +68,13 @@ public class ApplicationModule {
     @Provides
     @Named("device_id")
     public String provideDeviceId(Context context){
-        TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-        String DEVICE_ID = tm.getDeviceId();
-        return DEVICE_ID;
+        if (EasyPermissions.hasPermissions(context, new String[]{Manifest.permission.READ_PHONE_STATE})) {
+            TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
+            String DEVICE_ID = tm.getDeviceId();
+            return DEVICE_ID;
+        }else {
+            return "0";
+        }
     }
 
     @Provides
