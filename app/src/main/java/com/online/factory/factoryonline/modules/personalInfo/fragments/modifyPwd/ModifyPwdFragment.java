@@ -2,17 +2,29 @@ package com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPw
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentModifyPwdBinding;
+import com.online.factory.factoryonline.models.exception.ValidateException;
+import com.online.factory.factoryonline.utils.Validate;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import timber.log.Timber;
 
 /**
  * 作者: GIndoc
@@ -20,8 +32,12 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class ModifyPwdFragment extends BaseFragment {
+public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, ModifyPwdPresenter> implements ModifyPwdContract.View {
+    public static final String PHONE_NUM = "PHONE_NUM";
     private FragmentModifyPwdBinding mBinding;
+
+    @Inject
+    ModifyPwdPresenter mPresenter;
 
     @Inject
     public ModifyPwdFragment() {
@@ -38,17 +54,83 @@ public class ModifyPwdFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentModifyPwdBinding.inflate(inflater);
         mBinding.setView(this);
+
+        mBinding.etPhonenum.setText(getArguments().getString(PHONE_NUM));
+
         return mBinding.getRoot();
     }
 
     @Override
-    protected BasePresenter createPresent() {
-        return null;
+    protected ModifyPwdPresenter createPresent() {
+        return mPresenter;
     }
 
-    @Nonnull
     @Override
-    public LifecycleTransformer bindUntilEvent(@Nonnull Object event) {
-        return null;
+    public <T> LifecycleTransformer<T> getBindToLifecycle() {
+        return bindToLifecycle();
     }
+
+    @Override
+    public void showError(String error) {
+
+    }
+
+    public void submit() {
+        try {
+            String phoneNum = mBinding.etPhonenum.getText().toString();
+            String verifyCode = mBinding.etVerificationcode.getText().toString();
+            String newPwd = mBinding.etNewPwd.getText().toString();
+            Validate.validatePhoneNum(phoneNum);
+            if (TextUtils.isEmpty(verifyCode)) throw new Exception("请输入验证码");
+            if (TextUtils.isEmpty(newPwd)) throw new Exception("请输入新密码");
+            mPresenter.modifyPwd(newPwd, verifyCode);
+        } catch (Exception e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void getVerifyCode(){
+        try {
+            String phoneNum = mBinding.etPhonenum.getText().toString();
+            Validate.validatePhoneNum(phoneNum);
+            mPresenter.getVerifyCode(phoneNum);
+        } catch (ValidateException ve) {
+            Toast.makeText(getContext(), ve.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void refleshSmsButton() {
+        Observable.interval(1, TimeUnit.SECONDS)
+                .compose(this.<Long>getBindToLifecycle())
+                .filter(new Func1<Long, Boolean>() {
+                    @Override
+                    public Boolean call(Long aLong) {
+                        return aLong <= 120;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Long>() {
+                    @Override
+                    public void _onNext(Long aLong) {
+                        mBinding.tvGetVertifycode.setText(120 - aLong + "s");
+                        if (aLong == 120) {
+                            mBinding.tvGetVertifycode.setText("重新获取");
+                            mBinding.tvGetVertifycode.setClickable(true);
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+
+    }
+
+    @Override
+    public void finish() {
+        Toast.makeText(getContext(), "修改密码成功", Toast.LENGTH_SHORT).show();
+        pop();
+    }
+
 }

@@ -19,6 +19,7 @@ import com.online.factory.factoryonline.models.response.UserResponse;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -27,6 +28,7 @@ import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -69,11 +71,13 @@ public interface FactoryApi {
      * minrange   筛选边界的最小值
      * filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
      * areaId     筛选的区域id
+     *
      * @param params
      * @return
      */
     @GET("wantedmessages/recommend")
     Observable<RecommendResponse> getRecommendInfos(@QueryMap Map<String, Object> params);
+
     /**
      * 请求“推荐的目录”列表
      *
@@ -99,7 +103,7 @@ public interface FactoryApi {
     /**
      * 请求服务器，判断该厂房是否被收藏
      *
-     * @param id    wantedMessageId
+     * @param id wantedMessageId
      * @return
      */
     @GET("wantedmessages/{id}/collection/")
@@ -115,7 +119,7 @@ public interface FactoryApi {
     Observable<Response> getSalt(@Path("username") String userName);
 
     @POST("user/")
-    Observable<retrofit2.Response<JsonObject>>login(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
+    Observable<retrofit2.Response<JsonObject>> login(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
     @GET("/user")
     Observable<UserResponse> getUser();
@@ -152,7 +156,7 @@ public interface FactoryApi {
     Observable<SearchResponse> search(@Query("key") String s);
 
     @GET("users/{user_id}")
-    Observable<PublishUserResponse> getUserById(@Path("user_id")int userId);
+    Observable<PublishUserResponse> getUserById(@Path("user_id") int userId);
 
     @GET("wantedmessages/home")
     Observable<HomeResponse> getHomeInfos();
@@ -162,4 +166,7 @@ public interface FactoryApi {
 
     @GET
     Observable<MyCollectionResponse> getCollections(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
+
+    @PUT("user/")
+    Observable<Response> updateUser(@Header("Authorization") String token, @Header("TIME") String timestamp, @Body RequestBody body);
 }

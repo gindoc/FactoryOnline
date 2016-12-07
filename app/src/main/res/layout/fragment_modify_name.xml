@@ -44,7 +44,8 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
                 android:paddingRight="@dimen/x15"
-                android:text="下一步"
+                android:text="保存"
+                android:onClick="@{()->view.modifyName()}"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -67,12 +68,12 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/et_username"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:paddingLeft="@dimen/x15"
-                android:text="蜡笔小新"
                 android:textColor="#424242"
                 android:textSize="18sp" />
 
@@ -80,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/x15"
+                android:onClick="@{()->view.clearName()}"
                 android:paddingRight="@dimen/x15"
                 android:src="@drawable/ic_cancle" />
         </LinearLayout>

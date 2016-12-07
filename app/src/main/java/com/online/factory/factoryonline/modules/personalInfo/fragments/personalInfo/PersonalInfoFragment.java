@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ import javax.inject.Inject;
  */
 
 public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View, PersonalInfoPresenter> implements PersonalInfoContract.View {
+    private static final int MODIFY_NAME_REQUEST_CODE = 199;
+    private static final int MODIFY_PWD_REQUEST_CODE = 200;
     private FragmentPersonalInfoBinding mBinding;
 
     @Inject
@@ -41,6 +44,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     @Inject
     LoginContext mLoginContext;
+    private User user;
 
     @Inject
     public PersonalInfoFragment() {
@@ -74,15 +78,27 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     }
 
     public void modifyName() {
-        start(modifyNameFragment);
+        Bundle bundle = new Bundle();
+        bundle.putString(ModifyNameFragment.USER_NAME, user.getUserName());
+        modifyNameFragment.setArguments(bundle);
+        startForResult(modifyNameFragment, MODIFY_NAME_REQUEST_CODE);
     }
 
     public void modifyPwd(){
-        start(modifyPwdFragment);
+        Bundle bundle = new Bundle();
+        bundle.putString(ModifyPwdFragment.PHONE_NUM, user.getPhone_num());
+        modifyPwdFragment.setArguments(bundle);
+        startForResult(modifyPwdFragment, MODIFY_PWD_REQUEST_CODE);
     }
 
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    protected void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        mPresenter.getUser();
     }
 
     @Override
@@ -94,6 +110,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     @Override
     public void showUser(User user) {
+        this.user = user;
         mBinding.setUser(user);
     }
 

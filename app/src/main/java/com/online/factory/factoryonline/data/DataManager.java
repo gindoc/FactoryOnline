@@ -10,6 +10,7 @@ import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
+import com.online.factory.factoryonline.models.UpdateUser;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.post.Login;
@@ -36,6 +37,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -310,4 +312,14 @@ public class DataManager {
         return factoryApi.getCollections(next, token, timestamp);
     }
 
+    public Observable<Response> updateUser(UpdateUser updateUser) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        String json = new Gson().toJson(updateUser);
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("updateUser", AESUtil.encrypt(json, timestamp, iv.toString()));
+        return factoryApi.updateUser(token, timestamp, builder.build());
+    }
 }
