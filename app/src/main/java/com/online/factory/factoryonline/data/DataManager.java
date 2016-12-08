@@ -1,6 +1,8 @@
 package com.online.factory.factoryonline.data;
 
 
+import android.text.TextUtils;
+
 import com.google.common.base.Functions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -26,7 +28,6 @@ import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.SearchResponse;
-import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
 
@@ -223,17 +224,11 @@ public class DataManager {
      *
      * @return
      */
-    public Observable<UserResponse> getUser() {
-        User localUser = Saver.getSerializableObject(SharePreferenceKey.USER);
-        if (localUser != null) {
-            UserResponse response = new UserResponse();
-            response.setUser(localUser);
-            response.setErro_code(200);
-            response.setErro_msg("成功");
-            return Observable.just(response);
-        } else {
-            return factoryApi.getUser();
-        }
+    public Observable<retrofit2.Response<JsonObject>> getUser() {
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+            return factoryApi.getUser(token, timestamp);
     }
 
     public Observable<RecommendResponse> getStreetFactories(String url, Map<String, Object> params) {
@@ -317,9 +312,10 @@ public class DataManager {
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
         String json = new Gson().toJson(updateUser);
+        String encodedJosn = AESUtil.encrypt(json, timestamp, iv.toString());
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("updateUser", AESUtil.encrypt(json, timestamp, iv.toString()));
+                .addFormDataPart("updateUser", encodedJosn);
         return factoryApi.updateUser(token, timestamp, builder.build());
     }
 }

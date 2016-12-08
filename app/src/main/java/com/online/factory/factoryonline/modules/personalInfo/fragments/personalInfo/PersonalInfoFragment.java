@@ -1,7 +1,11 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +15,19 @@ import android.widget.Toast;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BasePresenter;
+import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
 import com.online.factory.factoryonline.models.User;
+import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
+import com.online.factory.factoryonline.utils.FileUtils;
+import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
+
+import java.io.File;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -31,6 +41,7 @@ import javax.inject.Inject;
 public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View, PersonalInfoPresenter> implements PersonalInfoContract.View {
     private static final int MODIFY_NAME_REQUEST_CODE = 199;
     private static final int MODIFY_PWD_REQUEST_CODE = 200;
+    private static final int SELECT_IMAGE_REQUEST_CODE = 201;
     private FragmentPersonalInfoBinding mBinding;
 
     @Inject
@@ -91,6 +102,11 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
         startForResult(modifyPwdFragment, MODIFY_PWD_REQUEST_CODE);
     }
 
+    public void openAlbum() {
+        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, SELECT_IMAGE_REQUEST_CODE);
+    }
+
     public void finish() {
         getActivity().finish();
     }
@@ -99,6 +115,31 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     protected void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         mPresenter.getUser();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SELECT_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data!=null) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumns={MediaStore.Images.Media.DATA};
+            Cursor c = getContext().getContentResolver().query(selectedImage, filePathColumns, null,null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePathColumns[0]);
+            String picturePath= c.getString(columnIndex);
+            c.close();
+            mPresenter.uploadImage(picturePath);
+        }
+    }
+
+    @Override
+    public void showLoading() {
+        CustomDialog.createLoadingDialog(getContext()).show();
+    }
+
+    @Override
+    public void hideLoading() {
+        CustomDialog.dismissDialog();
     }
 
     @Override

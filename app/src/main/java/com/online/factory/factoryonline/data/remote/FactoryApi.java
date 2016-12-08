@@ -14,7 +14,6 @@ import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.SearchResponse;
-import com.online.factory.factoryonline.models.response.UserResponse;
 
 import java.util.List;
 import java.util.Map;
@@ -121,8 +120,8 @@ public interface FactoryApi {
     @POST("user/")
     Observable<retrofit2.Response<JsonObject>> login(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
-    @GET("/user")
-    Observable<UserResponse> getUser();
+    @GET("user/")
+    Observable<retrofit2.Response<JsonObject>> getUser(@Header("Authorization")String auth, @Header("TIME")String time);
 
     @GET
     Observable<RecommendResponse> getStreetFactories(@Url String next, @QueryMap Map<String, Object> params);

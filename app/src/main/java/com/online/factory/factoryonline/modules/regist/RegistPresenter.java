@@ -6,10 +6,8 @@ import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.models.User;
-import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.Response;
-import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.modules.login.LogInState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.AESUtil;
@@ -70,6 +68,8 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                             getView().registSuccessfully();
                         } else if (errCode.equals("300")) {
                             getView().userExisted();
+                        } else if (errCode.equals("601")) {
+                            getView().showError("验证码已过期");
                         }
                     }
 

@@ -62,6 +62,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/x15"
+                android:onClick="@{()->view.openAlbum()}"
                 android:paddingRight="@dimen/x15">
 
                 <TextView
@@ -73,6 +74,7 @@
                     android:textSize="18sp" />
 
                 <com.online.factory.factoryonline.customview.RoundImageView
+                    android:id="@+id/iv_head_photo"
                     android:layout_width="@dimen/x29"
                     android:layout_height="@dimen/x29"
                     app:imageUrl="@{user.avatar}"

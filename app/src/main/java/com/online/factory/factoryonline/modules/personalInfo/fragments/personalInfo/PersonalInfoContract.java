@@ -12,6 +12,8 @@ import com.online.factory.factoryonline.models.User;
 
 public interface PersonalInfoContract {
     interface View extends IBaseView{
+        void showLoading();
+        void hideLoading();
 
         void refreshWhenLogOut();
 
