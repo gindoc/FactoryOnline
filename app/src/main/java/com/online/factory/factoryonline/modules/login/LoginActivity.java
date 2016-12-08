@@ -15,6 +15,7 @@ import com.online.factory.factoryonline.base.BaseFragmentPagerAdapter;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityLoginBinding;
 import com.online.factory.factoryonline.models.post.Login;
+import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -66,7 +67,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     public void onCLickSignUp(View view){
         startActivityForResult(RegistActivity.getStartIntent(this), TO_REGIST_ACTIVITY);
-        this.overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
+        overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
+    }
+
+    public void onClickForgetPwd(View view) {
+        startActivity(ForgetPwdActivity.getStartIntent(this));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     @Override

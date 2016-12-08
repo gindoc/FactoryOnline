@@ -9,59 +9,6 @@
         android:paddingRight="@dimen/x32"
         android:paddingTop="@dimen/y40">
 
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_size">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/background_login_text_input"
-                android:padding="@dimen/padding_size">
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/et_phonenum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="输入手机号码"
-                        android:maxLines="1"
-                        android:textColorHint="@color/gray_light" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:id="@+id/line_sms_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@id/et_phonenum"
-                    android:background="@color/dividerColor" />
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/et_pwd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/line_sms_login"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="输入登录密码"
-                        android:maxLines="1"
-                        android:textColorHint="@color/gray_light" />
-                </android.support.design.widget.TextInputLayout>
-            </RelativeLayout>
-        </LinearLayout>-->
         <EditText
             android:id="@+id/et_phonenum"
             android:layout_width="match_parent"
@@ -124,6 +71,7 @@
                 android:paddingBottom="@dimen/y10"
                 android:paddingTop="@dimen/y10"
                 android:text="忘记密码"
+                android:onClick="onClickForgetPwd"
                 android:textColor="#1ab80f"
                 android:textSize="14sp" />
         </RelativeLayout>

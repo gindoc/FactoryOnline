@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_arrow_left_green"
+                android:gravity="center_vertical"
+                android:onClick="@{()->view.pop()}"
+                android:paddingLeft="@dimen/x10"
+                android:text="返回"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="忘记密码"
+                android:textColor="#424242"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/x10"
+                android:text="提交"
+                android:onClick="@{()->view.submit()}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/x20">
+
+            <EditText
+                android:id="@+id/et_phonenum"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y44"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_input_phone"
+                android:drawablePadding="@dimen/x10"
+                android:hint="请输入手机号"
+                android:paddingLeft="@dimen/x10"
+                android:textColor="#424242"
+                android:textColorHint="#cdcdcd" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y44"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/y44"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingRight="@dimen/x20">
+
+                    <EditText
+                        android:id="@+id/et_verificationcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:drawableLeft="@drawable/ic_verification_code"
+                        android:drawablePadding="@dimen/x10"
+                        android:hint="请输入短信验证码"
+                        android:paddingLeft="@dimen/x10"
+                        android:textColor="#424242"
+                        android:textColorHint="#cdcdcd" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#ccc" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_get_vertifycode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/green_rectangle_outline_with_color_primary"
+                    android:paddingBottom="@dimen/y5"
+                    android:paddingLeft="@dimen/x10"
+                    android:paddingRight="@dimen/x10"
+                    android:paddingTop="@dimen/y5"
+                    android:onClick="@{()->view.getVerifyCode()}"
+                    android:text="获取验证码"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_newPwd"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y44"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_old_pwd"
+                android:drawablePadding="@dimen/x10"
+                android:hint="请输入新密码"
+                android:paddingLeft="@dimen/x10"
+                android:drawableRight="@drawable/ic_pwd_close"
+                android:textColor="#424242"
+                android:paddingRight="@dimen/x5"
+                android:textColorHint="#cdcdcd" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+
+            <EditText
+                android:id="@+id/et_newPwd_again"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y44"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/ic_new_pwd"
+                android:drawablePadding="@dimen/x10"
+                android:hint="请再次输入新密码"
+                android:paddingLeft="@dimen/x10"
+                android:textColor="#424242"
+                android:textColorHint="#cdcdcd" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

@@ -8,6 +8,7 @@ import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.collection.CollectionActivity;
+import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.dagger.modules.ActivityModule;
@@ -71,4 +72,6 @@ public interface ActivityComponent {
     void inject(PersonalInfoActivity personalInfoActivity);
 
     void inject(AgentActivity agentActivity);
+
+    void inject(ForgetPwdActivity forgetPwdActivity);
 }
