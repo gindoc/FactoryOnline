@@ -2,9 +2,12 @@ package com.online.factory.factoryonline.modules.main.fragments.home;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +21,14 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.databinding.FragmentCommissionBinding;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.FragmentOwnerBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.agent.AgentActivity;
@@ -49,14 +54,19 @@ import timber.log.Timber;
  * Created by cwenhui on 2016.02.23
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract
-        .View, BaseRecyclerViewAdapter.OnItemClickListener {
+        .View, BaseRecyclerViewAdapter.OnItemClickListener, OnPageListener {
     public static final int PERMISSION_REQUEST_CODE = 199;
     private FragmentHomeBinding mBinding;
     private LayoutHomeHeaderBinding mHeaderBinding;
     private FragmentOwnerBinding mOwnBinding;
     private FragmentCommissionBinding mCommissionBinding;
+    private String agentNext;
+
     @Inject
     HomeRecyclerViewAdapter mAdapter;
+
+    @Inject
+    AgentRecyclerViewAdapter mAgentAdapter;
 
     @Inject
     LocationClient locationClient;
@@ -159,6 +169,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mPresenter.requestIndexPicUrls();
         mPresenter.requestScrollMsg();
         mPresenter.requestWantedMessages();
+        mPresenter.requestAgents(getString(R.string.api)+"promediums", true);
 
         return mBinding.getRoot();
     }
@@ -168,6 +179,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
         mAdapter.setOnItemClickListener(this);
+
     }
 
     /**
@@ -185,6 +197,14 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mHeaderBinding.rolePick.removeAllViews();
         mCommissionBinding = FragmentCommissionBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
         mCommissionBinding.setView(this);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mCommissionBinding.recyclerViewAgents.setLayoutManager(linearLayoutManager);
+        mCommissionBinding.recyclerViewAgents.setAdapter(mAgentAdapter);
+
+        mCommissionBinding.recyclerViewAgents.setOnPageListener(this);
+        mAgentAdapter.setOnItemClickListener(new AgentItemClickListener());
     }
 
     /**
@@ -200,12 +220,6 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         Activity activity = getActivity();
         Intent intent = new Intent(activity, PublishRentalActivity.class);
         startActivity(intent);
-        activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
-    }
-
-    public void openAgentPage() {
-        Activity activity = getActivity();
-        startActivity(AgentActivity.getStartIntent(activity));
         activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
@@ -268,10 +282,41 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     }
 
     @Override
+    public void loadAgents(List<ProMedium> proMedium, boolean isInit) {
+        mAgentAdapter.addData(proMedium);
+        if (!isInit) {
+            mCommissionBinding.recyclerViewAgents.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void loadNextUrl(String next) {
+        agentNext = next;
+    }
+
+    @Override
     public void onItemClick(View view, int position) {
         Intent intent = new Intent();
         intent.setClass(getContext(), FactoryDetailActivity.class);
         intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, mAdapter.getData().get(position));
         startActivity(intent);
     }
+
+    @Override
+    public void onPage() {
+        if (!TextUtils.isEmpty(agentNext)) {
+            mPresenter.requestAgents(agentNext, false);
+        }
+    }
+
+    class AgentItemClickListener implements BaseRecyclerViewAdapter.OnItemClickListener {
+        @Override
+        public void onItemClick(View view, int position) {
+            ProMedium proMedium = mAgentAdapter.getData().get(position);
+            Activity activity = getActivity();
+            startActivity(AgentActivity.getStartIntent(activity, proMedium));
+            activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+        }
+    }
+
 }

@@ -3,7 +3,9 @@ package com.online.factory.factoryonline.modules.main.fragments.home;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.ProMedium;
 
 import javax.inject.Inject;
 
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 
 public class HomeViewModel extends BaseObservable {
     private Factory factoryInfo;
+    private ProMedium proMedium;
 
     @Inject
     public HomeViewModel() {
@@ -37,10 +40,6 @@ public class HomeViewModel extends BaseObservable {
     public String getFactoryTotalPrice() {
         return factoryInfo.getPrice() * factoryInfo.getRange() + "元/月";
     }
-//    @Bindable
-//    public String getFactoryAddress() {
-//        return factoryInfo.getAddress();
-//    }
 
     @Bindable
     public String getFactoryArea() {
@@ -56,5 +55,21 @@ public class HomeViewModel extends BaseObservable {
     @Bindable
     public String getAddressOverview() {
         return factoryInfo.getAddress_overview();
+    }
+
+    public void setProMedium(ProMedium proMedium) {
+        this.proMedium = proMedium;
+        notifyPropertyChanged(BR.agentAvatar);
+        notifyPropertyChanged(BR.agentName);
+    }
+
+    @Bindable
+    public String getAgentAvatar() {
+        return proMedium.getAvatar();
+    }
+
+    @Bindable
+    public String getAgentName() {
+        return proMedium.getReal_name();
     }
 }

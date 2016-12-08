@@ -144,7 +144,8 @@ public class DataManagerModule {
                         || request.url().toString().contains("images")
                         || request.url().toString().contains("wantedmessages")
                         || request.url().toString().contains("factorypois/district/")
-                        || request.url().toString().contains("smses")) {
+                        || request.url().toString().contains("smses")
+                        || request.url().toString().contains("promediums")) {
                     realRequest = request.newBuilder().build();
                 } else {
                     intercepterResponse = new Response.Builder()

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.agent.AgentViewModel" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <FrameLayout
@@ -28,7 +35,7 @@
                     android:id="@+id/iv_agent_avatar"
                     android:layout_width="@dimen/y60"
                     android:layout_height="@dimen/y60"
-                    android:src="@drawable/boy" />
+                    app:imageUrl="@{viewModel.agentAvatar}" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -41,7 +48,7 @@
                         android:id="@+id/tv_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="刘大大"
+                        android:text="@{viewModel.agentName}"
                         android:textColor="@android:color/white"
                         android:textSize="22sp" />
 
@@ -50,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:text="客户经理"
+                        android:text="@{viewModel.agentBranch}"
                         android:textColor="@android:color/white"
                         android:textSize="18sp" />
 
@@ -60,7 +67,7 @@
                         android:layout_alignTop="@id/tv_job"
                         android:layout_marginLeft="@dimen/x10"
                         android:layout_toRightOf="@id/tv_job"
-                        android:text="入职1年"
+                        android:text='@{viewModel.agentExperience}'
                         android:textColor="@android:color/white"
                         android:textSize="18sp" />
                 </RelativeLayout>
@@ -83,17 +90,14 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/tv_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x5"
-                android:text="( 12 )"
+                android:text="( 0 )"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <!--<View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#ccc" />-->
     </LinearLayout>
 </layout>

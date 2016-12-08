@@ -10,6 +10,8 @@ import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
+import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
+import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
@@ -168,4 +170,10 @@ public interface FactoryApi {
 
     @PUT("user/")
     Observable<Response> updateUser(@Header("Authorization") String token, @Header("TIME") String timestamp, @Body RequestBody body);
+
+    @GET
+    Observable<ProMediumResponse> getAgents(@Url String next);
+
+    @GET
+    Observable<ProMediumMessageResponse> getProMediumMessages(@Url String next);
 }

@@ -24,6 +24,8 @@ import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
+import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
+import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
@@ -317,5 +319,13 @@ public class DataManager {
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("updateUser", encodedJosn);
         return factoryApi.updateUser(token, timestamp, builder.build());
+    }
+
+    public Observable<ProMediumResponse> requestAgents(String next) {
+        return factoryApi.getAgents(next);
+    }
+
+    public Observable<ProMediumMessageResponse> requestProMediumMessages(String next) {
+        return factoryApi.getProMediumMessages(next);
     }
 }

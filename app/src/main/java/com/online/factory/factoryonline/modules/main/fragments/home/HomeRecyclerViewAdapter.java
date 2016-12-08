@@ -28,7 +28,7 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMessa
 
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemHomeListBinding binding = ItemHomeListBinding.inflate(layoutInflater);
+        ItemHomeListBinding binding = ItemHomeListBinding.inflate(layoutInflater, parent, false);
         return new HomeViewHolder(binding.getRoot(),binding);
     }
 
@@ -40,7 +40,6 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMessa
         viewModel.setFactoryInfo(info);
         ItemHomeListBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
-
     }
 
     class HomeViewHolder extends RecyclerView.ViewHolder{

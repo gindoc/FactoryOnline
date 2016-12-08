@@ -99,7 +99,7 @@
                     tool:text="10元/㎡/月" />
             </LinearLayout>
 
-            <com.google.android.flexbox.FlexboxLayout
+            <!--<com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -132,7 +132,7 @@
                     android:padding="@dimen/x3"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
                     android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}'/>
-            </com.google.android.flexbox.FlexboxLayout>
+            </com.google.android.flexbox.FlexboxLayout>-->
 
         </LinearLayout>
 

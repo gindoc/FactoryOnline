@@ -5,14 +5,24 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityAgentBinding;
 import com.online.factory.factoryonline.databinding.LayoutAgentHeaderBinding;
+import com.online.factory.factoryonline.models.ProMedium;
+import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.trello.rxlifecycle.LifecycleTransformer;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,9 +32,11 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresenter> implements AgentContract.View {
+public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresenter> implements AgentContract.View, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+    public static final String PROMEDIUM = "PROMEDIUM";
     private ActivityAgentBinding mBinding;
     private LayoutAgentHeaderBinding mHeaderBinding;
+    private String next;
 
     @Inject
     AgentPresenter mPresenter;
@@ -32,8 +44,13 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
     @Inject
     AgentRecyclerViewAdapter mAdapter;
 
-    public static Intent getStartIntent(Context context) {
-        return new Intent(context, AgentActivity.class);
+    @Inject
+    AgentViewModel viewModel;
+
+    public static Intent getStartIntent(Context context, ProMedium proMedium) {
+        Intent intent = new Intent(context, AgentActivity.class);
+        intent.putExtra(PROMEDIUM, proMedium);
+        return intent;
     }
 
     @Override
@@ -41,12 +58,28 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_agent);
-        mHeaderBinding = LayoutAgentHeaderBinding.inflate(LayoutInflater.from(this), null);
+        mHeaderBinding = LayoutAgentHeaderBinding.inflate(LayoutInflater.from(this), (ViewGroup) mBinding.getRoot(), false);
         mBinding.setView(this);
 
-        mBinding.recyclerView.setAdapter(mAdapter);
+        initAgent();
+        initRecyclerView();
+    }
+
+    private void initAgent() {
+        ProMedium proMedium = (ProMedium) getIntent().getSerializableExtra(PROMEDIUM);
+        viewModel.setProMedium(proMedium);
+        mHeaderBinding.setViewModel(viewModel);
+
+        mPresenter.requestProMediumMessages(getString(R.string.api)+"promediums/messages/"+proMedium.getId());
+    }
+
+    private void initRecyclerView() {
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
+        mBinding.recyclerView.setOnPageListener(this);
+        mBinding.recyclerView.setPageFooter(R.layout.layout_recyclerview_footer);
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -61,6 +94,35 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
 
     @Override
     public void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void loadProMediumMessage(List<ProMediumMessage> proMediumMessage) {
+        mAdapter.addData(proMediumMessage);
+        mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.hideLoadingFooter();
+    }
+
+    @Override
+    public void loadNextUrlAndCount(String next, int count) {
+        this.next = next;
+        mHeaderBinding.tvCount.setText("( " + count + " )");
+    }
+
+    @Override
+    public void onPage() {
+        mBinding.recyclerView.showLoadingFooter();
+        if (!TextUtils.isEmpty(next)) {
+            mPresenter.requestProMediumMessages(next);
+        }else {
+            mBinding.recyclerView.hideLoadingFooter();
+            showError("没有更多数据了");
+        }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
 
     }
 }

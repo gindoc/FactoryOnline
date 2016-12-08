@@ -9,6 +9,7 @@ import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerView
 import com.online.factory.factoryonline.databinding.ItemAgentListBinding;
 import com.online.factory.factoryonline.databinding.ItemRecommendListBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendViewModel;
 
@@ -18,7 +19,7 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMessage, AgentRecyclerViewAdapter.AgentViewHolder> {
+public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMediumMessage, AgentRecyclerViewAdapter.AgentViewHolder> {
 
     private Provider<AgentViewModel> provider;
 

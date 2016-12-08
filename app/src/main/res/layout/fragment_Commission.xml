@@ -8,39 +8,10 @@
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
     </data>
-    <TableLayout
+
+    <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
+        android:id="@+id/recyclerView_agents"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"/>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/y85"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="@{()->view.openAgentPage()}"
-                android:orientation="vertical">
-
-                <com.online.factory.factoryonline.customview.RoundImageView
-                    android:layout_width="@dimen/x49"
-                    android:layout_height="@dimen/x49"
-                    android:layout_marginBottom="@dimen/y10"
-                    android:layout_marginTop="@dimen/y10"
-                    android:src="@drawable/ic_msg_online" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/y15"
-                    android:text="悬赏信息"
-                    android:textColor="#424242"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </TableRow>
-    </TableLayout>
 </layout>

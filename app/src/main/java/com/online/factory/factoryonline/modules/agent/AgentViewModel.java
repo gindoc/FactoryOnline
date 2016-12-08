@@ -4,6 +4,9 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.ProMedium;
+import com.online.factory.factoryonline.models.ProMediumFactory;
+import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.models.Tag;
 import com.online.factory.factoryonline.models.WantedMessage;
 
@@ -19,15 +22,39 @@ import javax.inject.Inject;
 
 public class AgentViewModel extends BaseObservable {
 //    private WantedMessage wantedMessage;
-    private Factory factory;
+    private ProMediumFactory factory;
+    private ProMedium proMedium;
 
     @Inject
     public AgentViewModel() {
     }
 
-    public void setWantedMessage(WantedMessage wantedMessage) {
+    public void setWantedMessage(ProMediumMessage wantedMessage) {
 //        this.wantedMessage = wantedMessage;
-        this.factory = wantedMessage.getFactory();
+        this.factory = wantedMessage.getProMediumFactory();
+    }
+
+    public void setProMedium(ProMedium proMedium) {
+        this.proMedium = proMedium;
+    }
+
+    @Bindable
+    public String getAgentName() {
+        return proMedium.getReal_name();
+    }
+
+    @Bindable
+    public String getAgentAvatar() {
+        return proMedium.getAvatar();
+    }
+
+    @Bindable
+    public String getAgentBranch() {
+        return proMedium.getBranch();
+    }
+
+    public String getAgentExperience() {
+        return "已入职" + proMedium.getYear_experience() + "年";
     }
 
     @Bindable
@@ -52,7 +79,7 @@ public class AgentViewModel extends BaseObservable {
 
     @Bindable
     public String getAddressOverview() {
-        return factory.getAddress_overview();
+        return factory.getAddress();
     }
 
     @Bindable
@@ -60,7 +87,7 @@ public class AgentViewModel extends BaseObservable {
         return factory.getPrice()+"元/㎡/月";
     }
 
-    @Bindable
+    /*@Bindable
     public String getTag1() {
         List<Tag> tags = factory.getTags();
         if (tags != null && tags.size()>=1) {
@@ -88,5 +115,5 @@ public class AgentViewModel extends BaseObservable {
         }else {
             return null;
         }
-    }
+    }*/
 }

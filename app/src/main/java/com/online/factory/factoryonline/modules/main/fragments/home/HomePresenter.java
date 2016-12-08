@@ -9,6 +9,7 @@ import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.response.HomeResponse;
+import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -100,7 +101,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                     public void _onNext(List<WantedMessage> wantedMessages) {
                         if (wantedMessages.size() > 0) {
                             getView().loadWantedMessages(wantedMessages);
-                        }else {
+                        } else {
                             onError(new ConnectException());
                         }
 
@@ -124,6 +125,26 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                     @Override
                     public void _onNext(List<WantedMessage> wantedMessages) {
                         getView().loadWantedMessages(wantedMessages);
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
+
+    public void requestAgents(String next, final boolean isInit) {
+        dataManager.requestAgents(next)
+                .compose(getView().<ProMediumResponse>getBindToLifecycle())
+                .compose(RxResultHelper.<ProMediumResponse>handleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<ProMediumResponse>() {
+                    @Override
+                    public void _onNext(ProMediumResponse proMediumResponse) {
+                        getView().loadAgents(proMediumResponse.getProMedium(), isInit);
+                        getView().loadNextUrl(proMediumResponse.getNext());
                     }
 
                     @Override

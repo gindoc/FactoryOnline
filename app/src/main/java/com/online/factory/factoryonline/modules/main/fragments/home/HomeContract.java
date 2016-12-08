@@ -4,6 +4,7 @@ import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.WantedMessage;
 
 import java.util.List;
@@ -18,6 +19,10 @@ public interface HomeContract {
         void initScrollTextView(List<News> newses);
 
         void loadWantedMessages(List<WantedMessage> wantedMessages);
+
+        void loadAgents(List<ProMedium> proMedium, boolean isInit);
+
+        void loadNextUrl(String next);
     }
 
     interface Presenter extends IBasePresenter {
