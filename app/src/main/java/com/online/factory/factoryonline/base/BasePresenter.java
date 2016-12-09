@@ -17,7 +17,7 @@ public class BasePresenter<T> {
     }
 
     protected T getView(){
-        return mViewRef.get();
+        return mViewRef == null ? null : mViewRef.get();
     }
 
     public boolean isViewAttached(){

@@ -16,8 +16,13 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
-        Timber.e(e.getMessage());
-        _onError(e);
+        try{
+            Timber.e(e.getMessage());
+            _onError(e);
+        }catch (Exception e1){
+
+        }
+
     }
 
     @Override

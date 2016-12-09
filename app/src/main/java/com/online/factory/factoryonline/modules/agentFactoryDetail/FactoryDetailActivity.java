@@ -29,7 +29,6 @@ import com.online.factory.factoryonline.databinding.ActivityAgentFactoryDetailBi
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.ProMediumFactory;
 import com.online.factory.factoryonline.models.ProMediumMessage;
-import com.online.factory.factoryonline.utils.GeoHash;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -87,7 +86,6 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         initViewPager();
         initBaiduMap();
 
-        mPresenter.getPublishUser(wantedMessage.getOwner_id());
     }
 
     private void initBaiduMap() {
