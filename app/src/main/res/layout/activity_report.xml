@@ -11,9 +11,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
             android:orientation="horizontal">
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:paddingLeft="@dimen/x10"
+                android:drawablePadding="@dimen/x5"
                 android:background="@android:color/transparent"
                 android:drawableLeft="@drawable/ic_arrow_left_green"
                 android:gravity="center_vertical"

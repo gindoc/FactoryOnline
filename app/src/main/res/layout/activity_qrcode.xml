@@ -21,6 +21,8 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:paddingLeft="@dimen/x10"
+                android:drawablePadding="@dimen/x5"
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ic_arrow_left_green"
                 android:gravity="center_vertical"

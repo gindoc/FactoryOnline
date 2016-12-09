@@ -27,6 +27,8 @@
             android:background="@android:color/white">
 
             <TextView
+                android:paddingLeft="@dimen/x10"
+                android:drawablePadding="@dimen/x5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ic_arrow_left_green"
@@ -110,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/x5"
-                    android:drawableRight="@drawable/ic_right"
+                    android:drawableRight="@drawable/ic_arrow_right"
                     android:text="@{user.userName}"
                     android:textColor="#424242"
                     android:textSize="18sp" />
@@ -166,7 +168,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/y44"
-                    android:drawableRight="@drawable/ic_right"
+                    android:drawableRight="@drawable/ic_arrow_right"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/x15"
                     android:paddingRight="@dimen/x15"

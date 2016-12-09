@@ -25,6 +25,8 @@
                 android:drawableLeft="@drawable/ic_arrow_left_green"
                 android:text="返回"
                 android:onClick="@{()->view.finish()}"
+                android:paddingLeft="@dimen/x10"
+                android:drawablePadding="@dimen/x5"
                 android:textColor="#1ab80f"
                 android:textSize="18sp" />
 
