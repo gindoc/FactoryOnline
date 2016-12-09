@@ -2,6 +2,8 @@ package com.online.factory.factoryonline.models;
 
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
+import java.io.Serializable;
+
 /**
  * 作者: GIndoc
  * 日期: 2016/12/8 16:34
@@ -9,7 +11,7 @@ import com.bluelinelabs.logansquare.annotation.JsonObject;
  */
 
 @JsonObject(fieldDetectionPolicy = JsonObject.FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS)
-public class ProMediumFactory {
+public class ProMediumFactory implements Serializable{
     private int id;
     private String thumbnail_url;
     private String title;

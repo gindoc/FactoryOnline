@@ -20,6 +20,7 @@ import com.online.factory.factoryonline.databinding.ActivityAgentBinding;
 import com.online.factory.factoryonline.databinding.LayoutAgentHeaderBinding;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.ProMediumMessage;
+import com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -46,6 +47,7 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
 
     @Inject
     AgentViewModel viewModel;
+    private ProMedium proMedium;
 
     public static Intent getStartIntent(Context context, ProMedium proMedium) {
         Intent intent = new Intent(context, AgentActivity.class);
@@ -66,11 +68,11 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
     }
 
     private void initAgent() {
-        ProMedium proMedium = (ProMedium) getIntent().getSerializableExtra(PROMEDIUM);
+        proMedium = (ProMedium) getIntent().getSerializableExtra(PROMEDIUM);
         viewModel.setProMedium(proMedium);
         mHeaderBinding.setViewModel(viewModel);
 
-        mPresenter.requestProMediumMessages(getString(R.string.api)+"promediums/messages/"+proMedium.getId());
+        mPresenter.requestProMediumMessages(getString(R.string.api)+"promediums/messages/"+ proMedium.getId());
     }
 
     private void initRecyclerView() {
@@ -123,6 +125,7 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
 
     @Override
     public void onItemClick(View view, int position) {
-
+        startActivity(FactoryDetailActivity.getStartIntent(this, mAdapter.getData().get(position), proMedium));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 }

@@ -78,6 +78,7 @@
         <activity android:name=".modules.personalInfo.PersonalInfoActivity" />
         <activity android:name=".modules.agent.AgentActivity" />
         <activity android:name=".modules.forgetPwd.ForgetPwdActivity" />
+        <activity android:name=".modules.agentFactoryDetail.FactoryDetailActivity" />
     </application>
 
 </manifest>

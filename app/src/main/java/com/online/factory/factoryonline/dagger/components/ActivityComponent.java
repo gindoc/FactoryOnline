@@ -74,4 +74,6 @@ public interface ActivityComponent {
     void inject(AgentActivity agentActivity);
 
     void inject(ForgetPwdActivity forgetPwdActivity);
+
+    void inject(com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity factoryDetailActivity);
 }
