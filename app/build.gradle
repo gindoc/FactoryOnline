@@ -19,13 +19,23 @@ android {
 
     signingConfigs {
         // your debug keystore
-        debug{
+        debug {
             storeFile file("debug.keystore")
+        }
+        release {
+            keyAlias 'factoryOnline'
+            keyPassword 'factoryonlinepwd'
+            storeFile file('D:/software/keystore/xfzy.jks')
+            storePassword 'factoryonlinepwd'
         }
     }
     buildTypes {
         debug {
-            minifyEnabled false
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
             // Uses new built-in shrinker http://tools.android.com/tech-docs/new-build-system/built-in-shrinker
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt')
@@ -34,6 +44,7 @@ android {
         }
 
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -92,7 +103,7 @@ dependencies {
     compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile "junit:junit:$rootProject.junitVersion"
     testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
@@ -103,11 +114,10 @@ dependencies {
     }
     compile 'com.qiniu:qiniu-android-sdk:7.2.+'
     compile 'com.qiniu:happy-dns:0.2.10'
-
     //zxing
+
     //    compile "com.google.zxing:zxing-parent:3.3.0"
     compile 'com.google.zxing:core:3.3.0'
-
     // EasyPermissions
     compile 'pub.devrel:easypermissions:0.2.1'
 }

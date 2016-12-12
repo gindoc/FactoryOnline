@@ -44,7 +44,6 @@ public class BaseApplication extends MultiDexApplication {
             return;
         }
 //        enabledStrictMode();
-        LeakCanary.install(this);
         Saver.initSaver(this);
 
         getApplicationComponent().inject(this);
@@ -54,6 +53,7 @@ public class BaseApplication extends MultiDexApplication {
 
         //初始化Timber
         if (BuildConfig.DEBUG) {
+            LeakCanary.install(this);
             Timber.plant(new Timber.DebugTree());
         }
 
