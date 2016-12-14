@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
@@ -48,8 +47,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 /**
  * Created by cwenhui on 2016/10/19.
  */
@@ -82,8 +79,6 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_publish_rental);
         StatusBarUtils.from(this)
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view

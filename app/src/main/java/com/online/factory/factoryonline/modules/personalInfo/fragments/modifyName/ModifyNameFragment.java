@@ -10,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentModifyNameBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 /**
@@ -48,8 +46,6 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
         mBinding.setView(this);
 
         StatusBarUtils.from((Activity) getContext())
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view

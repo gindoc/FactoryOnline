@@ -161,6 +161,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     @Override
     public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override

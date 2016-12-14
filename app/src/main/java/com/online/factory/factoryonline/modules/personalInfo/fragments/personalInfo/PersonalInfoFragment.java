@@ -12,25 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
 import com.online.factory.factoryonline.models.User;
-import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
-import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
-import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import java.io.File;
-
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 /**
@@ -80,8 +72,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
         mBinding.setView(this);
         mBinding.setPresenter(mPresenter);
         StatusBarUtils.from(getActivity())
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view

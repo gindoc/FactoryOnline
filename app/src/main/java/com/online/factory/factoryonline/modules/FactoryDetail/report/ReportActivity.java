@@ -44,8 +44,6 @@ public class ReportActivity extends BaseActivity<ReportContract.View, ReportPres
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_report);
         mBinding.setView(this);
         StatusBarUtils.from(this)
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view

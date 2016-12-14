@@ -75,6 +75,7 @@
                 android:paddingRight="@dimen/x12"
                 android:paddingTop="@dimen/x5"
                 android:text="发送短信"
+                android:onClick="@{()->view.sms()}"
                 android:textColor="#5ca6ed"
                 android:textSize="@dimen/x14" />
 
@@ -90,7 +91,8 @@
                 android:paddingLeft="@dimen/x12"
                 android:paddingRight="@dimen/x12"
                 android:paddingTop="@dimen/x5"
-                android:text="发送短信"
+                android:text="拨打电话"
+                android:onClick="@{()->view.phone()}"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/x14" />
         </LinearLayout>

@@ -79,7 +79,7 @@
                 android:paddingLeft="@dimen/x15"
                 android:onClick="@{()->view.openRecordPage()}"
                 android:paddingRight="@dimen/x20"
-                android:text="近期发布15条记录"
+                android:text="近期发布0条记录"
                 android:textColor="#424242"
                 android:textSize="@dimen/x14" />
 

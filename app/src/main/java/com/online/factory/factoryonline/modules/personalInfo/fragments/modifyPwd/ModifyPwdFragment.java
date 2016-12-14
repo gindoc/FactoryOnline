@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentModifyPwdBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -20,7 +19,6 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -57,8 +55,6 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
         mBinding = FragmentModifyPwdBinding.inflate(inflater);
         mBinding.setView(this);
         StatusBarUtils.from((Activity) getContext())
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view

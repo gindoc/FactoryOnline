@@ -9,23 +9,14 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
-import com.online.factory.factoryonline.base.BasePresenter;
-import com.online.factory.factoryonline.databinding.ActivitySearchBinding;
 import com.online.factory.factoryonline.databinding.ActivitySettingBinding;
 import com.online.factory.factoryonline.modules.setting.about.AboutActivity;
 import com.online.factory.factoryonline.modules.setting.copyright.CopyrightActivity;
 import com.online.factory.factoryonline.modules.setting.qrcode.QRCodeActivity;
-import com.online.factory.factoryonline.utils.DataCleanManager;
-import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
-import rx.Scheduler;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
 
 /**
  * 作者: GIndoc
@@ -48,8 +39,6 @@ public class SettingActivity extends BaseActivity<SettingContract.View, SettingP
         mBinding.setView(this);
         mBinding.setPresenter(mPresenter);
         StatusBarUtils.from(this)
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view

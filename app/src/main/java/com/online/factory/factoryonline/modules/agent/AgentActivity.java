@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.agent;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
@@ -21,6 +23,7 @@ import com.online.factory.factoryonline.databinding.LayoutAgentHeaderBinding;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.utils.CommunicationUtil;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -36,6 +39,8 @@ import javax.inject.Inject;
 
 public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresenter> implements AgentContract.View, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
     public static final String PROMEDIUM = "PROMEDIUM";
+    private static final int PERMISSION_CALL_PHONE = 199;
+    private static final int PERMISSION_SEND_SMS = 200;
     private ActivityAgentBinding mBinding;
     private LayoutAgentHeaderBinding mHeaderBinding;
     private String next;
@@ -65,8 +70,6 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
         mBinding.setView(this);
 
         StatusBarUtils.from(this)
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
@@ -137,5 +140,47 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
     public void onItemClick(View view, int position) {
         startActivity(FactoryDetailActivity.getStartIntent(this, mAdapter.getData().get(position), proMedium));
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void sms(){
+        if (TextUtils.isEmpty(proMedium.getPhone_num())) {
+            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        performCodeWithPermission(getString(R.string.permission_send_sms_rationale), PERMISSION_SEND_SMS,
+                new String[]{Manifest.permission.SEND_SMS}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        CommunicationUtil.sendSms(AgentActivity.this, proMedium.getPhone_num());
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_send_sms_deny_again), PERMISSION_SEND_SMS);
+                        }
+                    }
+                });
+    }
+
+    public void phone(){
+        if (TextUtils.isEmpty(proMedium.getPhone_num())) {
+            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        performCodeWithPermission(getString(R.string.permission_call_rationale), PERMISSION_CALL_PHONE,
+                new String[]{Manifest.permission.CALL_PHONE}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        CommunicationUtil.call(AgentActivity.this, proMedium.getPhone_num());
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_call_deny_again), PERMISSION_CALL_PHONE);
+                        }
+                    }
+                });
     }
 }
