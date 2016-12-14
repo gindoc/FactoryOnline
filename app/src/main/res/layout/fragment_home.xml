@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="view"
-            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment"/>
 
         <variable
             name="presenter"
-            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeContract.Presenter" />
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeContract.Presenter"/>
     </data>
 
     <LinearLayout
@@ -20,9 +20,9 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
-            android:id="@+id/ll_top_bar"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -42,13 +42,13 @@
                     android:onClick="@{()->view.openCityPage()}"
                     android:text="正在定位"
                     android:textColor="#424242"
-                    android:textSize="@dimen/x14" />
+                    android:textSize="@dimen/x14"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/x6"
-                    android:src="@drawable/ic_location_arrow_down" />
+                    android:src="@drawable/ic_location_arrow_down"/>
             </LinearLayout>
 
             <LinearLayout
@@ -57,33 +57,35 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/y8"
                 android:layout_marginRight="@dimen/x19"
-                android:onClick="@{()->view.openSearchPage()}"
                 android:layout_marginTop="@dimen/y8"
                 android:background="@drawable/home_fragment_search_background"
                 android:gravity="center"
+                android:onClick="@{()->view.openSearchPage()}"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/x10"
-                    android:src="@drawable/ic_search" />
+                    android:src="@drawable/ic_search"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="请输入搜索关键字"
                     android:textColor="#9d9ca2"
-                    android:textSize="@dimen/x13" />
+                    android:textSize="@dimen/x13"/>
             </LinearLayout>
 
         </LinearLayout>
+
 
         <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cacheColorHint="@null"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"/>
+
     </LinearLayout>
 </layout>

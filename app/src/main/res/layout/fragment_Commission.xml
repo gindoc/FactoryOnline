@@ -12,6 +12,7 @@
     <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
         android:id="@+id/recyclerView_agents"
         android:layout_width="match_parent"
+        android:minHeight="@dimen/y85"
         android:layout_height="wrap_content"/>
 
 </layout>
