@@ -1,13 +1,15 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd;
 
+
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.UpdateUser;
 import com.online.factory.factoryonline.models.response.Response;
-import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameContract;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
+
+import org.apache.commons.codec.binary.Base64;
 
 import javax.inject.Inject;
 
@@ -36,7 +38,7 @@ public class ModifyPwdPresenter extends BasePresenter<ModifyPwdContract.View> im
 
         UpdateUser updateUser = new UpdateUser();
         updateUser.setUpdate_type(3);
-        updateUser.setUpdate_value(jo.toString());
+        updateUser.setUpdate_value(new String(Base64.encodeBase64(jo.toString().getBytes())));
 
         dataManager.updateUser(updateUser)
                 .compose(getView().<Response>getBindToLifecycle())
