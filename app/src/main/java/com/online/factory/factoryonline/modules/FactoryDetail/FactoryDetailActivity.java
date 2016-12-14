@@ -40,6 +40,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+
 /**
  * Created by cwenhui on 2016/10/17.
  */
@@ -231,7 +232,19 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     }
 
     public void phoneToContacter() {
-        if (TextUtils.isEmpty(mBinding.tvContactPeoplePhone.getText())) {
+        phone(mBinding.tvContactPeoplePhone.getText().toString());
+    }
+
+    public void phoneToPublish() {
+        if (userPublic==null) {
+            Toast.makeText(this, "发布人信息不全", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        phone(userPublic.getPhone_num());
+    }
+
+    private void phone(final String phoneNum){
+        if (TextUtils.isEmpty(phoneNum)) {
             Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -239,7 +252,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                 new String[]{Manifest.permission.CALL_PHONE}, new PermissionCallback() {
                     @Override
                     public void hasPermission() {
-                        CommunicationUtil.call(FactoryDetailActivity.this, mBinding.tvContactPeoplePhone.getText().toString());
+                        CommunicationUtil.call(FactoryDetailActivity.this, phoneNum);
                     }
 
                     @Override
@@ -252,7 +265,19 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     }
 
     public void smsToContacter() {
-        if (TextUtils.isEmpty(mBinding.tvContactPeoplePhone.getText())) {
+        sms(mBinding.tvContactPeoplePhone.getText().toString());
+    }
+
+    public void smsToPublish(){
+        if (userPublic==null) {
+            Toast.makeText(this, "发布人信息不全", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        sms(userPublic.getPhone_num());
+    }
+
+    private void sms(final String phoneNum){
+        if (TextUtils.isEmpty(phoneNum)) {
             Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -260,7 +285,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                 new String[]{Manifest.permission.SEND_SMS}, new PermissionCallback() {
                     @Override
                     public void hasPermission() {
-                        CommunicationUtil.sendSms(FactoryDetailActivity.this, mBinding.tvContactPeoplePhone.getText().toString());
+                        CommunicationUtil.sendSms(FactoryDetailActivity.this, phoneNum);
                     }
 
                     @Override

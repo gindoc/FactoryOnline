@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.agentFactoryDetail;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
@@ -24,12 +26,14 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
 import com.online.factory.factoryonline.databinding.ActivityAgentFactoryDetailBinding;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.ProMediumFactory;
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.models.UserPublic;
+import com.online.factory.factoryonline.utils.CommunicationUtil;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -47,6 +51,8 @@ import javax.inject.Inject;
 public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.View, FactoryDetailPresenter> implements FactoryDetailContract.View, OnGetGeoCoderResultListener {
     public static final String PRO_MEDIUM_MESSAGE = "PRO_MEDIUM_MESSAGE";
     public static final String PRO_MEDIUM = "PRO_MEDIUM";
+    private static final int PERMISSION_CALL_PHONE = 199;
+    private static final int PERMISSION_SEND_SMS = 200;
     private ActivityAgentFactoryDetailBinding mBinding;
 
     @Inject
@@ -242,6 +248,48 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.factory_menu, menu);
         return true;
+    }
+
+    public void smsToContacter() {
+        if (TextUtils.isEmpty(mBinding.tvContactPeoplePhone.getText())) {
+            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        performCodeWithPermission(getString(R.string.permission_send_sms_rationale), PERMISSION_SEND_SMS,
+                new String[]{Manifest.permission.SEND_SMS}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        CommunicationUtil.sendSms(FactoryDetailActivity.this, mBinding.tvContactPeoplePhone.getText().toString());
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_send_sms_deny_again), PERMISSION_SEND_SMS);
+                        }
+                    }
+                });
+    }
+
+    public void phoneToContacter() {
+        if (TextUtils.isEmpty(mBinding.tvContactPeoplePhone.getText())) {
+            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        performCodeWithPermission(getString(R.string.permission_call_rationale), PERMISSION_CALL_PHONE,
+                new String[]{Manifest.permission.CALL_PHONE}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        CommunicationUtil.call(FactoryDetailActivity.this, mBinding.tvContactPeoplePhone.getText().toString());
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_call_deny_again), PERMISSION_CALL_PHONE);
+                        }
+                    }
+                });
     }
 
     @Override

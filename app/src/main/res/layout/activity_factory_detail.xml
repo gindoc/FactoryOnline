@@ -472,6 +472,7 @@
                             android:layout_alignLeft="@id/tv_publish_people"
                             android:layout_below="@id/tv_publish_people"
                             android:layout_marginTop="@dimen/x5"
+                            android:onClick="@{()->view.smsToPublish()}"
                             android:src="@drawable/ic_sms_outline" />
 
                         <ImageView
@@ -480,6 +481,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/tv_publish_people"
                             android:layout_marginLeft="@dimen/x10"
+                            android:onClick="@{()->view.phoneToPublish()}"
                             android:layout_marginTop="@dimen/x5"
                             android:layout_toRightOf="@id/iv_sms_to_publish"
                             android:src="@drawable/ic_phone_outline" />

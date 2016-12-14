@@ -27,7 +27,6 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -62,13 +61,16 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                 .subscribe(new RxSubscriber<RecommendResponse>() {
                     @Override
                     public void _onNext(RecommendResponse response) {
-
                         filterWithId(response.getWantedMessages());
                     }
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable instanceof ConnectException) {
+                            requestRecommendListByDB(1);
+                        }
                         Timber.e(throwable.getMessage());
+                        getView().cancelLoading();
                     }
                 });
 //                .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
@@ -171,13 +173,66 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         return dataManager.getRecommendInfos(params, true);
                     }
                 })
-                .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
+                .subscribe(new RxSubscriber<RecommendResponse>() {
                     @Override
-                    public Observable<List<WantedMessage>> call(RecommendResponse response) {
-                        if (response.getErro_code() == 200) {
-                            localApi.insertWantedMessages(response.getWantedMessages());
+                    public void _onNext(RecommendResponse recommendResponse) {
+                        filterWithIdNotInit(recommendResponse.getWantedMessages());
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        if (throwable instanceof ConnectException) {
+                            getView().showError("网络连接失败，请检查你的网络！！！");
                         }
-                        return Observable.just(response.getWantedMessages());
+                        Timber.e(throwable.getMessage());
+                        getView().cancelLoading();
+                    }
+                });
+//                .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
+//                    @Override
+//                    public Observable<List<WantedMessage>> call(RecommendResponse response) {
+//                        if (response.getErro_code() == 200) {
+//                            localApi.insertWantedMessages(response.getWantedMessages());
+//                        }
+//                        return Observable.just(response.getWantedMessages());
+//                    }
+//                })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RxSubscriber<List<WantedMessage>>() {
+//                    @Override
+//                    public void _onNext(List<WantedMessage> wantedMessages) {
+//                        if (wantedMessages.size() > 0) {
+//                            getView().loadRecommendList(wantedMessages, true);
+//                        }
+//                        getView().cancelLoading();
+//                    }
+//
+//                    @Override
+//                    public void _onError(Throwable throwable) {
+//                        if (throwable instanceof ConnectException) {
+//                            getView().showError("网络连接失败，请检查你的网络！！！");
+//                        }
+//                        Timber.e(throwable.getMessage());
+//                        getView().cancelLoading();
+//                    }
+//                });
+    }
+
+    private void filterWithIdNotInit(List<WantedMessage> wantedMessages){
+        dataManager.getMaxIdWantedMessage()
+                .compose(getView().<WantedMessage>getBindToLifecycle())
+                .flatMap(new Func1<WantedMessage, Observable<List<WantedMessage>>>() {
+                    @Override
+                    public Observable<List<WantedMessage>> call(WantedMessage wantedMessage) {
+                        List<WantedMessage> wantedMessages = new ArrayList<WantedMessage>();
+                        for (WantedMessage wantedMessage1 : wantedMessages) {
+                            if (Integer.parseInt(wantedMessage1.getId()) > Integer.parseInt(wantedMessage.getId())) {
+                                wantedMessages.add(wantedMessage1);
+                            }
+                        }
+                        localApi.insertWantedMessages(wantedMessages);
+                        return Observable.just(wantedMessages);
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -194,7 +249,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                     @Override
                     public void _onError(Throwable throwable) {
                         if (throwable instanceof ConnectException) {
-                            getView().showError("网络连接失败，请检查你的网络！！！");
+                            requestRecommendListByDB(1);
                         }
                         Timber.e(throwable.getMessage());
                         getView().cancelLoading();
