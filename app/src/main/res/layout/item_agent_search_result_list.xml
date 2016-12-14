@@ -29,7 +29,8 @@
         <ImageView
             android:id="@+id/factory_img"
             android:layout_width="@dimen/x108"
-            android:layout_height="@dimen/y80"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:layout_marginRight="@dimen/x15"
             app:imageUrl="@{viewModel.imageUrl}" />
 
@@ -111,7 +112,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/blue_tag"
+                    android:background="@drawable/space_tag"
                     android:gravity="center"
                     android:padding="@dimen/x3"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
@@ -122,7 +123,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/green_tag"
+                    android:background="@drawable/floor_tag"
                     android:gravity="center"
                     android:padding="@dimen/x3"
                     android:layout_marginRight="@dimen/x10"
@@ -132,7 +133,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/yellow_tag"
+                    android:background="@drawable/enviroment_tag"
                     android:gravity="center"
                     android:padding="@dimen/x3"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'

@@ -30,6 +30,7 @@ import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.ProMediumFactory;
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.models.UserPublic;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -76,6 +77,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_agent_factory_detail);
         mBinding.setView(this);
+
         wantedMessage = (ProMediumMessage) getIntent().getSerializableExtra(PRO_MEDIUM_MESSAGE);
         factory = wantedMessage.getProMediumFactory();
         proMedium = (ProMedium) getIntent().getSerializableExtra(PRO_MEDIUM);
@@ -114,6 +116,14 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     }
 
     private void initToolbar() {
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.toolbar)
+                .process();
         mBinding.toolbar.setTitle("");
         setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);

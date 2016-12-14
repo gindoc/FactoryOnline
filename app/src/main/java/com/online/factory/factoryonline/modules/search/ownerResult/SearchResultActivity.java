@@ -12,6 +12,7 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.databinding.ActivityOwnerSearchResultBinding;
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.modules.search.agentResult.SearchResultAdapter;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -47,7 +48,14 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_owner_search_result);
-
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
         mBinding.recyclerView.setAdapter(mAdapter);
 
         mPresenter.requestSearchResult(getString(R.string.api)+"search/contents/"+getIntent().getIntExtra(CONTENT_ID, 0));

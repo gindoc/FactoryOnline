@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentModifyNameBinding;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.annotation.Nonnull;
@@ -45,6 +46,15 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentModifyNameBinding.inflate(inflater);
         mBinding.setView(this);
+
+        StatusBarUtils.from((Activity) getContext())
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
 
         mBinding.etUsername.setText(getArguments().getString(USER_NAME));
 

@@ -20,7 +20,8 @@
         <ImageView
             android:id="@+id/factory_img"
             android:layout_width="@dimen/x120"
-            android:layout_height="@dimen/y80"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:layout_marginRight="@dimen/x10"
             app:imageUrl="@{viewModel.factoryImg}" />
 

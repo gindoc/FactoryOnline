@@ -15,6 +15,7 @@ import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 
 import javax.inject.Inject;
 

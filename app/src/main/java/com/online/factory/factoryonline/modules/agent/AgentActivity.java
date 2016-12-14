@@ -21,6 +21,7 @@ import com.online.factory.factoryonline.databinding.LayoutAgentHeaderBinding;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -62,6 +63,15 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_agent);
         mHeaderBinding = LayoutAgentHeaderBinding.inflate(LayoutInflater.from(this), (ViewGroup) mBinding.getRoot(), false);
         mBinding.setView(this);
+
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
 
         initAgent();
         initRecyclerView();

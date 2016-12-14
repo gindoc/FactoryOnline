@@ -6,10 +6,9 @@
 
     <!-- app启动页的背景. -->
     <style name="SplashTheme" parent="AppTheme.Base">
-        <!--<item name="android:windowBackground">@/item>-->
     </style>
     <!-- Base application theme. -->
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
@@ -17,6 +16,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@drawable/line_with_db</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:fitsSystemWindows">true</item>-->
     </style>
 
     <style name="HomeTheme" parent="AppTheme.Base">

@@ -26,6 +26,7 @@ import com.online.factory.factoryonline.modules.collection.owner.OwnerCollection
 import com.online.factory.factoryonline.modules.publication.PublicationContract;
 import com.online.factory.factoryonline.modules.publication.PublicationPresenter;
 import com.online.factory.factoryonline.modules.publication.PublicationRecyclerViewAdapter;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -58,6 +59,14 @@ public class CollectionActivity extends BaseActivity<CollectionContract.View, Co
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_collection);
         mBinding.setView(this);
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
 
         mBinding.rbAgency.setChecked(true);
         loadRootFragment(R.id.rl_container, agentCollectionFragment);

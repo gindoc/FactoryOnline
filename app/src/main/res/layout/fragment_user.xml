@@ -49,8 +49,6 @@
                     android:layout_centerInParent="true"
                     android:onClick="@{view.clickRoundImage}"
                     android:scaleType="fitXY"
-                    app:border_outside_color="#138a5b"
-                    app:border_thickness="@dimen/x1"
                     app:imageUrl="@{user.avatar}" />
 
                 <TextView

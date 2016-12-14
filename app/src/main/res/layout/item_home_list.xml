@@ -25,7 +25,8 @@
         <ImageView
             android:id="@+id/factory_img"
             android:layout_width="@dimen/x108"
-            android:layout_height="@dimen/y80"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:layout_marginRight="@dimen/x15"
             app:imageUrl="@{viewModel.factoryImg}" />
 
@@ -108,7 +109,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/blue_tag"
+                    android:background="@drawable/space_tag"
                     android:gravity="center"
                     android:padding="@dimen/x3"
                     android:text="空间大"
@@ -118,7 +119,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/green_tag"
+                    android:background="@drawable/floor_tag"
                     android:gravity="center"
                     android:padding="@dimen/x3"
                     android:text="空间大"

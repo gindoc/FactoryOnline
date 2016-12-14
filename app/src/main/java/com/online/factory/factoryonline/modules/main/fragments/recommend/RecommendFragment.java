@@ -29,6 +29,7 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -108,6 +109,15 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mDistrictBinding = LayoutRecommendFilterDistrictBinding.inflate(inflater);
         mPriceBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
         mAreaBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
+
+        StatusBarUtils.from((Activity) getContext())
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.llTopBar)
+                .process();
 
         mBinding.setView(this);
         mPriceBinding.setView(this);

@@ -24,6 +24,7 @@ import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
 import com.online.factory.factoryonline.utils.FileUtils;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -78,7 +79,14 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
         mBinding = FragmentPersonalInfoBinding.inflate(inflater);
         mBinding.setView(this);
         mBinding.setPresenter(mPresenter);
-
+        StatusBarUtils.from(getActivity())
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
         return mBinding.getRoot();
     }
 

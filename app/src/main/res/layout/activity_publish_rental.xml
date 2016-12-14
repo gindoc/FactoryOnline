@@ -22,9 +22,8 @@
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:gravity="center"
                 android:text="发布信息"
                 android:textColor="#424242"
                 android:textSize="@dimen/x16" />
@@ -46,6 +45,7 @@
                 android:drawableLeft="@drawable/ic_arrow_left_green"
                 android:drawablePadding="@dimen/x5"
                 android:gravity="center_vertical"
+                android:onClick="@{()->view.finish()}"
                 android:paddingLeft="@dimen/x10"
                 android:text="返回"
                 android:textColor="@color/colorPrimary"
@@ -61,6 +61,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_height="wrap_content">
 
                 <RelativeLayout
@@ -418,7 +420,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/x5"
-                                    android:background="@drawable/blue_tag"
+                                    android:background="@drawable/space_tag"
                                     android:padding="@dimen/x5"
                                     android:textColor="#2b91f0"
                                     android:textSize="@dimen/x11"
@@ -429,7 +431,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/x5"
-                                    android:background="@drawable/green_tag"
+                                    android:background="@drawable/floor_tag"
                                     android:padding="@dimen/x5"
                                     android:textColor="#29ad15"
                                     android:textSize="@dimen/x11"
@@ -439,7 +441,7 @@
                                     android:id="@+id/tv_tag3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/yellow_tag"
+                                    android:background="@drawable/enviroment_tag"
                                     android:padding="@dimen/x5"
                                     android:textSize="@dimen/x11"
                                     android:textColor="#edba1d"

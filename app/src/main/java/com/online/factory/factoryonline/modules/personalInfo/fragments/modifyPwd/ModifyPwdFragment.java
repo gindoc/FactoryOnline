@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.FragmentModifyPwdBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.Validate;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -54,6 +56,14 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentModifyPwdBinding.inflate(inflater);
         mBinding.setView(this);
+        StatusBarUtils.from((Activity) getContext())
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
 
         mBinding.etPhonenum.setText(getArguments().getString(PHONE_NUM));
 

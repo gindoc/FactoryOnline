@@ -8,6 +8,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rl_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
             android:orientation="horizontal">
@@ -38,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:background="@android:color/transparent"
-                android:text="下一步"
+                android:text="提交"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/x14" />
         </RelativeLayout>

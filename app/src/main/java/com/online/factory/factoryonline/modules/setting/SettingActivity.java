@@ -17,6 +17,7 @@ import com.online.factory.factoryonline.modules.setting.copyright.CopyrightActiv
 import com.online.factory.factoryonline.modules.setting.qrcode.QRCodeActivity;
 import com.online.factory.factoryonline.utils.DataCleanManager;
 import com.online.factory.factoryonline.utils.FileUtils;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.annotation.Nonnull;
@@ -46,7 +47,14 @@ public class SettingActivity extends BaseActivity<SettingContract.View, SettingP
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_setting);
         mBinding.setView(this);
         mBinding.setPresenter(mPresenter);
-
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
         mPresenter.caculateCacheSize();
     }
 

@@ -13,6 +13,7 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityQrcodeBinding;
 import com.online.factory.factoryonline.modules.setting.SettingActivity;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -42,7 +43,14 @@ public class QRCodeActivity extends BaseActivity<QRCodeContract.View, QRCodePres
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_qrcode);
         mBinding.setView(this);
-
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTitle)
+                .process();
         int qrcodeDimen = resources.getDimensionPixelSize(R.dimen.x150);
         mPresenter.createQRCode(qrcodeDimen,qrcodeDimen);
     }

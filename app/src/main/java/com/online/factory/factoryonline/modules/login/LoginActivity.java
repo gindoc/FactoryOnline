@@ -18,6 +18,7 @@ import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -51,8 +52,21 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this , R.layout.activity_login);
+        mBinding.setView(this);
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
         setUpTabs();
+    }
 
+    public void exitLogin() {
+        finish();
+        overridePendingTransition(R.anim.no_anim, R.anim.translate_bottom_out);
     }
 
     public void login(Login loginBean){

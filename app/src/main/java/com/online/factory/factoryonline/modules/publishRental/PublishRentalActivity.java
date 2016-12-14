@@ -34,6 +34,7 @@ import com.online.factory.factoryonline.modules.publishRental.area.AreaActivity;
 import com.online.factory.factoryonline.modules.publishRental.tag.TagActivity;
 import com.online.factory.factoryonline.utils.GeoHash;
 import com.online.factory.factoryonline.utils.Saver;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.Validate;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -75,7 +76,14 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_publish_rental);
-
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.llTitle)
+                .process();
         initView();
         mBinding.setView(this);
 
