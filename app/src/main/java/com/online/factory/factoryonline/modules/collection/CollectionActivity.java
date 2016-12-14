@@ -21,6 +21,8 @@ import com.online.factory.factoryonline.databinding.ActivityCollectionBinding;
 import com.online.factory.factoryonline.databinding.ActivityPublicationBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.modules.collection.agent.AgentCollectionFragment;
+import com.online.factory.factoryonline.modules.collection.owner.OwnerCollectionFragment;
 import com.online.factory.factoryonline.modules.publication.PublicationContract;
 import com.online.factory.factoryonline.modules.publication.PublicationPresenter;
 import com.online.factory.factoryonline.modules.publication.PublicationRecyclerViewAdapter;
@@ -36,22 +38,19 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class CollectionActivity extends BaseActivity<CollectionContract.View, CollectionPresenter> implements CollectionContract.View,
-        SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+public class CollectionActivity extends BaseActivity<CollectionContract.View, CollectionPresenter> implements CollectionContract.View {
 
-    private static final int TO_FACILITY_DETAIL = 99;
     @Inject
     CollectionPresenter mPresenter;
 
-    @Inject
-    PublicationRecyclerViewAdapter mAdapter;
 
     @Inject
-    Resources resources;
+    AgentCollectionFragment agentCollectionFragment;
+
+    @Inject
+    OwnerCollectionFragment ownerCollectionFragment;
 
     private ActivityCollectionBinding mBinding;
-    private String next = "";
-    private int count = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,20 +59,10 @@ public class CollectionActivity extends BaseActivity<CollectionContract.View, Co
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_collection);
         mBinding.setView(this);
 
-        initRecyclerView();
-
-        mBinding.swipe.setOnRefreshListener(this);
-
-        mPresenter.requestPublications(resources.getString(R.string.api)+"user/collections");
+        mBinding.rbAgency.setChecked(true);
+        loadRootFragment(R.id.rl_container, agentCollectionFragment);
     }
 
-    private void initRecyclerView() {
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setOnPageListener(this);
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        mBinding.recyclerView.setPageFooter(R.layout.layout_recyclerview_footer);
-        mAdapter.setOnItemClickListener(this);
-    }
 
     @Override
     protected CollectionPresenter createPresent() {
@@ -87,58 +76,18 @@ public class CollectionActivity extends BaseActivity<CollectionContract.View, Co
 
     @Override
     public void showError(String error) {
-
     }
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, CollectionActivity.class);
     }
 
-    @Override
-    public void loadCollectionList(List<WantedMessage> wantedMessages) {
-        mAdapter.getData().addAll(wantedMessages);
-        mBinding.recyclerView.notifyDataSetChanged();
-        mBinding.recyclerView.hideLoadingFooter();
+    public void loadAgentList(View view) {
+        startWithPop(agentCollectionFragment);
     }
 
-    @Override
-    public void loadNextUrlAndCount(String next, int count) {
-        this.next = next;
-        this.count = count;
+    public void loadOwnerList(View view) {
+        startWithPop(ownerCollectionFragment);
     }
 
-    @Override
-    public void onRefresh() {
-        mBinding.swipe.setRefreshing(false);
-        Toast.makeText(this, "共" + count + "条信息", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onPage() {
-        if (!TextUtils.isEmpty(next)) {
-            mBinding.recyclerView.showLoadingFooter();
-            mPresenter.requestPublications(next);
-        }else {
-            Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
-            mBinding.recyclerView.hideLoadingFooter();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == TO_FACILITY_DETAIL) {
-            mAdapter.getData().clear();
-            mPresenter.requestPublications(resources.getString(R.string.api)+"user/collections");
-        }
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        Intent intent = new Intent(this, FactoryDetailActivity.class);
-        WantedMessage wantedMessage = mAdapter.getData().get(position);
-        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, wantedMessage);
-        startActivityForResult(intent, TO_FACILITY_DETAIL);
-        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
-    }
 }

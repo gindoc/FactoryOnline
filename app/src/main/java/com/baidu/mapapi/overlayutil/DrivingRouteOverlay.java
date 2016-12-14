@@ -92,7 +92,7 @@ public class DrivingRouteOverlay extends OverlayManager {
                                                     .fromAssetWithDpi("Icon_end.png"))
                                                             .zIndex(10));
         }
-        // poly line
+        // poly line_with_e6
         if (mRouteLine.getAllStep() != null
                 && mRouteLine.getAllStep().size() > 0) {
         

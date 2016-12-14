@@ -55,7 +55,7 @@ public class FactoryDetailViewModel extends BaseObservable {
 
     @Bindable
     public String getDescription() {
-        return "\u3000\u3000"+factory.getDescription();
+        return factory.getDescription();
     }
 
     @Bindable

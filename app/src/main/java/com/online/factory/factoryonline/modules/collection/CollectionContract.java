@@ -15,9 +15,6 @@ import java.util.List;
 public interface CollectionContract {
     interface View extends IBaseView{
 
-        void loadCollectionList(List<WantedMessage> wantedMessages);
-
-        void loadNextUrlAndCount(String next, int count);
     }
 
     interface Presenter extends IBasePresenter{

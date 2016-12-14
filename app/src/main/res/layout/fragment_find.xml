@@ -39,7 +39,7 @@
                     android:layout_marginBottom="@dimen/y15"
                     android:text="我要厂房"
                     android:textColor="#424242"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
             </LinearLayout>
 
             <!--<LinearLayout

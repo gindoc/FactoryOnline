@@ -123,11 +123,6 @@ public class RegistActivity extends BaseActivity<RegistContract.View, RegistPres
     }
 
     @Override
-    public void userExisted() {
-        Toast.makeText(this, "该手机号已被注册，请联系警察叔叔！！Orz...", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void refleshSmsButton() {
         Observable.interval(1, TimeUnit.SECONDS)
                 .compose(this.<Long>getBindToLifecycle())

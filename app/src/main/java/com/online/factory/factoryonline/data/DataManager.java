@@ -1,26 +1,20 @@
 package com.online.factory.factoryonline.data;
 
 
-import android.text.TextUtils;
-
-import com.google.common.base.Functions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.LocalApi;
-import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.UpdateUser;
-import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
-import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
@@ -29,7 +23,7 @@ import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
-import com.online.factory.factoryonline.models.response.SearchResponse;
+import com.online.factory.factoryonline.models.response.SearchResultResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
 
@@ -40,7 +34,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -245,13 +238,11 @@ public class DataManager {
         return factoryApi.getSmsCode(smsType, phoneNum);
     }
 
-
-    public Observable<List<CityBean>> requestCities() {
-        return factoryApi.getCities();
-    }
-
-    public Observable<JsonObject> requestToken(String tokenType) {
-        return factoryApi.getToken(tokenType, null);
+    public Observable<JsonObject> requestToken(int tokenType) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.getToken(token, timestamp, tokenType, null);
     }
 
     public Observable<JsonObject> deleteImage(String imageKey) {
@@ -279,7 +270,7 @@ public class DataManager {
         return factoryApi.publishMessage(header, builder.build());
     }
 
-    public Observable<SearchResponse> search(String s) {
+    public Observable<SearchResultResponse> search(String s) {
         return factoryApi.search(s);
     }
 
@@ -300,13 +291,22 @@ public class DataManager {
         return factoryApi.getPublications(next, token, timestamp);
     }
 
-    public Observable<MyCollectionResponse> requestCollections(String next) {
+    public Observable<MyCollectionResponse> requestOwnerCollections(String next) {
         String token = Saver.getToken().replace("\"", "");
         String timestamp = String.valueOf(System.currentTimeMillis()*1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         token = AESUtil.encrypt(token, timestamp, iv.toString());
         token = "Token " + token;
-        return factoryApi.getCollections(next, token, timestamp);
+        return factoryApi.getOwnerCollections(next, token, timestamp);
+    }
+
+    public Observable<ProMediumMessageResponse> requestAgentCollections(String next) {
+        String token = Saver.getToken().replace("\"", "");
+        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        token = AESUtil.encrypt(token, timestamp, iv.toString());
+        token = "Token " + token;
+        return factoryApi.getAgentCollection(next, token, timestamp);
     }
 
     public Observable<Response> updateUser(UpdateUser updateUser) {
@@ -327,5 +327,37 @@ public class DataManager {
 
     public Observable<ProMediumMessageResponse> requestProMediumMessages(String next) {
         return factoryApi.getProMediumMessages(next);
+    }
+
+
+    /**
+     * 请求服务器，判断该厂房是否被收藏
+     *
+     * @param id wantedMessageId
+     * @return
+     */
+    public Observable<CollectionResponse> isAgentMsgCollected(int id) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.isAgentMsgCollected(token, timestamp, id);
+    }
+
+    public Observable<Response> postAgentState(int id) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.postAgentState(token, timestamp, id);
+    }
+
+    public Observable<Response> deleteAgentState(int id) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.deleteAgentState(token, timestamp, id);
+    }
+
+    public Observable<ProMediumMessageResponse> requestSearchResult(String next) {
+        return factoryApi.getSearchResult(next);
     }
 }

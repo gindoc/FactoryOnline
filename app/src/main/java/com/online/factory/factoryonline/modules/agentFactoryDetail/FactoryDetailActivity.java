@@ -29,6 +29,7 @@ import com.online.factory.factoryonline.databinding.ActivityAgentFactoryDetailBi
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.ProMediumFactory;
 import com.online.factory.factoryonline.models.ProMediumMessage;
+import com.online.factory.factoryonline.models.UserPublic;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -79,7 +80,11 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         factory = wantedMessage.getProMediumFactory();
         proMedium = (ProMedium) getIntent().getSerializableExtra(PRO_MEDIUM);
 
-        mViewModel.setProMedium(proMedium);
+        if (proMedium != null) {
+            mViewModel.setProMedium(proMedium);
+        }else {
+            mPresenter.requestAgent(wantedMessage.getOwner_id());
+        }
 
         initToolbar();
         initFactoryDetail();
@@ -134,7 +139,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                     } else {
                         menuItem.setIcon(R.drawable.ic_collect);
                     }
-                    mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+                    mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_green);
                     mBinding.tvTitle.setVisibility(View.VISIBLE);
                 }
 
@@ -205,6 +210,11 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         }
     }
 
+    @Override
+    public void loadAgent(UserPublic userPublic) {
+        mViewModel.setUserPublic(userPublic);
+    }
+
     public void expandDesc() {
         if (!isDescExpanded) {
             mBinding.tvDescription.setMaxLines(Integer.MAX_VALUE);
@@ -262,6 +272,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     @Override
     public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+        if (geoCodeResult == null || geoCodeResult.getLocation()==null) return;
         StringBuilder api = new StringBuilder("http://api.map.baidu.com/staticimage?center=");
         double longitude = geoCodeResult.getLocation().longitude;
         double latitude = geoCodeResult.getLocation().latitude;
@@ -295,8 +306,8 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
             ImageView imageView = imageViewsList.get(position);
             Picasso.with(FactoryDetailActivity.this)
                     .load((String) imageView.getTag())
-                    .placeholder(R.drawable.ic_msg_online)
-                    .error(R.drawable.ic_home_full)
+                    .placeholder(R.drawable.ic_no_pic)
+                    .error(R.drawable.ic_no_pic)
                     .into(imageView);
 
             ((ViewPager) container).addView(imageViewsList.get(position));

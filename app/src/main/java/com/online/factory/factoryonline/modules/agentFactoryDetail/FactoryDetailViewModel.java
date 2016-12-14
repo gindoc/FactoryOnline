@@ -3,9 +3,11 @@ package com.online.factory.factoryonline.modules.agentFactoryDetail;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.ProMediumFactory;
 import com.online.factory.factoryonline.models.ProMediumMessage;
+import com.online.factory.factoryonline.models.UserPublic;
 import com.online.factory.factoryonline.utils.TimeUtil;
 
 import javax.inject.Inject;
@@ -18,6 +20,7 @@ public class FactoryDetailViewModel extends BaseObservable {
     private ProMediumFactory factory;
     private ProMediumMessage wantedMessage;
     private ProMedium proMedium;
+    private UserPublic userPublic;
 
     @Inject
     public FactoryDetailViewModel() {
@@ -30,6 +33,24 @@ public class FactoryDetailViewModel extends BaseObservable {
 
     public void setProMedium(ProMedium proMedium) {
         this.proMedium = proMedium;
+    }
+
+    public void setUserPublic(UserPublic userPublic) {
+        this.userPublic = userPublic;
+        notifyPropertyChanged(BR.avatar);
+        notifyPropertyChanged(BR.contactName);
+        notifyPropertyChanged(BR.contactNum);
+    }
+
+    @Bindable
+    public String getAvatar() {
+        if (proMedium != null) {
+            return proMedium.getAvatar();
+        }else if (userPublic!=null){
+            return userPublic.getAvatar();
+        }else {
+            return "";
+        }
     }
 
     @Bindable
@@ -54,7 +75,7 @@ public class FactoryDetailViewModel extends BaseObservable {
 
     @Bindable
     public String getDescription() {
-        return "\u3000\u3000"+factory.getDescription();
+        return factory.getDescription();
     }
 
     @Bindable
@@ -84,10 +105,22 @@ public class FactoryDetailViewModel extends BaseObservable {
 
     @Bindable
     public String getContactName() {
-        return proMedium.getReal_name();
+        if (proMedium != null) {
+            return proMedium.getReal_name();
+        }else if (userPublic!=null){
+            return userPublic.getUsername();
+        }else {
+            return "";
+        }
     }
-
+    @Bindable
     public String getContactNum() {
-        return proMedium.getPhone_num();
+        if (proMedium != null) {
+            return proMedium.getPhone_num();
+        }else if (userPublic!=null){
+            return userPublic.getPhone_num();
+        }else {
+            return "";
+        }
     }
 }

@@ -46,7 +46,7 @@
             android:paddingLeft="@dimen/x15"
             android:text="返回"
             android:textColor="#424242"
-            android:textSize="18sp" />
+            android:textSize="@dimen/x14" />
 
         <TextView
             android:id="@+id/tv_advertiser_name"
@@ -57,7 +57,7 @@
             android:gravity="center"
             android:text="蜡笔小新"
             android:textColor="#424242"
-            android:textSize="22sp" />
+            android:textSize="@dimen/x16" />
 
         <LinearLayout
             android:id="@+id/ll_choice"
@@ -79,7 +79,7 @@
                 android:paddingRight="@dimen/x20"
                 android:text="近期发布15条记录"
                 android:textColor="#424242"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
 
             <View
                 android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                 android:paddingRight="@dimen/x20"
                 android:text="0条被删除"
                 android:textColor="#424242"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
 
             <View
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                 android:paddingRight="@dimen/x20"
                 android:text="1条被举报"
                 android:textColor="#424242"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
 
             <View
                 android:layout_width="match_parent"
@@ -151,7 +151,7 @@
                     android:paddingTop="@dimen/x5"
                     android:text="发送短信"
                     android:textColor="#5ca6ed"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/x14" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -167,7 +167,7 @@
                     android:paddingTop="@dimen/x5"
                     android:text="发送短信"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/x14" />
             </LinearLayout>
         </RelativeLayout>
 

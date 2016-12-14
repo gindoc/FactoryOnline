@@ -50,7 +50,7 @@
                     android:paddingRight="@dimen/x10"
                     android:paddingTop="@dimen/y8"
                     android:textColor="#9d9ca2"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
 
             </LinearLayout>
 
@@ -65,7 +65,7 @@
                 android:paddingRight="@dimen/x17"
                 android:text="地图"
                 android:textColor="#1ab80f"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
         </LinearLayout>
 
         <View
@@ -99,7 +99,7 @@
                 app:maskColor="#611a1a1a"
                 app:menuBackgroundColor="@android:color/white"
                 app:menuSelectedIcon="@drawable/ic_arrow_up"
-                app:menuTextSize="18sp"
+                app:menuTextSize="@dimen/x14"
                 app:menuUnselectedIcon="@drawable/ic_arrow_down"
                 app:textSelectedColor="@color/colorPrimary"
                 app:textUnselectedColor="#424242"

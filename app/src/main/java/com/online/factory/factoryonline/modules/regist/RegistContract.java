@@ -13,8 +13,6 @@ public interface RegistContract {
     interface View extends IBaseView {
         void registSuccessfully();
 
-        void userExisted();
-
         void refleshSmsButton();
 
     }

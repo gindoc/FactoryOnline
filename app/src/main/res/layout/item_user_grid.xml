@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/x5"
             android:text="@{viewModel.itemText}"
             android:textColor="#424242"
-            android:textSize="18sp"
+            android:textSize="@dimen/x14"
             tool:text="123456" />
     </LinearLayout>
 </layout>

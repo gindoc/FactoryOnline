@@ -8,8 +8,8 @@ package com.online.factory.factoryonline.data.remote;
 
 public class Consts {
 
-    public static final String uploadToken = "1";
-    public static final String downToken = "2";
-    public static final String manageToken = "3";
+    public static final int uploadToken = 1;
+    public static final int downToken = 2;
+    public static final int manageToken = 3;
 
 }

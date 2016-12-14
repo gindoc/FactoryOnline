@@ -9,72 +9,6 @@
         android:paddingRight="@dimen/x32"
         android:paddingTop="@dimen/y40">
 
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_size">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/background_login_text_input"
-                android:padding="@dimen/padding_size">
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/et_phonenum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="输入手机号码"
-                        android:maxLines="1"
-                        android:textColorHint="@color/gray_light" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:id="@+id/line_sms_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@id/et_phonenum"
-                    android:background="@color/dividerColor" />
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/et_verificationcode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/line_sms_login"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="输入验证码"
-                        android:maxLines="1"
-                        android:textColorHint="@color/gray_light" />
-                </android.support.design.widget.TextInputLayout>
-
-
-                <TextView
-                    android:id="@+id/tv_get_vertifycode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@id/line_sms_login"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/background_send_vertify_code"
-                    android:hint="点击发送验证码"
-                    android:padding="6dp"
-                    android:textColor="@color/green" />
-            </RelativeLayout>
-        </LinearLayout>-->
-
         <EditText
             android:id="@+id/et_phonenum"
             android:layout_width="match_parent"
@@ -86,7 +20,7 @@
             android:paddingLeft="@dimen/x25"
             android:textColor="#424242"
             android:textColorHint="#ccc"
-            android:textSize="16sp" />
+            android:textSize="@dimen/x13" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,7 +46,7 @@
                 android:paddingRight="@dimen/x5"
                 android:textColor="#424242"
                 android:textColorHint="#ccc"
-                android:textSize="16sp" />
+                android:textSize="@dimen/x13" />
 
             <Button
                 android:id="@+id/tv_get_vertifycode"
@@ -122,7 +56,7 @@
                 android:text="获取验证码"
                 android:textColor="#1ab80f"
                 android:focusable="true"
-                android:textSize="12sp" />
+                android:textSize="@dimen/x11" />
         </LinearLayout>
 
 
@@ -134,6 +68,6 @@
             android:background="@drawable/green_rectangle_solid_with_large_corner"
             android:text="登 录"
             android:textColor="@android:color/white"
-            android:textSize="22sp" />
+            android:textSize="@dimen/x16" />
     </LinearLayout>
 </layout>

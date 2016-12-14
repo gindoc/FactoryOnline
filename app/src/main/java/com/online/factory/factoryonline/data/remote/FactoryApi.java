@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
+import com.online.factory.factoryonline.models.SearchResult;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
@@ -15,12 +16,11 @@ import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
-import com.online.factory.factoryonline.models.response.SearchResponse;
+import com.online.factory.factoryonline.models.response.SearchResultResponse;
 
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -141,7 +141,7 @@ public interface FactoryApi {
     Observable<List<CityBean>> getCities();
 
     @GET("qiniutokens/{tokenType}")
-    Observable<JsonObject> getToken(@Path("tokenType") String tokenType, @Query("bucket") String bucket);
+    Observable<JsonObject> getToken(@Header("Authorization") String auth, @Header("TIME")String time, @Path("tokenType") int tokenType, @Query("bucket") String bucket);
 
     //    @DELETE("images/{imageKey}/")
     @HTTP(method = "delete", path = "images/{imageKey}", hasBody = false)
@@ -153,8 +153,8 @@ public interface FactoryApi {
     @POST("wantedmessages/")
     Observable<JsonObject> publishMessage(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
-    @GET("wantedmessages/search")
-    Observable<SearchResponse> search(@Query("key") String s);
+    @GET("search")
+    Observable<SearchResultResponse> search(@Query("key") String s);
 
     @GET("users/{user_id}")
     Observable<PublishUserResponse> getUserById(@Path("user_id") int userId);
@@ -166,7 +166,10 @@ public interface FactoryApi {
     Observable<PublicationResponse> getPublications(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
 
     @GET
-    Observable<MyCollectionResponse> getCollections(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
+    Observable<MyCollectionResponse> getOwnerCollections(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
+
+    @GET
+    Observable<ProMediumMessageResponse> getAgentCollection(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
 
     @PUT("user/")
     Observable<Response> updateUser(@Header("Authorization") String token, @Header("TIME") String timestamp, @Body RequestBody body);
@@ -176,4 +179,16 @@ public interface FactoryApi {
 
     @GET
     Observable<ProMediumMessageResponse> getProMediumMessages(@Url String next);
+
+    @GET("promediummessages/{id}/collection/")
+    Observable<CollectionResponse> isAgentMsgCollected(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
+
+    @POST("promediummessages/{id}/collection/")
+    Observable<Response> postAgentState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
+
+    @DELETE("promediummessages/{id}/collection/")
+    Observable<Response> deleteAgentState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
+
+    @GET
+    Observable<ProMediumMessageResponse> getSearchResult(@Url String next);
 }

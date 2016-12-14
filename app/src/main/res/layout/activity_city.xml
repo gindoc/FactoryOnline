@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.city.CityActivity" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,8 +26,9 @@
                 android:text="返回"
                 android:paddingLeft="@dimen/x10"
                 android:drawablePadding="@dimen/x5"
+                android:onClick="@{()->view.finish()}"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -30,7 +37,7 @@
                 android:gravity="center"
                 android:text="选择城市"
                 android:textColor="#424242"
-                android:textSize="22sp" />
+                android:textSize="@dimen/x16" />
 
         </RelativeLayout>
 
@@ -45,7 +52,7 @@
             android:paddingLeft="@dimen/x11"
             android:text="已开通服务的城市"
             android:textColor="#424242"
-            android:textSize="18sp" />
+            android:textSize="@dimen/x14" />
 
         <View
             android:layout_width="match_parent"
@@ -66,7 +73,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/x15"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/x12"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,7 +81,7 @@
                 android:drawablePadding="@dimen/x11"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp"
+                android:textSize="@dimen/x14"
                 tool:text="东莞"
                 android:id="@+id/tv_current_city" />
         </RelativeLayout>

@@ -79,25 +79,11 @@ public class DataManagerModule {
             String fileName;
             if (path.matches("^(/scrollMsgs)$")) {      //匹配/scrollMsgs
                 fileName = "ScrollMsgs.json";
-            } else if (path.matches("^(/factoryInfos/[1-9]\\d*/[1-9]\\d*)")) {
-                fileName = "FactoryResponse.json";
-            } else if (path.matches("^(/recommendInfos/[1-9]\\d*/[1-9]\\d*)")) {
-                fileName = "RecommendInfos.json";
-            } else if (path.matches("^(/recommendDistrictCats)")) {
-                fileName = "RecommendDistrictCats.json";
             } else if (path.matches("^(/recommendPriceCats)")) {
                 fileName = "RecommendPriceCats.json";
             } else if (path.matches("^(/recommendAreaCats)")) {
                 fileName = "RecomendAreaCats.json";
-            } else if (path.matches("^(/isFactoryCollected/[0-9]\\d*)")) {
-                fileName = "IsFactoryCollected.json";
-            } else if (path.matches("^(/users)")) {
-                fileName = "Regist.json";
-            } else if (path.matches("^(/user)")) {
-                fileName = "UserResponse.json";
-            } else if (path.matches("^(/publicmessages/[1-9]\\d*)")) {
-                fileName = "FactoryResponse.json";
-            } else if (path.matches("^(/factorypoi/[1-9]\\d*)")) {
+            }else if (path.matches("^(/factorypoi/[1-9]\\d*)")) {
                 fileName = "FactoryPois.json";
             } else if (path.matches("^(/cities)")){
                 fileName = "Cities.json";
@@ -145,7 +131,9 @@ public class DataManagerModule {
                         || request.url().toString().contains("wantedmessages")
                         || request.url().toString().contains("factorypois/district/")
                         || request.url().toString().contains("smses")
-                        || request.url().toString().contains("promediums")) {
+                        || request.url().toString().contains("promediums")
+                        || request.url().toString().contains("search")
+                        || request.url().toString().contains("promediummessages")) {
                     realRequest = request.newBuilder().build();
                 } else {
                     intercepterResponse = new Response.Builder()

@@ -66,10 +66,8 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                             Saver.setLoginState(true);
 
                             getView().registSuccessfully();
-                        } else if (errCode.equals("300")) {
-                            getView().userExisted();
-                        } else if (errCode.equals("601")) {
-                            getView().showError("验证码已过期");
+                        } else{
+                            getView().showError(body.get("erro_msg").getAsString());
                         }
                     }
 

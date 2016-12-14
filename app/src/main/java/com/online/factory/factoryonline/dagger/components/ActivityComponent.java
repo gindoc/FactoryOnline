@@ -22,6 +22,7 @@ import com.online.factory.factoryonline.modules.publishRental.area.AreaActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
 import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
+import com.online.factory.factoryonline.modules.search.agentResult.SearchResultActivity;
 import com.online.factory.factoryonline.modules.setting.SettingActivity;
 import com.online.factory.factoryonline.modules.setting.qrcode.QRCodeActivity;
 
@@ -76,4 +77,8 @@ public interface ActivityComponent {
     void inject(ForgetPwdActivity forgetPwdActivity);
 
     void inject(com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity factoryDetailActivity);
+
+    void inject(SearchResultActivity searchResultActivity);
+
+    void inject(com.online.factory.factoryonline.modules.search.ownerResult.SearchResultActivity searchResultActivity);
 }

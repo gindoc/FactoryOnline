@@ -128,7 +128,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                     }else {
                         menuItem.setIcon(R.drawable.ic_collect);
                     }
-                    mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+                    mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_green);
                     mBinding.tvTitle.setVisibility(View.VISIBLE);
                 }
 

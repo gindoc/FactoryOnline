@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.online.factory.factoryonline.modules.agent.AgentViewModel"/>
+            type="com.online.factory.factoryonline.modules.agent.AgentViewModel" />
     </data>
 
     <LinearLayout
@@ -46,7 +46,7 @@
                 android:maxLines="1"
                 android:text="@{viewModel.name}"
                 android:textColor="#424242"
-                android:textSize="18sp"
+                android:textSize="@dimen/x14"
                 tool:text="南城 带装修独院厂房25000" />
 
             <LinearLayout
@@ -60,17 +60,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#808080"
                     android:text='@{viewModel.area}'
-                    android:textSize="16sp"
+                    android:maxLines="1"
+                    android:textColor="#808080"
+                    android:textSize="@dimen/x13"
                     tool:text="2500 ㎡" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#df3d3f"
-                    android:textSize="18sp"
                     android:text="@{viewModel.totalPrice}"
+                    android:textColor="#df3d3f"
+                    android:textSize="@dimen/x14"
+                    android:maxLines="1"
                     tool:text="25000元/月" />
             </LinearLayout>
 
@@ -85,17 +87,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#808080"
                     android:text="@{viewModel.addressOverview}"
-                    android:textSize="16sp"
+                    android:textColor="#808080"
+                    android:maxLines="1"
+                    android:textSize="@dimen/x13"
                     tool:text="南城 - 雅苑" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:textSize="16sp"
+                    android:maxLines="1"
                     android:text="@{viewModel.price}"
+                    android:textColor="#808080"
+                    android:textSize="@dimen/x13"
                     tool:text="10元/㎡/月" />
             </LinearLayout>
 

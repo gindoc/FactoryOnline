@@ -37,6 +37,7 @@ import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
+import com.online.factory.factoryonline.modules.search.SearchActivity;
 import com.online.factory.factoryonline.utils.TimeUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -230,6 +231,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     public void openCityPage() {
         startActivity(CityActivity.getStartIntent(getContext()));
+        getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void openSearchPage() {
+        startActivity(SearchActivity.getStartIntent(getContext()));
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 

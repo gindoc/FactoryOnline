@@ -79,6 +79,8 @@
         <activity android:name=".modules.agent.AgentActivity" />
         <activity android:name=".modules.forgetPwd.ForgetPwdActivity" />
         <activity android:name=".modules.agentFactoryDetail.FactoryDetailActivity" />
+        <activity android:name=".modules.search.agentResult.SearchResultActivity" />
+        <activity android:name=".modules.search.ownerResult.SearchResultActivity" />
     </application>
 
 </manifest>

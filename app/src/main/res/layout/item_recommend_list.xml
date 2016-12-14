@@ -46,7 +46,7 @@
                 android:maxLines="1"
                 android:text="@{viewModel.name}"
                 android:textColor="#424242"
-                android:textSize="18sp"
+                android:textSize="@dimen/x14"
                 tool:text="南城 带装修独院厂房25000" />
 
             <LinearLayout
@@ -60,16 +60,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxLines="1"
                     android:textColor="#808080"
                     android:text='@{viewModel.area}'
-                    android:textSize="16sp"
+                    android:textSize="@dimen/x13"
                     tool:text="2500 ㎡" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#df3d3f"
-                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:textSize="@dimen/x14"
                     android:text="@{viewModel.factoryTotalPrice}"
                     tool:text="25000元/月" />
             </LinearLayout>
@@ -86,15 +88,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#808080"
+                    android:maxLines="1"
                     android:text="@{viewModel.addressOverview}"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/x13"
                     tool:text="南城 - 雅苑" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#808080"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/x13"
+                    android:maxLines="1"
                     android:text="@{viewModel.price}"
                     tool:text="10元/㎡/月" />
             </LinearLayout>
@@ -112,7 +116,7 @@
                     android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
                     android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}'
                     android:layout_marginRight="@dimen/x10"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -123,13 +127,14 @@
                     android:layout_marginRight="@dimen/x10"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
                     android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}'
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/yellow_tag"
                     android:gravity="center"
                     android:padding="@dimen/x3"
+                    android:textSize="@dimen/x13"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
                     android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}'/>
             </com.google.android.flexbox.FlexboxLayout>

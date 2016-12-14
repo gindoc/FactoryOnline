@@ -4,6 +4,7 @@ import android.view.MenuItem;
 
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
@@ -30,7 +31,7 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
 
     @Override
     public void isCollected(int fId, final MenuItem item) {
-        dataManager.isFactoryCollected(fId)
+        dataManager.isAgentMsgCollected(fId)
                 .compose(getView().<CollectionResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -52,7 +53,7 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
     }
 
     public void postCollectionState(final MenuItem item, int id) {
-        dataManager.postCollectionState(id)
+        dataManager.postAgentState(id)
                 .compose(getView().<Response>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -72,7 +73,7 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
     }
 
     public void deleteCollectionState(final MenuItem item, int id) {
-        dataManager.deleteCollectionState(id)
+        dataManager.deleteAgentState(id)
                 .compose(getView().<Response>getBindToLifecycle())
                 .compose(RxResultHelper.<Response>handleResult())
                 .subscribeOn(Schedulers.io())
@@ -81,6 +82,26 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
                     @Override
                     public void _onNext(Response response) {
                         getView().toogleCollectionState(item);
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void requestAgent(int owner_id) {
+        dataManager.getUserById(owner_id)
+                .compose(getView().<PublishUserResponse>getBindToLifecycle())
+                .compose(RxResultHelper.<PublishUserResponse>handleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<PublishUserResponse>() {
+                    @Override
+                    public void _onNext(PublishUserResponse publishUserResponse) {
+                        getView().loadAgent(publishUserResponse.getUserPublic());
                     }
 
                     @Override

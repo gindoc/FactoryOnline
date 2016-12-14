@@ -30,7 +30,7 @@
                 android:onClick="@{()->view.finish()}"
                 android:text="返回"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
                 android:layout_centerInParent="true"
                 android:text="版权信息"
                 android:textColor="#424242"
-                android:textSize="22sp" />
+                android:textSize="@dimen/x16" />
 
         </RelativeLayout>
 
@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"
-            android:textSize="16sp"
+            android:textSize="@dimen/x13"
             android:text="@string/copyright" />
     </LinearLayout>
 </layout>

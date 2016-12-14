@@ -2,8 +2,6 @@ package com.online.factory.factoryonline.modules.baidumap;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
-import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryPoi;
 import com.online.factory.factoryonline.models.MapPoi;
 import com.online.factory.factoryonline.models.WantedMessage;
 

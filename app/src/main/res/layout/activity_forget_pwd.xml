@@ -29,7 +29,7 @@
                 android:drawablePadding="@dimen/x5"
                 android:text="返回"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
                 android:layout_centerInParent="true"
                 android:text="忘记密码"
                 android:textColor="#424242"
-                android:textSize="22sp" />
+                android:textSize="@dimen/x16" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                 android:text="提交"
                 android:onClick="@{()->view.submit()}"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
         </RelativeLayout>
 
         <View
@@ -72,6 +72,7 @@
                 android:hint="请输入手机号"
                 android:paddingLeft="@dimen/x10"
                 android:textColor="#424242"
+                android:textSize="@dimen/x13"
                 android:textColorHint="#cdcdcd" />
 
             <View
@@ -103,6 +104,7 @@
                         android:hint="请输入短信验证码"
                         android:paddingLeft="@dimen/x10"
                         android:textColor="#424242"
+                        android:textSize="@dimen/x13"
                         android:textColorHint="#cdcdcd" />
 
                     <View
@@ -123,7 +125,7 @@
                     android:onClick="@{()->view.getVerifyCode()}"
                     android:text="获取验证码"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
             </LinearLayout>
 
             <EditText
@@ -138,6 +140,7 @@
                 android:drawableRight="@drawable/ic_pwd_close"
                 android:textColor="#424242"
                 android:paddingRight="@dimen/x5"
+                android:textSize="@dimen/x13"
                 android:textColorHint="#cdcdcd" />
 
             <View
@@ -155,6 +158,7 @@
                 android:hint="请再次输入新密码"
                 android:paddingLeft="@dimen/x10"
                 android:textColor="#424242"
+                android:textSize="@dimen/x13"
                 android:textColorHint="#cdcdcd" />
 
             <View

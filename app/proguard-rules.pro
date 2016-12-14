@@ -178,6 +178,6 @@
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
-
+# databinding
 -dontwarn android.databinding.**
 -keep class android.databinding.** { *; }

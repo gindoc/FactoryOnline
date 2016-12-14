@@ -29,7 +29,7 @@
                 android:drawablePadding="@dimen/x5"
                 android:text="返回"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
                 android:layout_centerInParent="true"
                 android:text="名称"
                 android:textColor="#424242"
-                android:textSize="22sp" />
+                android:textSize="@dimen/x16" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                 android:text="保存"
                 android:onClick="@{()->view.modifyName()}"
                 android:textColor="@color/colorPrimary"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
         </RelativeLayout>
 
         <View
@@ -76,7 +76,7 @@
                 android:background="@android:color/transparent"
                 android:paddingLeft="@dimen/x15"
                 android:textColor="#424242"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14" />
 
             <ImageView
                 android:layout_width="wrap_content"

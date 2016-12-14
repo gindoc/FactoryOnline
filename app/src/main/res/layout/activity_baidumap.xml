@@ -25,7 +25,7 @@
                 android:layout_gravity="center"
                 android:text="地图找房"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x16" />
         </android.support.v7.widget.Toolbar>
 
         <com.baidu.mapapi.map.MapView

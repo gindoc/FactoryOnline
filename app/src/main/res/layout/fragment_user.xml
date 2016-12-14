@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/user_background" />
+                    android:src="@drawable/publish_rental_background" />
 
 
                 <com.online.factory.factoryonline.customview.RoundImageView
@@ -65,7 +65,7 @@
                     android:text='@{user.userName}'
                     android:textColor="@android:color/white"
                     android:textColorHint="@android:color/white"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/x14" />
 
             </RelativeLayout>
 

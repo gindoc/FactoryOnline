@@ -7,7 +7,7 @@
     <color name="linkColor">#1976d2</color>
     <color name="infoColor">#929497</color>
     <color name="buttonFontColor">#acbbc5</color>
-    <color name="dividerColor">#e6e6e6</color>
+    <color name="dividerColor">#ccc</color>
     <color name="dotBlur">#cccccc</color>
     <color name="dotRed">#ff374b</color>
     <color name="swipe_color_red">#ff1131</color>

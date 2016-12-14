@@ -41,7 +41,7 @@
                     android:onClick="@{()->view.openCityPage()}"
                     android:text="正在定位"
                     android:textColor="#424242"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/x14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -56,6 +56,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="@dimen/y8"
                 android:layout_marginRight="@dimen/x19"
+                android:onClick="@{()->view.openSearchPage()}"
                 android:layout_marginTop="@dimen/y8"
                 android:background="@drawable/home_fragment_search_background"
                 android:gravity="center"
@@ -72,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:text="请输入搜索关键字"
                     android:textColor="#9d9ca2"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
             </LinearLayout>
 
         </LinearLayout>

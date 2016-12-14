@@ -1,6 +1,5 @@
 package com.online.factory.factoryonline.modules.main.fragments.user;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -11,18 +10,15 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.customview.DividerGridItemDecoration;
 import com.online.factory.factoryonline.customview.FullyGridLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
-import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.databinding.FragmentUserBinding;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.UserBean;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.login.LoginContext;
-import com.online.factory.factoryonline.utils.Saver;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -87,7 +83,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
 
     private void initRecyclerView() {
         gridLayoutManager.setSpanCount(SPAN_COUNT);
-        dividerGridItemDecoration.setDivider(ContextCompat.getDrawable(getContext(), R.drawable.line));
+        dividerGridItemDecoration.setDivider(ContextCompat.getDrawable(getContext(), R.drawable.line_with_db));
 
         mBinding.recyclerView.setLayoutManager(gridLayoutManager);
         mBinding.recyclerView.addItemDecoration(dividerGridItemDecoration);

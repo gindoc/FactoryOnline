@@ -32,6 +32,6 @@
             android:layout_marginBottom="@dimen/y15"
             android:text="@{viewModel.agentName}"
             android:textColor="#424242"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/x13"/>
     </LinearLayout>
 </layout>

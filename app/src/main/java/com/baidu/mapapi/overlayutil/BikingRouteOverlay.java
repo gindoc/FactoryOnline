@@ -98,7 +98,7 @@ public class BikingRouteOverlay extends OverlayManager {
                                                             .zIndex(10));
         }
 
-        // poly line list
+        // poly line_with_e6 list
         if (mRouteLine.getAllStep() != null
                 && mRouteLine.getAllStep().size() > 0) {
             LatLng lastStepLastPoint = null;

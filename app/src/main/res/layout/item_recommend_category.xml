@@ -38,7 +38,7 @@
                     android:text="@{viewModel.categoryName}"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
                     android:textColor='@{viewModel.isClick?@color/colorPrimary:@color/recommend_category_first_font}'
-                    android:textSize="18sp"
+                    android:textSize="@dimen/x14"
                     tool:text="区域/面积/价格的item" />
 
                 <TextView
@@ -50,7 +50,7 @@
                     android:text="@{viewModel.childCategoryNum}"
                     android:textColor="@android:color/white"
                     android:visibility='@{TextUtils.isEmpty(viewModel.childCategoryNum)?View.GONE:View.VISIBLE}'
-                    android:textSize="12sp"
+                    android:textSize="@dimen/x11"
                     tool:text="11" />
             </LinearLayout>
 
