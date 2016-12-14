@@ -46,6 +46,7 @@
             android:gravity="center"
             android:paddingLeft="@dimen/x15"
             android:text="返回"
+            android:onClick="@{()->view.finish()}"
             android:textColor="#424242"
             android:textSize="@dimen/x14" />
 

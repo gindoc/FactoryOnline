@@ -65,6 +65,20 @@
                 android:paddingLeft="@dimen/x11"
                 android:paddingRight="@dimen/x17"
                 android:text="地图"
+                android:visibility="gone"
+                android:textColor="#1ab80f"
+                android:textSize="@dimen/x14" />
+
+            <TextView
+                android:id="@+id/tv_scrollTop"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="@{view.scrollTop}"
+                android:paddingLeft="@dimen/x11"
+                android:visibility="gone"
+                android:paddingRight="@dimen/x11"
+                android:text="返回顶部"
                 android:textColor="#1ab80f"
                 android:textSize="@dimen/x14" />
         </LinearLayout>

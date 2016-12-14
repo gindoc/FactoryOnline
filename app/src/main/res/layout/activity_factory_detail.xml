@@ -574,6 +574,7 @@
                 android:layout_height="@dimen/y48"
                 android:layout_alignBottom="@id/iv_contact_people"
                 android:layout_alignParentRight="true"
+                android:onClick="@{()->view.phoneToContacter()}"
                 android:layout_marginRight="@dimen/x15"
                 android:src="@drawable/ic_phone_full" />
 
@@ -583,6 +584,7 @@
                 android:layout_height="@dimen/y48"
                 android:layout_alignBottom="@id/iv_contact_people"
                 android:layout_marginRight="@dimen/x15"
+                android:onClick="@{()->view.smsToContacter()}"
                 android:layout_toLeftOf="@id/iv_phone_to_contact_people"
                 android:src="@drawable/ic_sms_full" />
 

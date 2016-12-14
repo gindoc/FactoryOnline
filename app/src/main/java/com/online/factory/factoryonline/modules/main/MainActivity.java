@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity {
         }
     }
     public void onClickRecommend(View view){
+        mBinding.bottomTab.rbRecommend.setChecked(true);
         if(findFragment(RecommendFragment.class) == null){
             startWithPop(recommendFragment);
         }

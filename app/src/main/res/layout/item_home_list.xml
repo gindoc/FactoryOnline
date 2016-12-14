@@ -4,7 +4,9 @@
     xmlns:tool="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.text.TextUtils" />
 
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel" />
@@ -109,21 +111,36 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/space_tag"
+                    android:background="@{viewModel.tag1Background}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:text="空间大"
+                    android:textColor="@{viewModel.tag1TextColor}"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}'
                     android:layout_marginRight="@dimen/x10"
-                    android:textSize="@dimen/x11" />
+                    android:textSize="@dimen/x13" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/floor_tag"
+                    android:background="@{viewModel.tag2Background}"
+                    android:textColor="@{viewModel.tag2TextColor}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:text="空间大"
-                    android:textSize="@dimen/x11" />
+                    android:layout_marginRight="@dimen/x10"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}'
+                    android:textSize="@dimen/x13" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@{viewModel.tag3Background}"
+                    android:textColor="@{viewModel.tag3TextColor}"
+                    android:gravity="center"
+                    android:padding="@dimen/x3"
+                    android:textSize="@dimen/x13"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}'/>
             </com.google.android.flexbox.FlexboxLayout>
 
         </LinearLayout>

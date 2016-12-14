@@ -2,7 +2,6 @@ package com.online.factory.factoryonline.modules.main.fragments.home;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +23,7 @@ import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerView
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.databinding.FragmentCommissionBinding;
+import com.online.factory.factoryonline.databinding.FragmentFindBinding;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
 import com.online.factory.factoryonline.databinding.FragmentOwnerBinding;
 import com.online.factory.factoryonline.databinding.LayoutHomeHeaderBinding;
@@ -36,10 +36,10 @@ import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.modules.main.MainActivity;
+import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
-import com.online.factory.factoryonline.utils.TimeUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -62,6 +62,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     private LayoutHomeHeaderBinding mHeaderBinding;
     private FragmentOwnerBinding mOwnBinding;
     private FragmentCommissionBinding mCommissionBinding;
+    private FragmentFindBinding mFindBinding;
     private String agentNext;
 
     @Inject
@@ -78,6 +79,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Inject
     BDLocationListener mBdLocationListener;
+
+    @Inject
+    RecommendFragment recommendFragment;
 
     @Inject
     public HomeFragment() {
@@ -198,7 +202,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
      */
     public void findFactory() {
         mHeaderBinding.rolePick.removeAllViews();
-        LayoutInflater.from(getContext()).inflate(R.layout.fragment_find, mHeaderBinding.rolePick);
+        mFindBinding = FragmentFindBinding.inflate(LayoutInflater.from(getContext()), mHeaderBinding.rolePick, true);
+        mFindBinding.setView(this);
     }
 
     /**
@@ -249,6 +254,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
+    public void openRecommend() {
+        ((MainActivity)getActivity()).onClickRecommend(null);
+    }
     @Override
     public void onResume() {
         super.onResume();

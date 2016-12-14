@@ -133,7 +133,8 @@ public class DataManagerModule {
                         || request.url().toString().contains("smses")
                         || request.url().toString().contains("promediums")
                         || request.url().toString().contains("search")
-                        || request.url().toString().contains("promediummessages")) {
+                        || request.url().toString().contains("promediummessages")
+                        || request.url().toString().contains("feedbacks")) {
                     realRequest = request.newBuilder().build();
                 } else {
                     intercepterResponse = new Response.Builder()

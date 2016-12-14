@@ -236,7 +236,7 @@ public class DBManager {
 
         } catch (Exception e) {
             Timber.e(e.getMessage());
-            e.printStackTrace();
+//            e.printStackTrace();
         }finally {
             db.endTransaction();    //结束事务
             db.close();
@@ -384,6 +384,132 @@ public class DBManager {
                 wantedMessages.add(wantedMessage);
             }
             return wantedMessages;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            db.close();
+        }
+    }
+
+    public WantedMessage queryMaxIdHomeWantedMessage() {
+        db = helper.getWritableDatabase();
+        Cursor c = null;
+        try {
+            c = db.rawQuery("SELECT * FROM (WantedMessage INNER JOIN Factory ON factoryId = Factory.id)  " +
+                    "INNER JOIN Contacter ON contacterId = Contacter.id ORDER BY id desc LIMIT 1 ",null);
+            WantedMessage wantedMessage=new WantedMessage();
+            Factory factory;
+            Contacter contacter;
+            while (c.moveToNext()) {
+                wantedMessage = new WantedMessage();
+                factory = new Factory();
+                contacter = new Contacter();
+
+                factory.setId(c.getString(c.getColumnIndex("factoryId")));
+                factory.setTitle(c.getString(c.getColumnIndex("title")));
+                factory.setThumbnail_url(c.getString(c.getColumnIndex("thumbnail_url")));
+                factory.setPrice(c.getFloat(c.getColumnIndex("price")));
+                factory.setRange(c.getFloat(c.getColumnIndex("range")));
+                String[] stringTags = c.getString(c.getColumnIndex("tags")).split(",");
+                List<Tag> tags = new ArrayList<>();
+                for (String stringTag : stringTags) {
+                    Tag tag = new Tag();
+                    tag.setName(stringTag);
+                    tags.add(tag);
+                }
+                factory.setTags(tags);
+                String[] stringUrls = c.getString(c.getColumnIndex("image_urls")).split(",");
+                factory.setImage_urls(Arrays.asList(stringUrls));
+                factory.setDescription(c.getString(c.getColumnIndex("description")));
+                factory.setAddress_overview(c.getString(c.getColumnIndex("address_overview")));
+                factory.setPre_pay(c.getString(c.getColumnIndex("pre_pay")));
+                factory.setRent_type(c.getString(c.getColumnIndex("rent_type")));
+                factory.setGeohash(c.getString(c.getColumnIndex("geohash")));
+
+                contacter.setId(c.getString(c.getColumnIndex("contacterId")));
+                contacter.setName(c.getString(c.getColumnIndex("name")));
+                contacter.setPhone_num(c.getString(c.getColumnIndex("phone_num")));
+
+                wantedMessage.setId(c.getString(c.getColumnIndex("id")));
+                int i = c.getInt(c.getColumnIndex("isCollect"));
+                boolean a = i != 0;
+                wantedMessage.setCollect(a);
+                wantedMessage.setCreated_time(c.getInt(c.getColumnIndex("created_time")));
+                wantedMessage.setDelete_id(c.getString(c.getColumnIndex("delete_id")));
+                wantedMessage.setOwner_id(c.getString(c.getColumnIndex("owner_id")));
+                wantedMessage.setUpdate_id(c.getString(c.getColumnIndex("update_id")));
+                wantedMessage.setUpdate_time(c.getInt(c.getColumnIndex("update_time")));
+                wantedMessage.setFactory(factory);
+                wantedMessage.setContacter(contacter);
+            }
+            return wantedMessage;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            db.close();
+        }
+    }
+
+    public WantedMessage queryMaxIdWantedMessage() {
+        db = helper.getWritableDatabase();
+        Cursor c = null;
+        try {
+            c = db.rawQuery("SELECT * FROM (WantedMessage INNER JOIN Factory ON factoryId = Factory.id)  " +
+                    "INNER JOIN Contacter ON contacterId = Contacter.id ORDER BY id desc LIMIT 1 ",null);
+            WantedMessage wantedMessage=new WantedMessage();
+            Factory factory;
+            Contacter contacter;
+            while (c.moveToNext()) {
+                wantedMessage = new WantedMessage();
+                factory = new Factory();
+                contacter = new Contacter();
+
+                factory.setId(c.getString(c.getColumnIndex("factoryId")));
+                factory.setTitle(c.getString(c.getColumnIndex("title")));
+                factory.setThumbnail_url(c.getString(c.getColumnIndex("thumbnail_url")));
+                factory.setPrice(c.getFloat(c.getColumnIndex("price")));
+                factory.setRange(c.getFloat(c.getColumnIndex("range")));
+                String[] stringTags = c.getString(c.getColumnIndex("tags")).split(",");
+                List<Tag> tags = new ArrayList<>();
+                for (String stringTag : stringTags) {
+                    Tag tag = new Tag();
+                    tag.setName(stringTag);
+                    tags.add(tag);
+                }
+                factory.setTags(tags);
+                String[] stringUrls = c.getString(c.getColumnIndex("image_urls")).split(",");
+                factory.setImage_urls(Arrays.asList(stringUrls));
+                factory.setDescription(c.getString(c.getColumnIndex("description")));
+                factory.setAddress_overview(c.getString(c.getColumnIndex("address_overview")));
+                factory.setPre_pay(c.getString(c.getColumnIndex("pre_pay")));
+                factory.setRent_type(c.getString(c.getColumnIndex("rent_type")));
+                factory.setGeohash(c.getString(c.getColumnIndex("geohash")));
+
+                contacter.setId(c.getString(c.getColumnIndex("contacterId")));
+                contacter.setName(c.getString(c.getColumnIndex("name")));
+                contacter.setPhone_num(c.getString(c.getColumnIndex("phone_num")));
+
+                wantedMessage.setId(c.getString(c.getColumnIndex("id")));
+                int i = c.getInt(c.getColumnIndex("isCollect"));
+                boolean a = i != 0;
+                wantedMessage.setCollect(a);
+                wantedMessage.setCreated_time(c.getInt(c.getColumnIndex("created_time")));
+                wantedMessage.setDelete_id(c.getString(c.getColumnIndex("delete_id")));
+                wantedMessage.setOwner_id(c.getString(c.getColumnIndex("owner_id")));
+                wantedMessage.setUpdate_id(c.getString(c.getColumnIndex("update_id")));
+                wantedMessage.setUpdate_time(c.getInt(c.getColumnIndex("update_time")));
+                wantedMessage.setFactory(factory);
+                wantedMessage.setContacter(contacter);
+            }
+            return wantedMessage;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

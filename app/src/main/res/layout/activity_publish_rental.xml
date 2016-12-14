@@ -420,9 +420,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/x5"
-                                    android:background="@drawable/space_tag"
                                     android:padding="@dimen/x5"
-                                    android:textColor="#2b91f0"
                                     android:textSize="@dimen/x11"
                                     android:visibility="invisible" />
 
@@ -431,9 +429,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="@dimen/x5"
-                                    android:background="@drawable/floor_tag"
                                     android:padding="@dimen/x5"
-                                    android:textColor="#29ad15"
                                     android:textSize="@dimen/x11"
                                     android:visibility="invisible" />
 
@@ -441,10 +437,8 @@
                                     android:id="@+id/tv_tag3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/enviroment_tag"
                                     android:padding="@dimen/x5"
                                     android:textSize="@dimen/x11"
-                                    android:textColor="#edba1d"
                                     android:visibility="invisible" />
                             </LinearLayout>
 

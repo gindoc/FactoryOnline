@@ -35,6 +35,7 @@ public class RecordActivity extends BaseActivity<RecordContract.View, RecordPres
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_record);
+        mBinding.setView(this);
         StatusBarUtils.from(this)
                 //沉浸状态栏
                 .setTransparentStatusbar(true)

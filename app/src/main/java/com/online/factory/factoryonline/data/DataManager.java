@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
-import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.UpdateUser;
@@ -119,6 +118,14 @@ public class DataManager {
      */
     public Observable<Integer> getMaxUpdateTime() {
         return Observable.just(localApi.queryMaxUpdateTime());
+    }
+
+    public Observable<WantedMessage> getMaxIdWantedMessage() {
+        return Observable.just(localApi.queryMaxIdWantedMessage());
+    }
+
+    public Observable<WantedMessage> getMaxIdHomeWantedMessage(){
+        return Observable.just(localApi.queryMaxIdHomeWantedMessage());
     }
 
     /**
@@ -359,5 +366,13 @@ public class DataManager {
 
     public Observable<ProMediumMessageResponse> requestSearchResult(String next) {
         return factoryApi.getSearchResult(next);
+    }
+
+    public Observable<Response> messageFeedback(int messageId, String content, String remark) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        builder.addFormDataPart("content", content);
+        builder.addFormDataPart("remark", remark);
+        return factoryApi.messageFeedback(messageId, builder.build());
     }
 }

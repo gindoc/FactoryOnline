@@ -21,6 +21,7 @@ import com.online.factory.factoryonline.models.response.SearchResultResponse;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -191,4 +192,7 @@ public interface FactoryApi {
 
     @GET
     Observable<ProMediumMessageResponse> getSearchResult(@Url String next);
+
+    @POST("feedbacks/wantedmessage/{message_id}/")
+    Observable<Response> messageFeedback(@Path("message_id")int messageId, @Body RequestBody builder);
 }

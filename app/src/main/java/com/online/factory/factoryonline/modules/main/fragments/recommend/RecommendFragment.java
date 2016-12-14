@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.LinearRecyclerView;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
@@ -47,7 +49,7 @@ import timber.log.Timber;
  * Created by louiszgm on 2016/9/30.
  */
 public class RecommendFragment extends BaseFragment<RecommendContract.View, RecommendPresenter> implements
-        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener, LinearRecyclerView.OnScrollListener {
     private FragmentRecommendBinding mBinding;
     private LayoutRecommendFilterDistrictBinding mDistrictBinding;
     private LayoutRecommendFilterPriceAreaBinding mPriceBinding;
@@ -170,6 +172,10 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     public void openSearchPage(View view) {
         startActivity(SearchActivity.getStartIntent(getContext()));
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void scrollTop(View view) {
+        mBinding.recyclerView.scrollToPosition(0);
     }
 
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -461,6 +467,16 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             mPresenter.initRecommendList();
         }else {
             mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
+        }
+    }
+
+    @Override
+    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {}
+
+    @Override
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        if (dy > 0) {
+            mBinding.tvScrollTop.setVisibility(View.VISIBLE);
         }
     }
 

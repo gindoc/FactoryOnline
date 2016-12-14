@@ -111,9 +111,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/space_tag"
+                    android:background="@{viewModel.tag1Background}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
+                    android:textColor="@{viewModel.tag1TextColor}"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
                     android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}'
                     android:layout_marginRight="@dimen/x10"
@@ -122,7 +123,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/floor_tag"
+                    android:background="@{viewModel.tag2Background}"
+                    android:textColor="@{viewModel.tag2TextColor}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
                     android:layout_marginRight="@dimen/x10"
@@ -132,7 +134,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/enviroment_tag"
+                    android:background="@{viewModel.tag3Background}"
+                    android:textColor="@{viewModel.tag3TextColor}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
                     android:textSize="@dimen/x13"

@@ -4,15 +4,9 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.utils.DBManager;
 import com.online.factory.factoryonline.utils.Saver;
 
-import org.antlr.runtime.tree.Tree;
-
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
-
-import javax.inject.Inject;
 
 import rx.Observable;
 
@@ -66,5 +60,13 @@ public class LocalApi {
 
     public Observable<List<WantedMessage>> queryHomeWantedMessages() {
         return Observable.just(dbManager.queryHomeWantedMessages());
+    }
+
+    public WantedMessage queryMaxIdWantedMessage() {
+        return dbManager.queryMaxIdWantedMessage();
+    }
+
+    public WantedMessage queryMaxIdHomeWantedMessage() {
+        return dbManager.queryMaxIdHomeWantedMessage();
     }
 }

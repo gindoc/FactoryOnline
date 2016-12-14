@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,6 +27,7 @@
                 android:drawableLeft="@drawable/ic_arrow_left_green"
                 android:gravity="center_vertical"
                 android:text="返回"
+                android:onClick="@{()->view.finish()}"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/x14" />
 
@@ -35,6 +42,7 @@
                 android:textSize="@dimen/x16" />
 
             <Button
+                android:onClick="@{()->view.submit()}"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -53,6 +61,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
                 android:orientation="vertical">
 
                 <TextView
@@ -91,84 +101,87 @@
 
                 <include layout="@layout/line" />
 
-                <TextView
+                <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y44"
-                    android:drawableLeft="@drawable/gray_oval_outline"
-                    android:drawablePadding="@dimen/x15"
-                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/x15"
-                    android:text="厂房位置有误"
-                    android:textColor="#424242"
-                    android:textSize="@dimen/x14" />
+                    android:orientation="vertical">
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y44"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/x15"
+                        android:button="@drawable/report_selector"
+                        android:text="厂房位置有误"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:background="#dbdbdb" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="@dimen/x15"
-                    android:background="#dbdbdb" />
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y44"
+                        android:button="@drawable/report_selector"
+                        android:paddingLeft="@dimen/x15"
+                        android:gravity="center_vertical"
+                        android:text="房源价格不符"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/y44"
-                    android:drawableLeft="@drawable/gray_oval_outline"
-                    android:drawablePadding="@dimen/x15"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/x15"
-                    android:text="房源价格不符"
-                    android:textColor="#424242"
-                    android:textSize="@dimen/x14" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:background="#dbdbdb" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="@dimen/x15"
-                    android:background="#dbdbdb" />
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y44"
+                        android:button="@drawable/report_selector"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/x15"
+                        android:text="发布人电话有误"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/y44"
-                    android:drawableLeft="@drawable/gray_oval_outline"
-                    android:drawablePadding="@dimen/x15"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/x15"
-                    android:text="发布人电话有误"
-                    android:textColor="#424242"
-                    android:textSize="@dimen/x14" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:background="#dbdbdb" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="@dimen/x15"
-                    android:background="#dbdbdb" />
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y44"
+                        android:button="@drawable/report_selector"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/x15"
+                        android:text="图片或面积有误"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/y44"
-                    android:drawableLeft="@drawable/ic_selected"
-                    android:drawablePadding="@dimen/x15"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/x15"
-                    android:text="图片或面积有误"
-                    android:textColor="#424242"
-                    android:textSize="@dimen/x14" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_marginLeft="@dimen/x15"
+                        android:background="#dbdbdb" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_marginLeft="@dimen/x15"
-                    android:background="#dbdbdb" />
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y44"
+                        android:button="@drawable/report_selector"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/x15"
+                        android:text="其他"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
+                </RadioGroup>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/y44"
-                    android:drawableLeft="@drawable/gray_oval_outline"
-                    android:drawablePadding="@dimen/x15"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="@dimen/x15"
-                    android:text="其他"
-                    android:textColor="#424242"
-                    android:textSize="@dimen/x14" />
+
 
                 <include layout="@layout/line" />
 
@@ -186,6 +199,7 @@
                 <include layout="@layout/line" />
 
                 <EditText
+                    android:id="@+id/et_remark"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/y85"
                     android:layout_margin="@dimen/x10"
@@ -193,7 +207,6 @@
                     android:gravity="top|left"
                     android:hint="请详细描述你的投诉内容（字数200以内）"
                     android:padding="@dimen/x10"
-                    android:focusable="false"
                     android:textColorHint="#999999"
                     android:textSize="@dimen/x12" />
             </LinearLayout>

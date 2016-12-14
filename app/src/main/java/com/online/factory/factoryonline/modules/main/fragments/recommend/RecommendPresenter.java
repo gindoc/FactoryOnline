@@ -14,6 +14,7 @@ import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
 import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -57,15 +59,76 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         return dataManager.getRecommendInfos(params, true);
                     }
                 })
-                .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
+                .subscribe(new RxSubscriber<RecommendResponse>() {
                     @Override
-                    public Observable<List<WantedMessage>> call(RecommendResponse response) {
-                        if (response.getErro_code() == 200) {
-                            localApi.insertWantedMessages(response.getWantedMessages());
+                    public void _onNext(RecommendResponse response) {
+
+                        filterWithId(response.getWantedMessages());
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+//                .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
+//                    @Override
+//                    public Observable<RecommendResponse> call(Integer integer) {
+//                        Map<String, Object> params = new HashMap<String, Object>();
+//                        params.put("since", integer);
+//                        params.put("max", System.currentTimeMillis() / 1000);
+//                        return dataManager.getRecommendInfos(params, true);
+//                    }
+//                });
+//                .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
+//                    @Override
+//                    public Observable<List<WantedMessage>> call(RecommendResponse response) {
+//                        if (response.getErro_code() == 200) {
+//                            localApi.insertWantedMessages(response.getWantedMessages());
+//                        }
+//                        return Observable.just(response.getWantedMessages());
+//                    }
+//                })
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RxSubscriber<List<WantedMessage>>() {
+//                    @Override
+//                    public void _onNext(List<WantedMessage> wantedMessages) {
+//                        if (wantedMessages.size() > 0) {
+//                            getView().loadRecommendList(wantedMessages, true);
+//                            getView().cancelLoading();
+//                        }else {
+//                            onError(new ConnectException());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void _onError(Throwable throwable) {
+//                        if (throwable instanceof ConnectException) {
+//                            requestRecommendListByDB(1);
+//                        }
+//                        Timber.e(throwable.getMessage());
+//                        getView().cancelLoading();
+//                    }
+//                });
+    }
+
+    private void filterWithId(final List<WantedMessage> recommendInfos){
+        dataManager.getMaxIdWantedMessage()
+                .compose(getView().<WantedMessage>getBindToLifecycle())
+                .flatMap(new Func1<WantedMessage, Observable<List<WantedMessage>>>() {
+                    @Override
+                    public Observable<List<WantedMessage>> call(WantedMessage wantedMessage) {
+                        List<WantedMessage> wantedMessages = new ArrayList<WantedMessage>();
+                        for (WantedMessage wantedMessage1 : recommendInfos) {
+                            if (Integer.parseInt(wantedMessage1.getId()) > Integer.parseInt(wantedMessage.getId())) {
+                                wantedMessages.add(wantedMessage1);
+                            }
                         }
-                        return Observable.just(response.getWantedMessages());
+                        localApi.insertWantedMessages(wantedMessages);
+                        return Observable.just(wantedMessages);
                     }
                 })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new RxSubscriber<List<WantedMessage>>() {
                     @Override
@@ -87,6 +150,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         getView().cancelLoading();
                     }
                 });
+
     }
 
     /**
