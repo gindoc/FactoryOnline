@@ -18,6 +18,8 @@ public interface PersonalInfoContract {
         void refreshWhenLogOut();
 
         void showUser(User user);
+
+        void unLogin();
     }
 
     interface Presenter extends IBasePresenter {

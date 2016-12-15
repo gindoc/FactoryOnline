@@ -12,6 +12,8 @@ import com.online.factory.factoryonline.data.remote.Consts;
 import com.online.factory.factoryonline.models.UpdateUser;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FileUtils;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -54,6 +57,9 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
     Context context;
 
     @Inject
+    LoginContext loginContext;
+
+    @Inject
     public PersonalInfoPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
     }
@@ -66,7 +72,6 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
     }
 
     public void getUser() {
-        getView().showLoading();
         dataManager.getUser()
                 .compose(getView().<retrofit2.Response<JsonObject>>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
@@ -74,7 +79,16 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
                 .subscribe(new RxSubscriber<retrofit2.Response<JsonObject>>() {
                     @Override
                     public void _onNext(retrofit2.Response<JsonObject> response) {
-                        getView().hideLoading();
+                        try {
+                            if (response.errorBody() != null && response.errorBody().string().contains("认证令牌")) {
+                                Saver.logout();
+                                loginContext.setmState(new LogOutState());
+                                getView().unLogin();
+                                return;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         JsonObject body = response.body();
                         if (body.get("erro_code").toString().equals("200")) {
                             String str_user = body.get("user").getAsString();
@@ -93,7 +107,6 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
                     @Override
                     public void _onError(Throwable throwable) {
                         Timber.e(throwable.getMessage());
-                        getView().hideLoading();
                     }
                 });
     }

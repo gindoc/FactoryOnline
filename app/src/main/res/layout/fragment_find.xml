@@ -15,7 +15,8 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y85"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/y96"
             android:weightSum="3"
             android:orientation="horizontal">
 

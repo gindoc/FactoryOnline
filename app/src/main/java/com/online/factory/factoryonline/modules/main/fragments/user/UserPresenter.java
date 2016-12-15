@@ -6,10 +6,15 @@ import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.models.User;
+import com.online.factory.factoryonline.modules.login.LogInState;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
+
+import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -26,6 +31,10 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
 
     @Inject
     DataManager dataManager;
+
+    @Inject
+    LoginContext loginContext;
+
     @Inject
     public UserPresenter() {
     }
@@ -51,6 +60,15 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
                 .subscribe(new RxSubscriber<retrofit2.Response<JsonObject>>() {
                     @Override
                     public void _onNext(retrofit2.Response<JsonObject> response) {
+                        try {
+                            if (response.errorBody() != null && response.errorBody().string().contains("认证令牌")) {
+                                Saver.logout();
+                                loginContext.setmState(new LogOutState());
+                                return;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         JsonObject body = response.body();
                         if (body.get("erro_code").toString().equals("200")) {
                             String str_user = body.get("user").getAsString();

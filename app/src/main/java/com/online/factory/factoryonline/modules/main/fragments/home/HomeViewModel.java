@@ -42,12 +42,12 @@ public class HomeViewModel extends BaseObservable {
 
     @Bindable
     public String getFactoryPrice() {
-        return factoryInfo.getPrice()+"/㎡/月";
+        return factoryInfo.getPrice()+"元/㎡/月";
     }
 
     @Bindable
     public String getFactoryTotalPrice() {
-        return factoryInfo.getPrice() * factoryInfo.getRange() + "元/月";
+        return (int)(factoryInfo.getPrice() * factoryInfo.getRange()) + "元/月";
     }
 
     @Bindable
@@ -80,6 +80,10 @@ public class HomeViewModel extends BaseObservable {
     @Bindable
     public String getAgentName() {
         return proMedium.getReal_name();
+    }
+
+    public String getAgentBrand(){
+        return proMedium.getBranch();
     }
 
     @Bindable

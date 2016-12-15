@@ -40,17 +40,17 @@ public class FactoryDetailViewModel extends BaseObservable {
 
     @Bindable
     public String getPrice() {
-        return factory.getPrice()+"/㎡/月";
+        return factory.getPrice()+"元";
     }
 
     @Bindable
     public String getTotalPrice() {
-        return factory.getPrice() * factory.getRange()+"/月";
+        return (int)(factory.getPrice() * factory.getRange())+"元";
     }
 
     @Bindable
     public String getRange() {
-        return factory.getRange()+"㎡";
+        return (int)factory.getRange()+"㎡";
     }
 
     @Bindable

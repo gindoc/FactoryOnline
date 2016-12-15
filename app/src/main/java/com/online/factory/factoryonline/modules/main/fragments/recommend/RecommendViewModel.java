@@ -54,17 +54,17 @@ public class RecommendViewModel extends BaseObservable {
 
     @Bindable
     public String getPrice() {
-        return info.getPrice()+"/㎡/月";
+        return info.getPrice()+"元/㎡/月";
     }
 
     @Bindable
     public String getArea() {
-        return (int)info.getRange()+"/㎡";
+        return (int)info.getRange()+"㎡";
     }
 
     @Bindable
     public String getFactoryTotalPrice() {
-        return info.getRange() * info.getPrice() + "元/月";
+        return (int)(info.getRange() * info.getPrice()) + "元/月";
     }
 
     @Bindable

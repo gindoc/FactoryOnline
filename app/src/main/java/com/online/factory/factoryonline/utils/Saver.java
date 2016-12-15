@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.online.factory.factoryonline.data.local.SharePreferenceKey;
+import com.online.factory.factoryonline.models.User;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -75,5 +78,17 @@ public class Saver {
         Editor editor = sharePref.edit();
         editor.putStringSet("searchHistory", history);
         editor.commit();
+    }
+
+    public static void logout() {
+        setToken("");
+        setLoginState(false);
+        saveSerializableObject(null, SharePreferenceKey.USER);
+    }
+
+    public static void login(User user, String token) {
+        setLoginState(true);
+        setToken(token);
+        saveSerializableObject(user, SharePreferenceKey.USER);
     }
 }

@@ -1,6 +1,8 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
@@ -151,6 +154,20 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     public void showUser(User user) {
         this.user = user;
         mBinding.setUser(user);
+    }
+
+    @Override
+    public void unLogin() {
+        Toast.makeText(getContext(), "当前未登陆，请先登录", Toast.LENGTH_SHORT).show();
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.unLogin)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        getActivity().finish();
+                    }
+                }).create().show();
     }
 
     @Override

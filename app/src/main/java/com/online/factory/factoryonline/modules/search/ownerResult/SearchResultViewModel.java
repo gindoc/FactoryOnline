@@ -37,12 +37,12 @@ public class SearchResultViewModel extends BaseObservable {
 
     @Bindable
     public String getArea() {
-        return factory.getRange()+"㎡";
+        return (int)factory.getRange()+"㎡";
     }
 
     @Bindable
     public String getTotalPrice() {
-        return factory.getPrice() * factory.getRange() + "元/月";
+        return (int)(factory.getPrice() * factory.getRange()) + "元/月";
     }
 
     @Bindable
