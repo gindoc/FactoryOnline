@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -12,7 +13,6 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.databinding.ActivityForgetPwdBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
-import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.Validate;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
@@ -39,6 +39,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
     private Subscription subscription;
     @Inject
     ForgetPwdPresenter mPresenter;
+    private boolean isShowPwd = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,5 +141,16 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
             subscription.unsubscribe();
         }
         super.onDestroy();
+    }
+
+    public void showPwd() {
+        if (!isShowPwd) {
+            mBinding.ivTooglePwd.setImageResource(R.drawable.ic_pwd_open);
+            mBinding.etNewPwd.setInputType(InputType.TYPE_CLASS_TEXT);
+        }else {
+            mBinding.ivTooglePwd.setImageResource(R.drawable.ic_pwd_close);
+            mBinding.etNewPwd.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        }
+        isShowPwd = !isShowPwd;
     }
 }

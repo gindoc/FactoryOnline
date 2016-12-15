@@ -332,7 +332,6 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void loadRecommendList(List<WantedMessage> wantedMessages, boolean action) {
-        isShowEmptyView(wantedMessages);
         if (action) {
             for (WantedMessage wantedMessage : wantedMessages) {
                 ids.add(Integer.parseInt(wantedMessage.getId()));
@@ -344,10 +343,11 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             mAdapter.getData().addAll(wantedMessages);
         }
         mBinding.recyclerView.notifyDataSetChanged();
+        isShowEmptyView();
     }
 
-    private void isShowEmptyView(List<WantedMessage> wantedMessages) {
-        if (wantedMessages.size() > 0) {
+    private void isShowEmptyView() {
+        if (mAdapter.getData().size() > 0) {
             mBinding.llNetworkError.setVisibility(View.GONE);
         } else {
             mBinding.llNetworkError.setVisibility(View.VISIBLE);
@@ -356,7 +356,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void loadFilterResult(List<WantedMessage> wantedMessages, int filterCount) {
-        isShowEmptyView(wantedMessages);
+        isShowEmptyView();
         filterPage++;
         this.filterCount = filterCount;
         mAdapter.getData().clear();
@@ -366,7 +366,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void loadPullUpResultWithFilter(List<WantedMessage> wantedMessages) {
-        isShowEmptyView(wantedMessages);
+        isShowEmptyView();
         filterPage++;
         mAdapter.getData().addAll(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();

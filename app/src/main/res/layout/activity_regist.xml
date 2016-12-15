@@ -124,10 +124,12 @@
                     android:textSize="@dimen/x13" />
 
                 <ImageView
+                    android:id="@+id/iv_toogle_pwd"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/x5"
                     android:paddingRight="@dimen/x5"
+                    android:onClick="@{()->view.showPwd()}"
                     android:src="@drawable/ic_pwd_close" />
             </LinearLayout>
 

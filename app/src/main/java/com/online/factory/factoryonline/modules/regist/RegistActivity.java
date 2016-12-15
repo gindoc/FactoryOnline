@@ -5,17 +5,16 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
-import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityRegistBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.models.post.Regist;
-import com.online.factory.factoryonline.utils.MD5;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.Validate;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
@@ -46,6 +45,7 @@ public class RegistActivity extends BaseActivity<RegistContract.View, RegistPres
     String device_id;
 
     private ActivityRegistBinding mBinding;
+    private boolean isShowPwd = false;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, RegistActivity.class);
@@ -179,5 +179,16 @@ public class RegistActivity extends BaseActivity<RegistContract.View, RegistPres
             overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
         }
         return true;
+    }
+
+    public void showPwd() {
+        if (!isShowPwd) {
+            mBinding.ivTooglePwd.setImageResource(R.drawable.ic_pwd_open);
+            mBinding.etPwd.setInputType(InputType.TYPE_CLASS_TEXT);
+        }else {
+            mBinding.ivTooglePwd.setImageResource(R.drawable.ic_pwd_close);
+            mBinding.etPwd.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        }
+        isShowPwd = !isShowPwd;
     }
 }

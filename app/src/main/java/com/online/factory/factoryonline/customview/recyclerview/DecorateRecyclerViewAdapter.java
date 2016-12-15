@@ -130,6 +130,7 @@ public class DecorateRecyclerViewAdapter<T extends RecyclerView.Adapter> extends
                     viewHolder.setVisibility(shouldShow);
                 }
                 footer.setVisibility(shouldShow ? View.VISIBLE : View.GONE);
+                notifyDataSetChanged();
             }
         }
     }
