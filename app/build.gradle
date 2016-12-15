@@ -121,5 +121,5 @@ dependencies {
     // EasyPermissions
     compile 'pub.devrel:easypermissions:0.2.1'
 
-    compile 'commons-codec:commons-codec:20041127.091804'
+
 }

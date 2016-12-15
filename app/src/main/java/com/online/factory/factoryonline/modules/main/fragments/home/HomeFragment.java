@@ -5,15 +5,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -198,7 +194,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
         mAdapter.setOnItemClickListener(this);
-        mBinding.recyclerView.setPageFooter(R.layout.layout_home_emptyview);
+        View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.layout_home_emptyview, mBinding
+                .recyclerView, false);
+        mBinding.recyclerView.setPageFooter(emptyView);
         mBinding.recyclerView.showLoadingFooter();
     }
 

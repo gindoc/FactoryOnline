@@ -99,7 +99,7 @@
                 <LinearLayout
                     android:id="@+id/ll_network_error"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/y150"
+                    android:layout_height="@dimen/y250"
                     android:gravity="center"
                     android:orientation="vertical">
 
