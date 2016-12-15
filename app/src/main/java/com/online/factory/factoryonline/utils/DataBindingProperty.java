@@ -1,11 +1,11 @@
 package com.online.factory.factoryonline.utils;
 
 import android.databinding.BindingAdapter;
+import org.apache.commons.codec.binary.Base64;
 import android.graphics.Bitmap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.widget.ImageView;
-import org.apache.commons.codec.binary.Base64;
 import com.online.factory.factoryonline.R;
 import com.squareup.picasso.Picasso;
 

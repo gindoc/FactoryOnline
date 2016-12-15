@@ -1,6 +1,8 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd;
 
 
+import org.apache.commons.codec.binary.Base64;
+
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
@@ -9,7 +11,6 @@ import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
-import org.apache.commons.codec.binary.Base64;
 
 import javax.inject.Inject;
 

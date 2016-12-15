@@ -92,19 +92,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
-                <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
-                    android:id="@+id/recyclerView"
+                <ImageView
+                    android:id="@+id/iv_network_error"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:cacheColorHint="@null"
-                    android:scrollbars="vertical" />
-            </android.support.v4.widget.SwipeRefreshLayout>
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/network_error"/>
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/swipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:cacheColorHint="@null"
+                        android:scrollbars="vertical" />
+                </android.support.v4.widget.SwipeRefreshLayout>
 
+            </FrameLayout>
 
             <com.online.factory.factoryonline.customview.DropDownMenu
                 android:id="@+id/dropDownMenu"

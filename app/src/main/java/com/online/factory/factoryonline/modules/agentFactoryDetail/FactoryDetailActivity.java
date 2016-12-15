@@ -38,6 +38,7 @@ import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
+
 import org.apache.commons.codec.binary.Base64;
 
 import java.util.ArrayList;

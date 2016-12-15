@@ -126,6 +126,7 @@ public class AgentCollectionFragment extends BaseFragment<AgentCollectionContrac
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        mAdapter.getData().clear();
         mPresenter.requestPublications(getString(R.string.api) + "user/collections/promediummessages/");
     }
 

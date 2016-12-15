@@ -136,7 +136,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mPriceBinding.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkParams(mPriceBinding, RecommendContract.PRICE)){
+                if (checkParams(mPriceBinding, RecommendContract.PRICE)) {
                     mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
                 }
             }
@@ -145,7 +145,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mAreaBinding.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (checkParams(mAreaBinding, RecommendContract.AREA)){
+                if (checkParams(mAreaBinding, RecommendContract.AREA)) {
                     mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
                 }
             }
@@ -176,6 +176,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     public void scrollTop(View view) {
         mBinding.recyclerView.scrollToPosition(0);
+        mBinding.tvScrollTop.setVisibility(View.GONE);
     }
 
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -184,6 +185,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer, container, false));
         mBinding.recyclerView.setOnPageListener(this);
         mAdapter.setOnItemClickListener(this);
+        mBinding.recyclerView.setOnScrollListener(this);
 
         mDistrictBinding.recyclerviewFirstCat.setAdapter(mDistrictFirCategoryAdapter);         //初始化推荐页面的一级目录
         mDistrictFirCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
@@ -212,7 +214,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
                     recommendFilter.setAreaId(area.getId());
                     recommendFilter.getFiltertype().add(RecommendContract.DISTRICT);
                     mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
-                }else {
+                } else {
                     recommendFilter.getFiltertype().remove(RecommendContract.DISTRICT);
                     recommendFilter.setAreaId(-1);
                     notFilter();
@@ -246,36 +248,36 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         recommendFilter.getFiltertype().add(type);
         isFilter = true;
         if (type.equals(RecommendContract.PRICE)) {
-            if (position > 0 && position<adapter.getData().size()-1) {
+            if (position > 0 && position < adapter.getData().size() - 1) {
                 String range = text.substring(0, text.indexOf("元"));
                 String[] minAndMax = range.split("~");
                 recommendFilter.getMinranges().addProperty(type, Integer.parseInt(minAndMax[0]));
                 recommendFilter.getMaxranges().addProperty(type, Integer.parseInt(minAndMax[1]));
                 mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
-            } else if (position == adapter.getData().size()-1) {
+            } else if (position == adapter.getData().size() - 1) {
                 String min = text.substring(0, text.indexOf("元"));
                 recommendFilter.getMinranges().addProperty(type, Integer.parseInt(min));
                 recommendFilter.getMaxranges().addProperty(type, -1);
                 mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
-            }else {
+            } else {
                 recommendFilter.getFiltertype().remove(RecommendContract.PRICE);
                 recommendFilter.getMinranges().remove(RecommendContract.PRICE);
                 recommendFilter.getMaxranges().remove(RecommendContract.PRICE);
                 notFilter();
             }
         } else if (type.equals(RecommendContract.AREA)) {
-            if (position > 0 && position<adapter.getData().size()-1) {
+            if (position > 0 && position < adapter.getData().size() - 1) {
                 String range = text.substring(0, text.indexOf("平"));
                 String[] minAndMax = range.split("~");
                 recommendFilter.getMinranges().addProperty(type, Integer.parseInt(minAndMax[0]));
                 recommendFilter.getMaxranges().addProperty(type, Integer.parseInt(minAndMax[1]));
                 mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
-            } else if (position == adapter.getData().size()-1) {
-                String min = text.substring(text.indexOf("于")+1, text.indexOf("平"));
+            } else if (position == adapter.getData().size() - 1) {
+                String min = text.substring(text.indexOf("于") + 1, text.indexOf("平"));
                 recommendFilter.getMinranges().addProperty(type, Integer.parseInt(min));
                 recommendFilter.getMaxranges().addProperty(type, -1);
                 mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
-            }else {
+            } else {
                 recommendFilter.getFiltertype().remove(RecommendContract.AREA);
                 recommendFilter.getMinranges().remove(RecommendContract.AREA);
                 recommendFilter.getMaxranges().remove(RecommendContract.AREA);
@@ -329,6 +331,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void loadRecommendList(List<WantedMessage> wantedMessages, boolean action) {
+        isShowEmptyView(wantedMessages);
         if (action) {
             for (WantedMessage wantedMessage : wantedMessages) {
                 ids.add(Integer.parseInt(wantedMessage.getId()));
@@ -342,8 +345,17 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mBinding.recyclerView.notifyDataSetChanged();
     }
 
+    private void isShowEmptyView(List<WantedMessage> wantedMessages) {
+        if (wantedMessages.size() > 0) {
+            mBinding.ivNetworkError.setVisibility(View.GONE);
+        } else {
+            mBinding.ivNetworkError.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void loadFilterResult(List<WantedMessage> wantedMessages, int filterCount) {
+        isShowEmptyView(wantedMessages);
         filterPage++;
         this.filterCount = filterCount;
         mAdapter.getData().clear();
@@ -353,6 +365,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void loadPullUpResultWithFilter(List<WantedMessage> wantedMessages) {
+        isShowEmptyView(wantedMessages);
         filterPage++;
         mAdapter.getData().addAll(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
@@ -400,7 +413,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         if (isFilter) {
             Toast.makeText(getContext(), "共有" + filterCount + "条信息", Toast.LENGTH_SHORT).show();
             mBinding.swipe.setRefreshing(false);
-        }else {
+        } else {
             mPresenter.requestRecommendListByNet(downPage);
         }
     }
@@ -429,7 +442,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             Toast.makeText(getContext(), "请填写最小值", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (TextUtils.isEmpty(max)){
+        if (TextUtils.isEmpty(max)) {
             Toast.makeText(getContext(), "请填写最大值", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -437,7 +450,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             Toast.makeText(getContext(), "请输入正确的值（最大值不能小于最小值）", Toast.LENGTH_SHORT).show();
             return false;
         }
-        mBinding.dropDownMenu.setTabText(min+"~"+max);
+        mBinding.dropDownMenu.setTabText(min + "~" + max);
         mBinding.dropDownMenu.closeMenu();
         hideKeyboard();
         filterPage = 1;
@@ -465,13 +478,14 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             downPage = 1;
             mAdapter.getData().clear();
             mPresenter.initRecommendList();
-        }else {
+        } else {
             mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
         }
     }
 
     @Override
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {}
+    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+    }
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -480,7 +494,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         }
     }
 
-    class Filter{
+    class Filter {
         JsonObject maxranges = new JsonObject();
         JsonObject minranges = new JsonObject();
         Set<String> filtertype = new HashSet<>();

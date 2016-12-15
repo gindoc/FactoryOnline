@@ -128,6 +128,7 @@ public class OwnerCollectionFragment extends BaseFragment<OwnerCollectionContrac
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        mAdapter.getData().clear();
         mPresenter.requestPublications(getString(R.string.api) + "user/collections/wantedmessages/");
     }
 

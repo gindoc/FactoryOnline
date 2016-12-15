@@ -120,14 +120,19 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                 .flatMap(new Func1<WantedMessage, Observable<List<WantedMessage>>>() {
                     @Override
                     public Observable<List<WantedMessage>> call(WantedMessage wantedMessage) {
-                        List<WantedMessage> wantedMessages = new ArrayList<WantedMessage>();
-                        for (WantedMessage wantedMessage1 : recommendInfos) {
-                            if (Integer.parseInt(wantedMessage1.getId()) > Integer.parseInt(wantedMessage.getId())) {
-                                wantedMessages.add(wantedMessage1);
+                        if (wantedMessage.getId() == null) {
+                            localApi.insertWantedMessages(recommendInfos);
+                            return Observable.just(recommendInfos);
+                        }else {
+                            List<WantedMessage> wantedMessages = new ArrayList<WantedMessage>();
+                            for (WantedMessage wantedMessage1 : recommendInfos) {
+                                if (Integer.parseInt(wantedMessage1.getId()) > Integer.parseInt(wantedMessage.getId())) {
+                                    wantedMessages.add(wantedMessage1);
+                                }
                             }
+                            localApi.insertWantedMessages(wantedMessages);
+                            return Observable.just(wantedMessages);
                         }
-                        localApi.insertWantedMessages(wantedMessages);
-                        return Observable.just(wantedMessages);
                     }
                 })
                 .subscribeOn(Schedulers.io())
