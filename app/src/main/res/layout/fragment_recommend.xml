@@ -32,9 +32,9 @@
                 android:layout_marginRight="@dimen/x11"
                 android:layout_marginTop="@dimen/x5"
                 android:layout_weight="1"
-                android:onClick="@{view.openSearchPage}"
                 android:background="@drawable/home_fragment_search_background"
-                android:gravity="center">
+                android:gravity="center"
+                android:onClick="@{view.openSearchPage}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -65,9 +65,9 @@
                 android:paddingLeft="@dimen/x11"
                 android:paddingRight="@dimen/x17"
                 android:text="地图"
-                android:visibility="gone"
                 android:textColor="#1ab80f"
-                android:textSize="@dimen/x14" />
+                android:textSize="@dimen/x14"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_scrollTop"
@@ -76,11 +76,11 @@
                 android:gravity="center_vertical"
                 android:onClick="@{view.scrollTop}"
                 android:paddingLeft="@dimen/x11"
-                android:visibility="gone"
                 android:paddingRight="@dimen/x11"
                 android:text="返回顶部"
                 android:textColor="#1ab80f"
-                android:textSize="@dimen/x14" />
+                android:textSize="@dimen/x14"
+                android:visibility="gone" />
         </LinearLayout>
 
         <View
@@ -96,16 +96,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/iv_network_error"
+                <LinearLayout
+                    android:id="@+id/ll_network_error"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/network_error"/>
+                    android:layout_height="@dimen/y150"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/network_error" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/y10"
+                        android:text="暂无数据"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x16" />
+                </LinearLayout>
+
+
                 <android.support.v4.widget.SwipeRefreshLayout
                     android:id="@+id/swipe"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"

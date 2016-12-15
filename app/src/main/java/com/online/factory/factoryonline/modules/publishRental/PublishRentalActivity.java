@@ -369,7 +369,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     @Override
     public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-        if (geoCodeResult != null) {
+        if (geoCodeResult != null && geoCodeResult.getLocation()!=null) {
             double longitude = geoCodeResult.getLocation().longitude;
             double latitude = geoCodeResult.getLocation().latitude;
             GeoHash geoHash = new GeoHash();

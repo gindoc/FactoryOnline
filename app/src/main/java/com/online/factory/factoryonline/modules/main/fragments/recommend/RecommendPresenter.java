@@ -73,45 +73,6 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         getView().cancelLoading();
                     }
                 });
-//                .flatMap(new Func1<Integer, Observable<RecommendResponse>>() {
-//                    @Override
-//                    public Observable<RecommendResponse> call(Integer integer) {
-//                        Map<String, Object> params = new HashMap<String, Object>();
-//                        params.put("since", integer);
-//                        params.put("max", System.currentTimeMillis() / 1000);
-//                        return dataManager.getRecommendInfos(params, true);
-//                    }
-//                });
-//                .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
-//                    @Override
-//                    public Observable<List<WantedMessage>> call(RecommendResponse response) {
-//                        if (response.getErro_code() == 200) {
-//                            localApi.insertWantedMessages(response.getWantedMessages());
-//                        }
-//                        return Observable.just(response.getWantedMessages());
-//                    }
-//                })
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new RxSubscriber<List<WantedMessage>>() {
-//                    @Override
-//                    public void _onNext(List<WantedMessage> wantedMessages) {
-//                        if (wantedMessages.size() > 0) {
-//                            getView().loadRecommendList(wantedMessages, true);
-//                            getView().cancelLoading();
-//                        }else {
-//                            onError(new ConnectException());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void _onError(Throwable throwable) {
-//                        if (throwable instanceof ConnectException) {
-//                            requestRecommendListByDB(1);
-//                        }
-//                        Timber.e(throwable.getMessage());
-//                        getView().cancelLoading();
-//                    }
-//                });
     }
 
     private void filterWithId(final List<WantedMessage> recommendInfos){
@@ -193,35 +154,6 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         getView().cancelLoading();
                     }
                 });
-//                .flatMap(new Func1<RecommendResponse, Observable<List<WantedMessage>>>() {
-//                    @Override
-//                    public Observable<List<WantedMessage>> call(RecommendResponse response) {
-//                        if (response.getErro_code() == 200) {
-//                            localApi.insertWantedMessages(response.getWantedMessages());
-//                        }
-//                        return Observable.just(response.getWantedMessages());
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new RxSubscriber<List<WantedMessage>>() {
-//                    @Override
-//                    public void _onNext(List<WantedMessage> wantedMessages) {
-//                        if (wantedMessages.size() > 0) {
-//                            getView().loadRecommendList(wantedMessages, true);
-//                        }
-//                        getView().cancelLoading();
-//                    }
-//
-//                    @Override
-//                    public void _onError(Throwable throwable) {
-//                        if (throwable instanceof ConnectException) {
-//                            getView().showError("网络连接失败，请检查你的网络！！！");
-//                        }
-//                        Timber.e(throwable.getMessage());
-//                        getView().cancelLoading();
-//                    }
-//                });
     }
 
     private void filterWithIdNotInit(List<WantedMessage> wantedMessages){

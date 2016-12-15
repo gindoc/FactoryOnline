@@ -144,8 +144,8 @@ public class SlideShowView extends FrameLayout {
 
             Picasso.with(context)
                     .load((String) imageView.getTag())
-                    .placeholder(R.drawable.ic_msg_online)
-                    .error(R.drawable.ic_home_full)
+                    .placeholder(R.drawable.ic_no_pic)
+                    .error(R.drawable.ic_no_pic)
                     .into(imageView);
 
             ((ViewPager) container).addView(imageViewsList.get(position));

@@ -198,7 +198,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
         mAdapter.setOnItemClickListener(this);
-
+        mBinding.recyclerView.setPageFooter(R.layout.layout_home_emptyview);
+        mBinding.recyclerView.showLoadingFooter();
     }
 
     /**
@@ -307,6 +308,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void loadWantedMessages(List<WantedMessage> wantedMessages) {
         mAdapter.setData(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.hideLoadingFooter();
     }
 
     @Override

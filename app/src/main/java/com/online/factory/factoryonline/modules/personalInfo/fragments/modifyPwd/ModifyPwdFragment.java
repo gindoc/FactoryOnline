@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import timber.log.Timber;
@@ -35,6 +36,7 @@ import timber.log.Timber;
 public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, ModifyPwdPresenter> implements ModifyPwdContract.View {
     public static final String PHONE_NUM = "PHONE_NUM";
     private FragmentModifyPwdBinding mBinding;
+    private Subscription subscription;
 
     @Inject
     ModifyPwdPresenter mPresenter;
@@ -106,8 +108,7 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
     }
 
     public void refleshSmsButton() {
-        Observable.interval(1, TimeUnit.SECONDS)
-                .compose(this.<Long>getBindToLifecycle())
+        subscription = Observable.interval(0,1, TimeUnit.SECONDS)
                 .filter(new Func1<Long, Boolean>() {
                     @Override
                     public Boolean call(Long aLong) {
@@ -137,6 +138,14 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
     public void finish() {
         Toast.makeText(getContext(), "修改密码成功", Toast.LENGTH_SHORT).show();
         pop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (subscription!=null&&subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+        super.onDestroyView();
     }
 
 }

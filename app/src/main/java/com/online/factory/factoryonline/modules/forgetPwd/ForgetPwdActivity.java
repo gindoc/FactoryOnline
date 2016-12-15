@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import timber.log.Timber;
@@ -35,7 +36,7 @@ import timber.log.Timber;
 
 public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, ForgetPwdPresenter> implements ForgetPwdContract.View {
     private ActivityForgetPwdBinding mBinding;
-
+    private Subscription subscription;
     @Inject
     ForgetPwdPresenter mPresenter;
 
@@ -98,8 +99,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
     }
 
     public void refleshSmsButton() {
-        Observable.interval(1, TimeUnit.SECONDS)
-                .compose(this.<Long>getBindToLifecycle())
+        subscription = Observable.interval(0, 1, TimeUnit.SECONDS)
                 .filter(new Func1<Long, Boolean>() {
                     @Override
                     public Boolean call(Long aLong) {
@@ -132,5 +132,13 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, ForgetPwdActivity.class);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (subscription!=null&&subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+        super.onDestroy();
     }
 }

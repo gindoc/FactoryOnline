@@ -104,6 +104,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         downPage = 1;
         upPage = 1;
         filterPage = 1;
+        isFilter = false;
         ids = new ArrayList<>();
         recommendFilter = new Filter();
 
@@ -347,9 +348,9 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     private void isShowEmptyView(List<WantedMessage> wantedMessages) {
         if (wantedMessages.size() > 0) {
-            mBinding.ivNetworkError.setVisibility(View.GONE);
+            mBinding.llNetworkError.setVisibility(View.GONE);
         } else {
-            mBinding.ivNetworkError.setVisibility(View.VISIBLE);
+            mBinding.llNetworkError.setVisibility(View.VISIBLE);
         }
     }
 
