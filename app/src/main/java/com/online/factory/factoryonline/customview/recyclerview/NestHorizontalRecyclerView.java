@@ -10,17 +10,17 @@ import android.view.MotionEvent;
  * 作用:
  */
 
-public class MyRecyclerView extends SuperRecyclerView {
+public class NestHorizontalRecyclerView extends SuperRecyclerView {
     private float xDistance, yDistance, xLast, yLast;
-    public MyRecyclerView(Context context) {
+    public NestHorizontalRecyclerView(Context context) {
         super(context);
     }
 
-    public MyRecyclerView(Context context, AttributeSet attrs) {
+    public NestHorizontalRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public NestHorizontalRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
