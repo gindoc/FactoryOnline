@@ -14,6 +14,7 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.android.FragmentEvent;
 import com.trello.rxlifecycle.android.RxLifecycleAndroid;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,10 +36,12 @@ public abstract class BaseFragment<V , T extends BasePresenter<V>>  extends Supp
     private CharSequence mTitle;
     private T mPresent;
     private Map<Integer, PermissionCallback> mPermissonCallbacks  = new HashMap<>();
+    private String mPageName;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPageName = getClass().getName();
         lifecycleSubject.onNext(FragmentEvent.CREATE);
         mPresent = createPresent();
         if(mPresent != null){
@@ -111,11 +114,13 @@ public abstract class BaseFragment<V , T extends BasePresenter<V>>  extends Supp
     @Override
     public void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(mPageName);
         lifecycleSubject.onNext(FragmentEvent.RESUME);
     }
 
     @Override
     public void onPause() {
+        MobclickAgent.onPageEnd(mPageName);
         lifecycleSubject.onNext(FragmentEvent.PAUSE);
         super.onPause();
     }

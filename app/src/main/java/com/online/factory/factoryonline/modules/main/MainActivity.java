@@ -13,12 +13,15 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityMainBinding;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
 
 import javax.inject.Inject;
+
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
 
@@ -46,6 +49,7 @@ public class MainActivity extends BaseActivity {
         mBinding.bottomTab.rbHome.setChecked(true);
 
         loadRootFragment(R.id.tab_content, homeFragment);
+
     }
 
     @Override

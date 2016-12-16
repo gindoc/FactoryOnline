@@ -41,7 +41,8 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="MLPHyB7vZjqhVxq48DQM72Y6" />
 
-        <meta-data android:name="JPUSH_APPKEY" android:value="2f0bf84aec9e72e58d647ea2" />
+        <meta-data android:value="584e4c15b27b0a4150000132" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="YingYongBao" android:name="UMENG_CHANNEL"/>
 
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
 

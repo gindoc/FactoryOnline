@@ -1,6 +1,8 @@
 package com.online.factory.factoryonline.base;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -8,6 +10,7 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -25,7 +28,13 @@ import com.trello.rxlifecycle.RxLifecycle;
 import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.android.RxLifecycleAndroid;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+import com.umeng.analytics.MobclickAgent;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +44,7 @@ import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
+import timber.log.Timber;
 
 /**
  * Created by louiszgm on 2016/9/29.
@@ -45,17 +55,22 @@ public abstract class BaseActivity<V , T extends BasePresenter<V>> extends Suppo
     private ActivityComponent mComponent;
     protected T mPresenter;
     private Map<Integer, PermissionCallback> mPermissonCallbacks  = new HashMap<>();
+    private String mPageName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPageName = getClass().getName();
+        MobclickAgent.setDebugMode(true);
+        MobclickAgent.openActivityDurationTrack(false);
+        MobclickAgent.setCatchUncaughtExceptions(true);
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         lifecycleSubject.onNext(ActivityEvent.CREATE);
         mPresenter = createPresent();
         if(mPresenter != null){
             V view = (V) this;
             mPresenter.attachView(view);
         }
-
     }
     protected abstract T createPresent();
 
@@ -105,12 +120,16 @@ public abstract class BaseActivity<V , T extends BasePresenter<V>> extends Suppo
     @CallSuper
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onPageStart(mPageName);
+        MobclickAgent.onResume(this);
         lifecycleSubject.onNext(ActivityEvent.RESUME);
     }
 
     @Override
     @CallSuper
     protected void onPause() {
+        MobclickAgent.onPageEnd(mPageName);
+        MobclickAgent.onPause(this);
         lifecycleSubject.onNext(ActivityEvent.PAUSE);
         super.onPause();
     }
@@ -202,4 +221,5 @@ public abstract class BaseActivity<V , T extends BasePresenter<V>> extends Suppo
             }
         }
     }
+
 }

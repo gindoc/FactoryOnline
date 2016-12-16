@@ -12,7 +12,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "Beta 1.0.0"
+        versionName "v1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -122,4 +122,7 @@ dependencies {
     compile 'pub.devrel:easypermissions:0.2.1'
 
     compile 'commons-codec:commons-codec:20041127.091804'
+
+    //UMENG
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
