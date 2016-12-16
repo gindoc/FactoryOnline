@@ -13,6 +13,10 @@ import java.util.Map;
  * Created by cwenhui on 2016.02.23
  */
 public interface RecommendContract {
+    String DISTRICT = "1";
+    String PRICE = "2";
+    String AREA = "3";
+
     interface View extends IBaseView {
         /**
          * 加载推荐列表
@@ -20,6 +24,18 @@ public interface RecommendContract {
          * @param action         上拉或者下拉，true为下拉加载或初始化，false为上拉加载
          */
         void loadRecommendList(List<WantedMessage> recommendList, boolean action);
+
+        /**
+         * 加载过滤结果，带过滤条件
+         * @param wantedMessages
+         */
+        void loadFilterResult(List<WantedMessage> wantedMessages, int filterCount);
+
+        /**
+         * 加载上拉加载的结果，带过滤条件
+         * @param wantedMessages
+         */
+        void loadPullUpResultWithFilter(List<WantedMessage> wantedMessages);
 
         /**
          * 取消加载时显示的swipeRefreshLayout和FooterView
@@ -60,14 +76,11 @@ public interface RecommendContract {
 
         /**
          * 从网络请求推荐列表（下拉刷新）,结果插入数据库
-         *
          * @param page       请求的页码，如果不输，默认为1
-//         * @param maxrange   筛选的最大边界
-//         * @param minrange   筛选边界的最小值
-//         * @param filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
-//         * @param areaId     筛选的区域id
          */
-        void requestRecommendListByNet(int page/*, float maxrange, float minrange, int filterType, int areaId*/);
+        void requestRecommendListByNet(int page);
+
+        void filterRecommendListByNet(final int pageNo, final RecommendFragment.Filter filter);
 
         /**
          * 从数据库请求推荐列表
@@ -96,9 +109,6 @@ public interface RecommendContract {
          * 请求推荐页面的面积目录
          */
         void requestAreaCategories();
-
-//        void filter(int pageNo, int areaId, int max, int min, int filterType);
-
 
     }
 }

@@ -17,6 +17,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
             android:gravity="center_vertical"
@@ -31,9 +32,9 @@
                 android:layout_marginRight="@dimen/x11"
                 android:layout_marginTop="@dimen/x5"
                 android:layout_weight="1"
-                android:onClick="@{view.openSearchPage}"
                 android:background="@drawable/home_fragment_search_background"
-                android:gravity="center">
+                android:gravity="center"
+                android:onClick="@{view.openSearchPage}">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
                     android:paddingRight="@dimen/x10"
                     android:paddingTop="@dimen/y8"
                     android:textColor="#9d9ca2"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
 
             </LinearLayout>
 
@@ -65,7 +66,21 @@
                 android:paddingRight="@dimen/x17"
                 android:text="地图"
                 android:textColor="#1ab80f"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x14"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_scrollTop"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="@{view.scrollTop}"
+                android:paddingLeft="@dimen/x11"
+                android:paddingRight="@dimen/x11"
+                android:text="返回顶部"
+                android:textColor="#1ab80f"
+                android:textSize="@dimen/x14"
+                android:visibility="gone" />
         </LinearLayout>
 
         <View
@@ -77,19 +92,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
-                <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
-                    android:id="@+id/recyclerView"
+                <LinearLayout
+                    android:id="@+id/ll_network_error"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:cacheColorHint="@null"
-                    android:scrollbars="vertical" />
-            </android.support.v4.widget.SwipeRefreshLayout>
+                    android:layout_height="@dimen/y250"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/network_error" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/y10"
+                        android:text="暂无数据"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x16" />
+                </LinearLayout>
+
+
+                <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/swipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:cacheColorHint="@null"
+                        android:scrollbars="vertical" />
+                </android.support.v4.widget.SwipeRefreshLayout>
+
+            </FrameLayout>
 
             <com.online.factory.factoryonline.customview.DropDownMenu
                 android:id="@+id/dropDownMenu"
@@ -99,7 +141,7 @@
                 app:maskColor="#611a1a1a"
                 app:menuBackgroundColor="@android:color/white"
                 app:menuSelectedIcon="@drawable/ic_arrow_up"
-                app:menuTextSize="18sp"
+                app:menuTextSize="@dimen/x14"
                 app:menuUnselectedIcon="@drawable/ic_arrow_down"
                 app:textSelectedColor="@color/colorPrimary"
                 app:textUnselectedColor="#424242"

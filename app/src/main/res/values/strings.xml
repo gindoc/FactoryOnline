@@ -1,6 +1,23 @@
 <resources>
     <string name="app_name">Factory Online</string>
-    <string name="api">http://45.76.69.192:8000/api/v1/</string>
-    <!--<string name="api">http://192.168.0.118:8001/api/v1/</string>-->
+    <string name="api">http://116.62.44.204:8000/api/v1/</string>
+    <!--<string name="api">http://192.168.0.113:8000/</string>-->
 
+    <string name="unLogin">当前未登陆，请先登录</string>
+
+    <!--permission strings-->
+    <string name="permission_deny_again_title">权限设置</string>
+    <string name="permission_deny_again_positive">设置</string>
+    <string name="permission_deny_again_nagative">取消</string>
+    <string name="permission_location_rationale">请允许打开GPS，否则定位功能将无法使用</string>
+    <string name="permission_location_deny_again">打开应用程序修改应用程序的定位权限</string>
+
+    <string name="permission_storage_rationale">请授权读写权限，否则拍照功能和相册功能将无法使用</string>
+    <string name="permission_storage_deny_again">打开应用程序修改应用程序的读写权限</string>
+
+    <string name="permission_call_rationale">请打开拨打电话权限，否则无法拨打电话</string>
+    <string name="permission_call_deny_again">打开应用程序修改应用程序的拨打电话权限</string>
+
+    <string name="permission_send_sms_rationale">请打开发送短信权限，否则无法发送短信</string>
+    <string name="permission_send_sms_deny_again">打开应用程序修改应用程序的发送短信权限</string>
 </resources>

@@ -26,7 +26,7 @@
                 android:layout_gravity="center"
                 android:text="已选图片"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x16" />
         </android.support.v7.widget.Toolbar>
 
         <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/x45"
             android:text="确定"
-            android:textSize="16sp"
+            android:textSize="@dimen/x13"
             android:onClick="@{()->view.finish()}"
             android:textColor="@android:color/white"
             android:background="#FE552C"/>

@@ -12,6 +12,7 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ActivityPrePayBinding;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -44,7 +45,13 @@ public class PrePayActivity extends BaseActivity implements BaseRecyclerViewAdap
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_pre_pay);
-
+        mBinding.setView(this);
+        StatusBarUtils.from(this)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
         prePaies.addAll(Arrays.asList(getResources().getStringArray(R.array.pre_pay)));
 
         initRecyclerView();

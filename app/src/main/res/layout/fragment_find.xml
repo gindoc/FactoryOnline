@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>
+    <data>
 
         <variable
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
-    </data>-->
+    </data>
 
     <TableLayout
         android:layout_width="match_parent"
@@ -15,7 +15,9 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y85"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/y96"
+            android:weightSum="3"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -23,6 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:onClick="@{()->view.openRecommend()}"
                 android:orientation="vertical">
 
                 <com.online.factory.factoryonline.customview.RoundImageView
@@ -36,12 +39,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/y15"
-                    android:text="标准"
+                    android:text="我要厂房"
                     android:textColor="#424242"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
             </LinearLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -49,6 +52,7 @@
                 android:orientation="vertical">
 
                 <com.online.factory.factoryonline.customview.RoundImageView
+                    android:id="@+id/roundImageView2"
                     android:layout_width="@dimen/x49"
                     android:layout_height="@dimen/x49"
                     android:layout_marginBottom="@dimen/y10"
@@ -96,12 +100,12 @@
                 android:orientation="vertical">
 
                 <com.online.factory.factoryonline.customview.RoundImageView
+                    android:id="@+id/roundImageView"
                     android:layout_width="@dimen/x49"
                     android:layout_height="@dimen/x49"
                     android:layout_marginBottom="@dimen/y10"
                     android:layout_marginTop="@dimen/y10"
-                    android:src="@drawable/ic_tin"
-                    android:id="@+id/roundImageView" />
+                    android:src="@drawable/ic_tin" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -110,7 +114,7 @@
                     android:text="铁皮房"
                     android:textColor="#424242"
                     android:textSize="16sp" />
-            </LinearLayout>
+            </LinearLayout>-->
         </TableRow>
     </TableLayout>
 </layout>

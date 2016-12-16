@@ -20,6 +20,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
             android:gravity="center_vertical"
@@ -41,7 +42,7 @@
                     android:onClick="@{()->view.openCityPage()}"
                     android:text="正在定位"
                     android:textColor="#424242"
-                    android:textSize="18sp" />
+                    android:textSize="@dimen/x14" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -59,6 +60,7 @@
                 android:layout_marginTop="@dimen/y8"
                 android:background="@drawable/home_fragment_search_background"
                 android:gravity="center"
+                android:onClick="@{()->view.openSearchPage()}"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -72,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="请输入搜索关键字"
                     android:textColor="#9d9ca2"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
             </LinearLayout>
 
         </LinearLayout>
@@ -83,5 +85,6 @@
             android:layout_height="wrap_content"
             android:cacheColorHint="@null"
             android:scrollbars="vertical" />
+
     </LinearLayout>
 </layout>

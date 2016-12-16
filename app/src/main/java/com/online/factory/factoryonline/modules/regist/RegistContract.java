@@ -13,10 +13,13 @@ public interface RegistContract {
     interface View extends IBaseView {
         void registSuccessfully();
 
-        void userExisted();
+        void refleshSmsButton();
+
     }
 
     interface Presenter extends IBasePresenter {
         void regist(Regist regist);
+
+        void getSmsCode(String phoneNum);
     }
 }

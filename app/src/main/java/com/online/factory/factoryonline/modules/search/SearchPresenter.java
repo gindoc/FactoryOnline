@@ -5,7 +5,8 @@ import android.text.TextUtils;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.data.local.LocalApi;
-import com.online.factory.factoryonline.models.response.SearchResponse;
+import com.online.factory.factoryonline.models.SearchResult;
+import com.online.factory.factoryonline.models.response.SearchResultResponse;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
 import java.util.Set;
@@ -50,14 +51,14 @@ public class SearchPresenter extends BasePresenter<SearchContract.View> implemen
 
     public void search(final String s) {
         dataManager.search(s)
-                .compose(getView().<SearchResponse>getBindToLifecycle())
+                .compose(getView().<SearchResultResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<SearchResponse>() {
+                .subscribe(new RxSubscriber<SearchResultResponse>() {
                     @Override
-                    public void _onNext(SearchResponse searchResponse) {
+                    public void _onNext(SearchResultResponse searchResponse) {
                         if (searchResponse.getErro_code() == 200) {
-                            getView().loadSearchList(searchResponse.getWantedMessages());
+                            getView().loadSearchList(searchResponse.getSearchResult());
                         } else if (searchResponse.getErro_code() == 402) {
                             getView().loadSearchList(null);
                         }

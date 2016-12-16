@@ -4,72 +4,76 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/x32"
+        android:paddingRight="@dimen/x32"
+        android:paddingTop="@dimen/y40">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/et_phonenum"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_size">
+            android:layout_height="@dimen/y44"
+            android:background="@drawable/gray_rectangle_outline_with_large_corner"
+            android:drawableLeft="@drawable/ic_input_phone"
+            android:drawablePadding="@dimen/x15"
+            android:hint="请输入手机号"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/x25"
+            android:textColor="#424242"
+            android:textColorHint="#ccc"
+            android:textSize="@dimen/x13" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/background_login_text_input"
-                android:padding="@dimen/padding_size">
+        <EditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y44"
+            android:layout_marginTop="@dimen/y20"
+            android:inputType="textPassword"
+            android:background="@drawable/gray_rectangle_outline_with_large_corner"
+            android:drawableLeft="@drawable/ic_input_pwd"
+            android:drawablePadding="@dimen/x15"
+            android:hint="请输入登录密码"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/x25"
+            android:textColor="#424242"
+            android:textColorHint="#ccc"
+            android:textSize="@dimen/x13" />
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/et_phonenum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="输入手机号码"
-                        android:maxLines="1"
-                        android:textColorHint="@color/gray_light" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:id="@+id/line_sms_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_below="@id/et_phonenum"
-                    android:background="@color/dividerColor" />
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/et_pwd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/line_sms_login"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin">
-
-                    <android.support.design.widget.TextInputEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:hint="输入登录密码"
-                        android:maxLines="1"
-                        android:textColorHint="@color/gray_light" />
-                </android.support.design.widget.TextInputLayout>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginTop="24dp"
-            android:background="@color/colorPrimary"
-            android:text="登录"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_marginTop="@dimen/y20"
+            android:background="@drawable/green_rectangle_solid_with_large_corner"
+            android:text="登 录"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textSize="@dimen/x16"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/y10"
+                android:paddingTop="@dimen/y10"
+                android:text="注册账号"
+                android:onClick="onCLickSignUp"
+                android:textColor="#1ab80f"
+                android:textSize="@dimen/x12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingBottom="@dimen/y10"
+                android:paddingTop="@dimen/y10"
+                android:text="忘记密码"
+                android:onClick="onClickForgetPwd"
+                android:textColor="#1ab80f"
+                android:textSize="@dimen/x12" />
+        </RelativeLayout>
     </LinearLayout>
 </layout>

@@ -1,12 +1,16 @@
 package com.online.factory.factoryonline.modules.baidumap;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -26,12 +30,16 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityBaidumapBinding;
-import com.online.factory.factoryonline.models.Factory;
-import com.online.factory.factoryonline.models.FactoryPoi;
+import com.online.factory.factoryonline.models.MapPoi;
+import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
+import com.online.factory.factoryonline.utils.GeoHash;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -46,7 +54,9 @@ import timber.log.Timber;
 /**
  * Created by louiszgm on 2016/10/13.
  */
-public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, BaiduMapPresent> implements BaiduMap.OnMapLoadedCallback, BaiduMapConstract.View, BaseRecyclerViewAdapter.OnItemClickListener {
+public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, BaiduMapPresent> implements BaiduMap.OnMapLoadedCallback,
+        BaiduMapConstract.View, BaseRecyclerViewAdapter.OnItemClickListener, OnPageListener {
+    public static final int PERMISSION_REQUEST_CODE = 199;
 
     private ActivityBaidumapBinding mBinding;
 
@@ -68,11 +78,15 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
     BaiduMapPresent mPresenter;
 
     @Inject
+    Resources resources;
+
+    @Inject
     MapRecyclerViewAdapter mAdapter;
+    private String mNext = null;
+    private int clickedAreaId;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, BaiduMapActivity.class);
-        return intent;
+        return new Intent(context, BaiduMapActivity.class);
     }
 
     @Override
@@ -83,15 +97,30 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         mBinding.setView(this);
 
         initialMap();
+        checkPermission();
 
         startCluster();
 
+        initToolbar();
+
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setPageFooter(R.layout.layout_recyclerview_footer);
+        mBinding.recyclerView.setOnPageListener(this);
+        mAdapter.setOnItemClickListener(this);
+    }
+
+    private void initToolbar() {
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.toolbar)
+                .process();
         mBinding.toolbar.setTitle("");
         setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
-
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
     }
 
     private boolean isFirstLoc = true;
@@ -122,7 +151,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
                             isFirstLoc = false;
                             LatLng ll = new LatLng(bdLocation.getLatitude(),
                                     bdLocation.getLongitude());
-                            MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(ll, 18);
+                            MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(ll, 8);
                             mBaiduMap.animateMapStatus(msu);
                         }
                     }
@@ -134,14 +163,14 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         mBaiduMap.setMyLocationEnabled(true);
         mBaiduMap.setOnMapLoadedCallback(this);
         mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null));
-        mLocationClient.start();
+//        mLocationClient.start();
     }
 
     private void startCluster() {
         // 定义点聚合管理类ClusterManager
         mClusterManager = new ClusterManager<MyItem>(this, mBaiduMap);
         // 添加Marker点
-        mPresenter.getLatLngList(12);
+        mPresenter.getLatLngList(305);
         // 设置地图监听，当地图状态发生改变时，进行点聚合运算
         mBaiduMap.setOnMapStatusChangeListener(mClusterManager);
         mBaiduMap.setOnMarkerClickListener(mClusterManager);
@@ -154,9 +183,10 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
 
 
     @Override
-    public void loadFactories(List<Factory> factories) {
-        mAdapter.setData(factories);
+    public void loadWantedMessages(List<WantedMessage> wantedMessages) {
+        mAdapter.setData(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.hideLoadingFooter();
     }
 
     public void retract() {
@@ -168,7 +198,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
      * 向地图添加Marker点
      */
     @Override
-    public void loadMarker(List<FactoryPoi> factoryPois) {
+    public void loadMarker(List<MapPoi> mapPois) {
         pcdsClusterRenderer = new PCDSClusterRenderer<MyItem>(this, mBaiduMap, mClusterManager);
         mClusterManager.setRenderer(pcdsClusterRenderer);
         mClusterManager.setAlgorithm(new PCDSAlgorithm<MyItem>());
@@ -182,8 +212,10 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
                 int currentZoom = (int) mBaiduMap.getMapStatus().zoom;
                 if (currentZoom >= 13) {
                     MyItem item = ((ArrayList<MyItem>) cluster.getItems()).get(0);
-                    int streetId = item.getFactoryPoi().getStreet_id();
-                    mPresenter.getStreetFactoryList(streetId);
+                    int areaId = item.getMapPoi().getArea_id();
+                    String url = resources.getString(R.string.api) + "wantedmessages/recommend";
+                    mPresenter.requestWantedMessagesByNet(url, areaId);
+                    clickedAreaId = areaId;
                     mBinding.toolbar.setVisibility(View.GONE);
                     mBinding.llFactoryList.setVisibility(View.VISIBLE);
                 } else {
@@ -196,18 +228,25 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
             @Override
             public boolean onClusterItemClick(MyItem item) {
-                int streetId = item.getFactoryPoi().getStreet_id();
-                mPresenter.getStreetFactoryList(streetId);
+                int areaId = item.getMapPoi().getArea_id();
+                String url = resources.getString(R.string.api) + "wantedmessages/recommend";
+                mPresenter.requestWantedMessagesByNet(url, areaId);
+                clickedAreaId = areaId;
                 mBinding.toolbar.setVisibility(View.GONE);
                 mBinding.llFactoryList.setVisibility(View.VISIBLE);
                 return true;
             }
         });
         List<MyItem> results = new ArrayList<>();
-        for (FactoryPoi factoryPoi : factoryPois) {
-            results.add(new MyItem(factoryPoi));
+        for (MapPoi mapPoi : mapPois) {
+            results.add(new MyItem(mapPoi));
         }
         mClusterManager.addItems(results);
+    }
+
+    @Override
+    public void loadNextUrlAndCount(String next) {
+        mNext = next;
     }
 
     @Override
@@ -223,9 +262,20 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
     public void onItemClick(View view, int position) {
         Intent intent = new Intent();
         intent.setClass(this, FactoryDetailActivity.class);
-        Factory factory = mAdapter.getData().get(position);
-        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, factory);
+        WantedMessage wantedMessage = mAdapter.getData().get(position);
+        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, wantedMessage);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPage() {
+        mBinding.recyclerView.showLoadingFooter();
+        if (!TextUtils.isEmpty(mNext)) {
+            mPresenter.requestWantedMessagesByNet(mNext, clickedAreaId);
+        }else {
+            Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            mBinding.recyclerView.hideLoadingFooter();
+        }
     }
 
     /**
@@ -233,18 +283,19 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
      */
     public class MyItem implements ClusterItem {
         private LatLng mPosition;
-        private FactoryPoi mFactoryPoi;
+        private MapPoi mapPoi;
 
-        public MyItem(FactoryPoi factoryPoi) {
-            double lat = factoryPoi.getLocation().get(0);
-            double lng = factoryPoi.getLocation().get(1);
+        public MyItem(MapPoi mapPoi) {
+            double[] latAndLon = new GeoHash().decode(mapPoi.getGeohash());
+            double lat = latAndLon[0];
+            double lng = latAndLon[1];
             LatLng latLng = new LatLng(lat, lng);
             mPosition = latLng;
-            mFactoryPoi = factoryPoi;
+            this.mapPoi = mapPoi;
         }
 
-        public FactoryPoi getFactoryPoi() {
-            return mFactoryPoi;
+        public MapPoi getMapPoi() {
+            return mapPoi;
         }
 
         @Override
@@ -284,5 +335,39 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         mLocationClient.stop();
         mBaiduMap.setMyLocationEnabled(false);
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return true;
+    }
+
+    private void checkPermission() {
+        performCodeWithPermission(getString(R.string.permission_location_rationale), PERMISSION_REQUEST_CODE,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        mLocationClient.start();
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_location_deny_again), PERMISSION_REQUEST_CODE);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            mLocationClient.start();
+        }
     }
 }

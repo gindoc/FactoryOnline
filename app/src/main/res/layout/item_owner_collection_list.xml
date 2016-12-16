@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.collection.owner.CollectionViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_click_background"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/y11"
+        android:paddingLeft="@dimen/x11"
+        android:paddingRight="@dimen/x15"
+        android:paddingTop="@dimen/y12">
+
+        <ImageView
+            android:id="@+id/factory_img"
+            android:layout_width="@dimen/x108"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:layout_marginRight="@dimen/x15"
+            app:imageUrl="@{viewModel.imgUrl}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y11"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{viewModel.name}"
+                android:textColor="#424242"
+                android:textSize="@dimen/x14"
+                tool:text="南城 带装修独院厂房25000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y11"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#808080"
+                    android:maxLines="1"
+                    android:text='@{viewModel.area}'
+                    android:textSize="@dimen/x13"
+                    tool:text="2500 ㎡" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#df3d3f"
+                    android:maxLines="1"
+                    android:textSize="@dimen/x14"
+                    android:text="@{viewModel.factoryTotalPrice}"
+                    tool:text="25000元/月" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/y11"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textColor="#808080"
+                    android:text="@{viewModel.addressOverview}"
+                    android:textSize="@dimen/x13"
+                    tool:text="南城 - 雅苑" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#808080"
+                    android:textSize="@dimen/x13"
+                    android:maxLines="1"
+                    android:text="@{viewModel.price}"
+                    tool:text="10元/㎡/月" />
+            </LinearLayout>
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@{viewModel.tag1Background}"
+                    android:gravity="center"
+                    android:padding="@dimen/x3"
+                    android:textColor="@{viewModel.tag1TextColor}"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}'
+                    android:layout_marginRight="@dimen/x10"
+                    android:textSize="@dimen/x13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@{viewModel.tag2Background}"
+                    android:textColor="@{viewModel.tag2TextColor}"
+                    android:gravity="center"
+                    android:padding="@dimen/x3"
+                    android:layout_marginRight="@dimen/x10"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}'
+                    android:textSize="@dimen/x13" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@{viewModel.tag3Background}"
+                    android:textColor="@{viewModel.tag3TextColor}"
+                    android:gravity="center"
+                    android:padding="@dimen/x3"
+                    android:textSize="@dimen/x13"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}'/>
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

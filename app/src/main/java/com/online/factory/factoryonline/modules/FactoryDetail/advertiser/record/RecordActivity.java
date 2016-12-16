@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.databinding.ActivityRecordBinding;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -34,6 +35,13 @@ public class RecordActivity extends BaseActivity<RecordContract.View, RecordPres
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_record);
+        mBinding.setView(this);
+        StatusBarUtils.from(this)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
     }
 
     @Override

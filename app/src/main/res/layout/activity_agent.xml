@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.agent.AgentActivity" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/ic_arrow_left_green"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x10"
+                android:drawablePadding="@dimen/x5"
+                android:text="返回"
+                android:onClick="@{()->view.finish()}"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/x14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:text="经纪人信息"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/x16" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ccc" />
+
+        <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#ccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y49"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_send_sms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/x14"
+                android:background="@drawable/blue_rectangle_outline_with_corner"
+                android:drawableLeft="@drawable/ic_sms"
+                android:drawablePadding="@dimen/x5"
+                android:gravity="center"
+                android:paddingBottom="@dimen/x5"
+                android:paddingLeft="@dimen/x12"
+                android:paddingRight="@dimen/x12"
+                android:paddingTop="@dimen/x5"
+                android:text="发送短信"
+                android:onClick="@{()->view.sms()}"
+                android:textColor="#5ca6ed"
+                android:textSize="@dimen/x14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x14"
+                android:background="@drawable/green_rectangle_solid_with_corner"
+                android:drawableLeft="@drawable/ic_phone"
+                android:drawablePadding="@dimen/x5"
+                android:gravity="center"
+                android:paddingBottom="@dimen/x5"
+                android:paddingLeft="@dimen/x12"
+                android:paddingRight="@dimen/x12"
+                android:paddingTop="@dimen/x5"
+                android:text="拨打电话"
+                android:onClick="@{()->view.phone()}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/x14" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

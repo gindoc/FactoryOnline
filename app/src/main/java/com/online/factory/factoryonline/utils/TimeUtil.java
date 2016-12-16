@@ -1,6 +1,9 @@
 package com.online.factory.factoryonline.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * 作者: GIndoc
@@ -15,6 +18,11 @@ public class TimeUtil {
         return format.format(timestamp);
     }
 
+    /**
+     * 模糊时间
+     * @param timestamp
+     * @return
+     */
     public static String vagueTime(long timestamp) {
         long currentTimestamp = System.currentTimeMillis()/1000;
         long interval = currentTimestamp - timestamp;
@@ -30,4 +38,5 @@ public class TimeUtil {
             return formatTimeStamp("yyyy-MM-dd", timestamp);
         }
     }
+
 }

@@ -22,7 +22,7 @@
             android:paddingRight="@dimen/x5"
             android:paddingTop="@dimen/x3"
             android:textColor="#df3d3f"
-            android:textSize="16sp"
+            android:textSize="@dimen/x10"
             android:text="没地儿" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:maxLines="1"
             tool:text="南城靠牛栅产业园厂房出租10000方便宜大甩卖"
             android:textColor="#424242"
-            android:textSize="18sp" />
+            android:textSize="@dimen/x12" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,7 +54,7 @@
             android:paddingRight="@dimen/x5"
             android:paddingTop="@dimen/x3"
             android:textColor="#df3d3f"
-            android:textSize="16sp"
+            android:textSize="@dimen/x10"
             android:text="没地儿"  />
 
         <TextView
@@ -65,6 +65,6 @@
             android:maxLines="1"
             tool:text="樟木头厂房4500平方原房东标准独立大甩卖"
             android:textColor="#424242"
-            android:textSize="18sp" />
+            android:textSize="@dimen/x12" />
     </LinearLayout>
 </LinearLayout>

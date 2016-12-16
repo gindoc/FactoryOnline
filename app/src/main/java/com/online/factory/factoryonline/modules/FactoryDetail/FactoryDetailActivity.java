@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.FactoryDetail;
 
+import android.Manifest;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,18 +15,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.AppBarStateChangeListener;
 import com.online.factory.factoryonline.databinding.ActivityFactoryDetailBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.UserPublic;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.advertiser.AdvertiserActivity;
 import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActivity;
+import com.online.factory.factoryonline.utils.CommunicationUtil;
 import com.online.factory.factoryonline.utils.GeoHash;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
+
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -34,11 +41,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+
 /**
  * Created by cwenhui on 2016/10/17.
  */
 public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.View, FactoryDetailPresenter> implements FactoryDetailContract.View {
     public static final String WANTED_MESSAGE = "WANTED_MESSAGE";
+    private static final int PERMISSION_CALL_PHONE = 199;
+    private static final int PERMISSION_SEND_SMS = 200;
     private ActivityFactoryDetailBinding mBinding;
 
     @Inject
@@ -53,6 +63,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     private AppBarStateChangeListener.State appBarState = AppBarStateChangeListener.State.EXPANDED;    // appBar展开状态
     private WantedMessage wantedMessage;
     private Factory factory;
+    private UserPublic userPublic;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +78,8 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         initFactoryDetail();
         initViewPager();
         initBaiduMap();
+
+        mPresenter.getPublishUser(Integer.parseInt(wantedMessage.getOwner_id()));
     }
 
     private void initBaiduMap() {
@@ -99,6 +112,12 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
     }
 
     private void initToolbar() {
+        StatusBarUtils.from(this)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.toolbar)
+                .process();
         mBinding.toolbar.setTitle("");
         setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
@@ -112,7 +131,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                     appBarState = state;
                     if (isCollected) {
                         menuItem.setIcon(R.drawable.ic_collected_with_shadow);
-                    }else {
+                    } else {
                         menuItem.setIcon(R.drawable.ic_collect_with_shadow);
                     }
                     mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
@@ -121,10 +140,10 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                     appBarState = state;
                     if (isCollected) {
                         menuItem.setIcon(R.drawable.ic_collected);
-                    }else {
+                    } else {
                         menuItem.setIcon(R.drawable.ic_collect);
                     }
-                    mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);
+                    mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_green);
                     mBinding.tvTitle.setVisibility(View.VISIBLE);
                 }
 
@@ -183,7 +202,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         if (appBarState == AppBarStateChangeListener.State.COLLAPSED) {
             if (isCollected) {
                 item.setIcon(R.drawable.ic_collected);
-            }else {
+            } else {
                 item.setIcon(R.drawable.ic_collect);
             }
         } else if (appBarState == AppBarStateChangeListener.State.EXPANDED) {
@@ -195,14 +214,86 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         }
     }
 
+    @Override
+    public void initPublishUser(UserPublic userPublic) {
+        this.userPublic = userPublic;
+        mBinding.setUserPublic(userPublic);
+    }
+
     public void openReportPage() {      //举报
-        startActivity(ReportActivity.getStartIntent(this));
+        startActivity(ReportActivity.getStartIntent(this, Integer.parseInt(wantedMessage.getId())));
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     public void openAdvertiserPage() {
         startActivity(AdvertiserActivity.getStartIntent(this));
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    public void phoneToContacter() {
+        phone(mBinding.tvContactPeoplePhone.getText().toString());
+    }
+
+    public void phoneToPublish() {
+        if (userPublic==null) {
+            Toast.makeText(this, "发布人信息不全", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        phone(userPublic.getPhone_num());
+    }
+
+    private void phone(final String phoneNum){
+        if (TextUtils.isEmpty(phoneNum)) {
+            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        performCodeWithPermission(getString(R.string.permission_call_rationale), PERMISSION_CALL_PHONE,
+                new String[]{Manifest.permission.CALL_PHONE}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        CommunicationUtil.call(FactoryDetailActivity.this, phoneNum);
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_call_deny_again), PERMISSION_CALL_PHONE);
+                        }
+                    }
+                });
+    }
+
+    public void smsToContacter() {
+        sms(mBinding.tvContactPeoplePhone.getText().toString());
+    }
+
+    public void smsToPublish(){
+        if (userPublic==null) {
+            Toast.makeText(this, "发布人信息不全", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        sms(userPublic.getPhone_num());
+    }
+
+    private void sms(final String phoneNum){
+        if (TextUtils.isEmpty(phoneNum)) {
+            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        performCodeWithPermission(getString(R.string.permission_send_sms_rationale), PERMISSION_SEND_SMS,
+                new String[]{Manifest.permission.SEND_SMS}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        CommunicationUtil.sendSms(FactoryDetailActivity.this, phoneNum);
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_send_sms_deny_again), PERMISSION_SEND_SMS);
+                        }
+                    }
+                });
     }
 
     public void expandDesc() {

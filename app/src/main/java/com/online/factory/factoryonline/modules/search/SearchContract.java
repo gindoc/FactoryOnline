@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.search;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
+import com.online.factory.factoryonline.models.SearchResult;
 import com.online.factory.factoryonline.models.WantedMessage;
 
 import java.util.List;
@@ -13,10 +14,12 @@ import java.util.Set;
  * FOR   :
  */
 public interface SearchContract {
+    int OWNER = 1;
+    int AGENT = 2;
     interface View extends IBaseView {
         void initSearchHistory(Set<String> history);
 
-        void loadSearchList(List<WantedMessage> wantedMessages);
+        void loadSearchList(List<SearchResult> searchResults);
     }
 
     interface Presenter extends IBasePresenter {

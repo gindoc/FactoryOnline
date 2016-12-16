@@ -15,8 +15,10 @@ import com.online.factory.factoryonline.base.BaseFragmentPagerAdapter;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityLoginBinding;
 import com.online.factory.factoryonline.models.post.Login;
+import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -42,8 +44,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     @Inject
     BaseFragmentPagerAdapter adapter;
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
-        return intent;
+        return new Intent(context, LoginActivity.class);
     }
 
     @Override
@@ -51,13 +52,27 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this , R.layout.activity_login);
+        mBinding.setView(this);
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
         setUpTabs();
+    }
 
+    public void exitLogin() {
+        finish();
+        overridePendingTransition(R.anim.no_anim, R.anim.translate_bottom_out);
     }
 
     public void login(Login loginBean){
         presenter.login(loginBean);
     }
+
     private void setUpTabs() {
         mBinding.viewpager.setAdapter(adapter);
         adapter.setFragments(fragments);
@@ -66,7 +81,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     public void onCLickSignUp(View view){
         startActivityForResult(RegistActivity.getStartIntent(this), TO_REGIST_ACTIVITY);
-        this.overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
+        overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
+    }
+
+    public void onClickForgetPwd(View view) {
+        startActivity(ForgetPwdActivity.getStartIntent(this));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
     @Override

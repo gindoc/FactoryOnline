@@ -3,20 +3,25 @@ package com.online.factory.factoryonline.data.remote;
 
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.CityBean;
-import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.News;
-import com.online.factory.factoryonline.models.post.Publish;
+import com.online.factory.factoryonline.models.PublishUserResponse;
+import com.online.factory.factoryonline.models.SearchResult;
+import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
-import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.HomeResponse;
+import com.online.factory.factoryonline.models.response.MyCollectionResponse;
+import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
+import com.online.factory.factoryonline.models.response.ProMediumResponse;
+import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
-import com.online.factory.factoryonline.models.response.SearchResponse;
-import com.online.factory.factoryonline.models.response.UserResponse;
+import com.online.factory.factoryonline.models.response.SearchResultResponse;
 
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -25,9 +30,11 @@ import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -66,11 +73,13 @@ public interface FactoryApi {
      * minrange   筛选边界的最小值
      * filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
      * areaId     筛选的区域id
+     *
      * @param params
      * @return
      */
     @GET("wantedmessages/recommend")
     Observable<RecommendResponse> getRecommendInfos(@QueryMap Map<String, Object> params);
+
     /**
      * 请求“推荐的目录”列表
      *
@@ -96,17 +105,17 @@ public interface FactoryApi {
     /**
      * 请求服务器，判断该厂房是否被收藏
      *
-     * @param id    wantedMessageId
+     * @param id wantedMessageId
      * @return
      */
     @GET("wantedmessages/{id}/collection/")
-    Observable<CollectionResponse> isFactoryCollected(@Header("Authorization") String header, @Path("id") int id);
+    Observable<CollectionResponse> isFactoryCollected(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
 
     @POST("wantedmessages/{id}/collection/")
-    Observable<Response> postCollectionState(@Header("Authorization") String header, @Path("id") int id);
+    Observable<Response> postCollectionState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
 
     @DELETE("wantedmessages/{id}/collection/")
-    Observable<Response> deleteCollectionState(@Header("Authorization") String header, @Path("id") int id);
+    Observable<Response> deleteCollectionState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
 
     @GET("/users/salt/{username}")
     Observable<Response> getSalt(@Path("username") String userName);
@@ -114,17 +123,17 @@ public interface FactoryApi {
     @POST("user/")
     Observable<retrofit2.Response<JsonObject>> login(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
-    @GET("/user")
-    Observable<UserResponse> getUser();
+    @GET("user/")
+    Observable<retrofit2.Response<JsonObject>> getUser(@Header("Authorization")String auth, @Header("TIME")String time);
 
-    @GET("/publicmessages/{streetId}")
-    Observable<FactoryResponse> getStreetFactories(@Path("streetId") int streetId);
+    @GET
+    Observable<RecommendResponse> getStreetFactories(@Url String next, @QueryMap Map<String, Object> params);
 
-    @GET("/factorypoi/{cityId}")
-    Observable<FactoryPoiResponse> getLatLngs(@Path("cityId") int cityId);
+    @GET("factorypois/district/{city_id}")
+    Observable<BaiduMapResponse> getLatLngs(@Path("city_id") int cityId);
 
-    @POST("https://api.sms.jpush.cn/v1/codes")
-    Observable<JsonObject> getSmsCode(@Body RequestBody requestBody);
+    @GET("smses/{template_type}")
+    Observable<Response> getSmsCode(@Path("template_type") String type, @Query("address") String phoneNum);
 
     @POST("users/")
     Observable<retrofit2.Response<JsonObject>> regist(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
@@ -133,7 +142,7 @@ public interface FactoryApi {
     Observable<List<CityBean>> getCities();
 
     @GET("qiniutokens/{tokenType}")
-    Observable<JsonObject> getToken(@Path("tokenType") String tokenType, @Query("bucket") String bucket);
+    Observable<JsonObject> getToken(@Header("Authorization") String auth, @Header("TIME")String time, @Path("tokenType") int tokenType, @Query("bucket") String bucket);
 
     //    @DELETE("images/{imageKey}/")
     @HTTP(method = "delete", path = "images/{imageKey}", hasBody = false)
@@ -145,7 +154,45 @@ public interface FactoryApi {
     @POST("wantedmessages/")
     Observable<JsonObject> publishMessage(@HeaderMap Map<String, String> currentTime, @Body RequestBody requestBody);
 
-    @GET("wantedmessages/search")
-    Observable<SearchResponse> search(@Query("key") String s);
+    @GET("search")
+    Observable<SearchResultResponse> search(@Query("key") String s);
 
+    @GET("users/{user_id}")
+    Observable<PublishUserResponse> getUserById(@Path("user_id") int userId);
+
+    @GET("wantedmessages/home")
+    Observable<HomeResponse> getHomeInfos();
+
+    @GET
+    Observable<PublicationResponse> getPublications(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
+
+    @GET
+    Observable<MyCollectionResponse> getOwnerCollections(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
+
+    @GET
+    Observable<ProMediumMessageResponse> getAgentCollection(@Url String next, @Header("Authorization") String header, @Header("TIME") String time);
+
+    @PUT("user/")
+    Observable<Response> updateUser(@Header("Authorization") String token, @Header("TIME") String timestamp, @Body RequestBody body);
+
+    @GET
+    Observable<ProMediumResponse> getAgents(@Url String next);
+
+    @GET
+    Observable<ProMediumMessageResponse> getProMediumMessages(@Url String next);
+
+    @GET("promediummessages/{id}/collection/")
+    Observable<CollectionResponse> isAgentMsgCollected(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
+
+    @POST("promediummessages/{id}/collection/")
+    Observable<Response> postAgentState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
+
+    @DELETE("promediummessages/{id}/collection/")
+    Observable<Response> deleteAgentState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
+
+    @GET
+    Observable<ProMediumMessageResponse> getSearchResult(@Url String next);
+
+    @POST("feedbacks/wantedmessage/{message_id}/")
+    Observable<Response> messageFeedback(@Path("message_id")int messageId, @Body RequestBody builder);
 }

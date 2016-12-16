@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class Regist {
     private String phone_num;
 
-    private int vertify_code;
+    private String verify_code;
 
     private String pwd;
 
@@ -34,12 +34,12 @@ public class Regist {
         this.phone_num = phone_num;
     }
 
-    public int getVertify_code() {
-        return vertify_code;
+    public String getVerify_code() {
+        return verify_code;
     }
 
-    public void setVertify_code(int vertify_code) {
-        this.vertify_code = vertify_code;
+    public void setVerify_code(String verify_code) {
+        this.verify_code = verify_code;
     }
 
     public String getPwd() {

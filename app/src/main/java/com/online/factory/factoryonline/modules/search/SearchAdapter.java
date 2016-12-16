@@ -3,8 +3,12 @@ package com.online.factory.factoryonline.modules.search;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
 import android.text.TextUtils;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +28,11 @@ import javax.inject.Inject;
  */
 
 public class SearchAdapter extends BaseRecyclerViewAdapter<WantedMessage, SearchAdapter.SearchViewHolder> {
+    private String searchTxt;
+
+    public void setSearchTxt(String searchTxt) {
+        this.searchTxt = searchTxt;
+    }
 
     @Inject
     public SearchAdapter(Context context) {
@@ -64,7 +73,14 @@ public class SearchAdapter extends BaseRecyclerViewAdapter<WantedMessage, Search
         LinearLayout linearLayout = (LinearLayout) holder.itemView;
         TextView textView = (TextView) linearLayout.getChildAt(0);
         String txt = data.get(position).getFactory().getTitle();
-        textView.setText(txt);
+        textView.setText(txt, TextView.BufferType.SPANNABLE);
+        if (!TextUtils.isEmpty(searchTxt)) {
+            Spannable spannable = (Spannable) textView.getText();
+            int start = txt.indexOf(searchTxt);
+            int end = start + searchTxt.length();
+            int color = ResourcesCompat.getColor(mContext.getResources(), R.color.colorPrimary, null);
+            spannable.setSpan(new ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
     }
 
     class SearchViewHolder extends RecyclerView.ViewHolder{

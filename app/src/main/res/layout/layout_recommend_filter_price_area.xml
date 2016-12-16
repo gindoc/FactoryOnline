@@ -40,7 +40,7 @@
                 android:maxLength="10"
                 android:padding="@dimen/x10"
                 android:textColor="#979797"
-                android:textSize="14sp" />
+                android:textSize="@dimen/x12" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                 android:layout_marginLeft="@dimen/x10"
                 android:layout_marginRight="@dimen/x10"
                 android:text="-"
-                android:textSize="16sp" />
+                android:textSize="@dimen/x13" />
 
             <EditText
                 android:id="@+id/maximum"
@@ -60,7 +60,7 @@
                 android:maxLength="10"
                 android:padding="@dimen/x10"
                 android:textColor="#979797"
-                android:textSize="14sp" />
+                android:textSize="@dimen/x12" />
 
             <TextView
                 android:id="@+id/confirm"
@@ -74,7 +74,7 @@
                 android:paddingBottom="@dimen/x10"
                 android:text="确定"
                 android:textColor="@color/green"
-                android:textSize="14sp" />
+                android:textSize="@dimen/x12" />
         </LinearLayout>
     </LinearLayout>
 </layout>

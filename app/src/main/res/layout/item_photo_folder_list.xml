@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tool="http://schemas.android.com/tools">
+    xmlns:tool="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,7 +22,7 @@
             android:layout_height="@dimen/x100"
             android:scaleType="centerCrop"
             app:fileUrl="@{viewModel.firstImagePath}"
-            tool:src="@drawable/ic_account_full" />
+            tool:src="@drawable/ic_no_pic" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -30,6 +31,6 @@
             android:text="@{viewModel.folderName}"
             android:textColor="#b9000000"
             tool:text="文件夹名字"
-            android:textSize="16sp" />
+            android:textSize="@dimen/x13" />
     </LinearLayout>
 </layout>

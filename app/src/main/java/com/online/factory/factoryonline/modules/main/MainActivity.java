@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -21,6 +23,7 @@ import javax.inject.Inject;
 public class MainActivity extends BaseActivity {
 
     private ActivityMainBinding mBinding;
+    private long mExitTime;
     @Inject
     RecommendFragment recommendFragment;
 
@@ -32,15 +35,17 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     LoginContext mLoginContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.bottomTab.rbHome.setChecked(true);
+
         loadRootFragment(R.id.tab_content, homeFragment);
-        
     }
 
     @Override
@@ -53,25 +58,41 @@ public class MainActivity extends BaseActivity {
         return intent;
     }
 
-    public void onClickMsg(View view){
+    public void onClickMsg(View view) {
         mLoginContext.openMsg(MainActivity.this);
     }
 
-    public void onClickHome(View view){
-        if(findFragment(HomeFragment.class) == null){
+    public void onClickHome(View view) {
+        if (findFragment(HomeFragment.class) == null) {
             startWithPop(homeFragment);
         }
     }
-    public void onClickRecommend(View view){
-        if(findFragment(RecommendFragment.class) == null){
+
+    public void onClickRecommend(View view) {
+        mBinding.bottomTab.rbRecommend.setChecked(true);
+        if (findFragment(RecommendFragment.class) == null) {
             startWithPop(recommendFragment);
         }
     }
 
-    public void onClickUser(View view){
-        if(findFragment(UserFragment.class) == null){
+    public void onClickUser(View view) {
+        if (findFragment(UserFragment.class) == null) {
             startWithPop(userFragment);
         }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

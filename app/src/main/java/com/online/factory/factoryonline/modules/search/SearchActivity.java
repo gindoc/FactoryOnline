@@ -8,17 +8,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +22,9 @@ import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.databinding.ActivitySearchBinding;
-import com.online.factory.factoryonline.models.WantedMessage;
+import com.online.factory.factoryonline.models.SearchResult;
+import com.online.factory.factoryonline.modules.search.agentResult.SearchResultActivity;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -52,11 +48,9 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
     @Inject
     SearchPresenter mPresenter;
 
-    @Inject
-    SearchAdapter mAdapter;
-
     private ActivitySearchBinding mBinding;
-
+    private int OWNER_CONTENT_ID;
+    private int AGENT_CONTENT_ID;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, SearchActivity.class);
@@ -69,8 +63,14 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         mBinding.setView(this);
         mBinding.setPresenter(mPresenter);
-
-        mBinding.recyclerView.setAdapter(mAdapter);
+        StatusBarUtils.from(this)
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.llTopBar)
+                .process();
         mPresenter.loadSearchHistory();
 
         attachListenerForEdittext();
@@ -81,7 +81,7 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
     public void cancelSearch() {
         mBinding.etSearch.setText("");
         mBinding.llSearchHistory.setVisibility(View.VISIBLE);
-        mBinding.recyclerView.setVisibility(View.GONE);
+        mBinding.llSearchResult.setVisibility(View.GONE);
         mBinding.ivClear.setVisibility(View.GONE);
         mPresenter.loadSearchHistory();
     }
@@ -102,19 +102,28 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
     }
 
     @Override
-    public void loadSearchList(List<WantedMessage> wantedMessages) {
-        if (wantedMessages != null && wantedMessages.size() > 0) {
+    public void loadSearchList(List<SearchResult> searchResults) {
+        if (searchResults != null && searchResults.size() > 0) {
             mBinding.llSearchHistory.setVisibility(View.GONE);
-            mBinding.recyclerView.setVisibility(View.VISIBLE);
-            mAdapter.getData().clear();
-            mAdapter.setData(wantedMessages);
-            mBinding.recyclerView.notifyDataSetChanged();
+            mBinding.llSearchResult.setVisibility(View.VISIBLE);
+            SearchResult ownerResult = searchResults.get(0);
+            SearchResult agentResult = searchResults.get(1);
+            OWNER_CONTENT_ID = ownerResult.getContentId();
+            AGENT_CONTENT_ID = agentResult.getContentId();
+            mBinding.tvOwnerMsgCount.setText(ownerResult.getCount() + "");
+            mBinding.tvAgentMsgCount.setText(agentResult.getCount() + "");
         } else {
             mPresenter.loadSearchHistory();
-            mAdapter.getData().clear();
-            mBinding.recyclerView.notifyDataSetChanged();
             Toast.makeText(this, "搜索不到相关结果", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void openOwnerMsgList() {
+        startActivity(com.online.factory.factoryonline.modules.search.ownerResult.SearchResultActivity.getStartIntent(this, OWNER_CONTENT_ID));
+    }
+
+    public void openAgentMsgList() {
+        startActivity(SearchResultActivity.getStartIntent(this, AGENT_CONTENT_ID));
     }
 
     private void attachListenerForEdittext() {

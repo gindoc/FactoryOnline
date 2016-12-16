@@ -4,7 +4,9 @@
     xmlns:tool="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.text.TextUtils" />
 
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel" />
@@ -25,7 +27,8 @@
         <ImageView
             android:id="@+id/factory_img"
             android:layout_width="@dimen/x108"
-            android:layout_height="@dimen/y80"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:layout_marginRight="@dimen/x15"
             app:imageUrl="@{viewModel.factoryImg}" />
 
@@ -43,7 +46,7 @@
                 android:maxLines="1"
                 android:text="@{viewModel.factoryName}"
                 android:textColor="#424242"
-                android:textSize="18sp"
+                android:textSize="@dimen/x14"
                 tool:text="南城 带装修独院厂房25000" />
 
             <LinearLayout
@@ -57,16 +60,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxLines="1"
                     android:textColor="#808080"
                     android:text='@{viewModel.factoryArea}'
-                    android:textSize="16sp"
+                    android:textSize="@dimen/x13"
                     tool:text="2500 ㎡" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#df3d3f"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/x14"
+                    android:maxLines="1"
                     android:text="@{viewModel.factoryTotalPrice}"
                     tool:text="25000元/月" />
             </LinearLayout>
@@ -83,17 +88,20 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="#808080"
+                    android:maxLines="1"
                     android:text="@{viewModel.addressOverview}"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/x13"
                     tool:text="南城 - 雅苑" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#808080"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/x13"
+                    android:maxLines="1"
                     android:text="@{viewModel.factoryPrice}"
-                    tool:text="10元/㎡/月" />
+                    tool:text="10元/㎡/月"
+                    android:id="@+id/textView4" />
             </LinearLayout>
 
             <com.google.android.flexbox.FlexboxLayout
@@ -103,21 +111,36 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/blue_tag"
+                    android:background="@{viewModel.tag1Background}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:text="空间大"
+                    android:textColor="@{viewModel.tag1TextColor}"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}'
                     android:layout_marginRight="@dimen/x10"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/x13" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/green_tag"
+                    android:background="@{viewModel.tag2Background}"
+                    android:textColor="@{viewModel.tag2TextColor}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:text="空间大"
-                    android:textSize="16sp" />
+                    android:layout_marginRight="@dimen/x10"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}'
+                    android:textSize="@dimen/x13" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@{viewModel.tag3Background}"
+                    android:textColor="@{viewModel.tag3TextColor}"
+                    android:gravity="center"
+                    android:padding="@dimen/x3"
+                    android:textSize="@dimen/x13"
+                    android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}'/>
             </com.google.android.flexbox.FlexboxLayout>
 
         </LinearLayout>

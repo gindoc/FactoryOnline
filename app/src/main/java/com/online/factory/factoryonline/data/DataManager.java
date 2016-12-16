@@ -4,22 +4,25 @@ package com.online.factory.factoryonline.data;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.LocalApi;
-import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
-import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.News;
-import com.online.factory.factoryonline.models.User;
+import com.online.factory.factoryonline.models.PublishUserResponse;
+import com.online.factory.factoryonline.models.UpdateUser;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
+import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
-import com.online.factory.factoryonline.models.response.FactoryPoiResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.HomeResponse;
+import com.online.factory.factoryonline.models.response.MyCollectionResponse;
+import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
+import com.online.factory.factoryonline.models.response.ProMediumResponse;
+import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
-import com.online.factory.factoryonline.models.response.SearchResponse;
-import com.online.factory.factoryonline.models.response.UserResponse;
+import com.online.factory.factoryonline.models.response.SearchResultResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
 
@@ -117,6 +120,14 @@ public class DataManager {
         return Observable.just(localApi.queryMaxUpdateTime());
     }
 
+    public Observable<WantedMessage> getMaxIdWantedMessage() {
+        return Observable.just(localApi.queryMaxIdWantedMessage());
+    }
+
+    public Observable<WantedMessage> getMaxIdHomeWantedMessage(){
+        return Observable.just(localApi.queryMaxIdHomeWantedMessage());
+    }
+
     /**
      * 请求“推荐的目录”列表
      *
@@ -145,19 +156,28 @@ public class DataManager {
     /**
      * 请求服务器，判断该厂房是否被收藏
      *
-     * @param id    wantedMessageId
+     * @param id wantedMessageId
      * @return
      */
     public Observable<CollectionResponse> isFactoryCollected(int id) {
-        return factoryApi.isFactoryCollected("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.isFactoryCollected(token, timestamp, id);
     }
 
     public Observable<Response> postCollectionState(int id) {
-        return factoryApi.postCollectionState("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.postCollectionState(token, timestamp, id);
     }
 
     public Observable<Response> deleteCollectionState(int id) {
-        return factoryApi.deleteCollectionState("Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7", id);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.deleteCollectionState(token, timestamp, id);
     }
     /**
      * 注册
@@ -206,43 +226,30 @@ public class DataManager {
      *
      * @return
      */
-    public Observable<UserResponse> getUser() {
-        User localUser = Saver.getSerializableObject(SharePreferenceKey.USER);
-        if (localUser != null) {
-            UserResponse response = new UserResponse();
-            response.setUser(localUser);
-            response.setErro_code(200);
-            response.setErro_msg("成功");
-            return Observable.just(response);
-        } else {
-            return factoryApi.getUser();
-        }
+    public Observable<retrofit2.Response<JsonObject>> getUser() {
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+            return factoryApi.getUser(token, timestamp);
     }
 
-    public Observable<FactoryResponse> getStreetFactories(int streetId) {
-        return factoryApi.getStreetFactories(streetId);
+    public Observable<RecommendResponse> getStreetFactories(String url, Map<String, Object> params) {
+        return factoryApi.getStreetFactories(url, params);
     }
 
-    public Observable<FactoryPoiResponse> getLatLngs(int cityId) {
+    public Observable<BaiduMapResponse> getLatLngs(int cityId) {
         return factoryApi.getLatLngs(cityId);
     }
 
-    public Observable<JsonObject> getSmsCode(String phoneNum) {
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-        builder.addFormDataPart("mobile", phoneNum)
-                .addFormDataPart("temp_id", "1");
-
-        return factoryApi.getSmsCode(builder.build());
+    public Observable<Response> getSmsCode(String phoneNum, String smsType) {
+        return factoryApi.getSmsCode(smsType, phoneNum);
     }
 
-
-    public Observable<List<CityBean>> requestCities() {
-        return factoryApi.getCities();
-    }
-
-    public Observable<JsonObject> requestToken(String tokenType) {
-        return factoryApi.getToken(tokenType, null);
+    public Observable<JsonObject> requestToken(int tokenType) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.getToken(token, timestamp, tokenType, null);
     }
 
     public Observable<JsonObject> deleteImage(String imageKey) {
@@ -258,17 +265,114 @@ public class DataManager {
                 .setType(MultipartBody.FORM);
         Map<String, String> header = new HashMap<>();
         if (publish != null) {
-//            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
-            header.put("Authorization", "Token 67f9b7d87e57b2a523d9f1f5f8637dcfd42bfaf7");
-//            StringBuilder iv = new StringBuilder(timestamp).reverse();
+            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+            StringBuilder iv = new StringBuilder(timestamp).reverse();
             String publishJsonString = new Gson().toJson(publish);
-//            String content = AESUtil.encrypt(publishJsonString, timestamp, iv.toString());
             builder.addFormDataPart("publish", publishJsonString);
+
+            String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+            header.put("Authorization", token);
+            header.put("TIME", timestamp);
         }
         return factoryApi.publishMessage(header, builder.build());
     }
 
-    public Observable<SearchResponse> search(String s) {
+    public Observable<SearchResultResponse> search(String s) {
         return factoryApi.search(s);
+    }
+
+    public Observable<PublishUserResponse> getUserById(int userId) {
+        return factoryApi.getUserById(userId);
+    }
+
+    public Observable<HomeResponse> getHomeInfos() {
+        return factoryApi.getHomeInfos();
+    }
+
+    public Observable<PublicationResponse> requestPublications(String next) {
+        String token = Saver.getToken().replace("\"", "");
+        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        token = AESUtil.encrypt(token, timestamp, iv.toString());
+        token = "Token " + token;
+        return factoryApi.getPublications(next, token, timestamp);
+    }
+
+    public Observable<MyCollectionResponse> requestOwnerCollections(String next) {
+        String token = Saver.getToken().replace("\"", "");
+        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        token = AESUtil.encrypt(token, timestamp, iv.toString());
+        token = "Token " + token;
+        return factoryApi.getOwnerCollections(next, token, timestamp);
+    }
+
+    public Observable<ProMediumMessageResponse> requestAgentCollections(String next) {
+        String token = Saver.getToken().replace("\"", "");
+        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        token = AESUtil.encrypt(token, timestamp, iv.toString());
+        token = "Token " + token;
+        return factoryApi.getAgentCollection(next, token, timestamp);
+    }
+
+    public Observable<Response> updateUser(UpdateUser updateUser) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        String json = new Gson().toJson(updateUser);
+        String encodedJosn = AESUtil.encrypt(json, timestamp, iv.toString());
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("updateUser", encodedJosn);
+        return factoryApi.updateUser(token, timestamp, builder.build());
+    }
+
+    public Observable<ProMediumResponse> requestAgents(String next) {
+        return factoryApi.getAgents(next);
+    }
+
+    public Observable<ProMediumMessageResponse> requestProMediumMessages(String next) {
+        return factoryApi.getProMediumMessages(next);
+    }
+
+
+    /**
+     * 请求服务器，判断该厂房是否被收藏
+     *
+     * @param id wantedMessageId
+     * @return
+     */
+    public Observable<CollectionResponse> isAgentMsgCollected(int id) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.isAgentMsgCollected(token, timestamp, id);
+    }
+
+    public Observable<Response> postAgentState(int id) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.postAgentState(token, timestamp, id);
+    }
+
+    public Observable<Response> deleteAgentState(int id) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.deleteAgentState(token, timestamp, id);
+    }
+
+    public Observable<ProMediumMessageResponse> requestSearchResult(String next) {
+        return factoryApi.getSearchResult(next);
+    }
+
+    public Observable<Response> messageFeedback(int messageId, String content, String remark) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        builder.addFormDataPart("content", content);
+        builder.addFormDataPart("remark", remark);
+        return factoryApi.messageFeedback(messageId, builder.build());
     }
 }

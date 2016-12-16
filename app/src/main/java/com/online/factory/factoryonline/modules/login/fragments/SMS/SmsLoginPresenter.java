@@ -3,6 +3,8 @@ package com.online.factory.factoryonline.modules.login.fragments.SMS;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -29,21 +31,21 @@ public class SmsLoginPresenter extends BasePresenter<SmsLoginContract.View> impl
 
     @Override
     public void getSmsCode(String phoneNum) {
-        dataManager.getSmsCode(phoneNum)
-                .compose(getView().<JsonObject>getBindToLifecycle())
+        dataManager.getSmsCode(phoneNum, "2")
+                .compose(getView().<Response>getBindToLifecycle())
+                .compose(RxResultHelper.<Response>handleResult())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new RxSubscriber<JsonObject>() {
-            @Override
-            public void _onNext(JsonObject jsonObject) {
-                Timber.e("sms resutl: "+jsonObject.toString());
-            }
+                .subscribe(new RxSubscriber<Response>() {
+                    @Override
+                    public void _onNext(Response response) {
+                        getView().refleshSmsButton();
+                    }
 
-            @Override
-            public void _onError(Throwable throwable) {
-
-            }
-        });
-
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 }

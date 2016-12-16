@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class User implements Serializable{
     private int id;
     private String username;
-    private String phoneNum;
+    private String phone_num;
     private int publish_count;
     private long regist_time;
     private String avatar;
@@ -37,12 +37,12 @@ public class User implements Serializable{
         this.username = username;
     }
 
-    public String getPhoneNum() {
-        return phoneNum;
+    public String getPhone_num() {
+        return phone_num;
     }
 
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
+    public void setPhone_num(String phone_num) {
+        this.phone_num = phone_num;
     }
 
     public int getPublish_count() {

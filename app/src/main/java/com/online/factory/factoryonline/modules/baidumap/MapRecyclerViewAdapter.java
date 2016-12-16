@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ItemBaiduMapListBinding;
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -15,7 +16,7 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016/10/25.
  */
-public class MapRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factory, MapRecyclerViewAdapter.MapViewHolder> {
+public class MapRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMessage, MapRecyclerViewAdapter.MapViewHolder> {
     private Provider<BaiduMapViewModel> provider;
 
     @Inject
@@ -34,7 +35,7 @@ public class MapRecyclerViewAdapter extends BaseRecyclerViewAdapter<Factory, Map
     public void onBindViewHolder(MapViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         BaiduMapViewModel viewModel = provider.get();
-        viewModel.setFactory(data.get(position));
+        viewModel.setWantedMessage(data.get(position));
         ItemBaiduMapListBinding binding = holder.getBinding();
         binding.setViewModel(viewModel);
 

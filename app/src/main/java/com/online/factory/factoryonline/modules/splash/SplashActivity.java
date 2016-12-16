@@ -24,7 +24,7 @@ public class SplashActivity extends BaseActivity {
         ImageView imageView = new ImageView(this);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.drawable.demo);
+        imageView.setImageResource(R.drawable.splash);
         setContentView(imageView);
 
         new Handler().postDelayed(new Runnable() {

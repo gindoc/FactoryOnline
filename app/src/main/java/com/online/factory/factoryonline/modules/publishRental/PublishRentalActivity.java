@@ -1,11 +1,12 @@
 package com.online.factory.factoryonline.modules.publishRental;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.online.factory.factoryonline.modules.publishRental.area.AreaActivity;
 import com.online.factory.factoryonline.modules.publishRental.tag.TagActivity;
 import com.online.factory.factoryonline.utils.GeoHash;
 import com.online.factory.factoryonline.utils.Saver;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.Validate;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -44,8 +46,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 /**
  * Created by cwenhui on 2016/10/19.
@@ -64,6 +64,9 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     @Inject
     PublishRentalPresenter mPresenter;
+
+    @Inject
+    Resources resources;
     private List<String> mSelectedImage = new ArrayList<>();
     private List<String> imageKeys = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
@@ -75,7 +78,12 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         getComponent().inject(this);
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_publish_rental);
-
+        StatusBarUtils.from(this)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.llTitle)
+                .process();
         initView();
         mBinding.setView(this);
 
@@ -211,20 +219,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             imageKeys.addAll(data.getStringArrayListExtra(PhotoSelectedFragment.IMAGE_KEYS));
             loadSelectedImage();
         } else if (requestCode == TO_TAGS_SELECTED && resultCode == RESULT_OK && data != null) {
-            mBinding.tvTagTip.setVisibility(View.VISIBLE);
-            mBinding.tvTag1.setVisibility(View.GONE);
-            mBinding.tvTag2.setVisibility(View.GONE);
-            mBinding.tvTag3.setVisibility(View.GONE);
-            tags.clear();
-            tags.addAll(data.getStringArrayListExtra(TagActivity.SELECTED_TAG));
-            if (tags.size() > 0) {
-                mBinding.tvTagTip.setVisibility(View.GONE);
-            }
-            for (int i = 0; i < tags.size(); i++) {
-                TextView tvTag = (TextView) mBinding.llTags.getChildAt(i + 1);
-                tvTag.setVisibility(View.VISIBLE);
-                tvTag.setText(tags.get(i));
-            }
+            showTags(data.getStringArrayListExtra(TagActivity.SELECTED_TAG));
         } else if (requestCode == TO_AREA_SELECTED && resultCode == RESULT_OK && data != null) {
             Area area = (Area) data.getSerializableExtra(AreaActivity.SELECTED_AREA);
             mBinding.tvArea.setText(area.getName());
@@ -238,11 +233,48 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
         }
     }
 
+    private void showTags(ArrayList<String> data) {
+        mBinding.tvTagTip.setVisibility(View.VISIBLE);
+        mBinding.tvTag1.setVisibility(View.GONE);
+        mBinding.tvTag2.setVisibility(View.GONE);
+        mBinding.tvTag3.setVisibility(View.GONE);
+        tags.clear();
+        tags.addAll(data);
+        if (tags.size() > 0) {
+            mBinding.tvTagTip.setVisibility(View.GONE);
+        }
+        for (int i = 0; i < tags.size(); i++) {
+            TextView tvTag = (TextView) mBinding.llTags.getChildAt(i + 1);
+            tvTag.setVisibility(View.VISIBLE);
+            tvTag.setText(tags.get(i));
+            if (tags.get(i).equals("空间大")) {
+                setTag(tvTag, R.drawable.space_tag, R.color.large_space);
+            } else if (tags.get(i).equals("楼层多")) {
+                setTag(tvTag, R.drawable.floor_tag, R.color.floor);
+            } else if (tags.get(i).equals("环境好")) {
+                setTag(tvTag, R.drawable.enviroment_tag, R.color.enviroment);
+            } else if (tags.get(i).equals("性价高")) {
+                setTag(tvTag, R.drawable.cost_effective_tag, R.color.cost_effective);
+            } else if (tags.get(i).equals("原房东")) {
+                setTag(tvTag, R.drawable.original_landlord_tag, R.color.original_landlord);
+            } else if (tags.get(i).equals("新建房")) {
+                setTag(tvTag, R.drawable.new_house_tag, R.color.new_house);
+            } else if (tags.get(i).equals("交通便利")) {
+                setTag(tvTag, R.drawable.transportation_tag, R.color.transportation);
+            }
+        }
+    }
+
+    private void setTag(TextView tvTag, int drawableResource, int color) {
+        tvTag.setBackgroundResource(drawableResource);
+        tvTag.setTextColor(ResourcesCompat.getColor(resources, color, null));
+    }
+
     private void loadSelectedImage() {
         if (mSelectedImage.size() > 0) {
             File file = new File(mSelectedImage.get(0));
             Picasso.with(this).load(file)
-                    .placeholder(R.drawable.demo)
+                    .placeholder(R.drawable.publish_rental_background)
                     .resize(mBinding.ivSelectedImg.getMeasuredWidth(), mBinding.ivSelectedImg.getMeasuredHeight())
                     .config(Bitmap.Config.RGB_565)
                     .into(mBinding.ivSelectedImg);
@@ -337,7 +369,7 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     @Override
     public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-        if (geoCodeResult != null) {
+        if (geoCodeResult != null && geoCodeResult.getLocation()!=null) {
             double longitude = geoCodeResult.getLocation().longitude;
             double latitude = geoCodeResult.getLocation().latitude;
             GeoHash geoHash = new GeoHash();

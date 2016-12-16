@@ -2,11 +2,12 @@
 <resources>
     <color name="colorPrimary">#1ab80f</color>
     <color name="colorPrimaryDark">#009966</color>
+    <color name="colorPrimaryWithAlpha">#7b1ab80f</color>
     <color name="colorAccent">#0EAAA4</color>
     <color name="linkColor">#1976d2</color>
     <color name="infoColor">#929497</color>
     <color name="buttonFontColor">#acbbc5</color>
-    <color name="dividerColor">#e6e6e6</color>
+    <color name="dividerColor">#ccc</color>
     <color name="dotBlur">#cccccc</color>
     <color name="dotRed">#ff374b</color>
     <color name="swipe_color_red">#ff1131</color>
@@ -20,4 +21,11 @@
     <color name="recommend_category_second_font">#4c4c4c</color>
     <color name="recommend_category_first_background_selected">#EBEBEB</color>
     <color name="fragment_user_grid_line">#e6e6e6</color>
+    <color name="large_space">#2b91f0</color>
+    <color name="floor">#29ad15</color>
+    <color name="enviroment">#edba1d</color>
+    <color name="cost_effective">#f756c0</color>
+    <color name="original_landlord">#9636f0</color>
+    <color name="new_house">#cf3a49</color>
+    <color name="transportation">#16b8ac</color>
 </resources>

@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="agent"
+            type="com.online.factory.factoryonline.models.ProMedium" />
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity" />
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y240"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@android:color/white"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    app:layout_collapseMode="parallax">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:id="@+id/tv_pager_index"
+                        android:layout_width="@dimen/x44"
+                        android:layout_height="@dimen/y18"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginBottom="@dimen/y10"
+                        android:layout_marginRight="@dimen/x15"
+                        android:background="@drawable/half_black_rectangle_background"
+                        android:gravity="center"
+                        android:text='@{"1/"+viewModel.imageUrls.length}'
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/x12"
+                        tool:text="1/6" />
+
+                </FrameLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="top|center"
+                    android:gravity="center"
+                    android:text="厂房详情"
+                    android:textColor="#424242"
+                    android:textSize="@dimen/x16"
+                    android:visibility="gone"
+                    app:layout_collapseMode="pin" />
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/view_line">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center|left"
+                        android:padding="@dimen/x15"
+                        android:text="@{viewModel.title}"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x16"
+                        android:textStyle="bold"
+                        tool:text="大岭山大塘工业园新出带装修2楼2500平方出租.有办公室" />
+
+                    <include layout="@layout/line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y66"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/y5"
+                                android:gravity="center"
+                                android:text="@{viewModel.totalPrice}"
+                                android:textColor="#DF4142"
+                                android:textSize="@dimen/x16"
+                                tool:text="2500元/月" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/y5"
+                                android:gravity="center"
+                                android:text="月租"
+                                android:textColor="#464646"
+                                android:textSize="@dimen/x13" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="@dimen/y50"
+                            android:background="#E9E9E9" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/y5"
+                                android:gravity="center"
+                                android:text="@{viewModel.price}"
+                                android:textColor="#DF4142"
+                                android:textSize="@dimen/x16"
+                                tool:text="10元/㎡" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/y5"
+                                android:gravity="center"
+                                android:text="每平"
+                                android:textColor="#464646"
+                                android:textSize="@dimen/x13" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="@dimen/y50"
+                            android:background="#E9E9E9" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/y5"
+                                android:gravity="center"
+                                android:text="@{viewModel.range}"
+                                android:textColor="#DF4142"
+                                android:textSize="@dimen/x16"
+                                tool:text="2500㎡" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/y5"
+                                android:gravity="center"
+                                android:text="面积"
+                                android:textColor="#464646"
+                                android:textSize="@dimen/x13" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <include layout="@layout/line" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y8"
+                        android:background="#f5f5f5" />
+
+                    <include layout="@layout/line" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y37"
+                        android:background="@android:color/white"
+                        android:drawablePadding="@dimen/x10"
+                        android:drawableStart="@drawable/green_rectangle_solid_background"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/x15"
+                        android:text="厂房信息"
+                        android:textSize="@dimen/x14"
+                        android:textColor="#424242" />
+
+                    <include layout="@layout/line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/x15"
+                        android:paddingTop="@dimen/y15">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="发布时间："
+                            android:textColor="#808080"
+                            android:textSize="@dimen/x13" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@{viewModel.createTime}"
+                            android:textColor="#424242"
+                            android:textSize="@dimen/x13"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="浏览量："
+                            android:textColor="#808080"
+                            android:textSize="@dimen/x13" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="178人"
+                            android:textColor="#424242"
+                            android:textSize="@dimen/x13"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/x15">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="出租方式："
+                            android:textColor="#808080"
+                            android:textSize="@dimen/x13" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@{viewModel.rentType}"
+                            android:textColor="#424242"
+                            android:textSize="@dimen/x13"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="押 金："
+                            android:textColor="#808080"
+                            android:textSize="@dimen/x13" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@{viewModel.prePay}"
+                            android:textColor="#424242"
+                            android:textSize="@dimen/x13"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <include layout="@layout/line" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y8"
+                        android:background="#f5f5f5" />
+
+                    <include layout="@layout/line" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y37"
+                        android:background="@android:color/white"
+                        android:drawablePadding="@dimen/x10"
+                        android:drawableStart="@drawable/green_rectangle_solid_background"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/x15"
+                        android:text="厂房介绍"
+                        android:textSize="@dimen/x14"
+                        android:textColor="#424242" />
+
+                    <include layout="@layout/line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/x15">
+
+                        <TextView
+                            android:id="@+id/tv_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="@dimen/y3"
+                            android:maxLines="3"
+                            android:text='@{viewModel.description}'
+                            android:textColor="#424242"
+                            android:textSize="@dimen/x14"
+                            tool:text="交通便利，紧邻S358省道，可提供6000平方米停车场，可提供2500平方米大型外广告位，载货电梯3台，配电充足，宿舍按需配置交通便利，紧邻S358省道，可提供6000平方米停车场，可提供2500平方米大型外广告位，载货电梯3台，配电充足，宿舍按需配置" />
+
+                        <Button
+                            android:id="@+id/btn_expand_desc"
+                            android:layout_width="@dimen/x86"
+                            android:layout_height="@dimen/y27"
+                            android:layout_marginTop="@dimen/y10"
+                            android:background="@drawable/green_rectangle_outline_background"
+                            android:gravity="center"
+                            android:onClick="@{()->view.expandDesc()}"
+                            android:text="查看全部"
+                            android:textColor="#1ab80f"
+                            android:textSize="@dimen/x12" />
+                    </LinearLayout>
+
+                    <include layout="@layout/line" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y8"
+                        android:background="#f5f5f5" />
+
+                    <include layout="@layout/line" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y37"
+                        android:background="@android:color/white"
+                        android:drawablePadding="@dimen/x10"
+                        android:drawableStart="@drawable/green_rectangle_solid_background"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/x15"
+                        android:text="厂房位置"
+                        android:textSize="@dimen/x14"
+                        android:textColor="#424242" />
+
+                    <include layout="@layout/line" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/y130"
+                        android:padding="@dimen/x15">
+
+                        <ImageView
+                            android:id="@+id/iv_mapview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#dbdbdb"
+                            android:padding="1px"
+                            android:scaleType="fitXY" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:drawableLeft="@drawable/ic_current_location"
+                        android:drawablePadding="@dimen/x10"
+                        android:paddingBottom="@dimen/x15"
+                        android:paddingLeft="@dimen/x15"
+                        android:text="@{viewModel.addressOverview}"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14"
+                        tool:text="大岭山大塘工业园A区2055号" />
+
+                    <include layout="@layout/line" />
+
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/y49"
+                android:background="#cccccc" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/y49"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent"
+                android:paddingTop="1px">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+            </FrameLayout>
+
+            <View
+                android:layout_width="@dimen/x48"
+                android:layout_height="@dimen/x48"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/y15"
+                android:layout_marginLeft="@dimen/x25"
+                android:background="@drawable/gray_oval_background" />
+
+            <com.online.factory.factoryonline.customview.RoundImageView
+                android:id="@+id/iv_contact_people"
+                android:layout_width="@dimen/x48"
+                android:layout_height="@dimen/x48"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/y15"
+                android:layout_marginLeft="@dimen/x25"
+                android:src="@drawable/photo_head"
+                app:imageUrl="@{viewModel.avatar}"
+                app:border_outside_color="@android:color/transparent"
+                app:border_thickness="1px" />
+
+            <TextView
+                android:id="@+id/tv_contact_people_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/view_line"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_toRightOf="@id/iv_contact_people"
+                android:paddingTop="@dimen/y2"
+                android:text="@{viewModel.contactName}"
+                android:textColor="#424242"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:id="@+id/tv_contact_people_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_contact_people_name"
+                android:layout_marginLeft="@dimen/x5"
+                android:layout_marginTop="@dimen/y1"
+                android:layout_toRightOf="@id/iv_contact_people"
+                android:text="@{viewModel.contactNum}"
+                android:textColor="#424242"
+                android:textSize="@dimen/x12" />
+
+            <ImageView
+                android:id="@+id/iv_phone_to_contact_people"
+                android:layout_width="@dimen/x48"
+                android:layout_height="@dimen/x48"
+                android:layout_alignBottom="@id/iv_contact_people"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/x15"
+                android:onClick="@{()->view.phoneToContacter()}"
+                android:src="@drawable/ic_phone_full" />
+
+            <ImageView
+                android:id="@+id/iv_sms_to_contact_people"
+                android:layout_width="@dimen/x48"
+                android:layout_height="@dimen/x48"
+                android:layout_alignBottom="@id/iv_contact_people"
+                android:layout_marginRight="@dimen/x15"
+                android:onClick="@{()->view.smsToContacter()}"
+                android:layout_toLeftOf="@id/iv_phone_to_contact_people"
+                android:src="@drawable/ic_sms_full" />
+
+        </RelativeLayout>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

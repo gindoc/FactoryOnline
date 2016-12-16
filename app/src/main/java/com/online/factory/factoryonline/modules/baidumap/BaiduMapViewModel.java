@@ -4,6 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 import com.online.factory.factoryonline.models.Factory;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import javax.inject.Inject;
 
@@ -12,13 +13,15 @@ import javax.inject.Inject;
  */
 public class BaiduMapViewModel extends BaseObservable {
     private Factory factory;
+    private WantedMessage wantedMessage;
 
     @Inject
     public BaiduMapViewModel() {
     }
 
-    public void setFactory(Factory factory) {
-        this.factory = factory;
+    public void setWantedMessage(WantedMessage wantedMessage) {
+        this.wantedMessage = wantedMessage;
+        factory = wantedMessage.getFactory();
     }
 
     @Bindable
@@ -28,12 +31,12 @@ public class BaiduMapViewModel extends BaseObservable {
 
     @Bindable
     public String getFactoryPrice() {
-        return factory.getPrice()+"/㎡/月";
+        return factory.getPrice()+"元/㎡/月";
     }
 
     @Bindable
     public String getFactoryArea() {
-        return factory.getRange()+"/㎡";
+        return factory.getRange()+"㎡";
     }
 
     @Bindable

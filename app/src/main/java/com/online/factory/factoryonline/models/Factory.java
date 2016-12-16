@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.bluelinelabs.logansquare.annotation.JsonObject;
 
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.Serializable;
 import java.util.ArrayList;

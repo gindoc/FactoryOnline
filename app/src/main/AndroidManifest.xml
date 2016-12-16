@@ -25,6 +25,11 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -69,6 +74,18 @@
         <activity android:name=".modules.publishRental.PrePay.PrePayActivity" />
         <activity android:name=".modules.publishRental.tag.TagActivity" />
         <activity android:name=".modules.search.SearchActivity" />
+        <activity android:name=".modules.publication.PublicationActivity" />
+        <activity android:name=".modules.collection.CollectionActivity" />
+        <activity android:name=".modules.setting.SettingActivity" />
+        <activity android:name=".modules.setting.about.AboutActivity" />
+        <activity android:name=".modules.setting.copyright.CopyrightActivity" />
+        <activity android:name=".modules.setting.qrcode.QRCodeActivity" />
+        <activity android:name=".modules.personalInfo.PersonalInfoActivity" />
+        <activity android:name=".modules.agent.AgentActivity" />
+        <activity android:name=".modules.forgetPwd.ForgetPwdActivity" />
+        <activity android:name=".modules.agentFactoryDetail.FactoryDetailActivity" />
+        <activity android:name=".modules.search.agentResult.SearchResultActivity" />
+        <activity android:name=".modules.search.ownerResult.SearchResultActivity" />
     </application>
 
 </manifest>

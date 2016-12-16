@@ -12,6 +12,8 @@ import com.online.factory.factoryonline.base.IBaseView;
 public interface ReportContract {
     interface View extends IBaseView{
 
+        void feedbackSuccessful();
+
     }
 
     interface Presenter extends IBasePresenter{

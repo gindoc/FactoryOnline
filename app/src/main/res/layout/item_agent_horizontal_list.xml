@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/x23"
+        android:paddingRight="@dimen/x30">
+
+        <com.online.factory.factoryonline.customview.RoundImageView
+            android:layout_width="@dimen/x49"
+            android:layout_height="@dimen/x49"
+            android:layout_marginBottom="@dimen/y9"
+            android:layout_marginTop="@dimen/y14"
+            android:scaleType="centerCrop"
+            tool:src="@drawable/boy"
+            app:imageUrl="@{viewModel.agentAvatar}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/y2"
+            tool:text="名字"
+            android:text="@{viewModel.agentName}"
+            android:textColor="#424242"
+            android:textSize="@dimen/x11"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            tool:text="万江分店"
+            android:textColor="#424242"
+            android:textSize="@dimen/x9"
+            android:text="@{viewModel.agentBrand}"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</layout>

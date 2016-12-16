@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:text="所有图片"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="@dimen/x16" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
                 android:layout_marginRight="@dimen/x10"
                 android:text="更换相册"
                 android:textColor="#ccc"
-                android:textSize="14sp" />
+                android:textSize="@dimen/x12" />
         </android.support.v7.widget.Toolbar>
 
         <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView

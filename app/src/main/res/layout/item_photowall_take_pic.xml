@@ -27,7 +27,7 @@
                 android:drawableTop="@drawable/ic_camera_small"
                 android:text="拍摄照片"
                 android:textColor="#F1F1F1"
-                android:textSize="16sp" />
+                android:textSize="@dimen/x13" />
         </RelativeLayout>
     </FrameLayout>
 

@@ -15,7 +15,7 @@
             android:paddingLeft="@dimen/x10"
             android:paddingTop="@dimen/x5"
             android:paddingBottom="@dimen/x5"
-            android:textSize="16sp"
+            android:textSize="@dimen/x13"
             tool:text="A" />
         <TextView
             android:id="@+id/tv_city_name"
@@ -26,6 +26,6 @@
             android:paddingBottom="@dimen/x5"
             tool:text="GIndoc"
             android:textColor="#0e0e0e"
-            android:textSize="22sp"/>
+            android:textSize="@dimen/x16"/>
     </LinearLayout>
 </layout>

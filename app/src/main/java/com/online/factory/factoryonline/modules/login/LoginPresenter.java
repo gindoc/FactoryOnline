@@ -7,11 +7,8 @@ import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;
-import com.online.factory.factoryonline.models.response.Response;
-import com.online.factory.factoryonline.models.response.UserResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
-import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
 import javax.inject.Inject;
@@ -57,7 +54,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                             User user = new Gson().fromJson(str_user, User.class);
 
                             Saver.saveSerializableObject(user, SharePreferenceKey.USER);
-                            Saver.setToken(body.get("token").toString());
+                            String token = AESUtil.desEncrypt(body.get("token").getAsString(), timestamp, iv.toString());
+                            Saver.setToken(token);
                             Saver.setLoginState(true);
 
                             getView().loginSuccessfully();

@@ -73,13 +73,11 @@ public class PwdLoginFragment  extends BaseFragment{
 
     @Nullable
     private String getInputPhoneNum() {
-        Editable phone_num = mBinding.etPhonenum.getEditText().getEditableText();
-        return phone_num == null ? null:phone_num.toString();
+        return mBinding.etPhonenum.getText().toString();
     }
 
     @Nullable
     private String getInputPwd(){
-        Editable pwd = mBinding.etPwd.getEditText().getEditableText();
-        return pwd == null ? null:pwd.toString();
+        return mBinding.etPwd.getText().toString();
     }
 }

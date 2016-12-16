@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.album.fragment.PhotoFolder;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.online.factory.factoryonline.databinding.FragmentPhotoFolderBinding;
 import com.online.factory.factoryonline.models.ImageFolderBean;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -64,6 +66,14 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
     }
 
     private void initToolbar() {
+        StatusBarUtils.from((Activity) getContext())
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.toolbar)
+                .process();
         mBinding.toolbar.setTitle("");
         ((AlbumActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left);

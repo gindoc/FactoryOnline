@@ -13,7 +13,7 @@
         android:gravity="center_vertical"
         android:text="当前定位"
         android:textColor="#424242"
-        android:textSize="18sp" />
+        android:textSize="@dimen/x14" />
 
     <include layout="@layout/line" />
 
@@ -29,7 +29,7 @@
             android:gravity="center_vertical"
             android:text="东莞"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
+            android:textSize="@dimen/x14" />
 
         <TextView
             android:id="@+id/tv_current_area"
@@ -39,7 +39,7 @@
             android:paddingRight="@dimen/x15"
             android:text="选择区域"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp" />
+            android:textSize="@dimen/x14" />
     </LinearLayout>
 
     <include layout="@layout/line" />

@@ -1,11 +1,11 @@
 package com.online.factory.factoryonline.utils;
 
 import android.databinding.BindingAdapter;
+import org.apache.commons.codec.binary.Base64;
 import android.graphics.Bitmap;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.widget.ImageView;
-import org.apache.commons.codec.binary.Base64;
 import com.online.factory.factoryonline.R;
 import com.squareup.picasso.Picasso;
 
@@ -33,7 +33,13 @@ public class DataBindingProperty {
             default:
                 if (!TextUtils.isEmpty(url)) {
                     String decodedUrl = new String(Base64.decodeBase64(url.getBytes()));
-                    Picasso.with(imageView.getContext()).load(decodedUrl).into(imageView);
+                    Picasso.with(imageView.getContext())
+                            .load(decodedUrl)
+                            .error(R.drawable.ic_no_pic)
+                            .placeholder(R.drawable.ic_no_pic)
+                            .into(imageView);
+                }else {
+                    Picasso.with(imageView.getContext()).load(R.drawable.ic_no_pic).into(imageView);
                 }
                 break;
         }

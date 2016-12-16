@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.album.fragment.PhotoWall;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.databinding.FragmentPhotoWallBinding;
 import com.online.factory.factoryonline.databinding.ItemPhotowallTakePicBinding;
@@ -24,6 +26,7 @@ import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.Pho
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -41,7 +44,9 @@ import timber.log.Timber;
  * Created by cwenhui on 2016/10/19.
  */
 public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, PhotoWallPresenter> implements
-        PhotoWallContract.View/*, BaseRecyclerViewAdapter.OnItemClickListener*/ {
+        PhotoWallContract.View{
+    public static final int WRITE_PERMISSION_REQUEST_CODE = 198;
+    public static final int READ_PERMISSION_REQUEST_CODE = 199;
     public static final int TO_PHOTOFOLDER_FRAGMENT = 99;
     public static final String SELECTED_FOLDER_INDEX = "selectedFolderIndex";
     public static final int TO_PHOTOSELECTED_FRAGMENT = 98;
@@ -96,10 +101,11 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         if (requestCode == PublishRentalActivity.TO_PHOTO_SELECTED && uploadedImage.size() > 0) {
             toPhotoSelectedFragment((ArrayList<String>) uploadedImage);
         }
+
         initToolBar();
         initRecyclerview();
 
-        mPresenter.getPhotos();
+        checkPermission(READ_PERMISSION_REQUEST_CODE);
 
         mAdapter.getSubject().subscribe(new RxSubscriber() {
             @Override
@@ -117,6 +123,14 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     private void initToolBar() {
+        StatusBarUtils.from((Activity) getContext())
+                //沉浸状态栏
+                .setTransparentStatusbar(true)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.toolbar)
+                .process();
         mBinding.toolbar.setTitle("");
         ((AlbumActivity) getActivity()).setSupportActionBar(mBinding.toolbar);
         mBinding.toolbar.setNavigationIcon(R.drawable.ic_close);
@@ -147,6 +161,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     @Override
     public void showError(String error) {
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -160,6 +175,10 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     }
 
     public void takePic(View view) {
+        checkPermission(WRITE_PERMISSION_REQUEST_CODE);
+    }
+
+    private void toCameraPage() {
         if (mAdapter.getUploadedItem().size() + mAdapter.getReadyToUpload().size() >= 9) {
             Toast.makeText(getContext(), "最多选择9张图片", Toast.LENGTH_SHORT).show();
             return;
@@ -174,11 +193,16 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) {
-            Toast.makeText(getContext(), "未拍摄有图片...", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (requestCode == ScanImageUtils.CHOOSE_CAPTURE) {
+        if (requestCode == READ_PERMISSION_REQUEST_CODE) {
+            mPresenter.getPhotos();
+        } else if (requestCode == WRITE_PERMISSION_REQUEST_CODE) {
+            Toast.makeText(getContext(), "读写权限已打开，可以开始拍照了", Toast.LENGTH_SHORT).show();
+            mPresenter.getPhotos();
+        } else if (requestCode == ScanImageUtils.CHOOSE_CAPTURE) {
+            if (resultCode != Activity.RESULT_OK) {
+                Toast.makeText(getContext(), "未拍摄有图片...", Toast.LENGTH_SHORT).show();
+                return;
+            }
             File picture = new File(mImageCapturePath);
             if (picture.length() > 0) {
                 Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
@@ -311,4 +335,25 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         }
     }
 
+    private void checkPermission(final int permissionType) {
+        performCodeWithPermission(getString(R.string.permission_storage_rationale), permissionType,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionCallback() {
+                    @Override
+                    public void hasPermission() {
+                        if (permissionType == READ_PERMISSION_REQUEST_CODE) {
+                            mPresenter.getPhotos();
+                        } else if (permissionType == WRITE_PERMISSION_REQUEST_CODE) {
+                            toCameraPage();
+                        }
+                    }
+
+                    @Override
+                    public void noPermission(Boolean hasPermanentlyDenied) {
+                        if (hasPermanentlyDenied) {
+                            alertAppSetPermission(getString(R.string.permission_storage_deny_again), permissionType);
+                        }
+                    }
+                });
+
+    }
 }

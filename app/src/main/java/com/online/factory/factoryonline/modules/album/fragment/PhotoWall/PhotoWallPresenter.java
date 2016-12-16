@@ -112,6 +112,9 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
                     @Override
                     public Observable<File> call(String s) {
                         Bitmap bitmap = BitmapManager.compressImage(s, 320, 480);
+                        if (bitmap == null) {
+                            return Observable.error(new Exception("图片为空"));
+                        }
                         File file = FileUtils.createTempImage(context);
                         try {           // 用bitmap生成文件
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
@@ -140,7 +143,9 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        getView().showError(throwable.getMessage());
                         Timber.e(throwable);
+                        getView().hideLoadingDialog();
                     }
                 });
 
@@ -165,6 +170,9 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if(throwable.getMessage().contains("401")){
+                            getView().showError("未登录，请先登录");
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });

@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.base;
 import android.app.Application;
 import android.content.Intent;
 import android.os.StrictMode;
+import android.support.multidex.MultiDexApplication;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.online.factory.factoryonline.BuildConfig;
@@ -17,7 +18,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import javax.inject.Inject;
 
-import cn.jpush.sms.SMSSDK;
+import pub.devrel.easypermissions.EasyPermissions;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -28,10 +29,11 @@ import static android.os.Build.VERSION_CODES.GINGERBREAD;
  * Created by louiszgm on 2016/9/29.
  */
 
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
     private ApplicationComponent mComponent;
     @Inject
     DataManager dataManager;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -42,17 +44,16 @@ public class BaseApplication extends Application {
             return;
         }
 //        enabledStrictMode();
-        LeakCanary.install(this);
         Saver.initSaver(this);
 
         getApplicationComponent().inject(this);
 
         // 初始化baiduMap
         SDKInitializer.initialize(this);
-        SMSSDK.getInstance().initSdk(this);
 
         //初始化Timber
         if (BuildConfig.DEBUG) {
+            LeakCanary.install(this);
             Timber.plant(new Timber.DebugTree());
         }
 
@@ -70,18 +71,18 @@ public class BaseApplication extends Application {
         }
     }
 
-    public ApplicationComponent getApplicationComponent(){
-        if(mComponent == null){
+    public ApplicationComponent getApplicationComponent() {
+        if (mComponent == null) {
             mComponent = DaggerApplicationComponent.builder()
                     .applicationModule(new ApplicationModule(this))
 //                    .dataManagerModule()
                     .build();
         }
         ComponentHolder.setAppComponent(mComponent);
-        return  mComponent;
+        return mComponent;
     }
 
-    public void setComponent(ApplicationComponent component){
+    public void setComponent(ApplicationComponent component) {
         mComponent = component;
     }
 
@@ -96,12 +97,13 @@ public class BaseApplication extends Application {
             // 当APP闪退时，所做的一些处理
             Timber.e("send error msg to server!!!");
             dataManager.getRecommendAreaCats()
-            .subscribeOn(Schedulers.io())
-            .subscribe();//
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();//
 
             //重启app
 //            restartApp();
         }
+
         private void restartApp() {
             Intent intent = new Intent(BaseApplication.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
