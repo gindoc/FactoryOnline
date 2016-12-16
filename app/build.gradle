@@ -16,7 +16,16 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
-
+    productFlavors{
+        YingYongBao{}
+        WanDouJia{}
+        Baidu{}
+        c360{}
+        HuaWei{}
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+    }
     signingConfigs {
         // your debug keystore
         debug {

@@ -181,3 +181,8 @@
 # databinding
 -dontwarn android.databinding.**
 -keep class android.databinding.** { *; }
+
+#umeng
+-keepclassmembers class * {
+   public <init>(org.json.JSONObject);
+}

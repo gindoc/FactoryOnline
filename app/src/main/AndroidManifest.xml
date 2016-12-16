@@ -42,7 +42,7 @@
             android:value="MLPHyB7vZjqhVxq48DQM72Y6" />
 
         <meta-data android:value="584e4c15b27b0a4150000132" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="YingYongBao" android:name="UMENG_CHANNEL"/>
+        <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
 
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
 
