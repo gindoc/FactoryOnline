@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemRecommendListBinding;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.WantedMessage;
@@ -16,7 +17,7 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMessage, RecommendRecyclerViewAdapter.RecommendViewHolder> {
+public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMessage, BaseRecyclerViewHolder> {
 
     private Provider<RecommendViewModel> provider;
 
@@ -27,34 +28,22 @@ public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Wanted
     }
 
     @Override
-    public RecommendViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemRecommendListBinding binding = ItemRecommendListBinding.inflate(layoutInflater, parent, false);
         View view = binding.getRoot();
-        return new RecommendViewHolder(view, binding);
+        return new BaseRecyclerViewHolder(view, binding);
     }
 
     @Override
-    public void onBindViewHolder(RecommendViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         RecommendViewModel viewModel = provider.get();
         WantedMessage wantedMessage = data.get(position);
         Factory info = wantedMessage.getFactory();
         viewModel.setInfo(info);
-        ItemRecommendListBinding binding = holder.getBinding();
+        ItemRecommendListBinding binding = (ItemRecommendListBinding) holder.getBinding();
         binding.setViewModel(viewModel);
 
-    }
-
-    public class RecommendViewHolder extends RecyclerView.ViewHolder {
-        private ItemRecommendListBinding binding;
-        public RecommendViewHolder(View itemView, ItemRecommendListBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemRecommendListBinding getBinding() {
-            return binding;
-        }
     }
 
 }

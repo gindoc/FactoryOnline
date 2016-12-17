@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemPhotowallGridBinding;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by cwenhui on 2016/10/20.
  */
-public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallAdapter.PhotoWallViewHolder> {
+public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, BaseRecyclerViewHolder> {
     Provider<PhotoWallItemViewModel> provider;
     private BehaviorSubject subject;
     private String mDirPath;    // 文件夹路径
@@ -53,13 +54,13 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
     }
 
     @Override
-    public PhotoWallViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemPhotowallGridBinding binding = ItemPhotowallGridBinding.inflate(layoutInflater, parent, false);
-        return new PhotoWallViewHolder(binding.getRoot(), binding);
+        return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder(PhotoWallViewHolder holder, final int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final PhotoWallItemViewModel viewModel = provider.get();
         String imageUrl = mDirPath + "/" + data.get(position);
@@ -69,7 +70,7 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
             }
         }
         viewModel.setImgUrl(mDirPath + "/" + data.get(position));
-        final ItemPhotowallGridBinding binding = holder.getBinding();
+        final ItemPhotowallGridBinding binding = (ItemPhotowallGridBinding) holder.getBinding();
         binding.setViewModel(viewModel);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,16 +101,4 @@ public class PhotoWallAdapter extends BaseRecyclerViewAdapter<String, PhotoWallA
         });
     }
 
-    class PhotoWallViewHolder extends RecyclerView.ViewHolder {
-        private ItemPhotowallGridBinding binding;
-
-        public PhotoWallViewHolder(View itemView, ItemPhotowallGridBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemPhotowallGridBinding getBinding() {
-            return binding;
-        }
-    }
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemRecommendCategoryBinding;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class RecommendCategoryAdapter extends BaseRecyclerViewAdapter<String, RecommendCategoryAdapter.RecommendCategoryViewHolder> {
+public class RecommendCategoryAdapter extends BaseRecyclerViewAdapter<String, BaseRecyclerViewHolder> {
     private Provider<RecommendViewModel> provider;
     private BehaviorSubject subject;
     @Inject
@@ -36,18 +37,18 @@ public class RecommendCategoryAdapter extends BaseRecyclerViewAdapter<String, Re
     }
 
     @Override
-    public RecommendCategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemRecommendCategoryBinding binding = ItemRecommendCategoryBinding.inflate(layoutInflater);
-        return new RecommendCategoryViewHolder(binding.getRoot(), binding);
+        return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder(RecommendCategoryViewHolder holder, final int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final RecommendViewModel viewModel = provider.get();
         String cat = data.get(position);
         viewModel.setCategoryName(cat);
-        ItemRecommendCategoryBinding binding = holder.getBinding();
+        ItemRecommendCategoryBinding binding = (ItemRecommendCategoryBinding) holder.getBinding();
         binding.setViewModel(viewModel);
         subject.subscribe(new Subscriber() {
             @Override
@@ -68,19 +69,5 @@ public class RecommendCategoryAdapter extends BaseRecyclerViewAdapter<String, Re
             }
         });
     }
-
-    class RecommendCategoryViewHolder extends RecyclerView.ViewHolder {
-        private ItemRecommendCategoryBinding binding;
-
-        public RecommendCategoryViewHolder(View itemView, ItemRecommendCategoryBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemRecommendCategoryBinding getBinding() {
-            return binding;
-        }
-    }
-
 
 }

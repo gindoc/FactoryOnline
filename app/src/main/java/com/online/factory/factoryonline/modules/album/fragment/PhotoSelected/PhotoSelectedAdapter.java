@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView;
 import com.online.factory.factoryonline.databinding.ItemPhotoSelectedBinding;
 import com.squareup.picasso.Picasso;
@@ -21,7 +22,7 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by cwenhui on 2016/10/22.
  */
-public class PhotoSelectedAdapter extends BaseRecyclerViewAdapter<String, PhotoSelectedAdapter.PhotoSelectedViewHolder> {
+public class PhotoSelectedAdapter extends BaseRecyclerViewAdapter<String, BaseRecyclerViewHolder> {
     private Provider<PhotoSelectedViewModel> provider;
 
     @Inject
@@ -38,45 +39,26 @@ public class PhotoSelectedAdapter extends BaseRecyclerViewAdapter<String, PhotoS
     }
 
     @Override
-    public PhotoSelectedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemPhotoSelectedBinding binding = ItemPhotoSelectedBinding.inflate(layoutInflater, parent, false);
-        return new PhotoSelectedViewHolder(binding.getRoot(), binding);
+        return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder(PhotoSelectedViewHolder holder, final int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         PhotoSelectedViewModel viewModel = provider.get();
         final String imageUrl = data.get(position);
         viewModel.setImageUrl(imageUrl);
-        final ItemPhotoSelectedBinding binding = holder.getBinding();
+        final ItemPhotoSelectedBinding binding = (ItemPhotoSelectedBinding) holder.getBinding();
         binding.setViewModel(viewModel);
 
         binding.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                data.remove(imageUrl);
                 subject.onNext(data.indexOf(imageUrl));
-//                SuperRecyclerView recyclerView = (SuperRecyclerView) binding.getRoot().getParent();                   //获得recyclerview来通知更新，坑
-//                recyclerView.notifyDataSetChanged();
-//                TextView title = (TextView) ((ViewGroup) recyclerView.getParent()).findViewById(R.id.tv_title);     //删除文件后设置一下title
-//                title.setText("已选" + data.size() + "张图片");
-//                Toast.makeText(mContext, "delete item ", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    class PhotoSelectedViewHolder extends RecyclerView.ViewHolder{
-
-        private ItemPhotoSelectedBinding binding;
-
-        public PhotoSelectedViewHolder(View itemView, ItemPhotoSelectedBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemPhotoSelectedBinding getBinding() {
-            return binding;
-        }
-    }
 }

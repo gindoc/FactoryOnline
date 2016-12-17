@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemCityListBinding;
 import com.online.factory.factoryonline.models.CityBean;
 
@@ -15,7 +16,7 @@ import javax.inject.Inject;
  * Created by cwenhui on 2016/11/8.
  */
 
-public class CityAdapter extends BaseRecyclerViewAdapter<CityBean, CityAdapter.CityViewHolder> {
+public class CityAdapter extends BaseRecyclerViewAdapter<CityBean, BaseRecyclerViewHolder> {
 
     @Inject
     public CityAdapter(Context context) {
@@ -23,15 +24,15 @@ public class CityAdapter extends BaseRecyclerViewAdapter<CityBean, CityAdapter.C
     }
 
     @Override
-    public CityViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemCityListBinding binding = ItemCityListBinding.inflate(layoutInflater, parent, false);
-        return new CityViewHolder(binding.getRoot(), binding);
+        return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder(CityViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        ItemCityListBinding binding = holder.getBinding();
+        ItemCityListBinding binding = (ItemCityListBinding) holder.getBinding();
         CityBean city = data.get(position);
         binding.tvCityName.setText(city.getCityName());
         if (position != 0) {
@@ -69,19 +70,6 @@ public class CityAdapter extends BaseRecyclerViewAdapter<CityBean, CityAdapter.C
             }
         }
         return -1;
-    }
-
-    class CityViewHolder extends RecyclerView.ViewHolder {
-        ItemCityListBinding binding;
-
-        public CityViewHolder(View itemView, ItemCityListBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemCityListBinding getBinding() {
-            return binding;
-        }
     }
 
 }

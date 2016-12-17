@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemRecommendCategoryBinding;
 import com.online.factory.factoryonline.databinding.ItemRecommendCategoryWhiteBinding;
 import com.online.factory.factoryonline.models.Area;
@@ -19,7 +20,7 @@ import rx.subjects.BehaviorSubject;
 /**
  * Created by cwenhui on 2016.11.3
  */
-public class RecommendWhiteCategoryAdapter extends BaseRecyclerViewAdapter<String, RecommendWhiteCategoryAdapter.RecommendCategoryViewHolder> {
+public class RecommendWhiteCategoryAdapter extends BaseRecyclerViewAdapter<String, BaseRecyclerViewHolder> {
     private Provider<RecommendViewModel> provider;
     private BehaviorSubject subject;
     @Inject
@@ -34,18 +35,18 @@ public class RecommendWhiteCategoryAdapter extends BaseRecyclerViewAdapter<Strin
     }
 
     @Override
-    public RecommendCategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemRecommendCategoryWhiteBinding binding = ItemRecommendCategoryWhiteBinding.inflate(layoutInflater);
-        return new RecommendCategoryViewHolder(binding.getRoot(), binding);
+        return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder(RecommendCategoryViewHolder holder, final int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final RecommendViewModel viewModel = provider.get();
         String cat = data.get(position);
         viewModel.setCategoryName(cat);
-        ItemRecommendCategoryWhiteBinding binding = holder.getBinding();
+        ItemRecommendCategoryWhiteBinding binding = (ItemRecommendCategoryWhiteBinding) holder.getBinding();
         binding.setViewModel(viewModel);
         subject.subscribe(new Subscriber() {
             @Override
@@ -66,19 +67,5 @@ public class RecommendWhiteCategoryAdapter extends BaseRecyclerViewAdapter<Strin
             }
         });
     }
-
-    class RecommendCategoryViewHolder extends RecyclerView.ViewHolder {
-        private ItemRecommendCategoryWhiteBinding binding;
-
-        public RecommendCategoryViewHolder(View itemView, ItemRecommendCategoryWhiteBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemRecommendCategoryWhiteBinding getBinding() {
-            return binding;
-        }
-    }
-
 
 }

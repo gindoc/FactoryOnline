@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 import com.online.factory.factoryonline.R;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 
 import java.io.File;
@@ -37,12 +38,14 @@ public class DataBindingProperty {
             default:
                 if (!TextUtils.isEmpty(url)) {
                     String decodedUrl = new String(Base64.decodeBase64(url.getBytes()));
-                    Picasso.with(imageView.getContext())
+                   RequestCreator requestCreator =  Picasso.with(imageView.getContext())
                             .load(decodedUrl)
                             .error(R.drawable.ic_no_pic)
-                            .placeholder(R.drawable.ic_no_pic)
-                            .resize(imageView.getMeasuredWidth(),imageView.getMeasuredHeight())
-                            .into(imageView);
+                            .placeholder(R.drawable.ic_no_pic);
+                    if (imageView.getMeasuredWidth() != 0) {
+                        requestCreator.resize(imageView.getMeasuredWidth(), imageView.getMeasuredHeight());
+                    }
+                    requestCreator.into(imageView);
                 }else {
                     Picasso.with(imageView.getContext()).load(R.drawable.ic_no_pic).into(imageView);
                 }

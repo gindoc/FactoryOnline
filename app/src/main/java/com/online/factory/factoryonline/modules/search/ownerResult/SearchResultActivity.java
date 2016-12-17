@@ -11,7 +11,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.databinding.ActivityOwnerSearchResultBinding;
 import com.online.factory.factoryonline.models.ProMediumMessage;
-import com.online.factory.factoryonline.modules.search.agentResult.SearchResultAdapter;
+import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -48,9 +48,8 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
         super.onCreate(savedInstanceState);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_owner_search_result);
+        mBinding.setView(this);
         StatusBarUtils.from(this)
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
@@ -77,8 +76,8 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
     }
 
     @Override
-    public void loadSearchResult(List<ProMediumMessage> proMediumMessage) {
-        mAdapter.addData(proMediumMessage);
+    public void loadSearchResult(List<WantedMessage> wantedMessages) {
+        mAdapter.addData(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
     }
 

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemAgentHorizontalListBinding;
 import com.online.factory.factoryonline.models.ProMedium;
 
@@ -18,7 +19,7 @@ import javax.inject.Provider;
  * 作用:
  */
 
-public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMedium, AgentRecyclerViewAdapter.AgentViewHolder> {
+public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMedium, BaseRecyclerViewHolder> {
     private Provider<HomeViewModel> provider;
 
     @Inject
@@ -28,31 +29,18 @@ public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMedium,
     }
 
     @Override
-    public AgentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemAgentHorizontalListBinding binding = ItemAgentHorizontalListBinding.inflate(layoutInflater, parent, false);
-        return new AgentViewHolder(binding.getRoot(), binding);
+        return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder(AgentViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         HomeViewModel viewModel = provider.get();
         ProMedium proMedium = data.get(position);
         viewModel.setProMedium(proMedium);
-        ItemAgentHorizontalListBinding binding = holder.getBinding();
+        ItemAgentHorizontalListBinding binding = (ItemAgentHorizontalListBinding) holder.getBinding();
         binding.setViewModel(viewModel);
-    }
-
-    class AgentViewHolder extends RecyclerView.ViewHolder{
-        private ItemAgentHorizontalListBinding binding;
-
-        AgentViewHolder(View itemView, ItemAgentHorizontalListBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemAgentHorizontalListBinding getBinding() {
-            return binding;
-        }
     }
 }

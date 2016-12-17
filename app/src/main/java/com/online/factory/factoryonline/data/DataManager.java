@@ -364,10 +364,12 @@ public class DataManager {
         return factoryApi.deleteAgentState(token, timestamp, id);
     }
 
-    public Observable<ProMediumMessageResponse> requestSearchResult(String next) {
-        return factoryApi.getSearchResult(next);
+    public Observable<ProMediumMessageResponse> requestSearchPromediumMessage(String next) {
+        return factoryApi.getSearchPromediumMessage(next);
     }
-
+    public Observable<RecommendResponse> requestSearchWantedMessage(String next) {
+        return factoryApi.getSearchWantedMessage(next);
+    }
     public Observable<Response> messageFeedback(int messageId, String content, String remark) {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);

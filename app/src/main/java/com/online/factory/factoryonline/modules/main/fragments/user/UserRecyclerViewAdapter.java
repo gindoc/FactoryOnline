@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemUserGridBinding;
 import com.online.factory.factoryonline.models.UserBean;
 
@@ -15,7 +16,7 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016/10/17.
  */
-public class UserRecyclerViewAdapter extends BaseRecyclerViewAdapter<UserBean, UserRecyclerViewAdapter.UerViewHolder> {
+public class UserRecyclerViewAdapter extends BaseRecyclerViewAdapter<UserBean, BaseRecyclerViewHolder> {
 
     private Provider<UserViewModel> provider;
     @Inject
@@ -25,32 +26,20 @@ public class UserRecyclerViewAdapter extends BaseRecyclerViewAdapter<UserBean, U
     }
 
     @Override
-    public UerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemUserGridBinding binding = ItemUserGridBinding.inflate(layoutInflater, parent, false);
-        return new UerViewHolder(binding.getRoot(), binding);
+        return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
     @Override
-    public void onBindViewHolder(UerViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         UserViewModel viewModel = provider.get();
         UserBean userBean = data.get(position);
         viewModel.setUserBean(userBean);
-        ItemUserGridBinding binding = holder.getBinding();
+        ItemUserGridBinding binding = (ItemUserGridBinding) holder.getBinding();
         binding.setViewModel(viewModel);
 
     }
 
-    class UerViewHolder extends RecyclerView.ViewHolder{
-        private ItemUserGridBinding binding;
-
-        public UerViewHolder(View itemView, ItemUserGridBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemUserGridBinding getBinding() {
-            return binding;
-        }
-    }
 }

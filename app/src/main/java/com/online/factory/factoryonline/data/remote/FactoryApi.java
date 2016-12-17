@@ -191,7 +191,10 @@ public interface FactoryApi {
     Observable<Response> deleteAgentState(@Header("Authorization") String header, @Header("TIME") String time, @Path("id") int id);
 
     @GET
-    Observable<ProMediumMessageResponse> getSearchResult(@Url String next);
+    Observable<ProMediumMessageResponse> getSearchPromediumMessage(@Url String next);
+
+    @GET
+    Observable<RecommendResponse> getSearchWantedMessage(@Url String next);
 
     @POST("feedbacks/wantedmessage/{message_id}/")
     Observable<Response> messageFeedback(@Path("message_id")int messageId, @Body RequestBody builder);

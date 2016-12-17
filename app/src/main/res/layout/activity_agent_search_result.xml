@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.search.agentResult.SearchResultActivity" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,6 +22,7 @@
                 android:text="返回"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/x14"
+                android:onClick="@{()->view.finish()}"
                 android:drawableLeft="@drawable/ic_arrow_left_green"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/x15"

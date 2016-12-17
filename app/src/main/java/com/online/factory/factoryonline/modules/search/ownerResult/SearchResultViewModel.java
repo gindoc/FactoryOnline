@@ -3,8 +3,10 @@ package com.online.factory.factoryonline.modules.search.ownerResult;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
+import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.ProMediumFactory;
 import com.online.factory.factoryonline.models.ProMediumMessage;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import javax.inject.Inject;
 
@@ -15,14 +17,14 @@ import javax.inject.Inject;
  */
 
 public class SearchResultViewModel extends BaseObservable {
-    private ProMediumFactory factory;
+    private Factory factory;
 
     @Inject
     public SearchResultViewModel() {
     }
 
-    public void setWantedMessage(ProMediumMessage wantedMessage) {
-        this.factory = wantedMessage.getProMediumFactory();
+    public void setWantedMessage(WantedMessage wantedMessage) {
+        this.factory = wantedMessage.getFactory();
     }
 
     @Bindable
@@ -47,7 +49,7 @@ public class SearchResultViewModel extends BaseObservable {
 
     @Bindable
     public String getAddressOverview() {
-        return factory.getAddress();
+        return factory.getAddress_overview();
     }
 
     @Bindable

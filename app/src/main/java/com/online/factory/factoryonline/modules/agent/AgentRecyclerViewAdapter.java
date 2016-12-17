@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemAgentListBinding;
 import com.online.factory.factoryonline.databinding.ItemRecommendListBinding;
 import com.online.factory.factoryonline.models.Factory;
@@ -19,7 +20,7 @@ import javax.inject.Provider;
 /**
  * Created by cwenhui on 2016.02.23
  */
-public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMediumMessage, AgentRecyclerViewAdapter.AgentViewHolder> {
+public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMediumMessage, BaseRecyclerViewHolder> {
 
     private Provider<AgentViewModel> provider;
 
@@ -30,32 +31,20 @@ public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMediumM
     }
 
     @Override
-    public AgentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemAgentListBinding binding = ItemAgentListBinding.inflate(layoutInflater, parent, false);
         View view = binding.getRoot();
-        return new AgentViewHolder(view, binding);
+        return new BaseRecyclerViewHolder(view, binding);
     }
 
     @Override
-    public void onBindViewHolder(AgentViewHolder holder, int position) {
+    public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         AgentViewModel viewModel = provider.get();
         viewModel.setWantedMessage(data.get(position));
-        ItemAgentListBinding binding = holder.getBinding();
+        ItemAgentListBinding binding = (ItemAgentListBinding) holder.getBinding();
         binding.setViewModel(viewModel);
 
-    }
-
-    public class AgentViewHolder extends RecyclerView.ViewHolder {
-        private ItemAgentListBinding binding;
-        public AgentViewHolder(View itemView, ItemAgentListBinding binding) {
-            super(itemView);
-            this.binding = binding;
-        }
-
-        public ItemAgentListBinding getBinding() {
-            return binding;
-        }
     }
 
 }

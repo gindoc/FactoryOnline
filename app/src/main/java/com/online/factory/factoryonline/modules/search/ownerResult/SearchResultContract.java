@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.modules.search.ownerResult;
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
 import com.online.factory.factoryonline.models.ProMediumMessage;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public interface SearchResultContract {
     interface View extends IBaseView {
 
-        void loadSearchResult(List<ProMediumMessage> proMediumMessage);
+        void loadSearchResult(List<WantedMessage> wantedMessages);
 
         void loadNextUrl(String next);
     }

@@ -27,7 +27,7 @@ public class SearchResultPresenter extends BasePresenter<SearchResultContract.Vi
     }
 
     public void requestSearchResult(String next) {
-        dataManager.requestSearchResult(next)
+        dataManager.requestSearchPromediumMessage(next)
                 .compose(getView().<ProMediumMessageResponse>getBindToLifecycle())
                 .compose(RxResultHelper.<ProMediumMessageResponse>handleResult())
                 .subscribeOn(Schedulers.io())
