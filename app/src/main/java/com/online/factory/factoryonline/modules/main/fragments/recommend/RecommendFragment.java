@@ -338,11 +338,21 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             }
             downPage++;
             mAdapter.getData().addAll(0, wantedMessages);
+            for (int i=0;i<wantedMessages.size();i++) {
+                mBinding.recyclerView.notifyItemInserted(i);
+            }
+//            mAdapter.notifyItemRangeChanged(0, mAdapter.getData().size());
         } else {
             upPage++;
+            int length = mAdapter.getData().size()+1;
             mAdapter.getData().addAll(wantedMessages);
+            for (int i=0;i<wantedMessages.size();i++) {
+                mBinding.recyclerView.notifyItemInserted(length+i);
+            }
+//            mAdapter.notifyItemRangeChanged(length, mAdapter.getData().size());
         }
-        mBinding.recyclerView.notifyDataSetChanged();
+//        mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.setIsLoading(false);
         isShowEmptyView();
     }
 
@@ -375,7 +385,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Override
     public void cancelLoading() {
         mBinding.swipe.setRefreshing(false);
-        mBinding.recyclerView.hideLoadingFooter();
+//        mBinding.recyclerView.hideLoadingFooter();
+        mBinding.recyclerView.removePageFooter();
     }
 
     @Override
@@ -421,11 +432,12 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void onPage() {
+        mBinding.recyclerView.setPageFooter(View.inflate(getContext(),R.layout.layout_recyclerview_footer, (ViewGroup) mBinding.getRoot()));
         mBinding.recyclerView.showLoadingFooter();
         if (isFilter) {
             mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
         } else {
-            mPresenter.requestRecommendListByDBWithoutIds(upPage, ids);
+            mPresenter.requestRecommendListByDBWithoutIds(mAdapter.getData().size());
         }
     }
 

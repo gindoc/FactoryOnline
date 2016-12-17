@@ -36,8 +36,8 @@ public class LocalApi {
         return dbManager.queryMaxUpdateTime();
     }
 
-    public List<WantedMessage> queryWantedMessagesWithoutIds(int pageNo, List<Integer> ids) {
-        return dbManager.queryWantedMessagesWithoutIds(pageNo, ids);
+    public List<WantedMessage> queryWantedMessagesWithoutIds(int count) {
+        return dbManager.queryWantedMessagesWithoutIds(count);
     }
 
     public Set<String> getSearchHistory() {

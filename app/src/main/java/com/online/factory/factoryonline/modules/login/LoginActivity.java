@@ -114,7 +114,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     @Override
     public void loginSuccessfully() {
-        startActivity(MainActivity.getStartIntent(this));
+//        startActivity(MainActivity.getStartIntent(this));
+        finish();
         overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }
 

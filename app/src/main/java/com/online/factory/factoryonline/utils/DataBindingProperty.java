@@ -25,7 +25,11 @@ public class DataBindingProperty {
             case R.id.iv_head_photo:
                 if (!TextUtils.isEmpty(url)) {
                     String decodedUrl = new String(Base64.decodeBase64(url.getBytes()));
-                    Picasso.with(imageView.getContext()).load(decodedUrl).placeholder(R.drawable.boy).into(imageView);
+                    Picasso.with(imageView.getContext())
+                            .load(decodedUrl)
+                            .placeholder(R.drawable.boy)
+                            .resize(imageView.getMeasuredWidth(),imageView.getMeasuredHeight())
+                            .into(imageView);
                 }else {
                     Picasso.with(imageView.getContext()).load(R.drawable.boy).into(imageView);
                 }
@@ -37,6 +41,7 @@ public class DataBindingProperty {
                             .load(decodedUrl)
                             .error(R.drawable.ic_no_pic)
                             .placeholder(R.drawable.ic_no_pic)
+                            .resize(imageView.getMeasuredWidth(),imageView.getMeasuredHeight())
                             .into(imageView);
                 }else {
                     Picasso.with(imageView.getContext()).load(R.drawable.ic_no_pic).into(imageView);

@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.data.remote.Consts;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
@@ -171,7 +172,8 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
                     @Override
                     public void _onError(Throwable throwable) {
                         if(throwable.getMessage().contains("401")){
-                            getView().showError("未登录，请先登录");
+                            getView().hideLoadingDialog();
+                            getView().toLogin();
                         }
                         Timber.e(throwable.getMessage());
                     }

@@ -125,12 +125,13 @@ public class DecorateRecyclerViewAdapter<T extends RecyclerView.Adapter> extends
     public void setFooterVisibility(View view, boolean shouldShow) {
         for (View footer : mFooters) {
             if (footer == view) {
-                if (footer.getTag() instanceof DecorateRecyclerViewAdapter.DecorateViewHolder) {
-                    DecorateViewHolder viewHolder = (DecorateViewHolder) footer.getTag();
-                    viewHolder.setVisibility(shouldShow);
-                }
+//                if (footer.getTag() instanceof DecorateRecyclerViewAdapter.DecorateViewHolder) {
+//                    DecorateViewHolder viewHolder = (DecorateViewHolder) footer.getTag();
+//                    viewHolder.setVisibility(shouldShow);
+//                }
                 footer.setVisibility(shouldShow ? View.VISIBLE : View.GONE);
-                notifyDataSetChanged();
+//                notifyDataSetChanged();
+//                notifyItemRemoved(mHeaders.size()+mBase.getItemCount()+1);
             }
         }
     }

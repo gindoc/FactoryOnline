@@ -28,6 +28,8 @@ public interface PhotoWallContract {
         void toPhotoSelectedFragment(ArrayList<String> selectedImagePath);
 
         void addImageKeyToOrderedImageKeys(String imageKey);
+
+        void toLogin();
     }
 
     interface Presenter extends IBasePresenter {

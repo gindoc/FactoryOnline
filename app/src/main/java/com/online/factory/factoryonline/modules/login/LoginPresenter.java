@@ -41,6 +41,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                 .subscribe(new RxSubscriber<retrofit2.Response<JsonObject>>() {
                     @Override
                     public void _onNext(retrofit2.Response<JsonObject> response) {
+                        Timber.e(response.body().toString());
                         JsonObject body = response.body();
                         if (body.get("erro_code").toString().equals("200")) {
                             loginContext.setmState(new LogInState());
@@ -59,6 +60,8 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                             Saver.setLoginState(true);
 
                             getView().loginSuccessfully();
+                        } else if (body.get("erro_code").toString().equals("303")) {
+                            getView().showError("密码错误，请重新登录");
                         }
                     }
 

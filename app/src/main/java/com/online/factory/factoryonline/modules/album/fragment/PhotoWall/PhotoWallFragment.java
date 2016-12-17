@@ -23,6 +23,7 @@ import com.online.factory.factoryonline.models.ImageFolderBean;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoFolder.PhotoFolderFragment;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
@@ -67,6 +68,9 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     @Inject
     PhotoSelectedFragment photoSelectedFragment;
+
+    @Inject
+    LoginContext loginContext;
 
     private ArrayList<String> uploadedImageKeys = new ArrayList<>();        // 已上传的imagekey
     private List<String> orderedImageKeys = new ArrayList<>();               // 排序好的imagekey，包含已上传的imagekey和准备上传图片的imagekey
@@ -235,6 +239,18 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             orderedImageKeys = new ArrayList<>();
         }
         orderedImageKeys.add(imageKey);
+    }
+
+    @Override
+    public void toLogin() {
+        CustomDialog.createMessageDialog(getContext(), "当前尚未登录，是否前往登录？", new CustomDialog.ReturnResults() {
+            @Override
+            public void result(Object o) {
+                if (o.equals("YES")) {
+                    loginContext.openUserDetail(getContext());
+                }
+            }
+        }).show();
     }
 
     public void switchAlbum(View view) {

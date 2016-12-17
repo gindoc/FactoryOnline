@@ -35,11 +35,11 @@ public class DBManager {
 //        db = helper.getWritableDatabase();
     }
 
-    public List<WantedMessage> queryWantedMessagesWithoutIds(int pageNo, List<Integer> id) {
+    public List<WantedMessage> queryWantedMessagesWithoutIds(int count) {
         db = helper.getWritableDatabase();
         Cursor c = null;
         try {
-            StringBuffer sb = new StringBuffer();
+            /*StringBuffer sb = new StringBuffer();
             if (id != null) {
                 for (int i : id) {
                     sb.append(",").append(i);
@@ -48,10 +48,9 @@ public class DBManager {
             String ids = "";
             if (sb.length() > 0) {
                 ids = sb.toString().substring(1);
-            }
-            c = db.rawQuery("SELECT * FROM (WantedMessage INNER JOIN Factory ON factoryId = Factory.id)  " +
-                    "INNER JOIN Contacter ON contacterId = Contacter.id AND WantedMessage.id NOT IN (?) ORDER BY id desc LIMIT 10 OFFSET ?",
-                    new String[]{ids, String.valueOf(pageNo*10-10)});
+            }*/
+            c = db.rawQuery("SELECT * FROM (WantedMessage INNER JOIN Factory ON factoryId = Factory.id) INNER JOIN Contacter ON contacterId = Contacter.id ORDER BY id desc LIMIT 10 OFFSET ?",
+                    new String[]{String.valueOf(count)});
             List<WantedMessage> wantedMessages = new ArrayList<>();
             WantedMessage wantedMessage;
             Factory factory;

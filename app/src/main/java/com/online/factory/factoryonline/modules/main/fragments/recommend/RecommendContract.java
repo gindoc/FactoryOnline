@@ -90,10 +90,9 @@ public interface RecommendContract {
 
         /**
          * 从数据库请求推荐列表，排除指定id的数据项
-         * @param pageNo    请求的页码，如果不输，默认为1
-         * @param ids       待排除的数据项的id
+         * @param count     已加载条数
          */
-        void requestRecommendListByDBWithoutIds(int pageNo, List<Integer> ids);
+        void requestRecommendListByDBWithoutIds(int count);
 
         /**
          * 请求推荐页面的区域目录

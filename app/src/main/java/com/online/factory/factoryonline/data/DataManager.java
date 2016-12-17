@@ -101,8 +101,8 @@ public class DataManager {
         }
     }
 
-    public Observable<RecommendResponse> getRecommendInfosWithoutIds(int pageNo, List<Integer> ids) {
-        List<WantedMessage> wantedMessages = localApi.queryWantedMessagesWithoutIds(pageNo, ids);
+    public Observable<RecommendResponse> getRecommendInfosWithoutIds(int count) {
+        List<WantedMessage> wantedMessages = localApi.queryWantedMessagesWithoutIds(count);
         RecommendResponse response = new RecommendResponse();
         response.setErro_code(200);
         response.setErro_msg("成功");

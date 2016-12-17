@@ -64,6 +64,7 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
                             if (response.errorBody() != null && response.errorBody().string().contains("认证令牌")) {
                                 Saver.logout();
                                 loginContext.setmState(new LogOutState());
+                                getView().showUser(null);
                                 return;
                             }
                         } catch (IOException e) {

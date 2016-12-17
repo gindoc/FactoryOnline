@@ -40,8 +40,8 @@ public class LogOutState implements UserState {
     }
 
     public void toLoginActivity(Context context) {
-        Activity activity = ((MainActivity) context);
-        Toast.makeText(context, "尚未登录，请先登录", Toast.LENGTH_SHORT).show();
+        Activity activity = ((Activity) context);
+//        Toast.makeText(context, "尚未登录，请先登录", Toast.LENGTH_SHORT).show();
         activity.startActivity(LoginActivity.getStartIntent(context));
         activity.overridePendingTransition(R.anim.translate_vetical_bottom_in, R.anim.no_animation);
     }

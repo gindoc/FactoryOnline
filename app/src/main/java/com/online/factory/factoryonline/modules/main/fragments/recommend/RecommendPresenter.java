@@ -254,8 +254,8 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                 });
     }
 
-    public void requestRecommendListByDBWithoutIds(int pageNo, List<Integer> ids) {
-        dataManager.getRecommendInfosWithoutIds(pageNo, ids)
+    public void requestRecommendListByDBWithoutIds(int count) {
+        dataManager.getRecommendInfosWithoutIds(count)
                 .compose(getView().<RecommendResponse>getBindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -289,7 +289,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                         if (response.getErro_code() == 200) {
                             getView().loadRecommendList(response.getWantedMessages(), false);
                         }
-                        getView().cancelLoading();
+//                        getView().cancelLoading();
                     }
 
                     @Override
