@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.bottomTab.rbHome.setChecked(true);
 
-        loadRootFragment(R.id.tab_content, homeFragment);
+        loadMultipleRootFragment(R.id.tab_content, 0, homeFragment, recommendFragment, userFragment);
 
     }
 
@@ -67,22 +67,19 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onClickHome(View view) {
-        if (findFragment(HomeFragment.class) == null) {
-            startWithPop(homeFragment);
-        }
+        showHideFragment(homeFragment, recommendFragment);
+        showHideFragment(homeFragment, userFragment);
     }
 
     public void onClickRecommend(View view) {
         mBinding.bottomTab.rbRecommend.setChecked(true);
-        if (findFragment(RecommendFragment.class) == null) {
-            startWithPop(recommendFragment);
-        }
+        showHideFragment(recommendFragment, userFragment);
+        showHideFragment(recommendFragment, homeFragment);
     }
 
     public void onClickUser(View view) {
-        if (findFragment(UserFragment.class) == null) {
-            startWithPop(userFragment);
-        }
+        showHideFragment(userFragment, recommendFragment);
+        showHideFragment(userFragment, homeFragment);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

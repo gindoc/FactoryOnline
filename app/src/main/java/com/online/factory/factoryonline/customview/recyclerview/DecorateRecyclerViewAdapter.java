@@ -125,13 +125,7 @@ public class DecorateRecyclerViewAdapter<T extends RecyclerView.Adapter> extends
     public void setFooterVisibility(View view, boolean shouldShow) {
         for (View footer : mFooters) {
             if (footer == view) {
-//                if (footer.getTag() instanceof DecorateRecyclerViewAdapter.DecorateViewHolder) {
-//                    DecorateViewHolder viewHolder = (DecorateViewHolder) footer.getTag();
-//                    viewHolder.setVisibility(shouldShow);
-//                }
                 footer.setVisibility(shouldShow ? View.VISIBLE : View.GONE);
-//                notifyDataSetChanged();
-//                notifyItemRemoved(mHeaders.size()+mBase.getItemCount()+1);
             }
         }
     }
@@ -185,11 +179,8 @@ public class DecorateRecyclerViewAdapter<T extends RecyclerView.Adapter> extends
             int whichFooter = Math.abs(viewType - FOOTER_VIEW_TYPE);
             View footerView = mFooters.get(whichFooter);
 
-            DecorateViewHolder viewHolder = new DecorateViewHolder(footerView);
-            footerView.setTag(viewHolder);
-            return viewHolder;
-//            return new RecyclerView.ViewHolder(footerView) {
-//            };
+            return new RecyclerView.ViewHolder(footerView) {
+            };
 
         } else {
             return mBase.onCreateViewHolder(viewGroup, viewType);
@@ -225,26 +216,6 @@ public class DecorateRecyclerViewAdapter<T extends RecyclerView.Adapter> extends
 
         } else {
             return FOOTER_VIEW_TYPE + position - mHeaders.size() - mBase.getItemCount();
-        }
-    }
-
-    class DecorateViewHolder extends RecyclerView.ViewHolder {
-        public DecorateViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        public void setVisibility(boolean isVisible){
-            RecyclerView.LayoutParams param = (RecyclerView.LayoutParams)itemView.getLayoutParams();
-            if (isVisible){
-                param.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                param.width = LinearLayout.LayoutParams.MATCH_PARENT;
-                itemView.setVisibility(View.VISIBLE);
-            }else{
-                itemView.setVisibility(View.GONE);
-                param.height = 0;
-                param.width = 0;
-            }
-            itemView.setLayoutParams(param);
         }
     }
 

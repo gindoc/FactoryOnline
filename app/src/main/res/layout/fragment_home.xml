@@ -79,12 +79,34 @@
 
         </LinearLayout>
 
-        <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
-            android:id="@+id/recyclerView"
+        <com.online.factory.factoryonline.customview.InterceptScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cacheColorHint="@null"
-            android:scrollbars="vertical" />
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/layout_home_header"
+                    layout="@layout/layout_home_header"
+                    app:view="@{view}" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cacheColorHint="@null"
+                        android:scrollbars="vertical" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </com.online.factory.factoryonline.customview.InterceptScrollView>
+
 
     </LinearLayout>
 </layout>

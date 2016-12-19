@@ -134,24 +134,5 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 });
     }
 
-    public void requestAgents(String next, final boolean isInit) {
-        dataManager.requestAgents(next)
-                .compose(getView().<ProMediumResponse>getBindToLifecycle())
-                .compose(RxResultHelper.<ProMediumResponse>handleResult())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<ProMediumResponse>() {
-                    @Override
-                    public void _onNext(ProMediumResponse proMediumResponse) {
-                        getView().loadAgents(proMediumResponse.getProMedium(), isInit);
-                        getView().loadNextUrl(proMediumResponse.getNext());
-                    }
-
-                    @Override
-                    public void _onError(Throwable throwable) {
-                        Timber.e(throwable.getMessage());
-                    }
-                });
-    }
 
 }

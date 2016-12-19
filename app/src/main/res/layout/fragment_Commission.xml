@@ -5,11 +5,14 @@
     <data>
 
         <variable
+            name="agentView"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.agent.AgentFragment" />
+        <variable
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
     </data>
 
-    <com.online.factory.factoryonline.customview.recyclerview.NestHorizontalRecyclerView
+    <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
         android:id="@+id/recyclerView_agents"
         android:layout_width="match_parent"
         android:minHeight="@dimen/y96"

@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="ownerView"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.owner.OwnerFragment" />
         <variable
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
@@ -24,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:onClick="@{()->view.publishRental()}"
+                android:onClick="@{()->ownerView.publishRental()}"
                 android:orientation="vertical">
 
                 <com.online.factory.factoryonline.customview.RoundImageView

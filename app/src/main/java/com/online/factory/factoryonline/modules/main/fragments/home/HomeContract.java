@@ -20,9 +20,6 @@ public interface HomeContract {
 
         void loadWantedMessages(List<WantedMessage> wantedMessages);
 
-        void loadAgents(List<ProMedium> proMedium, boolean isInit);
-
-        void loadNextUrl(String next);
     }
 
     interface Presenter extends IBasePresenter {

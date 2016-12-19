@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+\
 
+        <variable
+            name="findView"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.factory.FactoryFragment" />
         <variable
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment" />
@@ -25,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:onClick="@{()->view.openRecommend()}"
+                android:onClick="@{()->findView.openRecommend()}"
                 android:orientation="vertical">
 
                 <com.online.factory.factoryonline.customview.RoundImageView
