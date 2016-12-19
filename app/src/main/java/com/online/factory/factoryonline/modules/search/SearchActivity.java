@@ -36,6 +36,8 @@ import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.subjects.BehaviorSubject;
+import rx.subjects.Subject;
 import timber.log.Timber;
 
 /**
@@ -152,7 +154,7 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
         mBinding.etSearch.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                     mPresenter.cacheHistory(mBinding.etSearch.getText().toString());
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);        // 隐藏软键盘
@@ -179,7 +181,7 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
         mBinding.tvClear.setVisibility(View.VISIBLE);
         mBinding.tvTips.setText("搜索记录");
         for (String s : history) {
-            TextView tvHistory = new TextView(this);
+            final TextView tvHistory = new TextView(this);
             FlexboxLayout.LayoutParams lp = new FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT);
             Resources resources = getResources();
             int margin = (int) resources.getDimension(R.dimen.x10);
@@ -193,6 +195,12 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
             tvHistory.setTextColor(Color.parseColor("#424242"));
             tvHistory.setTextSize(16);
             tvHistory.setText(s);
+            tvHistory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mBinding.etSearch.setText(tvHistory.getText());
+                }
+            });
             mBinding.flexbox.addView(tvHistory);
         }
     }
