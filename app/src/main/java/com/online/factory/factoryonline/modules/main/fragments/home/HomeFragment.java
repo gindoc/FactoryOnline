@@ -181,10 +181,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter.setOnItemClickListener(this);
-        View emptyView = LayoutInflater.from(getContext()).inflate(R.layout.layout_home_emptyview, mBinding
-                .recyclerView, false);
-        mBinding.recyclerView.setPageFooter(emptyView);
-        mBinding.recyclerView.showLoadingFooter();
+        mBinding.llEmptyView.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -267,7 +264,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public void loadWantedMessages(List<WantedMessage> wantedMessages) {
         mAdapter.setData(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
-        mBinding.recyclerView.hideLoadingFooter();
+        if (wantedMessages.size() > 0) {
+            mBinding.llEmptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override

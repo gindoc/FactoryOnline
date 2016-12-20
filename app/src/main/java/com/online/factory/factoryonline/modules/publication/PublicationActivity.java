@@ -66,6 +66,7 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
 
         mBinding.swipe.setOnRefreshListener(this);
 
+        mBinding.swipe.setRefreshing(true);
         mPresenter.requestPublications(resources.getString(R.string.api)+"user/publications");
     }
 
@@ -73,7 +74,6 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setOnPageListener(this);
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        mBinding.recyclerView.setPageFooter(R.layout.layout_recyclerview_footer);
         mAdapter.setOnItemClickListener(this);
     }
 
@@ -100,7 +100,8 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
     public void loadPublicationList(List<WantedMessage> wantedMessages) {
         mAdapter.getData().addAll(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
-        mBinding.recyclerView.hideLoadingFooter();
+        mBinding.recyclerView.setIsLoading(false);
+        mBinding.swipe.setRefreshing(false);
     }
 
     @Override
@@ -117,12 +118,13 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
 
     @Override
     public void onPage() {
+        mBinding.swipe.setRefreshing(true);
         if (!TextUtils.isEmpty(next)) {
-            mBinding.recyclerView.showLoadingFooter();
             mPresenter.requestPublications(next);
         }else {
             Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
-            mBinding.recyclerView.hideLoadingFooter();
+            mBinding.recyclerView.setIsLoading(false);
+            mBinding.swipe.setRefreshing(false);
         }
     }
 

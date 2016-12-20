@@ -7,6 +7,7 @@
             name="view"
             type="com.online.factory.factoryonline.modules.agent.AgentActivity" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,11 +22,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:drawableLeft="@drawable/ic_arrow_left_green"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/x10"
                 android:drawablePadding="@dimen/x5"
-                android:text="返回"
+                android:gravity="center_vertical"
                 android:onClick="@{()->view.finish()}"
+                android:paddingLeft="@dimen/x10"
+                android:text="返回"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/x14" />
 
@@ -43,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="#ccc" />
+
 
         <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
             android:id="@+id/recyclerView"
@@ -70,12 +72,12 @@
                 android:drawableLeft="@drawable/ic_sms"
                 android:drawablePadding="@dimen/x5"
                 android:gravity="center"
+                android:onClick="@{()->view.sms()}"
                 android:paddingBottom="@dimen/x5"
                 android:paddingLeft="@dimen/x12"
                 android:paddingRight="@dimen/x12"
                 android:paddingTop="@dimen/x5"
                 android:text="发送短信"
-                android:onClick="@{()->view.sms()}"
                 android:textColor="#5ca6ed"
                 android:textSize="@dimen/x14" />
 
@@ -87,12 +89,12 @@
                 android:drawableLeft="@drawable/ic_phone"
                 android:drawablePadding="@dimen/x5"
                 android:gravity="center"
+                android:onClick="@{()->view.phone()}"
                 android:paddingBottom="@dimen/x5"
                 android:paddingLeft="@dimen/x12"
                 android:paddingRight="@dimen/x12"
                 android:paddingTop="@dimen/x5"
                 android:text="拨打电话"
-                android:onClick="@{()->view.phone()}"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/x14" />
         </LinearLayout>

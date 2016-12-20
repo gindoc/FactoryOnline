@@ -29,7 +29,8 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class SearchResultActivity extends BaseActivity<SearchResultContract.View, SearchResultPresenter> implements SearchResultContract.View, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+public class SearchResultActivity extends BaseActivity<SearchResultContract.View, SearchResultPresenter> implements SearchResultContract.View,
+        OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
     private static final String CONTENT_ID = "CONTENT_ID";
     @Inject
     SearchResultPresenter mPresenter;
@@ -60,7 +61,7 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
                 .setActionbarView(mBinding.rlTopBar)
                 .process();
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setPageFooter(R.layout.layout_recyclerview_footer);
+        mBinding.recyclerView.setOnPageListener(this);
         mAdapter.setOnItemClickListener(this);
 
         mPresenter.requestSearchResult(getString(R.string.api)+"search/contents/"+getIntent().getIntExtra(CONTENT_ID, 0));
@@ -85,6 +86,7 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
     public void loadSearchResult(List<ProMediumMessage> proMediumMessage) {
         mAdapter.addData(proMediumMessage);
         mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.setIsLoading(false);
     }
 
     @Override
@@ -98,6 +100,7 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
             mPresenter.requestSearchResult(next);
         }else {
             showError("没有更多内容了");
+            mBinding.recyclerView.setIsLoading(false);
         }
     }
 

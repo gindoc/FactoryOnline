@@ -93,7 +93,6 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
         mBinding.recyclerView.setOnPageListener(this);
-        mBinding.recyclerView.setPageFooter(R.layout.layout_recyclerview_footer);
         mAdapter.setOnItemClickListener(this);
     }
 
@@ -116,7 +115,7 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
     public void loadProMediumMessage(List<ProMediumMessage> proMediumMessage) {
         mAdapter.addData(proMediumMessage);
         mBinding.recyclerView.notifyDataSetChanged();
-        mBinding.recyclerView.hideLoadingFooter();
+        mBinding.recyclerView.setIsLoading(false);
     }
 
     @Override
@@ -127,12 +126,11 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
 
     @Override
     public void onPage() {
-        mBinding.recyclerView.showLoadingFooter();
         if (!TextUtils.isEmpty(next)) {
             mPresenter.requestProMediumMessages(next);
         }else {
-            mBinding.recyclerView.hideLoadingFooter();
-            showError("没有更多数据了");
+            mBinding.recyclerView.setIsLoading(false);
+//            showError("没有更多数据了");
         }
     }
 

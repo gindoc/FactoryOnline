@@ -81,7 +81,7 @@ public class RecommendPresenter extends BasePresenter<RecommendContract.View> im
                 .flatMap(new Func1<WantedMessage, Observable<List<WantedMessage>>>() {
                     @Override
                     public Observable<List<WantedMessage>> call(WantedMessage wantedMessage) {
-                        if (wantedMessage.getId() == null) {
+                        if (wantedMessage.getId() == null) {        // 数据库没有数据时
                             localApi.insertWantedMessages(recommendInfos);
                             return Observable.just(recommendInfos);
                         }else {

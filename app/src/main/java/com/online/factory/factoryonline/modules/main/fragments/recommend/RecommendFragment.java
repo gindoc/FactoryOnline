@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
+import com.online.factory.factoryonline.customview.WrapContentLinearLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.LinearRecyclerView;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
@@ -181,9 +183,9 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     }
 
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
+        mBinding.recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        mBinding.recyclerView.setPageFooter(inflater.inflate(R.layout.layout_recyclerview_footer, container, false));
         mBinding.recyclerView.setOnPageListener(this);
         mAdapter.setOnItemClickListener(this);
         mBinding.recyclerView.setOnScrollListener(this);
@@ -338,21 +340,19 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             }
             downPage++;
             mAdapter.getData().addAll(0, wantedMessages);
-            for (int i=0;i<wantedMessages.size();i++) {
+            for (int i = 0; i < wantedMessages.size(); i++) {
                 mBinding.recyclerView.notifyItemInserted(i);
             }
-//            mAdapter.notifyItemRangeChanged(0, mAdapter.getData().size());
+            mAdapter.notifyItemRangeChanged(0, mAdapter.getData().size());
         } else {
             upPage++;
-            int length = mAdapter.getData().size()+1;
+            int length = mAdapter.getData().size();
             mAdapter.getData().addAll(wantedMessages);
-            for (int i=0;i<wantedMessages.size();i++) {
-                mBinding.recyclerView.notifyItemInserted(length+i);
+            for (int i = 0; i < wantedMessages.size(); i++) {
+                mBinding.recyclerView.notifyItemInserted(length + i);
             }
-//            mAdapter.notifyItemRangeChanged(length, mAdapter.getData().size());
+            mAdapter.notifyItemRangeChanged(length, mAdapter.getData().size());
         }
-//        mBinding.recyclerView.notifyDataSetChanged();
-        mBinding.recyclerView.setIsLoading(false);
         isShowEmptyView();
     }
 
@@ -385,8 +385,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Override
     public void cancelLoading() {
         mBinding.swipe.setRefreshing(false);
-//        mBinding.recyclerView.hideLoadingFooter();
-        mBinding.recyclerView.removePageFooter();
+        mBinding.recyclerView.setIsLoading(false);
     }
 
     @Override
@@ -432,8 +431,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void onPage() {
-        mBinding.recyclerView.setPageFooter(View.inflate(getContext(),R.layout.layout_recyclerview_footer, (ViewGroup) mBinding.getRoot()));
-        mBinding.recyclerView.showLoadingFooter();
+        mBinding.swipe.setRefreshing(true);
         if (isFilter) {
             mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
         } else {
@@ -504,6 +502,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (dy > 0) {
             mBinding.tvScrollTop.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.tvScrollTop.setVisibility(View.GONE);
         }
     }
 

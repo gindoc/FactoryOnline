@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityOwnerSearchResultBinding;
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.models.WantedMessage;
@@ -25,7 +27,7 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class SearchResultActivity extends BaseActivity<SearchResultContract.View, SearchResultPresenter> implements SearchResultContract.View {
+public class SearchResultActivity extends BaseActivity<SearchResultContract.View, SearchResultPresenter> implements SearchResultContract.View, OnPageListener {
     private static final String CONTENT_ID = "CONTENT_ID";
     @Inject
     SearchResultPresenter mPresenter;
@@ -56,6 +58,7 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
                 .setActionbarView(mBinding.rlTopBar)
                 .process();
         mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setOnPageListener(this);
 
         mPresenter.requestSearchResult(getString(R.string.api)+"search/contents/"+getIntent().getIntExtra(CONTENT_ID, 0));
     }
@@ -79,10 +82,21 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
     public void loadSearchResult(List<WantedMessage> wantedMessages) {
         mAdapter.addData(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.setIsLoading(false);
     }
 
     @Override
     public void loadNextUrl(String next) {
         this.next = next;
+    }
+
+    @Override
+    public void onPage() {
+        if (!TextUtils.isEmpty(next)) {
+            mPresenter.requestSearchResult(next);
+        }else {
+            showError("没有更多内容了");
+            mBinding.recyclerView.setIsLoading(false);
+        }
     }
 }

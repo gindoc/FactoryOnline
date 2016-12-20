@@ -78,7 +78,6 @@ public class AgentCollectionFragment extends BaseFragment<AgentCollectionContrac
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setOnPageListener(this);
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        mBinding.recyclerView.setPageFooter(R.layout.layout_recyclerview_footer);
         mAdapter.setOnItemClickListener(this);
     }
 
@@ -89,10 +88,10 @@ public class AgentCollectionFragment extends BaseFragment<AgentCollectionContrac
 
     @Override
     public void loadCollectionList(List<ProMediumMessage> wantedMessages) {
-        mBinding.recyclerView.hideLoadingFooter();
         mAdapter.addData(wantedMessages);
         mBinding.recyclerView.notifyDataSetChanged();
         mBinding.swipe.setRefreshing(false);
+        mBinding.recyclerView.setIsLoading(false);
     }
 
     @Override
@@ -113,7 +112,7 @@ public class AgentCollectionFragment extends BaseFragment<AgentCollectionContrac
 
     @Override
     public void onRefresh() {
-        Toast.makeText(getContext(), "共"+count+"条数据",Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "共"+count+"条数据",Toast.LENGTH_SHORT).show();
         mBinding.swipe.setRefreshing(false);
     }
 
@@ -132,12 +131,13 @@ public class AgentCollectionFragment extends BaseFragment<AgentCollectionContrac
 
     @Override
     public void onPage() {
-        mBinding.recyclerView.showLoadingFooter();
+        mBinding.swipe.setRefreshing(true);
         if (!TextUtils.isEmpty(next)) {
             mPresenter.requestPublications(next);
         }else {
-            showError("没有更多数据了");
-            mBinding.recyclerView.hideLoadingFooter();
+//            showError("没有更多数据了");
+            mBinding.recyclerView.setIsLoading(false);
+            mBinding.swipe.setRefreshing(false);
         }
     }
 }
