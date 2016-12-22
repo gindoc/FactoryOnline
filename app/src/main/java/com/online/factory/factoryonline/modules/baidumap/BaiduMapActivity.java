@@ -133,7 +133,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
                     @Override
                     public void _onNext(Object o) {
                         BDLocation bdLocation = (BDLocation) o;
-                        Timber.e("纬度：" + bdLocation.getLatitude() + "   精度：" + bdLocation.getLongitude());
+                        Timber.e("纬度：%lf  精度：%lf" ,bdLocation.getLatitude() , bdLocation.getLongitude());
                         // 定位数据
                         MyLocationData data = new MyLocationData.Builder()
                                 // 定位精度bdLocation.getRadius()

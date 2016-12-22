@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -7,8 +7,8 @@
             name="view"
             type="com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity" />
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
@@ -38,12 +38,12 @@
 
         <LinearLayout
             android:id="@+id/ll_factory_list"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
             android:background="@android:color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <View
                 android:layout_width="match_parent"
@@ -79,10 +79,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{()->view.retract()}"
                     android:padding="@dimen/x10"
                     android:text="收起"
                     android:textColor="#232323"
-                    android:onClick="@{()->view.retract()}"
                     android:textSize="16sp" />
             </LinearLayout>
 

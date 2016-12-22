@@ -38,6 +38,14 @@ android {
             storePassword 'factoryonlinepwd'
         }
     }
+    lintOptions{
+        // 设置为true会关闭lint分析进度
+        quiet true
+        // 如果为true，则在发现错误时停止gradle构建
+        abortOnError false
+        // 如果为true，则只报告错误
+        ignoreWarnings true
+    }
     buildTypes {
         debug {
             minifyEnabled false
@@ -67,14 +75,6 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
-//    sourceSets {
-//        main {
-//            jniLibs.srcDirs = ['src/main/jniLibs']
-//        }
-//    }
-//    testOptions {
-//        unitTests.returnDefaultValues = true;
-//    }
 }
 
 dependencies {

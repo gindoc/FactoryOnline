@@ -51,7 +51,7 @@
             android:hardwareAccelerated="false">
 
         </activity>
-        <activity android:name=".modules.baidumap.BaiduMapActivity"></activity>
+        <activity android:name=".modules.baidumap.BaiduMapActivity"/>
         <activity android:name=".modules.login.LoginActivity" />
         <activity
             android:name=".modules.splash.SplashActivity"
