@@ -22,7 +22,7 @@ public class Validate {
         Pattern p = null;
         Matcher m = null;
         boolean b = false;
-        p = Pattern.compile("(13\\d|14[57]|15[^4,\\D]|17[678]|18\\d)\\d{8}|170[059]\\d{7}"); // 验证手机号
+        p = Pattern.compile("(13\\d|14[57]|15[^4,\\D]|17[5678]|18\\d)\\d{8}|170[059]\\d{7}"); // 验证手机号
         m = p.matcher(phone_num);
         b = m.matches();
         if(!b){
