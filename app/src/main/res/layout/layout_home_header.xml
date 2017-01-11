@@ -39,7 +39,8 @@
                     android:layout_width="@dimen/y36"
                     android:layout_height="@dimen/y36"
                     android:layout_marginRight="@dimen/x21"
-                    android:src="@drawable/ic_msg_online"/>
+                    android:src="@drawable/ic_msg_online"
+                    android:id="@+id/imageView" />
 
                 <com.online.factory.factoryonline.customview.VerticalScrollView
                     android:id="@+id/scroll_txt_view"

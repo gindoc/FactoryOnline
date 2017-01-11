@@ -15,6 +15,9 @@ import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.ComponentHolder;
 import com.online.factory.factoryonline.utils.Saver;
 import com.squareup.leakcanary.LeakCanary;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import javax.inject.Inject;
 
@@ -34,9 +37,17 @@ public class BaseApplication extends MultiDexApplication {
     @Inject
     DataManager dataManager;
 
+    {
+        PlatformConfig.setWeixin("wx9d0844d59f7344f3", "aa7a31ff1ee416e6c7d1cd33aa46b5a5");
+        PlatformConfig.setSinaWeibo("769036763", "0f771400a235cfa1672e0186cd060655");
+        PlatformConfig.setQQZone("1105941526", "Nct7t8yIEZqZmPcB");
+        Config.REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        UMShareAPI.get(this);
         //内存泄漏分析
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.

@@ -276,5 +276,25 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, mAdapter.getData().get(position));
         startActivity(intent);
     }
-
+//
+//    public void shareToWX() {
+//        new ShareAction(getActivity()).withText("Hello, welcome to use share sdk!!")
+//                .setPlatform(SHARE_MEDIA.SINA)
+//                .setCallback(new UMShareListener() {
+//                    @Override
+//                    public void onResult(SHARE_MEDIA share_media) {
+//                        Toast.makeText(getContext(),"成功了",Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+//                        Toast.makeText(getContext(),"失败"+throwable.getMessage(),Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    @Override
+//                    public void onCancel(SHARE_MEDIA share_media) {
+//                        Toast.makeText(getContext(),"取消了",Toast.LENGTH_LONG).show();
+//                    }
+//                }).share();
+//    }
 }
