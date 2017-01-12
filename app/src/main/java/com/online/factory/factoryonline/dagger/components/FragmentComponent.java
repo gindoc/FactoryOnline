@@ -9,6 +9,7 @@ import com.online.factory.factoryonline.modules.collection.agent.AgentCollection
 import com.online.factory.factoryonline.modules.collection.owner.OwnerCollectionFragment;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.home.agent.AgentFragment;
+import com.online.factory.factoryonline.modules.main.fragments.home.index.IndexFragment;
 import com.online.factory.factoryonline.modules.main.fragments.home.owner.OwnerFragment;
 import com.online.factory.factoryonline.modules.main.fragments.home.factory.FactoryFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
@@ -51,4 +52,6 @@ public interface FragmentComponent {
     void inject(OwnerFragment ownerFragment);
 
     void inject(AgentFragment agentFragment);
+
+    void inject(IndexFragment indexFragment);
 }

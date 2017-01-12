@@ -9,6 +9,7 @@ import com.online.factory.factoryonline.models.SearchResult;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
 import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
@@ -198,4 +199,7 @@ public interface FactoryApi {
 
     @POST("feedbacks/wantedmessage/{message_id}/")
     Observable<Response> messageFeedback(@Path("message_id")int messageId, @Body RequestBody builder);
+
+    @GET("/highqualityfactory")
+    Observable<HighQualityFactoryResponse> getHighQualityFactory();
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.index.IndexViewModel" />
+
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x200"
+        android:orientation="vertical">
+        <com.online.factory.factoryonline.customview.RoundImage
+            android:id="@+id/iv_high_quality_factory"
+            android:layout_width="@dimen/x150"
+            android:layout_height="@dimen/x120"
+            app:borderRadius="@dimen/x10"
+            app:type="round"
+            android:layout_alignParentRight="true"
+            app:imageUrl="@{viewModel.factoryImg}"/>
+        <LinearLayout
+            android:id="@+id/ll_item_high_quality_factory"
+            android:layout_width="@dimen/x150"
+            android:orientation="vertical"
+            android:layout_height="@dimen/x120">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.factoryName}"
+                android:textColor="#424242"
+                android:textSize="@dimen/x16"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/x10"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:layout_marginBottom="@dimen/x10"
+                android:text="@{viewModel.factoryDescription}"
+                android:textColor="#414141"
+                android:textSize="@dimen/x13"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.factoryTotalPrice}"
+                android:textSize="@dimen/x14"
+                android:textColor="#424242"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.addressOverview}"
+            android:layout_below="@id/ll_item_high_quality_factory"
+            android:textColor="#414141"
+            android:layout_marginTop="@dimen/x10"
+            android:textSize="@dimen/x11"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/iv_high_quality_factory"
+            android:text="浏览：203人"
+            android:textColor="#ccc"
+            android:layout_marginTop="@dimen/x10"
+            android:drawableLeft="@drawable/ic_pwd_open"
+            android:drawablePadding="@dimen/x5"/>
+    </RelativeLayout>
+</layout>

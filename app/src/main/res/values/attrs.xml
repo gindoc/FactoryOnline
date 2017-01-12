@@ -27,4 +27,16 @@
         <attr name="border_outside_color" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="RoundImage">
+        <attr name="borderRadius" format="dimension"/>
+        <attr name="type">
+            <enum name="circle" value="0"/>
+            <enum name="round" value="1"/>
+        </attr>
+        <attr name="border_inside_thickness" format="dimension" />
+        <attr name="border_outside_thickness" format="dimension" />
+        <attr name="border_inside_color1" format="color" />
+        <attr name="border_outside_color1" format="color"/>
+    </declare-styleable>
+
 </resources>

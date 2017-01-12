@@ -15,6 +15,7 @@ import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
+import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
 import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
@@ -376,5 +377,9 @@ public class DataManager {
         builder.addFormDataPart("content", content);
         builder.addFormDataPart("remark", remark);
         return factoryApi.messageFeedback(messageId, builder.build());
+    }
+
+    public Observable<HighQualityFactoryResponse> requestHighQuality() {
+        return factoryApi.getHighQualityFactory();
     }
 }

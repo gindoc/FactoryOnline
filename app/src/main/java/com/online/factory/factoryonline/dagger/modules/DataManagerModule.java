@@ -71,7 +71,7 @@ public class DataManagerModule {
     private String createResponseBody(Interceptor.Chain chain) {
         HttpUrl uri = chain.request().url();
         String path = uri.url().getPath();
-        String query = uri.url().getQuery();
+//        String query = uri.url().getQuery();
         StringBuffer response = new StringBuffer();
         BufferedReader reader;
         AssetManager assetManager = ComponentHolder.getAppComponent().getContext().getAssets();
@@ -89,7 +89,9 @@ public class DataManagerModule {
                 fileName = "Cities.json";
             } else if (path.matches("^(/areas)")){
                 fileName = "Areas.json";
-            }else {
+            } else if (path.matches("^(/highqualityfactory)")) {
+                fileName = "HighQualityFactory.json";
+            }else{
                 fileName = "SlideUrl.json";
             }
             reader = new BufferedReader(new InputStreamReader(assetManager.open(fileName)));
@@ -115,7 +117,7 @@ public class DataManagerModule {
                 Request realRequest = null;
                 Timber.d("requestBody : %s", bodyToString(request.body()));
                 Response intercepterResponse = null;
-                if (request.url().toString().equals("https://api.sms.jpush.cn/v1/codes")) {
+                /*if (request.url().toString().equals("https://api.sms.jpush.cn/v1/codes")) {
                     String s = "2f0bf84aec9e72e58d647ea2:4930a1ae980aaebb491d152b";
                     byte[] b = s.getBytes();
                     String base64_auth_string = Base64.encodeToString(b, Base64.NO_WRAP);
@@ -124,7 +126,7 @@ public class DataManagerModule {
                     for (int i = 0; i < headers.size(); i++) {
                         Timber.e(headers.get("Authorization"));
                     }
-                } else if (request.url().toString().contains("users")
+                } else */if (request.url().toString().contains("users")
                         || request.url().toString().contains("user")
                         || request.url().toString().contains("qiniutokens")
                         || request.url().toString().contains("images")

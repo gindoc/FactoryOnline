@@ -17,6 +17,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 import com.online.factory.factoryonline.R;
+import com.online.factory.factoryonline.utils.DensityUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -104,10 +105,13 @@ public class SlideShowView extends FrameLayout {
 
         // 热点个数与图片特殊相等
         for (int i = 0; i < imageUrls.length; i++) {
-            ImageView view =  new ImageView(context);
+//            ImageView view =  new ImageView(context);
+            RoundImage view =  new RoundImage(context);
+            view.setType(RoundImage.TYPE_ROUND);
+            view.setmRadius(DensityUtil.dip2px(getContext(), 20));
             view.setTag(imageUrls[i]);
             if (i == 0) {
-                view.setImageResource(R.drawable.ic_msg_online);
+                view.setImageResource(R.drawable.ic_no_pic);
             }
             view.setScaleType(ScaleType.FIT_XY);
             imageViewsList.add(view);

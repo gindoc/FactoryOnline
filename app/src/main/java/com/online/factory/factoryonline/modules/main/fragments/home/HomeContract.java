@@ -14,28 +14,8 @@ import java.util.List;
  */
 public interface HomeContract {
     interface View extends IBaseView{
-        void initSlideShowView(String[] urls);
-
-        void initScrollTextView(List<News> newses);
-
-        void loadWantedMessages(List<WantedMessage> wantedMessages);
-
     }
 
     interface Presenter extends IBasePresenter {
-        /**
-         * 获取首页轮播图地址
-         */
-        void requestIndexPicUrls();
-
-        /**
-         * 获取最新动态
-         */
-        void requestScrollMsg();
-
-        /**
-         * 获取首页厂房列表
-         */
-        void requestWantedMessages();
     }
 }
