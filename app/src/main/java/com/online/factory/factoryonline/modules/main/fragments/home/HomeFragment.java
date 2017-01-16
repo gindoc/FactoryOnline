@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +17,12 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.base.BaseFragmentPagerAdapter;
 import com.online.factory.factoryonline.base.PermissionCallback;
-import com.online.factory.factoryonline.customview.DividerItemDecoration;
-import com.online.factory.factoryonline.customview.FullyLinearLayoutManager;
-import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.FragmentHomeBinding;
-import com.online.factory.factoryonline.models.News;
-import com.online.factory.factoryonline.models.WantedMessage;
-import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.modules.main.fragments.home.agent.AgentFragment;
-import com.online.factory.factoryonline.modules.main.fragments.home.factory.FactoryFragment;
 import com.online.factory.factoryonline.modules.main.fragments.home.index.IndexFragment;
-import com.online.factory.factoryonline.modules.main.fragments.home.owner.OwnerFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -64,6 +53,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
 
     @Inject
     RecommendFragment recommendFragment;
+
+    @Inject
+    AgentFragment agentFragment;
 
     @Inject
     LocationClient locationClient;
@@ -126,6 +118,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     private void initViewPager() {
         final List<BaseFragment> fragments = new ArrayList<>();
         fragments.add(indexFragment);
+        fragments.add(recommendFragment);
+        fragments.add(agentFragment);
         FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -144,6 +138,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         };
         mBinding.viewpager.setAdapter(pagerAdapter);
         mBinding.tabLayout.setupWithViewPager(mBinding.viewpager);
+        mBinding.viewpager.setOffscreenPageLimit(3);
     }
 
     private void checkPermission() {

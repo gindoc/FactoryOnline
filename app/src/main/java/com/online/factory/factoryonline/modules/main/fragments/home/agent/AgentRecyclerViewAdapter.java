@@ -1,4 +1,4 @@
-package com.online.factory.factoryonline.modules.main.fragments.home.owner;
+package com.online.factory.factoryonline.modules.main.fragments.home.agent;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -19,10 +19,10 @@ import javax.inject.Provider;
  */
 
 public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMedium, BaseRecyclerViewHolder> {
-    private Provider<HomeViewModel> provider;
+    private Provider<AgentViewModel> provider;
 
     @Inject
-    public AgentRecyclerViewAdapter(Context context, Provider<HomeViewModel> provider) {
+    public AgentRecyclerViewAdapter(Context context, Provider<AgentViewModel> provider) {
         super(context);
         this.provider = provider;
     }
@@ -36,7 +36,7 @@ public class AgentRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMedium,
     @Override
     public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        HomeViewModel viewModel = provider.get();
+        AgentViewModel viewModel = provider.get();
         ProMedium proMedium = data.get(position);
         viewModel.setProMedium(proMedium);
         ItemAgentHorizontalListBinding binding = (ItemAgentHorizontalListBinding) holder.getBinding();

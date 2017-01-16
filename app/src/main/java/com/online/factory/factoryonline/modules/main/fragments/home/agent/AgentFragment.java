@@ -14,9 +14,9 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentCommissionBinding;
+import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.modules.agent.AgentActivity;
-import com.online.factory.factoryonline.modules.main.fragments.home.owner.AgentRecyclerViewAdapter;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -32,14 +32,19 @@ import javax.inject.Inject;
 public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresenter> implements AgentContract.View, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
     @Inject
     AgentPresenter presenter;
+
     @Inject
-    AgentRecyclerViewAdapter adapter;
+    AgentRecyclerViewAdapter agentAdapter;
+
+    @Inject
+    BranchRecyclerViewAdapter branchAdapter;
 
     private FragmentCommissionBinding binding;
     private String agentNext;
 
     @Inject
     public AgentFragment() {
+        setTitle("专家");
     }
 
     @Override
@@ -56,6 +61,7 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
 
         initRecyclerView();
         presenter.requestAgents(getString(R.string.api)+"promediums", true);
+        presenter.requestBranch();
 
         return binding.getRoot();
     }
@@ -63,9 +69,11 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
     private void initRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        binding.recyclerViewAgents.setLayoutManager(linearLayoutManager);
-        binding.recyclerViewAgents.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
+        binding.recyclerViewBranches.setLayoutManager(linearLayoutManager);
+        binding.recyclerViewBranches.setAdapter(branchAdapter);
+
+        binding.recyclerViewAgents.setAdapter(agentAdapter);
+        agentAdapter.setOnItemClickListener(this);
         binding.recyclerViewAgents.setOnPageListener(this);
     }
 
@@ -86,13 +94,19 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
 
     @Override
     public void loadAgents(List<ProMedium> proMedium, boolean isInit) {
-        adapter.addData(proMedium);
+        agentAdapter.addData(proMedium);
         binding.recyclerViewAgents.notifyDataSetChanged();
     }
 
     @Override
     public void loadNextUrl(String next) {
         agentNext = next;
+    }
+
+    @Override
+    public void loadBranches(List<Branch> branches) {
+        branchAdapter.addData(branches);
+        binding.recyclerViewBranches.notifyDataSetChanged();
     }
 
     @Override
@@ -104,7 +118,7 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
 
     @Override
     public void onItemClick(View view, int position) {
-        ProMedium proMedium = adapter.getData().get(position);
+        ProMedium proMedium = agentAdapter.getData().get(position);
         Activity activity = getActivity();
         startActivity(AgentActivity.getStartIntent(activity, proMedium));
         activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);

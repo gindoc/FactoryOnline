@@ -13,15 +13,12 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityMainBinding;
-import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
 
@@ -62,20 +59,20 @@ public class MainActivity extends BaseActivity {
         return intent;
     }
 
-    public void onClickMsg(View view) {
-        mLoginContext.openMsg(MainActivity.this);
-    }
+//    public void onClickMsg(View view) {
+//        mLoginContext.openMsg(MainActivity.this);
+//    }
 
     public void onClickHome(View view) {
         showHideFragment(homeFragment, recommendFragment);
         showHideFragment(homeFragment, userFragment);
     }
 
-    public void onClickRecommend(View view) {
+    /*public void onClickRecommend(View view) {
         mBinding.bottomTab.rbRecommend.setChecked(true);
         showHideFragment(recommendFragment, userFragment);
         showHideFragment(recommendFragment, homeFragment);
-    }
+    }*/
 
     public void onClickUser(View view) {
         showHideFragment(userFragment, recommendFragment);

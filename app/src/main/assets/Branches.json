@@ -1,0 +1,38 @@
+{
+  "erro_code": 200,
+  "erro_msg": "成功",
+  "branches": [
+    {
+      "name": "万江",
+      "imgUrl": "http://img1.imgtn.bdimg.com/it/u=71103099,3505857448&fm=23&gp=0.jpg"
+    },
+    {
+      "name": "东城",
+      "imgUrl": "http://img2.imgtn.bdimg.com/it/u=4094324147,1369065397&fm=23&gp=0.jpg"
+    },
+    {
+      "name": "大岭山",
+      "imgUrl": "http://img4.imgtn.bdimg.com/it/u=2051421900,2097251590&fm=21&gp=0.jpg"
+    },
+    {
+      "name": "厚街",
+      "imgUrl": "http://img4.imgtn.bdimg.com/it/u=3226359424,1594398520&fm=21&gp=0.jpg"
+    },
+    {
+      "name": "南城",
+      "imgUrl": "http://img2.imgtn.bdimg.com/it/u=611451041,1577878371&fm=21&gp=0.jpg"
+    },
+    {
+      "name": "莞城",
+      "imgUrl": "http://img1.imgtn.bdimg.com/it/u=1999353153,2772253274&fm=21&gp=0.jpg"
+    },
+    {
+      "name": "厚街",
+      "imgUrl": "http://img4.imgtn.bdimg.com/it/u=3226359424,1594398520&fm=21&gp=0.jpg"
+    },
+    {
+      "name": "莞城",
+      "imgUrl": "http://img2.imgtn.bdimg.com/it/u=2368780351,322450279&fm=21&gp=0.jpg"
+    }
+  ]
+}

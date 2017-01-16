@@ -23,12 +23,10 @@ import com.online.factory.factoryonline.databinding.FragmentIndexBinding;
 import com.online.factory.factoryonline.databinding.ItemHighQualityFactoryBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
-import com.squareup.leakcanary.LeakCanary;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 import javax.inject.Provider;

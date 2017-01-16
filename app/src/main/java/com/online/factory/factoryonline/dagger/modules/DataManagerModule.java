@@ -91,6 +91,8 @@ public class DataManagerModule {
                 fileName = "Areas.json";
             } else if (path.matches("^(/highqualityfactory)")) {
                 fileName = "HighQualityFactory.json";
+            }else if (path.matches("^(/branches)")){
+                fileName = "Branches.json";
             }else{
                 fileName = "SlideUrl.json";
             }

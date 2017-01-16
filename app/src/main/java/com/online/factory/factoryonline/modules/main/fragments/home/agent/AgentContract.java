@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.main.fragments.home.agent;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
+import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.ProMedium;
 
 import java.util.List;
@@ -17,10 +18,12 @@ public interface AgentContract {
         void loadAgents(List<ProMedium> proMedium, boolean isInit);
 
         void loadNextUrl(String next);
+
+        void loadBranches(List<Branch> branches);
     }
 
     interface Presenter extends IBasePresenter {
         void requestAgents(String next, boolean isInit);
-
+        void requestBranch();
     }
 }

@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendViewModel"/>
+            type="com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendViewModel" />
     </data>
 
     <LinearLayout
@@ -26,13 +26,31 @@
         android:paddingRight="@dimen/x15"
         android:paddingTop="@dimen/y12">
 
-        <ImageView
-            android:id="@+id/factory_img"
-            android:layout_width="@dimen/x108"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:layout_marginRight="@dimen/x15"
-            app:imageUrl="@{viewModel.imgUrl}" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.online.factory.factoryonline.customview.RoundImage
+                android:id="@+id/factory_img"
+                android:layout_width="@dimen/x108"
+                android:layout_height="@dimen/x100"
+                android:layout_marginRight="@dimen/x15"
+                android:scaleType="fitXY"
+                app:borderRadius="@dimen/x5"
+                app:imageUrl="@{viewModel.imgUrl}"
+                app:type="round" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/x5"
+                android:drawableLeft="@drawable/ic_pwd_open"
+                android:drawablePadding="@dimen/x5"
+                android:text="浏览:203人"
+                android:textColor="#ccc"
+                android:textSize="@dimen/x11" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,18 +80,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    android:textColor="#808080"
                     android:text='@{viewModel.area}'
+                    android:textColor="#808080"
                     android:textSize="@dimen/x13"
                     tool:text="2500 ㎡" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#df3d3f"
                     android:maxLines="1"
-                    android:textSize="@dimen/x14"
                     android:text="@{viewModel.factoryTotalPrice}"
+                    android:textColor="#df3d3f"
+                    android:textSize="@dimen/x14"
                     tool:text="25000元/月" />
             </LinearLayout>
 
@@ -88,19 +106,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="#808080"
                     android:maxLines="1"
                     android:text="@{viewModel.addressOverview}"
+                    android:textColor="#808080"
                     android:textSize="@dimen/x13"
                     tool:text="南城 - 雅苑" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:textSize="@dimen/x13"
                     android:maxLines="1"
                     android:text="@{viewModel.price}"
+                    android:textColor="#808080"
+                    android:textSize="@dimen/x13"
                     tool:text="10元/㎡/月" />
             </LinearLayout>
 
@@ -111,36 +129,37 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x10"
                     android:background="@{viewModel.tag1Background}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:textColor="@{viewModel.tag1TextColor}"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
-                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}'
-                    android:layout_marginRight="@dimen/x10"
-                    android:textSize="@dimen/x13" />
+                    android:textColor="@{viewModel.tag1TextColor}"
+                    android:textSize="@dimen/x11"
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}' />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x10"
                     android:background="@{viewModel.tag2Background}"
-                    android:textColor="@{viewModel.tag2TextColor}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:layout_marginRight="@dimen/x10"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
-                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}'
-                    android:textSize="@dimen/x13" />
+                    android:textColor="@{viewModel.tag2TextColor}"
+                    android:textSize="@dimen/x11"
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}' />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@{viewModel.tag3Background}"
-                    android:textColor="@{viewModel.tag3TextColor}"
                     android:gravity="center"
                     android:padding="@dimen/x3"
-                    android:textSize="@dimen/x13"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
-                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}'/>
+                    android:textColor="@{viewModel.tag3TextColor}"
+                    android:textSize="@dimen/x11"
+                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}' />
             </com.google.android.flexbox.FlexboxLayout>
 
         </LinearLayout>

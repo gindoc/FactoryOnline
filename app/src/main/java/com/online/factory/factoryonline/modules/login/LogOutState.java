@@ -14,10 +14,10 @@ import com.online.factory.factoryonline.modules.setting.SettingActivity;
 
 public class LogOutState implements UserState {
 
-    @Override
-    public void openMsg(Context context) {
-        toLoginActivity(context);
-    }
+//    @Override
+//    public void openMsg(Context context) {
+//        toLoginActivity(context);
+//    }
 
     @Override
     public void openUserDetail(Context context) {

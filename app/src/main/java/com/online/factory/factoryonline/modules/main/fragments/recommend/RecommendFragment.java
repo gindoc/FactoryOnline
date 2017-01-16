@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.WrapContentLinearLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
-import com.online.factory.factoryonline.customview.recyclerview.LinearRecyclerView;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentRecommendBinding;
 import com.online.factory.factoryonline.databinding.LayoutRecommendFilterDistrictBinding;
@@ -33,7 +31,6 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
-import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -51,7 +48,7 @@ import timber.log.Timber;
  * Created by louiszgm on 2016/9/30.
  */
 public class RecommendFragment extends BaseFragment<RecommendContract.View, RecommendPresenter> implements
-        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener, LinearRecyclerView.OnScrollListener {
+        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentRecommendBinding mBinding;
     private LayoutRecommendFilterDistrictBinding mDistrictBinding;
     private LayoutRecommendFilterPriceAreaBinding mPriceBinding;
@@ -86,6 +83,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Inject
     public RecommendFragment() {
+        setTitle("列表");
     }
 
     @Override
@@ -114,15 +112,6 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         mDistrictBinding = LayoutRecommendFilterDistrictBinding.inflate(inflater);
         mPriceBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
         mAreaBinding = LayoutRecommendFilterPriceAreaBinding.inflate(inflater);
-
-        StatusBarUtils.from((Activity) getContext())
-                //沉浸状态栏
-                .setTransparentStatusbar(true)
-                //白底黑字状态栏
-                .setLightStatusBar(true)
-                //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.llTopBar)
-                .process();
 
         mBinding.setView(this);
         mPriceBinding.setView(this);
@@ -177,18 +166,12 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
-    public void scrollTop(View view) {
-        mBinding.recyclerView.scrollToPosition(0);
-        mBinding.tvScrollTop.setVisibility(View.GONE);
-    }
-
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
-        mBinding.recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        mBinding.recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.setOnPageListener(this);
         mAdapter.setOnItemClickListener(this);
-        mBinding.recyclerView.setOnScrollListener(this);
 
         mDistrictBinding.recyclerviewFirstCat.setAdapter(mDistrictFirCategoryAdapter);         //初始化推荐页面的一级目录
         mDistrictFirCategoryAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
@@ -290,7 +273,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     }
 
     private void initDropDown() {
-        String headers[] = {"区域", "价格", "面积"};
+        String headers[] = {"全部", "价格", "面积"};
         List<View> popViews = new ArrayList<>();
         popViews.add(mDistrictBinding.getRoot());
         popViews.add(mPriceBinding.getRoot());
@@ -491,19 +474,6 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             mPresenter.initRecommendList();
         } else {
             mPresenter.filterRecommendListByNet(filterPage, recommendFilter);
-        }
-    }
-
-    @Override
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-    }
-
-    @Override
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-        if (dy > 0) {
-            mBinding.tvScrollTop.setVisibility(View.VISIBLE);
-        } else {
-            mBinding.tvScrollTop.setVisibility(View.GONE);
         }
     }
 

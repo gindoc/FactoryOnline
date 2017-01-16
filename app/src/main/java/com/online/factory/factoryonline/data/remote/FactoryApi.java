@@ -7,6 +7,7 @@ import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.SearchResult;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
+import com.online.factory.factoryonline.models.response.BranchResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
@@ -202,4 +203,7 @@ public interface FactoryApi {
 
     @GET("/highqualityfactory")
     Observable<HighQualityFactoryResponse> getHighQualityFactory();
+
+    @GET("/branches")
+    Observable<BranchResponse> getBranches();
 }

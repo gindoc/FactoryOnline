@@ -22,9 +22,9 @@ public class LoginContext {
         this.mState = mState;
     }
 
-    public void openMsg(Context context) {
-        mState.openMsg(context);
-    }
+//    public void openMsg(Context context) {
+//        mState.openMsg(context);
+//    }
 
     public void openUserDetail(Context context) {
         mState.openUserDetail(context);

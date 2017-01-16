@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.agent.AgentViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="@dimen/x160"
+        android:paddingTop="@dimen/x10"
+        android:paddingBottom="@dimen/x10"
+        android:paddingLeft="@dimen/x15"
+        android:paddingRight="@dimen/x15"
+        android:layout_height="@dimen/x120">
+
+        <com.online.factory.factoryonline.customview.RoundImage
+            android:layout_width="@dimen/x130"
+            android:layout_height="@dimen/x100"
+            android:foreground="@drawable/half_black_rectangle_background"
+            app:borderRadius="@dimen/x5"
+            app:imageUrl="@{viewModel.branchImgUrl}"
+            app:type="round" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="城市名"
+            android:text="@{viewModel.branchName}"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="@dimen/x13" />
+    </FrameLayout>
+
+</layout>

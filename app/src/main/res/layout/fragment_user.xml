@@ -20,61 +20,92 @@
             type="com.online.factory.factoryonline.modules.main.fragments.user.UserContract.Presenter" />
     </data>
 
-    <ScrollView
+
+    <com.online.factory.factoryonline.customview.FragmentUserContainer
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_head_photo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#f5f5f5"
-            android:orientation="vertical">
+            android:layout_height="@dimen/x115"
+            android:background="@android:color/white"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/x40">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y160">
-
-                <ImageView
-                    android:id="@+id/iv_head_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/publish_rental_background" />
-
-
-                <com.online.factory.factoryonline.customview.RoundImageView
-                    android:id="@+id/iv_head_photo"
-                    android:layout_width="@dimen/x75"
-                    android:layout_height="@dimen/x75"
-                    android:layout_centerInParent="true"
-                    android:onClick="@{view.clickRoundImage}"
-                    android:scaleType="fitXY"
-                    app:imageUrl="@{user.avatar}" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_head_photo"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/y10"
-                    android:hint="请登录 >"
-                    android:onClick="@{view.clickRoundImage}"
-                    android:text='@{user.userName}'
-                    android:textColor="@android:color/white"
-                    android:textColorHint="@android:color/white"
-                    android:textSize="@dimen/x14" />
+                    android:gravity="center"
+                    android:text="积分"
+                    android:textColor="#A0A0A0"
+                    android:textSize="@dimen/x11" />
 
-            </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x5"
+                    android:text="1703"
+                    android:textColor="#424242"
+                    android:textSize="@dimen/x13" />
+            </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/iv_head_background"
-                android:layout_marginTop="@dimen/y10" />
+
+            <com.online.factory.factoryonline.customview.RoundImage
+                android:id="@+id/iv_head_photo"
+                android:layout_width="@dimen/x75"
+                android:layout_height="@dimen/x75"
+                android:src="@drawable/boy"
+                app:border_outside_color1="#DFDFDF"
+                android:onClick="@{()->view.clickRoundImage()}"
+                app:border_outside_thickness="@dimen/x1"
+                app:type="circle" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="发布"
+                    android:textColor="#A0A0A0"
+                    android:textSize="@dimen/x11" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x5"
+                    android:text="6"
+                    android:textColor="#424242"
+                    android:textSize="@dimen/x13" />
+            </LinearLayout>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_head_photo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x5"
+            android:onClick="@{()->view.clickRoundImage()}"
+            android:hint="请登录 >"
+            android:textColor="#424242"
+            android:textSize="@dimen/x15" />
 
-    </ScrollView>
+    </com.online.factory.factoryonline.customview.FragmentUserContainer>
+
 </layout>

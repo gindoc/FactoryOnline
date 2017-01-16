@@ -15,11 +15,8 @@
             <include layout="@layout/fragment_home" />
         </FrameLayout>
 
-
         <include
             android:id="@+id/bottomTab"
             layout="@layout/bottom_tab" />
-
-
     </LinearLayout>
 </layout>

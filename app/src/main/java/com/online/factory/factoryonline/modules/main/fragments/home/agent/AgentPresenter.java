@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.main.fragments.home.agent;
 
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.models.response.BranchResponse;
 import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.modules.agent.*;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
@@ -39,6 +40,25 @@ public class AgentPresenter extends BasePresenter<AgentContract.View> implements
                     public void _onNext(ProMediumResponse proMediumResponse) {
                         getView().loadAgents(proMediumResponse.getProMedium(), isInit);
                         getView().loadNextUrl(proMediumResponse.getNext());
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
+
+    public void requestBranch() {
+        dataManager.requestBranch()
+                .compose(getView().<BranchResponse>getBindToLifecycle())
+                .compose(RxResultHelper.<BranchResponse>handleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<BranchResponse>() {
+                    @Override
+                    public void _onNext(BranchResponse branchResponse) {
+                        getView().loadBranches(branchResponse.getBranches());
                     }
 
                     @Override

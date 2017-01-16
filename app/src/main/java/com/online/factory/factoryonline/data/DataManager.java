@@ -13,6 +13,7 @@ import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
+import com.online.factory.factoryonline.models.response.BranchResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
@@ -381,5 +382,9 @@ public class DataManager {
 
     public Observable<HighQualityFactoryResponse> requestHighQuality() {
         return factoryApi.getHighQualityFactory();
+    }
+
+    public Observable<BranchResponse> requestBranch() {
+        return factoryApi.getBranches();
     }
 }

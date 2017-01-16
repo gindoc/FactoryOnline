@@ -7,41 +7,57 @@
 
         <variable
             name="viewModel"
-            type="com.online.factory.factoryonline.modules.main.fragments.home.HomeViewModel" />
+            type="com.online.factory.factoryonline.modules.main.fragments.home.agent.AgentViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:paddingLeft="@dimen/x23"
         android:paddingRight="@dimen/x30">
 
         <com.online.factory.factoryonline.customview.RoundImageView
+            android:id="@+id/iv_head_photo"
             android:layout_width="@dimen/x49"
             android:layout_height="@dimen/x49"
             android:layout_marginBottom="@dimen/y9"
             android:layout_marginTop="@dimen/y14"
             android:scaleType="centerCrop"
-            tool:src="@drawable/boy"
-            app:imageUrl="@{viewModel.agentAvatar}" />
+            app:imageUrl="@{viewModel.agentAvatar}"
+            tool:src="@drawable/boy" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@id/iv_head_photo"
             android:layout_marginBottom="@dimen/y2"
-            tool:text="名字"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_toRightOf="@id/iv_head_photo"
             android:text="@{viewModel.agentName}"
             android:textColor="#424242"
-            android:textSize="@dimen/x11"/>
+            android:textSize="@dimen/x13"
+            tool:text="名字" />
 
         <TextView
             android:layout_width="wrap_content"
-            tool:text="万江分店"
-            android:textColor="#424242"
-            android:textSize="@dimen/x9"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_head_photo"
+            android:layout_marginBottom="@dimen/x5"
+            android:layout_marginLeft="@dimen/x15"
+            android:layout_toRightOf="@id/iv_head_photo"
             android:text="@{viewModel.agentBrand}"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:textColor="#424242"
+            android:textSize="@dimen/x11"
+            tool:text="万江分店" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/green_rectangle_solid_background"/>
+    </RelativeLayout>
 </layout>

@@ -19,20 +19,23 @@
             android:onClick="onClickHome"
             android:text="厂房在线"/>
 
-        <RadioButton
+        <!--<RadioButton
             android:id="@+id/rb_recommend"
             style="@style/bottom_tab_style"
             android:drawableTop="@drawable/rb_locate_drawable_selector"
             android:onClick="onClickRecommend"
-            android:text="推荐"/>
+            android:text="推荐"/>-->
 
-        <RadioButton
-            android:visibility="gone"
-            android:id="@+id/rb_msg"
-            style="@style/bottom_tab_style"
-            android:drawableTop="@drawable/rb_msg_drawable_selector"
-            android:onClick="onClickMsg"
-            android:text="消息"/>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="@dimen/x30"
+                android:layout_height="@dimen/x30"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_publish"/>
+        </FrameLayout>
 
         <RadioButton
             android:id="@+id/rb_user"

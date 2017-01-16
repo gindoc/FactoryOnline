@@ -137,7 +137,7 @@
                     android:padding="@dimen/x3"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
                     android:textColor="@{viewModel.tag1TextColor}"
-                    android:textSize="@dimen/x13"
+                    android:textSize="@dimen/x11"
                     android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}' />
 
                 <TextView
@@ -149,7 +149,7 @@
                     android:padding="@dimen/x3"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
                     android:textColor="@{viewModel.tag2TextColor}"
-                    android:textSize="@dimen/x13"
+                    android:textSize="@dimen/x11"
                     android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}' />
 
                 <TextView
@@ -160,7 +160,7 @@
                     android:padding="@dimen/x3"
                     android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
                     android:textColor="@{viewModel.tag3TextColor}"
-                    android:textSize="@dimen/x13"
+                    android:textSize="@dimen/x11"
                     android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}' />
             </com.google.android.flexbox.FlexboxLayout>
 
