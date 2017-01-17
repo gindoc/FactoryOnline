@@ -63,9 +63,9 @@
                 android:id="@+id/iv_head_photo"
                 android:layout_width="@dimen/x75"
                 android:layout_height="@dimen/x75"
+                android:onClick="@{()->view.clickRoundImage()}"
                 android:src="@drawable/boy"
                 app:border_outside_color1="#DFDFDF"
-                android:onClick="@{()->view.clickRoundImage()}"
                 app:border_outside_thickness="@dimen/x1"
                 app:type="circle" />
 
@@ -101,10 +101,82 @@
             android:layout_below="@id/ll_head_photo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/x5"
-            android:onClick="@{()->view.clickRoundImage()}"
             android:hint="请登录 >"
+            android:onClick="@{()->view.clickRoundImage()}"
             android:textColor="#424242"
             android:textSize="@dimen/x15" />
+
+        <ImageView
+            android:id="@+id/iv_publish_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_publish_pen" />
+
+        <TextView
+            android:id="@+id/tv_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/x5"
+            android:drawableTop="@drawable/ic_collection"
+            android:gravity="center"
+            android:onClick="@{()->view.openPublish()}"
+            android:text="我的收藏"
+            android:textColor="#424242"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/tv_visit_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/x5"
+            android:drawableTop="@drawable/ic_footprint"
+            android:gravity="center"
+            android:onClick="@{()->view.openBrowsingHistory()}"
+            android:text="浏览历史"
+            android:textColor="#424242"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/tv_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/x5"
+            android:drawableTop="@drawable/ic_feedback"
+            android:gravity="center"
+            android:onClick="@{()->view.openFeedback()}"
+            android:text="问题反馈"
+            android:textColor="#424242"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/tv_role_pick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/x5"
+            android:drawableTop="@drawable/ic_switch_role"
+            android:gravity="center"
+            android:text="角色切换"
+            android:onClick="@{()->view.openRolePick()}"
+            android:textColor="#424242"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:id="@+id/tv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/x5"
+            android:drawableTop="@drawable/ic_setting"
+            android:gravity="center"
+            android:text="设置"
+            android:onClick="@{()->view.openSetting()}"
+            android:textColor="#424242"
+            android:textSize="@dimen/x13" />
+
+        <ImageView
+            android:id="@+id/iv_redeem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dog"/>
 
     </com.online.factory.factoryonline.customview.FragmentUserContainer>
 
