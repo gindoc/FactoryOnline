@@ -37,6 +37,9 @@ import com.online.factory.factoryonline.utils.CommunicationUtil;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 
 import org.apache.commons.codec.binary.Base64;
@@ -61,6 +64,10 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     @Inject
     FactoryDetailViewModel mViewModel;
+
+    @Inject
+    UMShareListener shareListener;
+    private ShareAction shareAction;
 
     private List<ImageView> imageViewsList = new ArrayList<>();
     private boolean isDescExpanded = false;             // 描述内容展开状态
@@ -95,11 +102,19 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
             mPresenter.requestAgent(wantedMessage.getOwner_id());
         }
 
+        initShareAction();
         initToolbar();
         initFactoryDetail();
         initViewPager();
         initBaiduMap();
 
+    }
+
+    private void initShareAction() {
+        shareAction = new ShareAction(this).setDisplayList(
+                SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
+                SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SMS
+        ).withText("分享厂房信息").setCallback(shareListener);
     }
 
     private void initBaiduMap() {
@@ -136,24 +151,29 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         mBinding.appbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                MenuItem menuItem = mBinding.toolbar.getMenu().findItem(R.id.collect);
-                if (menuItem == null) return;
+                Menu menu = mBinding.toolbar.getMenu();
+                MenuItem collectionItem = menu.findItem(R.id.collect);
+                MenuItem shareItem = menu.findItem(R.id.share);
+                if (collectionItem == null) return;
+                if (shareItem == null) return;
                 if (state == State.EXPANDED) {         //展开状态
                     appBarState = state;
                     if (isCollected) {
-                        menuItem.setIcon(R.drawable.ic_collected_with_shadow);
+                        collectionItem.setIcon(R.drawable.ic_collected_with_shadow);
                     } else {
-                        menuItem.setIcon(R.drawable.ic_collect_with_shadow);
+                        collectionItem.setIcon(R.drawable.ic_collect_with_shadow);
                     }
+                    shareItem.setIcon(R.drawable.ic_share_with_shadow);
                     mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_with_shadow);
                     mBinding.tvTitle.setVisibility(View.GONE);
                 } else if (state == State.COLLAPSED) {     //折叠状态
                     appBarState = state;
                     if (isCollected) {
-                        menuItem.setIcon(R.drawable.ic_collected);
+                        collectionItem.setIcon(R.drawable.ic_collected);
                     } else {
-                        menuItem.setIcon(R.drawable.ic_collect);
+                        collectionItem.setIcon(R.drawable.ic_collect);
                     }
+                    shareItem.setIcon(R.drawable.ic_share_outline);
                     mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_green);
                     mBinding.tvTitle.setVisibility(View.VISIBLE);
                 }
@@ -306,6 +326,8 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                     mPresenter.postCollectionState(item, wantedMessage.getId());
                 }
                 break;
+            case R.id.share:
+                shareAction.open();
         }
         return true;
     }

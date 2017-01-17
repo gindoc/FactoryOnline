@@ -11,19 +11,17 @@ import android.telephony.TelephonyManager;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.online.factory.factoryonline.base.BaseShareListener;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.qiniu.android.common.Zone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
-import com.qiniu.android.storage.UploadOptions;
-
-import javax.inject.Singleton;
+import com.umeng.socialize.UMShareListener;
 
 import dagger.Module;
 import dagger.Provides;
@@ -116,5 +114,10 @@ public class ApplicationModule {
         // 重用uploadManager。一般地，只需要创建一个uploadManager对象
         UploadManager uploadManager = new UploadManager(config);
         return uploadManager;
+    }
+
+    @Provides
+    public UMShareListener provideShareListener(Context context) {
+        return new BaseShareListener(context);
     }
 }

@@ -8,6 +8,7 @@
         <variable
             name="agent"
             type="com.online.factory.factoryonline.models.ProMedium" />
+
         <variable
             name="view"
             type="com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity" />
@@ -39,7 +40,7 @@
                 app:contentScrim="@android:color/white"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -235,8 +236,8 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/x15"
                         android:text="厂房信息"
-                        android:textSize="@dimen/x14"
-                        android:textColor="#424242" />
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
 
                     <include layout="@layout/line" />
 
@@ -321,6 +322,29 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/x15"
+                        android:paddingBottom="@dimen/x15"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="编 号："
+                            android:textColor="#808080"
+                            android:textSize="@dimen/x13" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#424242"
+                            android:textSize="@dimen/x13"
+                            android:text="666666"
+                            android:textStyle="bold"  />
+                    </LinearLayout>
+
                     <include layout="@layout/line" />
 
                     <View
@@ -339,8 +363,8 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/x15"
                         android:text="厂房介绍"
-                        android:textSize="@dimen/x14"
-                        android:textColor="#424242" />
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
 
                     <include layout="@layout/line" />
 
@@ -394,8 +418,8 @@
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/x15"
                         android:text="厂房位置"
-                        android:textSize="@dimen/x14"
-                        android:textColor="#424242" />
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
 
                     <include layout="@layout/line" />
 
@@ -469,9 +493,9 @@
                 android:layout_marginBottom="@dimen/y15"
                 android:layout_marginLeft="@dimen/x25"
                 android:src="@drawable/photo_head"
-                app:imageUrl="@{viewModel.avatar}"
                 app:border_outside_color="@android:color/transparent"
-                app:border_thickness="1px" />
+                app:border_thickness="1px"
+                app:imageUrl="@{viewModel.avatar}" />
 
             <TextView
                 android:id="@+id/tv_contact_people_name"
@@ -513,8 +537,8 @@
                 android:layout_height="@dimen/x48"
                 android:layout_alignBottom="@id/iv_contact_people"
                 android:layout_marginRight="@dimen/x15"
-                android:onClick="@{()->view.smsToContacter()}"
                 android:layout_toLeftOf="@id/iv_phone_to_contact_people"
+                android:onClick="@{()->view.smsToContacter()}"
                 android:src="@drawable/ic_sms_full" />
 
         </RelativeLayout>

@@ -8,4 +8,11 @@
         android:orderInCategory="101"
         android:title="收藏"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_share_with_shadow"
+        android:orderInCategory="102"
+        android:title="分享"
+        app:showAsAction="ifRoom" />
 </menu>
