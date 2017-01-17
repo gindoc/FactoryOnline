@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.customview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
@@ -9,6 +10,7 @@ import android.os.IBinder;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
@@ -16,8 +18,6 @@ import android.widget.PopupWindow;
 import com.online.factory.factoryonline.R;
 
 import java.lang.ref.WeakReference;
-
-import javax.inject.Inject;
 
 
 public class CustomPopupWindow extends PopupWindow {

@@ -1,20 +1,30 @@
 package com.online.factory.factoryonline.modules.main.fragments.user;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.databinding.FragmentUserBinding;
+import com.online.factory.factoryonline.databinding.LayoutPopupwindowRolePickBinding;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.utils.FastBlurUtil;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.WindowUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -26,22 +36,15 @@ import javax.inject.Inject;
 public class UserFragment extends BaseFragment<UserContract.View, UserPresenter> implements UserContract.View {
     public static final int TO_LOGIN_ACTIVITY = 101;
     private FragmentUserBinding mBinding;
-//    private final int SPAN_COUNT = 2;
+    private LayoutPopupwindowRolePickBinding mPopupwindowBinding;
+    private PopupWindow popupWindow;
+    private Bitmap blurBackground;
 
     @Inject
     UserPresenter mPresenter;
 
     @Inject
     LoginContext mLoginContext;
-
-//    @Inject
-//    FullyGridLayoutManager gridLayoutManager;
-
-//    @Inject
-//    UserRecyclerViewAdapter mAdapter;
-
-//    @Inject
-//    DividerGridItemDecoration dividerGridItemDecoration;
 
     @Inject
     public UserFragment() {
@@ -57,14 +60,42 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentUserBinding.inflate(inflater);
+        mPopupwindowBinding = LayoutPopupwindowRolePickBinding.inflate(inflater);
         mBinding.setPresenter(mPresenter);
         mBinding.setView(this);
-
-//        initRecyclerView();
-
+//        initPopupWindow();
         return mBinding.getRoot();
     }
 
+    private void initPopupWindow() {
+        mBinding.rlContainer.setDrawingCacheEnabled(true);      //启用绘图缓存
+        mBinding.rlContainer.buildDrawingCache();               //创建位图
+        blurBackground = Bitmap.createBitmap(mBinding.rlContainer.getDrawingCache()); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
+        mBinding.rlContainer.setDrawingCacheEnabled(false);
+        blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);
+        blurBackground = FastBlurUtil.doBlur(blurBackground, 8, true);
+
+        int[] widthAndHeight = WindowUtil.getScreenWidthAndHeight(getContext());
+        mPopupwindowBinding.ivBackground.setImageBitmap(blurBackground);
+        popupWindow = new PopupWindow(mPopupwindowBinding.getRoot(), widthAndHeight[0], widthAndHeight[1]+WindowUtil.getStatusHeight(getContext())+35);
+        mPopupwindowBinding.ivBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+    }
+    private void full(boolean enable) {
+        if (enable) {//隐藏状态栏
+            WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            getActivity().getWindow().setAttributes(lp);
+        } else {//显示状态栏
+            WindowManager.LayoutParams attr = getActivity().getWindow().getAttributes();
+            attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getActivity().getWindow().setAttributes(attr);
+        }
+    }
     public void clickRoundImage() {
         mLoginContext.openUserDetail(getContext());
     }
@@ -75,28 +106,6 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         mPresenter.getUser();
     }
 
-//    private void initRecyclerView() {
-//        gridLayoutManager.setSpanCount(SPAN_COUNT);
-//        dividerGridItemDecoration.setDivider(ContextCompat.getDrawable(getContext(), R.drawable.line_with_db));
-//
-//        mBinding.recyclerView.setLayoutManager(gridLayoutManager);
-//        mBinding.recyclerView.addItemDecoration(dividerGridItemDecoration);
-//        mBinding.recyclerView.setAdapter(mAdapter);
-//
-//        List<UserBean> userBeans = new ArrayList<>();
-//        UserBean bean = new UserBean(R.drawable.ic_publish, "我的发布");
-//        userBeans.add(bean);
-//        bean = new UserBean(R.drawable.ic_collection, "我的收藏");
-//        userBeans.add(bean);
-//        bean = new UserBean(R.drawable.ic_feedback, "问题反馈");
-//        userBeans.add(bean);
-//        bean = new UserBean(R.drawable.ic_setting, "设置");
-//        userBeans.add(bean);
-//        mAdapter.setData(userBeans);
-//        mAdapter.notifyDataSetChanged();
-//        mAdapter.setOnItemClickListener(this);
-//    }
-
     @Override
     protected UserPresenter createPresent() {
         return mPresenter;
@@ -104,7 +113,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
 
     @Override
     public void startLogIn() {
-        startActivityForResult(LoginActivity.getStartIntent(getActivity()),TO_LOGIN_ACTIVITY);
+        startActivityForResult(LoginActivity.getStartIntent(getActivity()), TO_LOGIN_ACTIVITY);
         getActivity().overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 
@@ -135,36 +144,22 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         mLoginContext.openPublish(getContext());
     }
 
-    public void openBrowsingHistory(){
+    public void openBrowsingHistory() {
         Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
     }
 
-    public void openFeedback(){
+    public void openFeedback() {
         Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
     }
 
-    public void openRolePick(){
+    public void openRolePick() {
+        full(true);
+        initPopupWindow();
+        popupWindow.showAtLocation(mBinding.getRoot(), Gravity.START, 0, 0);
         Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
     }
-    public void openSetting(){
+
+    public void openSetting() {
         mLoginContext.openSetting(getContext());
     }
-//    @Override
-//    public void onItemClick(View view, int position) {
-//        switch (position) {
-//            case 0:
-//                mLoginContext.openPublish(getContext());
-//                break;
-//            case 1:
-//                mLoginContext.openCollection(getContext());
-//                break;
-//            case 2:
-//                Toast.makeText(getContext(), "功能尚未开放，敬请期待", Toast.LENGTH_SHORT).show();
-//                break;
-//            case 3:
-//                mLoginContext.openSetting(getContext());
-//                break;
-//
-//        }
-//    }
 }
