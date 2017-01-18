@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
@@ -26,5 +27,17 @@ public class WindowUtil {
         windowManager.getDefaultDisplay().getMetrics(dm);
         int[] widthAndHeight = {dm.widthPixels, dm.heightPixels};
         return widthAndHeight;
+    }
+
+    public static void toggleStatusBar(boolean isVisible, Activity activity) {
+        if (isVisible) {//隐藏状态栏
+            WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            activity.getWindow().setAttributes(lp);
+        } else {//显示状态栏
+            WindowManager.LayoutParams attr = activity.getWindow().getAttributes();
+            attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            activity.getWindow().setAttributes(attr);
+        }
     }
 }

@@ -70,7 +70,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     private void initPopupWindow() {
         if (blurBackground != null) return;
         int[] widthAndHeight = WindowUtil.getScreenWidthAndHeight(getContext());
-        blurBackground = Bitmap.createBitmap(BitmapManager.screenShot(getActivity())); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
+        blurBackground = BitmapManager.screenShot(getActivity()); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
         blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);
         blurBackground = FastBlurUtil.doBlur(blurBackground, 8, true);
 
@@ -154,8 +154,8 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     }
 
     public void openRolePick() {
-        initPopupWindow();
         full(true);
+        initPopupWindow();
         popupWindow.showAtLocation(mBinding.getRoot(), Gravity.START, 0, 0);
     }
 

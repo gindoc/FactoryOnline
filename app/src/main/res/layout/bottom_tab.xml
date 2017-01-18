@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
-<LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/line"/>
-    <RadioGroup
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y40"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rb_home"
-            style="@style/bottom_tab_style"
-            android:drawableTop="@drawable/rb_home_drawable_selector"
-            android:onClick="onClickHome"
-            android:text="厂房在线"/>
+        <include layout="@layout/line" />
 
-        <!--<RadioButton
-            android:id="@+id/rb_recommend"
-            style="@style/bottom_tab_style"
-            android:drawableTop="@drawable/rb_locate_drawable_selector"
-            android:onClick="onClickRecommend"
-            android:text="推荐"/>-->
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y40"
+            android:orientation="horizontal">
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
-            <ImageView
-                android:layout_width="@dimen/x30"
-                android:layout_height="@dimen/x30"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_publish"/>
-        </FrameLayout>
+            <RadioButton
+                android:id="@+id/rb_home"
+                style="@style/bottom_tab_style"
+                android:drawableTop="@drawable/rb_home_drawable_selector"
+                android:onClick="onClickHome"
+                android:text="厂房在线" />
 
-        <RadioButton
-            android:id="@+id/rb_user"
-            style="@style/bottom_tab_style"
-            android:drawableTop="@drawable/rb_account_drawable_selector"
-            android:onClick="onClickUser"
-            android:text="我的"/>
-    </RadioGroup>
-</LinearLayout>
+            <!--<RadioButton
+                android:id="@+id/rb_recommend"
+                style="@style/bottom_tab_style"
+                android:drawableTop="@drawable/rb_locate_drawable_selector"
+                android:onClick="onClickRecommend"
+                android:text="推荐"/>-->
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:onClick="toPublish"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="@dimen/x30"
+                    android:layout_height="@dimen/x30"
+                    android:layout_gravity="center"
+                    android:src="@drawable/green_rectangle_solid_with_corner" />
+
+                <ImageView
+                    android:id="@+id/iv_publish"
+                    android:layout_width="@dimen/x25"
+                    android:layout_height="@dimen/x25"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_publish" />
+            </FrameLayout>
+
+            <RadioButton
+                android:id="@+id/rb_user"
+                style="@style/bottom_tab_style"
+                android:drawableTop="@drawable/rb_account_drawable_selector"
+                android:onClick="onClickUser"
+                android:text="我的" />
+        </RadioGroup>
+    </LinearLayout>
 </layout>
