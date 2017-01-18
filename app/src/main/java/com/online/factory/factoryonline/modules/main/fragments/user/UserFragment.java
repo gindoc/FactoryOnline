@@ -22,6 +22,7 @@ import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FastBlurUtil;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.WindowUtil;
@@ -63,28 +64,27 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         mPopupwindowBinding = LayoutPopupwindowRolePickBinding.inflate(inflater);
         mBinding.setPresenter(mPresenter);
         mBinding.setView(this);
-//        initPopupWindow();
         return mBinding.getRoot();
     }
 
     private void initPopupWindow() {
-        mBinding.rlContainer.setDrawingCacheEnabled(true);      //启用绘图缓存
-        mBinding.rlContainer.buildDrawingCache();               //创建位图
-        blurBackground = Bitmap.createBitmap(mBinding.rlContainer.getDrawingCache()); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
-        mBinding.rlContainer.setDrawingCacheEnabled(false);
+        if (blurBackground != null) return;
+        int[] widthAndHeight = WindowUtil.getScreenWidthAndHeight(getContext());
+        blurBackground = Bitmap.createBitmap(BitmapManager.screenShot(getActivity())); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
         blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);
         blurBackground = FastBlurUtil.doBlur(blurBackground, 8, true);
 
-        int[] widthAndHeight = WindowUtil.getScreenWidthAndHeight(getContext());
         mPopupwindowBinding.ivBackground.setImageBitmap(blurBackground);
-        popupWindow = new PopupWindow(mPopupwindowBinding.getRoot(), widthAndHeight[0], widthAndHeight[1]+WindowUtil.getStatusHeight(getContext())+35);
+        popupWindow = new PopupWindow(mPopupwindowBinding.getRoot(), widthAndHeight[0], widthAndHeight[1]);
         mPopupwindowBinding.ivBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+                full(false);
             }
         });
     }
+
     private void full(boolean enable) {
         if (enable) {//隐藏状态栏
             WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
@@ -96,6 +96,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
             getActivity().getWindow().setAttributes(attr);
         }
     }
+
     public void clickRoundImage() {
         mLoginContext.openUserDetail(getContext());
     }
@@ -153,10 +154,9 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     }
 
     public void openRolePick() {
-        full(true);
         initPopupWindow();
+        full(true);
         popupWindow.showAtLocation(mBinding.getRoot(), Gravity.START, 0, 0);
-        Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
     }
 
     public void openSetting() {

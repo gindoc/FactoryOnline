@@ -1,10 +1,13 @@
 package com.online.factory.factoryonline.utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -138,6 +141,21 @@ public class BitmapManager {
 		Canvas canvas = new Canvas(bitmap);
 		drawable.setBounds(0, 0, w, h);
 		drawable.draw(canvas);
+		return bitmap;
+	}
+
+	public static Bitmap screenShot(Activity activity) {
+		int[] widthAndHeight = WindowUtil.getScreenWidthAndHeight(activity);
+		View view = activity.getWindow().getDecorView();
+		view.setDrawingCacheEnabled(true);      //启用绘图缓存
+		//调用下面这个方法非常重要，如果没有调用这个方法，得到的bitmap为null
+		view.measure(View.MeasureSpec.makeMeasureSpec(widthAndHeight[0], View.MeasureSpec.EXACTLY),
+				View.MeasureSpec.makeMeasureSpec(widthAndHeight[1], View.MeasureSpec.EXACTLY));
+		//这个方法也非常重要，设置布局的尺寸和位置
+		view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+		view.buildDrawingCache();               //创建位图
+		Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache()); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
+		view.setDrawingCacheEnabled(false);
 		return bitmap;
 	}
 }
