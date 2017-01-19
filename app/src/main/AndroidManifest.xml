@@ -90,6 +90,8 @@
         <activity android:name=".modules.agentFactoryDetail.FactoryDetailActivity" />
         <activity android:name=".modules.search.agentResult.SearchResultActivity" />
         <activity android:name=".modules.search.ownerResult.SearchResultActivity" />
+        <activity android:name=".modules.order.OrderActivity" />
+        <activity android:name=".modules.main.fragments.home.agent.area.AreaActivity" />
         <activity
             android:name=".WBShareActivity"
             android:configChanges="keyboardHidden|orientation"

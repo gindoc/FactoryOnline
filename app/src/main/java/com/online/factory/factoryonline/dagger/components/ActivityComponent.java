@@ -13,6 +13,7 @@ import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.dagger.modules.ActivityModule;
 import com.online.factory.factoryonline.dagger.modules.FragmentModule;
+import com.online.factory.factoryonline.modules.order.OrderActivity;
 import com.online.factory.factoryonline.modules.personalInfo.PersonalInfoActivity;
 import com.online.factory.factoryonline.modules.publication.PublicationActivity;
 import com.online.factory.factoryonline.modules.publishRental.PrePay.PrePayActivity;
@@ -81,4 +82,8 @@ public interface ActivityComponent {
     void inject(SearchResultActivity searchResultActivity);
 
     void inject(com.online.factory.factoryonline.modules.search.ownerResult.SearchResultActivity searchResultActivity);
+
+    void inject(OrderActivity orderActivity);
+
+    void inject(com.online.factory.factoryonline.modules.main.fragments.home.agent.area.AreaActivity  areaActivity);
 }

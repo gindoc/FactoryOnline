@@ -27,6 +27,7 @@ import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
+import com.online.factory.factoryonline.modules.order.OrderActivity;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FastBlurUtil;
 import com.online.factory.factoryonline.utils.WindowUtil;
@@ -105,6 +106,13 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onAnimationRepeat(Animator animation) {}
                 });
+            }
+        });
+        mPopupwindowBinding.llOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = OrderActivity.getStartIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
     }

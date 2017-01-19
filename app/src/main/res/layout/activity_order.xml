@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.order.OrderActivity" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height"
+            android:background="@android:color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_click_background_transparent"
+                android:drawableLeft="@drawable/ic_arrow_left_green"
+                android:drawablePadding="@dimen/x5"
+                android:gravity="center_vertical"
+                android:onClick="@{()->view.finish()}"
+                android:paddingLeft="@dimen/x10"
+                android:text="返回"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/x14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="厂房预定"
+                android:textColor="#424242"
+                android:textSize="@dimen/x16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/x10"
+                android:paddingRight="@dimen/x10"
+                android:text="提交"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/x14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentBottom="true"
+                android:background="#ccc" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x29"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/x15"
+            android:text="厂房详情描述"
+            android:textColor="#838383"
+            android:textSize="@dimen/x13" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/x10">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:hint="您好，请描述您需要的厂房内容/详情.."
+                android:minHeight="@dimen/x100"
+                android:textColorHint="#ADADAD"
+                android:textSize="@dimen/x13" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="2-400字"
+                android:textColor="#A8A8A8"
+                android:textSize="@dimen/x10" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x29"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/x15"
+            android:text="匹配时间(选择时间匹配相对信息推送)"
+            android:textColor="#838383"
+            android:textSize="@dimen/x13" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/x10">
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginRight="@dimen/x10"
+                    android:background="@drawable/order_time_bg_selector"
+                    android:button="@android:color/transparent"
+                    android:paddingBottom="@dimen/x5"
+                    android:paddingLeft="@dimen/x10"
+                    android:paddingRight="@dimen/x10"
+                    android:paddingTop="@dimen/x5"
+                    android:text="1天"
+                    android:textColor="@drawable/order_time_text_selector"
+                    android:textSize="@dimen/x12" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginRight="@dimen/x10"
+                    android:background="@drawable/order_time_bg_selector"
+                    android:button="@android:color/transparent"
+                    android:paddingBottom="@dimen/x5"
+                    android:paddingLeft="@dimen/x10"
+                    android:paddingRight="@dimen/x10"
+                    android:paddingTop="@dimen/x5"
+                    android:text="7天"
+                    android:textColor="@drawable/order_time_text_selector"
+                    android:textSize="@dimen/x12" />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/x10"
+                    android:layout_marginRight="@dimen/x10"
+                    android:background="@drawable/order_time_bg_selector"
+                    android:button="@android:color/transparent"
+                    android:paddingBottom="@dimen/x5"
+                    android:paddingLeft="@dimen/x10"
+                    android:paddingRight="@dimen/x10"
+                    android:paddingTop="@dimen/x5"
+                    android:text="30天"
+                    android:textColor="@drawable/order_time_text_selector"
+                    android:textSize="@dimen/x12" />
+
+
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/et_input_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:background="@drawable/gray_rectangle_outline_with_corner"
+                android:focusable="false"
+                android:gravity="center"
+                android:hint="其他"
+                android:inputType="number"
+                android:paddingBottom="@dimen/x5"
+                android:paddingLeft="@dimen/x10"
+                android:paddingRight="@dimen/x10"
+                android:paddingTop="@dimen/x5"
+                android:textColor="@android:color/white"
+                android:textColorHint="#909090"
+                android:textSize="@dimen/x12" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

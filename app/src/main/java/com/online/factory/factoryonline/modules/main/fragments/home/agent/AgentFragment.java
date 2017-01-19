@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.online.factory.factoryonline.databinding.FragmentCommissionBinding;
 import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.modules.agent.AgentActivity;
+import com.online.factory.factoryonline.modules.main.fragments.home.agent.area.AreaActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -29,7 +31,8 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresenter> implements AgentContract.View, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresenter> implements AgentContract.View, OnPageListener,
+        BaseRecyclerViewAdapter.OnItemClickListener {
     @Inject
     AgentPresenter presenter;
 
@@ -71,6 +74,7 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         binding.recyclerViewBranches.setLayoutManager(linearLayoutManager);
         binding.recyclerViewBranches.setAdapter(branchAdapter);
+        branchAdapter.setOnItemClickListener(this);
 
         binding.recyclerViewAgents.setAdapter(agentAdapter);
         agentAdapter.setOnItemClickListener(this);
@@ -118,9 +122,13 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
 
     @Override
     public void onItemClick(View view, int position) {
-        ProMedium proMedium = agentAdapter.getData().get(position);
-        Activity activity = getActivity();
-        startActivity(AgentActivity.getStartIntent(activity, proMedium));
-        activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+        if (((RecyclerView)view.getParent()).getId() == R.id.recyclerView_agents) {
+            ProMedium proMedium = agentAdapter.getData().get(position);
+            Activity activity = getActivity();
+            startActivity(AgentActivity.getStartIntent(activity, proMedium));
+            activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+        }else {
+            startActivity(AreaActivity.getStartIntent(getContext()));
+        }
     }
 }
