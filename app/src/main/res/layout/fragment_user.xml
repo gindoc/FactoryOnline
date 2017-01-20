@@ -60,15 +60,14 @@
             </LinearLayout>
 
 
-            <com.online.factory.factoryonline.customview.RoundImage
+            <com.online.factory.factoryonline.customview.RoundImageView
                 android:id="@+id/iv_head_photo"
                 android:layout_width="@dimen/x75"
                 android:layout_height="@dimen/x75"
                 android:onClick="@{()->view.clickRoundImage()}"
                 android:src="@drawable/boy"
                 app:border_outside_color1="#DFDFDF"
-                app:border_outside_thickness="@dimen/x1"
-                app:type="circle" />
+                app:border_outside_thickness="@dimen/x1" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -168,7 +167,7 @@
             android:drawablePadding="@dimen/x5"
             android:drawableTop="@drawable/ic_setting"
             android:gravity="center"
-            android:text="设置"
+            android:text="    设置    "
             android:onClick="@{()->view.openSetting()}"
             android:textColor="#424242"
             android:textSize="@dimen/x13" />

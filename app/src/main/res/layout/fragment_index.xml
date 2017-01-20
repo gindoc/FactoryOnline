@@ -14,6 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <com.online.factory.factoryonline.customview.InterceptScrollView
@@ -28,26 +29,26 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/x10"
-                    android:paddingRight="@dimen/x10">
+                    android:paddingLeft="@dimen/x18"
+                    android:paddingRight="@dimen/x18">
 
                     <com.online.factory.factoryonline.customview.SlideShowView
                         android:id="@+id/slideShowView"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/x145" />
+                        android:layout_height="@dimen/x132" />
 
                     <LinearLayout
                         android:id="@+id/ll_recommend_active"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/slideShowView"
-                        android:layout_marginTop="@dimen/x10"
+                        android:layout_marginTop="@dimen/x16"
                         android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/x5"
+                            android:layout_marginRight="@dimen/x8"
                             android:layout_weight="1"
                             android:background="@drawable/gray_rectangle_outline_with_corner"
                             android:orientation="vertical"
@@ -60,8 +61,8 @@
                                 android:drawablePadding="@dimen/x5"
                                 android:gravity="center"
                                 android:text="每日推荐"
-                                android:textColor="#626262"
-                                android:textSize="@dimen/x10" />
+                                android:textColor="#808080"
+                                android:textSize="@dimen/x12" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -69,13 +70,13 @@
                                 android:layout_marginTop="@dimen/x5"
                                 android:text="支付宝先重大漏洞10日上午被曝光"
                                 android:textColor="#424242"
-                                android:textSize="@dimen/x12" />
+                                android:textSize="@dimen/x13" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/x5"
+                            android:layout_marginLeft="@dimen/x8"
                             android:layout_weight="1"
                             android:background="@drawable/gray_rectangle_outline_with_corner"
                             android:orientation="vertical"
@@ -88,8 +89,8 @@
                                 android:drawablePadding="@dimen/x5"
                                 android:gravity="center"
                                 android:text="活动"
-                                android:textColor="#626262"
-                                android:textSize="@dimen/x10" />
+                                android:textColor="#808080"
+                                android:textSize="@dimen/x12" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -97,7 +98,7 @@
                                 android:layout_marginTop="@dimen/x5"
                                 android:text="支付宝先重大漏洞10日上午被曝光"
                                 android:textColor="#424242"
-                                android:textSize="@dimen/x12" />
+                                android:textSize="@dimen/x13" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -107,8 +108,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/x5"
                         android:layout_below="@id/ll_recommend_active"
-                        android:layout_marginBottom="@dimen/x5"
-                        android:layout_marginTop="@dimen/x5"
+                        android:layout_marginBottom="@dimen/x16"
+                        android:layout_marginTop="@dimen/x13"
                         android:background="#FBFBFB" />
 
                     <LinearLayout
@@ -126,7 +127,9 @@
                             android:layout_weight="1"
                             android:drawableLeft="@drawable/ic_hight_quality"
                             android:gravity="center_vertical"
+                            android:drawablePadding="@dimen/x6"
                             android:text="精品厂房"
+                            android:textSize="@dimen/x14"
                             android:textColor="#424242" />
 
                         <LinearLayout
@@ -137,14 +140,14 @@
                             android:orientation="horizontal">
 
                             <ImageView
-                                android:layout_width="@dimen/x8"
-                                android:layout_height="@dimen/x8"
+                                android:layout_width="@dimen/x7"
+                                android:layout_height="@dimen/x7"
                                 android:layout_marginRight="@dimen/x5"
                                 android:src="@drawable/hight_quality_selected_dot" />
 
                             <ImageView
-                                android:layout_width="@dimen/x8"
-                                android:layout_height="@dimen/x8"
+                                android:layout_width="@dimen/x7"
+                                android:layout_height="@dimen/x7"
                                 android:src="@drawable/gray_oval_background" />
                         </LinearLayout>
                     </LinearLayout>
@@ -152,17 +155,17 @@
                     <android.support.v4.view.ViewPager
                         android:id="@+id/high_quality_viewpager"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/x100"
+                        android:layout_height="@dimen/x135"
                         android:layout_below="@id/ll_high_quality_title"
-                        android:layout_marginTop="@dimen/x8" />
+                        android:layout_marginTop="@dimen/x22" />
 
                     <View
                         android:id="@+id/split_line2"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/x5"
                         android:layout_below="@id/high_quality_viewpager"
-                        android:layout_marginBottom="@dimen/x5"
-                        android:layout_marginTop="@dimen/x5"
+                        android:layout_marginBottom="@dimen/x16"
+                        android:layout_marginTop="@dimen/x13"
                         android:background="#FBFBFB" />
 
                     <TextView
@@ -171,7 +174,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/split_line2"
                         android:layout_marginBottom="@dimen/x5"
-                        android:drawableLeft="@drawable/green_rectangle_solid_background"
+                        android:drawableLeft="@drawable/tag_greate_factory"
                         android:drawablePadding="6dp"
                         android:gravity="center_vertical"
                         android:text="优质厂房"

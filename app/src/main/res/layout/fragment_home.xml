@@ -59,18 +59,24 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="@dimen/x170"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/x28"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabGravity="center"
+                app:tabTextAppearance="@style/LoginTabLayoutStyle"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabTextColor="#808080" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/y30"
-            android:layout_marginBottom="@dimen/x5"
-            android:layout_marginLeft="@dimen/x25"
-            android:layout_marginRight="@dimen/x25"
-            android:layout_marginTop="@dimen/x5"
-            android:background="@drawable/gray_rectangle_with_d2"
+            android:layout_marginBottom="@dimen/x12"
+            android:layout_marginLeft="@dimen/x27"
+            android:layout_marginRight="@dimen/x27"
+            android:layout_marginTop="@dimen/x7"
+            android:background="@drawable/gray_rectangle_with_large_corner"
             android:gravity="center"
             android:onClick="@{()->view.openSearchPage()}">
 

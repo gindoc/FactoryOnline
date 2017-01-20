@@ -9,66 +9,106 @@
             type="com.online.factory.factoryonline.modules.main.fragments.home.index.IndexViewModel" />
 
     </data>
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x200"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <com.online.factory.factoryonline.customview.RoundImage
-            android:id="@+id/iv_high_quality_factory"
-            android:layout_width="@dimen/x150"
-            android:layout_height="@dimen/x120"
-            app:borderRadius="@dimen/x10"
-            app:type="round"
-            android:layout_alignParentRight="true"
-            app:imageUrl="@{viewModel.factoryImg}"/>
+
         <LinearLayout
-            android:id="@+id/ll_item_high_quality_factory"
-            android:layout_width="@dimen/x150"
-            android:orientation="vertical"
-            android:layout_height="@dimen/x120">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.factoryName}"
-                android:textColor="#424242"
-                android:textSize="@dimen/x16"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_item_high_quality_factory"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/x103"
+                android:layout_marginRight="@dimen/x20"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/x10"
-                android:maxLines="3"
-                android:ellipsize="end"
-                android:layout_marginBottom="@dimen/x10"
-                android:text="@{viewModel.factoryDescription}"
-                android:textColor="#414141"
-                android:textSize="@dimen/x13"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.factoryTotalPrice}"
-                android:textSize="@dimen/x14"
-                android:textColor="#424242"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.factoryName}"
+                    android:textColor="#424242"
+                    android:textSize="@dimen/x16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/x16"
+                    android:layout_marginTop="@dimen/x12"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="@{viewModel.factoryDescription}"
+                    android:textColor="#424242"
+                    android:textSize="@dimen/x13" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.factoryArea}"
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="@{viewModel.factoryPrice}"
+                        android:textColor="#e52929"
+                        android:textSize="@dimen/x14" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.online.factory.factoryonline.customview.RoundImage
+                android:id="@+id/iv_high_quality_factory"
+                android:layout_width="@dimen/x138"
+                android:layout_height="@dimen/x103"
+                app:borderRadius="@dimen/x10"
+                app:border_outside_color1="#e6e6e6"
+                app:border_outside_thickness="@dimen/x1"
+                app:imageUrl="@{viewModel.factoryImg}"
+                app:type="round" />
+
+
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.addressOverview}"
-            android:layout_below="@id/ll_item_high_quality_factory"
-            android:textColor="#414141"
-            android:layout_marginTop="@dimen/x10"
-            android:textSize="@dimen/x11"/>
+            android:paddingTop="@dimen/x16"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/iv_high_quality_factory"
-            android:text="浏览：203人"
-            android:textColor="#ccc"
-            android:layout_marginTop="@dimen/x10"
-            android:drawableLeft="@drawable/ic_pwd_open"
-            android:drawablePadding="@dimen/x5"/>
-    </RelativeLayout>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.addressOverview}"
+                android:textColor="#424242"
+                android:textSize="@dimen/x12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_pwd_open"
+                android:drawablePadding="@dimen/x7"
+                android:text="浏览：203人"
+                android:textColor="#808080"
+                android:textSize="@dimen/x12" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 </layout>
