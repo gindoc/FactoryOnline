@@ -256,4 +256,5 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
             sendEmptyMessageDelayed(0, 3000);
         }
     };
+
 }

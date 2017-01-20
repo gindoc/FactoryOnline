@@ -147,6 +147,10 @@ public class BitmapManager {
 	public static Bitmap screenShot(Activity activity) {
 		int[] widthAndHeight = WindowUtil.getScreenWidthAndHeight(activity);
 		View view = activity.getWindow().getDecorView();
+		return blur(view, widthAndHeight);
+	}
+
+	public static Bitmap blur(View view, int[] widthAndHeight) {
 		view.setDrawingCacheEnabled(true);      //启用绘图缓存
 		//调用下面这个方法非常重要，如果没有调用这个方法，得到的bitmap为null
 		view.measure(View.MeasureSpec.makeMeasureSpec(widthAndHeight[0], View.MeasureSpec.EXACTLY),

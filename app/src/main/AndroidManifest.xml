@@ -92,6 +92,10 @@
         <activity android:name=".modules.search.ownerResult.SearchResultActivity" />
         <activity android:name=".modules.order.OrderActivity" />
         <activity android:name=".modules.main.fragments.home.agent.area.AreaActivity" />
+        <activity android:name=".modules.transparent.TranslucentPublishActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
+        <activity android:name=".modules.transparent.TranslucentRolePickActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
         <activity
             android:name=".WBShareActivity"
             android:configChanges="keyboardHidden|orientation"

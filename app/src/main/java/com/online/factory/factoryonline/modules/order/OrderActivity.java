@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.order;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -64,8 +65,8 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
 
     }
 
-    public static Intent getStartIntent(MainActivity mainActivity) {
-        return new Intent(mainActivity, OrderActivity.class);
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, OrderActivity.class);
     }
 
     @Override
