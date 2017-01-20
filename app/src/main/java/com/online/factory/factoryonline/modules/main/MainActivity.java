@@ -39,10 +39,6 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     LoginContext mLoginContext;
-//    private PopupWindow popupWindow;
-//    private LayoutPopupwindowPublishBinding mPopupwindowBinding;
-//    private AnimatorSet animatorSetOut;
-//    private AnimatorSet animatorSetIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,61 +47,11 @@ public class MainActivity extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-//        mPopupwindowBinding = LayoutPopupwindowPublishBinding.inflate(LayoutInflater.from(this));
         mBinding.bottomTab.rbHome.setChecked(true);
 
-//        initAnimationSet();
         loadMultipleRootFragment(R.id.tab_content, 0, homeFragment, recommendFragment, userFragment);
 
     }
-
-//    private void initAnimationSet() {
-//        animatorSetOut = new AnimatorSet();
-//        animatorSetOut.playTogether(
-//                ObjectAnimator.ofFloat(mPopupwindowBinding.ivPublish, "rotation", 0, 45),
-//                ObjectAnimator.ofFloat(mPopupwindowBinding.llOrder, "scaleX", 0.3f, 1f),
-//                ObjectAnimator.ofFloat(mPopupwindowBinding.llOrder, "scaleY", 0.3f, 1f),
-//                ObjectAnimator.ofFloat(mPopupwindowBinding.llOrder, "translationY", 0, -300)
-//        );
-//        animatorSetIn = new AnimatorSet();
-//        animatorSetIn.playTogether(
-//                ObjectAnimator.ofFloat(mPopupwindowBinding.llOrder, "translationY", -300, 0),
-//                ObjectAnimator.ofFloat(mPopupwindowBinding.llOrder, "scaleX", 1f, 0.3f),
-//                ObjectAnimator.ofFloat(mPopupwindowBinding.llOrder, "scaleY", 1f, 0.3f),
-//                ObjectAnimator.ofFloat(mPopupwindowBinding.ivPublish, "rotation", 45, 0)
-//        );
-//        animatorSetOut.setDuration(500);
-//        animatorSetIn.setDuration(500);
-//        mPopupwindowBinding.ivBackground.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                animatorSetIn.start();
-//                animatorSetIn.addListener(new Animator.AnimatorListener() {
-//                    @Override
-//                    public void onAnimationStart(Animator animation) {}
-//
-//                    @Override
-//                    public void onAnimationEnd(Animator animation) {
-//                        WindowUtil.toggleStatusBar(false,MainActivity.this);
-//                        popupWindow.dismiss();
-//                    }
-//
-//                    @Override
-//                    public void onAnimationCancel(Animator animation) {}
-//
-//                    @Override
-//                    public void onAnimationRepeat(Animator animation) {}
-//                });
-//            }
-//        });
-//        mPopupwindowBinding.llOrder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = OrderActivity.getStartIntent(MainActivity.this);
-//                startActivity(intent);
-//            }
-//        });
-//    }
 
     @Override
     protected BasePresenter createPresent() {
@@ -122,16 +68,7 @@ public class MainActivity extends BaseActivity {
         showHideFragment(homeFragment, userFragment);
     }
 
-    /*public void onClickRecommend(View view) {
-        mBinding.bottomTab.rbRecommend.setChecked(true);
-        showHideFragment(recommendFragment, userFragment);
-        showHideFragment(recommendFragment, homeFragment);
-    }*/
-
     public void toPublish(View view) {
-//        WindowUtil.toggleStatusBar(true,this);
-//        initPopupWindow();
-//        popupWindow.showAtLocation(mBinding.getRoot(), Gravity.START, 0, 0);
         Bitmap blurBackground = BitmapManager.screenShot(this);
         blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);
         blurBackground = FastBlurUtil.doBlur(blurBackground, 8, true);
@@ -159,14 +96,4 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-//    private void initPopupWindow() {
-//        int[] widthAndHeight = WindowUtil.getScreenWidthAndHeight(this);
-//        Bitmap blurBackground = BitmapManager.screenShot(this); //创建一个DrawingCache的拷贝，因为DrawingCache得到的位图在禁用后会被回收
-//        blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);
-//        blurBackground = FastBlurUtil.doBlur(blurBackground, 8, true);
-//
-//        mPopupwindowBinding.ivBackground.setImageBitmap(blurBackground);
-//        animatorSetOut.start();
-//        popupWindow = new PopupWindow(mPopupwindowBinding.getRoot(), widthAndHeight[0], widthAndHeight[1]);     // 会有卡顿，不知道是不是因为重复创建popupwindow
-//    }
 }

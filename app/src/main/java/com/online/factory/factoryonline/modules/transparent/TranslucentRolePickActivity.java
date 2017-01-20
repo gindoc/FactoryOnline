@@ -37,7 +37,6 @@ public class TranslucentRolePickActivity extends Activity {
         });
     }
 
-
     public static Intent getStartIntent(Context context, Bitmap bitmap) {
         Intent intent = new Intent(context, TranslucentRolePickActivity.class);
         intent.putExtra(BACKGROUND, bitmap);
