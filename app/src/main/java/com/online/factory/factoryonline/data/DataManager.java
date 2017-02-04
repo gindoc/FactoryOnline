@@ -321,7 +321,8 @@ public class DataManager {
     public Observable<Response> updateUser(UpdateUser updateUser) {
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
-        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+//        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        String token = "Token 89ed0e70a0b31ce87e68d9b9761cb89375a3eeea";
         String json = new Gson().toJson(updateUser);
         String encodedJosn = AESUtil.encrypt(json, timestamp, iv.toString());
         MultipartBody.Builder builder = new MultipartBody.Builder()

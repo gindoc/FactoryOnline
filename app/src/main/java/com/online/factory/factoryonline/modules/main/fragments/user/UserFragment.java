@@ -17,7 +17,7 @@ import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.login.LoginContext;
-import com.online.factory.factoryonline.modules.transparent.TranslucentRolePickActivity;
+import com.online.factory.factoryonline.modules.translucent.role.TranslucentRolePickActivity;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FastBlurUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;

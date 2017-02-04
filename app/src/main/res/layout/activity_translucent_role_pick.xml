@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="view"
+            type="com.online.factory.factoryonline.modules.translucent.role.TranslucentRolePickActivity" />
+
+    </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,16 +32,20 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginRight="@dimen/x20"
+                android:onClick="@{()->view.switchRole(1)}"
                 android:src="@drawable/role_agent" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x20"
+                android:onClick="@{()->view.switchRole(2)}"
                 android:src="@drawable/role_user" />
         </LinearLayout>
 

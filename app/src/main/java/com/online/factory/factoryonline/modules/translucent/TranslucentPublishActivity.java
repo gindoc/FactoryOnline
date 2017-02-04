@@ -1,4 +1,4 @@
-package com.online.factory.factoryonline.modules.transparent;
+package com.online.factory.factoryonline.modules.translucent;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

@@ -26,6 +26,7 @@ import com.online.factory.factoryonline.modules.search.SearchActivity;
 import com.online.factory.factoryonline.modules.search.agentResult.SearchResultActivity;
 import com.online.factory.factoryonline.modules.setting.SettingActivity;
 import com.online.factory.factoryonline.modules.setting.qrcode.QRCodeActivity;
+import com.online.factory.factoryonline.modules.translucent.role.TranslucentRolePickActivity;
 
 import dagger.Subcomponent;
 
@@ -86,4 +87,6 @@ public interface ActivityComponent {
     void inject(OrderActivity orderActivity);
 
     void inject(com.online.factory.factoryonline.modules.main.fragments.home.agent.area.AreaActivity  areaActivity);
+
+    void inject(TranslucentRolePickActivity translucentRolePickActivity);
 }

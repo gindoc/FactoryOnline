@@ -91,12 +91,14 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     public void modifyName() {
         Bundle bundle = new Bundle();
+//        String name = user.getUserName() == null ? "" : user.getUserName();
+//        bundle.putString(ModifyNameFragment.USER_NAME, name);
         bundle.putString(ModifyNameFragment.USER_NAME, user.getUserName());
         modifyNameFragment.setArguments(bundle);
         startForResult(modifyNameFragment, MODIFY_NAME_REQUEST_CODE);
     }
 
-    public void modifyPwd(){
+    public void modifyPwd() {
         Bundle bundle = new Bundle();
         bundle.putString(ModifyPwdFragment.PHONE_NUM, user.getPhone_num());
         modifyPwdFragment.setArguments(bundle);
@@ -104,7 +106,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     }
 
     public void openAlbum() {
-        Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, SELECT_IMAGE_REQUEST_CODE);
     }
 
@@ -121,13 +123,13 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SELECT_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data!=null) {
+        if (requestCode == SELECT_IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
-            String[] filePathColumns={MediaStore.Images.Media.DATA};
-            Cursor c = getContext().getContentResolver().query(selectedImage, filePathColumns, null,null, null);
+            String[] filePathColumns = {MediaStore.Images.Media.DATA};
+            Cursor c = getContext().getContentResolver().query(selectedImage, filePathColumns, null, null, null);
             c.moveToFirst();
             int columnIndex = c.getColumnIndex(filePathColumns[0]);
-            String picturePath= c.getString(columnIndex);
+            String picturePath = c.getString(columnIndex);
             c.close();
             mPresenter.uploadImage(picturePath);
         }

@@ -18,7 +18,7 @@ import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
-import com.online.factory.factoryonline.modules.transparent.TranslucentPublishActivity;
+import com.online.factory.factoryonline.modules.translucent.TranslucentPublishActivity;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FastBlurUtil;
 
