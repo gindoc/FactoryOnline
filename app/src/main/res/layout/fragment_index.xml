@@ -175,7 +175,7 @@
                         android:layout_below="@+id/split_line2"
                         android:layout_marginBottom="@dimen/x5"
                         android:drawableLeft="@drawable/tag_greate_factory"
-                        android:drawablePadding="6dp"
+                        android:drawablePadding="@dimen/x6"
                         android:gravity="center_vertical"
                         android:text="优质厂房"
                         android:textColor="#1ab80f"

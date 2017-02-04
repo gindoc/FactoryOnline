@@ -45,8 +45,8 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
     public static final int PERMISSION_REQUEST_CODE = 199;
     private FragmentHomeBinding mBinding;
 
-    @Inject
-    HomeRecyclerViewAdapter mAdapter;
+//    @Inject
+//    HomeRecyclerViewAdapter mAdapter;
 
     @Inject
     IndexFragment indexFragment;

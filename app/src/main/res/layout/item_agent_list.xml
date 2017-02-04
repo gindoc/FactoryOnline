@@ -21,16 +21,18 @@
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/y11"
-        android:paddingLeft="@dimen/x11"
+        android:paddingBottom="@dimen/x23"
+        android:paddingLeft="@dimen/x15"
         android:paddingRight="@dimen/x15"
-        android:paddingTop="@dimen/y12">
+        android:paddingTop="@dimen/x23">
 
-        <ImageView
+        <com.online.factory.factoryonline.customview.RoundImage
             android:id="@+id/factory_img"
-            android:layout_width="@dimen/x108"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/x138"
+            android:layout_height="@dimen/x103"
             android:scaleType="fitXY"
+            app:borderRadius="@dimen/x5"
+            app:type="round"
             android:layout_marginRight="@dimen/x15"
             app:imageUrl="@{viewModel.imageUrl}" />
 
@@ -42,18 +44,26 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/y11"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{viewModel.name}"
                 android:textColor="#424242"
+                android:textStyle="bold"
                 android:textSize="@dimen/x14"
                 tool:text="南城 带装修独院厂房25000" />
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#424242"
+                android:textSize="@dimen/x13"
+                android:text="@{viewModel.addressOverview}"
+                android:layout_marginTop="@dimen/x12"
+                android:layout_marginBottom="@dimen/x16"
+                tool:text="万江-水蛇涌"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/y11"
+                android:layout_marginBottom="@dimen/x16"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -61,46 +71,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:maxLines="1"
                     android:text='@{viewModel.area}'
-                    android:maxLines="1"
-                    android:textColor="#808080"
-                    android:textSize="@dimen/x13"
-                    tool:text="2500 ㎡" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.totalPrice}"
-                    android:textColor="#df3d3f"
+                    android:textColor="#424242"
                     android:textSize="@dimen/x14"
-                    android:maxLines="1"
-                    tool:text="25000元/月" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/y11"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@{viewModel.addressOverview}"
-                    android:textColor="#808080"
-                    android:maxLines="1"
-                    android:textSize="@dimen/x13"
-                    tool:text="南城 - 雅苑" />
+                    tool:text="2500 ㎡" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="@{viewModel.price}"
-                    android:textColor="#808080"
-                    android:textSize="@dimen/x13"
+                    android:textColor="#e52929"
+                    android:textSize="@dimen/x14"
                     tool:text="10元/㎡/月" />
             </LinearLayout>
 
