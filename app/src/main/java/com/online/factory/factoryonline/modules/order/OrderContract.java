@@ -1,5 +1,7 @@
 package com.online.factory.factoryonline.modules.order;
 
+import android.text.Editable;
+
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
 
@@ -12,10 +14,12 @@ import com.online.factory.factoryonline.base.IBaseView;
 public interface OrderContract {
     interface View extends IBaseView{
 
+        void submitSuccessful();
     }
 
     interface Presenter extends IBasePresenter {
 
+        void publishNeededMessages(String description, String s);
     }
 
 }

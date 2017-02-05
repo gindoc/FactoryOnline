@@ -51,6 +51,7 @@
                 android:paddingRight="@dimen/x10"
                 android:text="提交"
                 android:textColor="@color/colorPrimary"
+                android:onClick="@{()->view.submit()}"
                 android:textSize="@dimen/x14" />
 
             <View
@@ -77,6 +78,7 @@
             android:padding="@dimen/x10">
 
             <EditText
+                android:id="@+id/et_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"

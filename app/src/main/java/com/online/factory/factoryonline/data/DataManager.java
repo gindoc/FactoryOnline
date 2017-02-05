@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.models.NeededMessage;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.UpdateUser;
@@ -321,8 +322,7 @@ public class DataManager {
     public Observable<Response> updateUser(UpdateUser updateUser) {
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
-//        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
-        String token = "Token 89ed0e70a0b31ce87e68d9b9761cb89375a3eeea";
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
         String json = new Gson().toJson(updateUser);
         String encodedJosn = AESUtil.encrypt(json, timestamp, iv.toString());
         MultipartBody.Builder builder = new MultipartBody.Builder()
@@ -387,5 +387,19 @@ public class DataManager {
 
     public Observable<BranchResponse> requestBranch() {
         return factoryApi.getBranches();
+    }
+
+    public Observable<Response> publishNeededMessages(String description, String time) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        NeededMessage neededMessage = new NeededMessage();
+        neededMessage.setContent(description);
+        neededMessage.setCallback_day(Float.parseFloat(time));
+        String json = new Gson().toJson(neededMessage);
+        builder.addFormDataPart("publishNeed", json);
+        return factoryApi.publishNeededMessage(token, timestamp, builder.build());
     }
 }

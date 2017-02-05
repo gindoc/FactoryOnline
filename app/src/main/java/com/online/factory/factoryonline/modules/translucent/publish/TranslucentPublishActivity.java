@@ -1,9 +1,8 @@
-package com.online.factory.factoryonline.modules.translucent;
+package com.online.factory.factoryonline.modules.translucent.publish;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -13,8 +12,13 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.online.factory.factoryonline.R;
+import com.online.factory.factoryonline.base.BasePresenter;
+import com.online.factory.factoryonline.base.BaseTranslucentActivity;
 import com.online.factory.factoryonline.databinding.ActivityTranslucentPublishBinding;
 import com.online.factory.factoryonline.modules.order.OrderActivity;
+import com.trello.rxlifecycle.LifecycleTransformer;
+
+import javax.annotation.Nonnull;
 
 /**
  * 作者: GIndoc
@@ -22,7 +26,7 @@ import com.online.factory.factoryonline.modules.order.OrderActivity;
  * 作用:
  */
 
-public class TranslucentPublishActivity extends Activity {
+public class TranslucentPublishActivity extends BaseTranslucentActivity {
     private static final String BACKGROUND = "BACKGROUND";
     private ActivityTranslucentPublishBinding mBinding;
     private AnimatorSet animatorSetOut;
@@ -36,6 +40,11 @@ public class TranslucentPublishActivity extends Activity {
         Bitmap blurBackground = getIntent().getParcelableExtra(BACKGROUND);
         mBinding.ivBackground.setImageBitmap(blurBackground);
         animatorSetOut.start();
+    }
+
+    @Override
+    protected BasePresenter createPresent() {
+        return null;
     }
 
     private void initAnimationSet() {
@@ -94,4 +103,9 @@ public class TranslucentPublishActivity extends Activity {
         return intent;
     }
 
+    @Nonnull
+    @Override
+    public LifecycleTransformer bindUntilEvent(@Nonnull Object event) {
+        return bindToLifecycle();
+    }
 }

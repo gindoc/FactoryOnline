@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 /**
@@ -32,6 +35,10 @@ import timber.log.Timber;
 
 public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresenter> implements OrderContract.View, View.OnTouchListener {
     private ActivityOrderBinding mBinding;
+
+    @Inject
+    OrderPresenter mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getComponent().inject(this);
@@ -52,12 +59,12 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
 
     @Override
     protected OrderPresenter createPresent() {
-        return null;
+        return mPresenter;
     }
 
     @Override
     public <T> LifecycleTransformer<T> getBindToLifecycle() {
-        return getBindToLifecycle();
+        return bindToLifecycle();
     }
 
     @Override
@@ -91,5 +98,33 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
             mBinding.radioGroup.clearCheck();
         }
         return false;
+    }
+
+    public void submit(){
+        Editable description = mBinding.etDescription.getText();
+        int checkedId = mBinding.radioGroup.getCheckedRadioButtonId();
+        if (TextUtils.isEmpty(description)) {
+            Toast.makeText(this, "请描述您需要的厂房内容/详情..(2~400字)", Toast.LENGTH_SHORT).show();
+            return;
+        }else if (description.length() < 2 || description.length() > 400){
+            Toast.makeText(this, "字数不符合要求(2~400字)",Toast.LENGTH_SHORT).show();
+            return;
+        } else if (checkedId == -1 && TextUtils.isEmpty(mBinding.etInputTime.getText())) {
+            Toast.makeText(this, "请选择匹配时间", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (checkedId != -1) {
+            RadioButton radioButton = (RadioButton) mBinding.radioGroup.findViewById(checkedId);
+            String c = radioButton.getText().toString();
+            c = c.substring(0, c.length() - 1);
+            mPresenter.publishNeededMessages(description.toString(), c);
+        }else {
+            mPresenter.publishNeededMessages(description.toString(), mBinding.etInputTime.getText().toString());
+        }
+    }
+
+    @Override
+    public void submitSuccessful() {
+        finish();
     }
 }

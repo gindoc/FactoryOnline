@@ -206,4 +206,7 @@ public interface FactoryApi {
 
     @GET("/branches")
     Observable<BranchResponse> getBranches();
+
+    @POST("neededmessages/")
+    Observable<Response> publishNeededMessage(@Header("Authorization") String token, @Header("TIME") String timestamp, @Body RequestBody build);
 }

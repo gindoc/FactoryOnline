@@ -119,16 +119,7 @@ public class DataManagerModule {
                 Request realRequest = null;
                 Timber.d("requestBody : %s", bodyToString(request.body()));
                 Response intercepterResponse = null;
-                /*if (request.url().toString().equals("https://api.sms.jpush.cn/v1/codes")) {
-                    String s = "2f0bf84aec9e72e58d647ea2:4930a1ae980aaebb491d152b";
-                    byte[] b = s.getBytes();
-                    String base64_auth_string = Base64.encodeToString(b, Base64.NO_WRAP);
-                    realRequest = request.newBuilder().addHeader("Authorization", "Basic " + base64_auth_string).build();
-                    Headers headers = realRequest.headers();
-                    for (int i = 0; i < headers.size(); i++) {
-                        Timber.e(headers.get("Authorization"));
-                    }
-                } else */if (request.url().toString().contains("users")
+                if (request.url().toString().contains("users")
                         || request.url().toString().contains("user")
                         || request.url().toString().contains("qiniutokens")
                         || request.url().toString().contains("images")
@@ -137,6 +128,7 @@ public class DataManagerModule {
                         || request.url().toString().contains("smses")
                         || request.url().toString().contains("promediums")
                         || request.url().toString().contains("search")
+                        || request.url().toString().contains("neededmessages")
                         || request.url().toString().contains("promediummessages")
                         || request.url().toString().contains("feedbacks")) {
                     realRequest = request.newBuilder().build();
