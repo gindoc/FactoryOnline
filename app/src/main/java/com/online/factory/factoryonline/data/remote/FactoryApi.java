@@ -209,4 +209,7 @@ public interface FactoryApi {
 
     @POST("neededmessages/")
     Observable<Response> publishNeededMessage(@Header("Authorization") String token, @Header("TIME") String timestamp, @Body RequestBody build);
+
+    @GET("promediums/top")
+    Observable<ProMediumResponse> getTopThreeAgent();
 }

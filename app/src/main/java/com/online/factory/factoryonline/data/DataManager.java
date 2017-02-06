@@ -407,4 +407,8 @@ public class DataManager {
     public Observable<List<Branch>> getBranchFromDB() {
         return localApi.queryBranches();
     }
+
+    public Observable<ProMediumResponse> requestTopThreeAgent() {
+        return factoryApi.getTopThreeAgent();
+    }
 }

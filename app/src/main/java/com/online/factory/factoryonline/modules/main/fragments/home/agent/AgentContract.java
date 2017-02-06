@@ -15,15 +15,13 @@ import java.util.List;
 
 public interface AgentContract {
     interface View extends IBaseView {
-        void loadAgents(List<ProMedium> proMedium, boolean isInit);
-
-        void loadNextUrl(String next);
+        void loadAgents(List<ProMedium> proMedium);
 
         void loadBranches(List<Branch> branches);
     }
 
     interface Presenter extends IBasePresenter {
-        void requestAgents(String next, boolean isInit);
+        void requestAgents();
         void requestBranch();
     }
 }

@@ -1,14 +1,14 @@
 package com.online.factory.factoryonline.modules.main.fragments.home.agent;
 
-import android.widget.Toast;
-
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.data.local.LocalApi;
+import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.models.Branch;
+import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.response.BranchResponse;
 import com.online.factory.factoryonline.models.response.ProMediumResponse;
-import com.online.factory.factoryonline.modules.agent.*;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -39,8 +39,8 @@ public class AgentPresenter extends BasePresenter<AgentContract.View> implements
     }
 
     @Override
-    public void requestAgents(String next, final boolean isInit) {
-        dataManager.requestAgents(next)
+    public void requestAgents() {
+        dataManager.requestTopThreeAgent()
                 .compose(getView().<ProMediumResponse>getBindToLifecycle())
                 .compose(RxResultHelper.<ProMediumResponse>handleResult())
                 .subscribeOn(Schedulers.io())
@@ -48,8 +48,46 @@ public class AgentPresenter extends BasePresenter<AgentContract.View> implements
                 .subscribe(new RxSubscriber<ProMediumResponse>() {
                     @Override
                     public void _onNext(ProMediumResponse proMediumResponse) {
-                        getView().loadAgents(proMediumResponse.getProMedium(), isInit);
-                        getView().loadNextUrl(proMediumResponse.getNext());
+                        if (proMediumResponse.getProMedium().size() > 0) {
+                            getView().loadAgents(proMediumResponse.getProMedium());
+                            updateLocalDataForAgent(proMediumResponse.getProMedium());
+                        }else {
+                            getAgentFromLocal();
+                        }
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
+
+    private void updateLocalDataForAgent(final List<ProMedium> proMedium) {
+        Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+                Saver.saveSerializableObject(proMedium, SharePreferenceKey.TOP_THREE_AGENT);
+            }
+        }).compose(getView().<Void>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
+
+    public void getAgentFromLocal() {
+        Observable.create(new Observable.OnSubscribe<List<ProMedium>>() {
+            @Override
+            public void call(Subscriber<? super List<ProMedium>> subscriber) {
+                Saver.getSerializableObject(SharePreferenceKey.TOP_THREE_AGENT);
+            }
+        }).compose(getView().<List<ProMedium>>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<List<ProMedium>>() {
+                    @Override
+                    public void _onNext(List<ProMedium> proMediumList) {
+                        getView().loadAgents(proMediumList);
                     }
 
                     @Override
@@ -70,7 +108,7 @@ public class AgentPresenter extends BasePresenter<AgentContract.View> implements
                     public void _onNext(BranchResponse branchResponse) {
                         if (branchResponse.getBranches().size() > 0) {
                             getView().loadBranches(branchResponse.getBranches());
-                            updateBranchTable(branchResponse.getBranches());
+                            updateLocalDataForBranch(branchResponse.getBranches());
                         }else {
                             getBranchesFromDB();
                         }
@@ -83,7 +121,7 @@ public class AgentPresenter extends BasePresenter<AgentContract.View> implements
                 });
     }
 
-    public void updateBranchTable(final List<Branch> branches) {
+    public void updateLocalDataForBranch(final List<Branch> branches) {
         Observable.create(new Observable.OnSubscribe<Void>() {
             @Override
             public void call(Subscriber<? super Void> subscriber) {
@@ -123,5 +161,6 @@ public class AgentPresenter extends BasePresenter<AgentContract.View> implements
                     }
                 });
     }
+
 
 }

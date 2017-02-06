@@ -5,16 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
-import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentCommissionBinding;
 import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.ProMedium;
@@ -32,7 +29,7 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresenter> implements AgentContract.View, OnPageListener,
+public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresenter> implements AgentContract.View,
         BaseRecyclerViewAdapter.OnItemClickListener {
     @Inject
     AgentPresenter presenter;
@@ -44,7 +41,6 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
     BranchRecyclerViewAdapter branchAdapter;
 
     private FragmentCommissionBinding binding;
-    private String agentNext;
 
     @Inject
     public AgentFragment() {
@@ -64,7 +60,7 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
         binding.setAgentView(this);
 
         initRecyclerView();
-        presenter.requestAgents(getString(R.string.api)+"promediums", true);
+        presenter.requestAgents();
         presenter.requestBranch();
 
         return binding.getRoot();
@@ -79,7 +75,6 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
 
         binding.recyclerViewAgents.setAdapter(agentAdapter);
         agentAdapter.setOnItemClickListener(this);
-        binding.recyclerViewAgents.setOnPageListener(this);
     }
 
     @Override
@@ -98,27 +93,15 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
     }
 
     @Override
-    public void loadAgents(List<ProMedium> proMedium, boolean isInit) {
+    public void loadAgents(List<ProMedium> proMedium) {
         agentAdapter.addData(proMedium);
         binding.recyclerViewAgents.notifyDataSetChanged();
-    }
-
-    @Override
-    public void loadNextUrl(String next) {
-        agentNext = next;
     }
 
     @Override
     public void loadBranches(List<Branch> branches) {
         branchAdapter.addData(branches);
         binding.recyclerViewBranches.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onPage() {
-        if (!TextUtils.isEmpty(agentNext)) {
-            presenter.requestAgents(agentNext, false);
-        }
     }
 
     @Override
