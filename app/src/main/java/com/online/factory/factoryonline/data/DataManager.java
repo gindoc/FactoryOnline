@@ -8,6 +8,7 @@ import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.NeededMessage;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.UpdateUser;
 import com.online.factory.factoryonline.models.WantedMessage;
@@ -410,5 +411,9 @@ public class DataManager {
 
     public Observable<ProMediumResponse> requestTopThreeAgent() {
         return factoryApi.getTopThreeAgent();
+    }
+
+    public Observable<ProMediumResponse> requestAreaAgent(String next) {
+        return factoryApi.requestAreaAgent(next);
     }
 }

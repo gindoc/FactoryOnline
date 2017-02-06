@@ -5,7 +5,7 @@
 
         <variable
             name="view"
-            type="com.online.factory.factoryonline.modules.main.fragments.home.agent.area.AreaActivity" />
+            type="com.online.factory.factoryonline.modules.main.fragments.home.agent.areaAgent.AreaActivity" />
     </data>
 
     <LinearLayout

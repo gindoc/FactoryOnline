@@ -16,7 +16,7 @@ import com.online.factory.factoryonline.databinding.FragmentCommissionBinding;
 import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.modules.agent.AgentActivity;
-import com.online.factory.factoryonline.modules.main.fragments.home.agent.area.AreaActivity;
+import com.online.factory.factoryonline.modules.main.fragments.home.agent.areaAgent.AreaActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -112,7 +112,8 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
             startActivity(AgentActivity.getStartIntent(activity, proMedium));
             activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
         }else {
-            startActivity(AreaActivity.getStartIntent(getContext()));
+            Branch branch = branchAdapter.getData().get(position);
+            startActivity(AreaActivity.getStartIntent(getContext(), branch.getId()));
         }
     }
 }

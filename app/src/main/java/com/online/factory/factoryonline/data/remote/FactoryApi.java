@@ -4,6 +4,7 @@ package com.online.factory.factoryonline.data.remote;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.News;
+import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.SearchResult;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
@@ -212,4 +213,7 @@ public interface FactoryApi {
 
     @GET("promediums/top")
     Observable<ProMediumResponse> getTopThreeAgent();
+
+    @GET
+    Observable<ProMediumResponse> requestAreaAgent(@Url String next);
 }

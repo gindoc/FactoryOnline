@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.main.fragments.home.agent.AgentViewModel" />
+
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/x15"
+        android:paddingTop="@dimen/x15">
+
+        <com.online.factory.factoryonline.customview.RoundImageView
+            android:id="@+id/iv_head_photo"
+            android:layout_width="@dimen/x63"
+            android:layout_height="@dimen/x63"
+            android:layout_marginRight="@dimen/x10"
+            app:imageUrl="@{viewModel.agentAvatar}"
+            tool:src="@drawable/boy"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_head_photo"
+            android:text="@{viewModel.agentName}"
+            android:textColor="#424242"
+            tool:text="姓名"
+            android:textSize="@dimen/x13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_head_photo"
+            android:layout_toRightOf="@id/iv_head_photo"
+            android:text="@{viewModel.experience}"
+            android:textColor="#424242"
+            tool:text="工作年限"
+            android:textSize="@dimen/x11" />
+
+        <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_head_photo"
+            android:text="@{viewModel.branchName}"
+            tool:text="区域"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x25"
+            android:textColor="#424242"
+            android:textSize="@dimen/x13" />-->
+        <ImageView
+            android:layout_width="@dimen/x25"
+            android:layout_height="@dimen/x25"
+            android:src="@drawable/no_one"
+            android:layout_alignBottom="@id/iv_head_photo"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#dbdbdb"
+            android:layout_below="@id/iv_head_photo"
+            android:layout_marginTop="@dimen/x15"/>
+    </RelativeLayout>
+</layout>

@@ -86,7 +86,7 @@ public interface ActivityComponent {
 
     void inject(OrderActivity orderActivity);
 
-    void inject(com.online.factory.factoryonline.modules.main.fragments.home.agent.area.AreaActivity  areaActivity);
+    void inject(com.online.factory.factoryonline.modules.main.fragments.home.agent.areaAgent.AreaActivity  areaActivity);
 
     void inject(TranslucentRolePickActivity translucentRolePickActivity);
 }

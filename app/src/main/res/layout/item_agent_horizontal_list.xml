@@ -54,6 +54,7 @@
             tool:text="万江分店" />
 
         <ImageView
+            android:id="@+id/iv_rank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

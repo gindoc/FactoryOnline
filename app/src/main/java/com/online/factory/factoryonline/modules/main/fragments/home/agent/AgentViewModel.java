@@ -84,8 +84,14 @@ public class AgentViewModel extends BaseObservable {
         return proMedium.getReal_name();
     }
 
+    @Bindable
     public String getAgentBrand(){
         return proMedium.getBranch();
+    }
+
+    @Bindable
+    public String getExperience() {
+        return proMedium.getYear_experience()+"年";
     }
 
     @Bindable
