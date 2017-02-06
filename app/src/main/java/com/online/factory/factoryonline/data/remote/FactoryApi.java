@@ -202,7 +202,7 @@ public interface FactoryApi {
     @POST("feedbacks/wantedmessage/{message_id}/")
     Observable<Response> messageFeedback(@Path("message_id")int messageId, @Body RequestBody builder);
 
-    @GET("/highqualityfactory")
+    @GET("wantedmessages/fabulous")
     Observable<HighQualityFactoryResponse> getHighQualityFactory();
 
     @GET("branches")

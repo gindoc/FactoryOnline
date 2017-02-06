@@ -11,6 +11,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.Tag;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 public class IndexViewModel extends BaseObservable {
     private Factory factoryInfo;
     private ProMedium proMedium;
+    private WantedMessage wantedMessage;
 
     @Inject
     Resources resources;
@@ -30,9 +32,14 @@ public class IndexViewModel extends BaseObservable {
     public IndexViewModel() {
     }
 
-    public void setFactoryInfo(Factory factoryInfo) {
-        this.factoryInfo = factoryInfo;
+    public void setWantedMessage(WantedMessage wantedMessage) {
+        this.wantedMessage = wantedMessage;
+        factoryInfo = wantedMessage.getFactory();
     }
+
+//    public void setFactoryInfo(Factory factoryInfo) {
+//        this.factoryInfo = factoryInfo;
+//    }
 
     @Bindable
     public String getFactoryName() {
@@ -60,6 +67,9 @@ public class IndexViewModel extends BaseObservable {
         return (int)factoryInfo.getRange()+"㎡";
     }
 
+    public String getViewCount() {
+        return "浏览：" + wantedMessage.getView_count() + "人";
+    }
 
     @Bindable
     public String getFactoryImg() {

@@ -23,6 +23,7 @@ public class WantedMessage implements Parcelable{
     private String delete_id;
     private String update_id;
     private String owner_id;
+    private int view_count;
 
     public WantedMessage() {
     }
@@ -97,6 +98,14 @@ public class WantedMessage implements Parcelable{
 
     public void setOwner_id(String owner_id) {
         this.owner_id = owner_id;
+    }
+
+    public int getView_count() {
+        return view_count;
+    }
+
+    public void setView_count(int view_count) {
+        this.view_count = view_count;
     }
 
     @Override

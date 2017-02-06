@@ -20,7 +20,6 @@ import timber.log.Timber;
  * 日期: 2017/1/19 16:02
  * 作用:
  */
-
 public class AreaPresenter extends BasePresenter<AreaContract.View> implements AreaContract.Presenter {
     private DataManager dataManager;
 

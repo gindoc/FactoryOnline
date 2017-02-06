@@ -37,8 +37,7 @@ public class IndexRecyclerViewAdapter extends BaseRecyclerViewAdapter<WantedMess
     public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         IndexViewModel viewModel = provider.get();
-        Factory info = (Factory) data.get(position).getFactory();
-        viewModel.setFactoryInfo(info);
+        viewModel.setWantedMessage(data.get(position));
         ItemIndexListBinding binding = (ItemIndexListBinding) holder.getBinding();
         binding.setViewModel(viewModel);
     }

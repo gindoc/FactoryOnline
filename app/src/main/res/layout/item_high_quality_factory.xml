@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_pwd_open"
                 android:drawablePadding="@dimen/x7"
-                android:text="浏览：203人"
+                android:text='@{viewModel.viewCount}'
                 android:textColor="#808080"
                 android:textSize="@dimen/x12" />
         </LinearLayout>

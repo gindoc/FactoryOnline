@@ -153,7 +153,7 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
             ItemHighQualityFactoryBinding binding = ItemHighQualityFactoryBinding.inflate(LayoutInflater.from(getContext()),
                     mBinding.highQualityViewpager, false);
             IndexViewModel model = provider.get();
-            model.setFactoryInfo(w.getFactory());
+            model.setWantedMessage(w);
             binding.setViewModel(model);
             View view = binding.getRoot();
             view.setTag(w);
