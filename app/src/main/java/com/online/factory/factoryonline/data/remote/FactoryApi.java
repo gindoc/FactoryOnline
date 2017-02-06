@@ -204,7 +204,7 @@ public interface FactoryApi {
     @GET("/highqualityfactory")
     Observable<HighQualityFactoryResponse> getHighQualityFactory();
 
-    @GET("/branches")
+    @GET("branches")
     Observable<BranchResponse> getBranches();
 
     @POST("neededmessages/")

@@ -219,8 +219,9 @@ public class AgentViewModel extends BaseObservable {
     }
 
     @Bindable
-    public String getBranchImgUrl() {
-        return branch.getImgUrl();
+    public int getBranchImgUrl() {
+//        return branch.getImgUrl();
+        return R.drawable.publish_rental_background;
     }
 
     public void setBranch(Branch branch) {

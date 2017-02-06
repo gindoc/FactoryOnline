@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.data.local;
 
+import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.utils.DBManager;
 import com.online.factory.factoryonline.utils.Saver;
@@ -68,5 +69,14 @@ public class LocalApi {
 
     public WantedMessage queryMaxIdHomeWantedMessage() {
         return dbManager.queryMaxIdHomeWantedMessage();
+    }
+
+    public void insertBranches(List<Branch> branches) {
+        dbManager.deleteBranches();
+        dbManager.insertBranches(branches);
+    }
+
+    public Observable<List<Branch>> queryBranches() {
+        return Observable.just(dbManager.queryBranches());
     }
 }

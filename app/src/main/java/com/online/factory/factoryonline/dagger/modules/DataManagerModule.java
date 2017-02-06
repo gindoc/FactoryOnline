@@ -91,8 +91,6 @@ public class DataManagerModule {
                 fileName = "Areas.json";
             } else if (path.matches("^(/highqualityfactory)")) {
                 fileName = "HighQualityFactory.json";
-            }else if (path.matches("^(/branches)")){
-                fileName = "Branches.json";
             }else{
                 fileName = "SlideUrl.json";
             }
@@ -130,6 +128,7 @@ public class DataManagerModule {
                         || request.url().toString().contains("search")
                         || request.url().toString().contains("neededmessages")
                         || request.url().toString().contains("promediummessages")
+                        || request.url().toString().contains("branches")
                         || request.url().toString().contains("feedbacks")) {
                     realRequest = request.newBuilder().build();
                 } else {

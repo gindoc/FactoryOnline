@@ -25,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS Factory (id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, image_urls VARCHAR, thumbnail_url VARCHAR, price REAL, " +
                 "range REAL, tags VARCHAR, description VARCHAR, address_overview VARCHAR, pre_pay VARCHAR, rent_type VARCHAR, geohash VARCHAR)");
         db.execSQL("CREATE TABLE IF NOT EXISTS Contacter (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR, phone_num VARCHAR)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS Branch (id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR)");
     }
 
     // 如果DATABASE_VERSION值被改为2,系统发现现有数据库版本不同,即会调用onUpgrade

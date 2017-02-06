@@ -22,7 +22,7 @@
             android:layout_height="@dimen/x60"
             android:foreground="@drawable/half_black_rectangle_background"
             app:borderRadius="@dimen/x5"
-            app:imageUrl="@{viewModel.branchImgUrl}"
+            app:imageId="@{viewModel.branchImgUrl}"
             app:type="round" />
 
         <TextView

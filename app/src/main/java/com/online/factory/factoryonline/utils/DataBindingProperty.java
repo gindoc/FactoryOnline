@@ -69,8 +69,21 @@ public class DataBindingProperty {
     }
 
     @BindingAdapter({"imageId"})
-    public static void setImageId(ImageView imageView, int imageId) {
-        imageView.setImageResource(imageId);
+    public static void setImageId(final ImageView imageView, final int imageId) {
+//        imageView.setImageResource(imageId);
+        imageView.post(new Runnable() {
+            @Override
+            public void run() {
+                int imageWidth = imageView.getMeasuredWidth();
+                Picasso.with(imageView.getContext())
+                        .load(imageId)
+                        .resize(imageWidth,imageWidth)
+                        .placeholder(R.drawable.ic_no_pic)
+                        .config(Bitmap.Config.RGB_565)
+                        .into(imageView);
+            }
+        });
+
     }
 
     @BindingAdapter({"isRefresh"})

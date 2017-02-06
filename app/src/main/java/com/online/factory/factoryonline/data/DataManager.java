@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.NeededMessage;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
@@ -401,5 +402,9 @@ public class DataManager {
         String json = new Gson().toJson(neededMessage);
         builder.addFormDataPart("publishNeed", json);
         return factoryApi.publishNeededMessage(token, timestamp, builder.build());
+    }
+
+    public Observable<List<Branch>> getBranchFromDB() {
+        return localApi.queryBranches();
     }
 }

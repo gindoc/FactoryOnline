@@ -16,6 +16,7 @@ import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.base.BaseTranslucentActivity;
 import com.online.factory.factoryonline.databinding.ActivityTranslucentPublishBinding;
 import com.online.factory.factoryonline.modules.order.OrderActivity;
+import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.annotation.Nonnull;
@@ -93,6 +94,10 @@ public class TranslucentPublishActivity extends BaseTranslucentActivity {
             public void onClick(View v) {
                 Intent intent = OrderActivity.getStartIntent(TranslucentPublishActivity.this);
                 startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(TranslucentPublishActivity.this, PublishRentalActivity.class);
+//                startActivity(intent);
+
             }
         });
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.Contacter;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.Tag;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import rx.Observable;
 import timber.log.Timber;
 
 /**
@@ -516,6 +518,63 @@ public class DBManager {
             if (c != null) {
                 c.close();
             }
+            db.close();
+        }
+    }
+
+    public void insertBranches(List<Branch> branches) {
+        db = helper.getWritableDatabase();
+        try {
+            db.beginTransaction();
+            for (Branch branch : branches) {
+                ContentValues values = new ContentValues();
+                values.put("id", branch.getId());
+                values.put("name", branch.getName());
+                db.insert("Branch", null, values);
+            }
+            db.setTransactionSuccessful();  //设置事务成功完成
+        } catch (Exception e) {
+            Timber.e(e.getMessage());
+//            e.printStackTrace();
+        }finally {
+            db.endTransaction();    //结束事务
+            db.close();
+        }
+    }
+
+    public void deleteBranches() {
+        db = helper.getWritableDatabase();
+        try {
+            db.beginTransaction();
+            db.execSQL("DELETE FROM Branch");
+            db.setTransactionSuccessful();  //设置事务成功完成
+        } catch (Exception e) {
+            Timber.e(e.getMessage());
+        }finally {
+            db.endTransaction();    //结束事务
+            db.close();
+        }
+    }
+
+    public List<Branch> queryBranches() {
+        db = helper.getWritableDatabase();
+        Cursor c = null;
+        try {
+            c = db.rawQuery("SELECT * FROM Branch ", null);
+            List<Branch> branches = new ArrayList<>();
+            Branch branch;
+            while (c.moveToNext()) {
+                branch = new Branch();
+                branch.setId(c.getInt(c.getColumnIndex("id")));
+                branch.setName(c.getString(c.getColumnIndex("name")));
+                branches.add(branch);
+            }
+            return branches;
+        } catch (Exception e) {
+            Timber.e(e.getMessage());
+            return null;
+        }finally {
+            db.endTransaction();    //结束事务
             db.close();
         }
     }
