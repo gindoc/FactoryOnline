@@ -87,6 +87,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         initBaiduMap();
 
         mPresenter.getPublishUser(Integer.parseInt(wantedMessage.getOwner_id()));
+        mPresenter.viewMessage(wantedMessage.getId());
     }
 
     private void initShareAction() {

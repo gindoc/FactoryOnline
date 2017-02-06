@@ -216,4 +216,7 @@ public interface FactoryApi {
 
     @GET
     Observable<ProMediumResponse> requestAreaAgent(@Url String next);
+
+    @POST("wantedmessages/{wantedmessage_id}/view/")
+    Observable<Response> viewMessage(@Path("wantedmessage_id") String id, @Header("TIME") String timestamp, @Header("Authorization") String token);
 }

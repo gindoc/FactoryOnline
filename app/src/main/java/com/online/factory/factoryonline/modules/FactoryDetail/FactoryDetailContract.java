@@ -49,5 +49,11 @@ public interface FactoryDetailContract {
          * @param userId    发布人id
          */
         void getPublishUser(int userId);
+
+        /**
+         * 统计某条厂房信息的浏览量以及被浏览历史
+         * @param id
+         */
+        void viewMessage(String id);
     }
 }

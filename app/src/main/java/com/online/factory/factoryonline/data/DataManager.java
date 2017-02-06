@@ -416,4 +416,11 @@ public class DataManager {
     public Observable<ProMediumResponse> requestAreaAgent(String next) {
         return factoryApi.requestAreaAgent(next);
     }
+
+    public Observable<Response> viewMessage(String id, String token) {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        token = "Token " + AESUtil.encrypt(token, timestamp, iv.toString());
+        return factoryApi.viewMessage(id, token, timestamp);
+    }
 }

@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.FactoryDetail;
 
+import android.text.TextUtils;
 import android.view.MenuItem;
 
 import com.online.factory.factoryonline.base.BasePresenter;
@@ -7,6 +8,7 @@ import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
 import com.online.factory.factoryonline.models.response.Response;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -102,6 +104,28 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
                     @Override
                     public void _onNext(PublishUserResponse publishUserResponse) {
                         getView().initPublishUser(publishUserResponse.getUserPublic());
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void viewMessage(String id) {
+        String token = Saver.getToken();
+        token = TextUtils.isEmpty(token)?null:token;
+        dataManager.viewMessage(id, token)
+                .compose(getView().<Response>getBindToLifecycle())
+                .compose(RxResultHelper.<Response>handleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Response>() {
+                    @Override
+                    public void _onNext(Response response) {
+                        getView().showError(response.getErro_msg());
                     }
 
                     @Override
