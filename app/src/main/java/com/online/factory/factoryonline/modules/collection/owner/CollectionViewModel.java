@@ -9,6 +9,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.Tag;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import java.util.List;
 
@@ -19,14 +20,16 @@ import javax.inject.Inject;
  */
 public class CollectionViewModel extends BaseObservable {
     private Factory info;
+    private WantedMessage wantedMessage;
     @Inject
     Resources resources;
     @Inject
     public CollectionViewModel() {
     }
 
-    public void setInfo(Factory info) {
-        this.info = info;
+    public void setWantedMessage(WantedMessage wantedMessage) {
+        this.wantedMessage = wantedMessage;
+        info = wantedMessage.getFactory();
     }
 
     @Bindable
@@ -60,6 +63,9 @@ public class CollectionViewModel extends BaseObservable {
         return info.getAddress_overview();
     }
 
+    public String getViewCount() {
+        return "浏览：" + wantedMessage.getView_count() + "人";
+    }
     @Bindable
     public String getTag1() {
         List<Tag> tags = info.getTags();

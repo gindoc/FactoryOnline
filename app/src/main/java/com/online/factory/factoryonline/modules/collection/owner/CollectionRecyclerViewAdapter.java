@@ -39,8 +39,7 @@ public class CollectionRecyclerViewAdapter extends BaseRecyclerViewAdapter<Wante
         super.onBindViewHolder(holder, position);
         CollectionViewModel viewModel = provider.get();
         WantedMessage wantedMessage = data.get(position);
-        Factory info = wantedMessage.getFactory();
-        viewModel.setInfo(info);
+        viewModel.setWantedMessage(wantedMessage);
         ItemOwnerCollectionListBinding binding = (ItemOwnerCollectionListBinding) holder.getBinding();
         binding.setViewModel(viewModel);
     }

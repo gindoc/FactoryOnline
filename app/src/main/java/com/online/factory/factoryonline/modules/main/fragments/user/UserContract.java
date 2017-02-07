@@ -1,5 +1,7 @@
 package com.online.factory.factoryonline.modules.main.fragments.user;
 
+import android.content.Context;
+
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
 import com.online.factory.factoryonline.models.User;
@@ -10,15 +12,22 @@ import com.online.factory.factoryonline.models.User;
 
 public interface UserContract {
 
-    interface View extends IBaseView{
+    interface View extends IBaseView {
         void startLogIn();
+
         void refreshWhenLogOut();
+
         void showUser(User user);
     }
 
-    interface Presenter extends IBasePresenter{
+    interface Presenter extends IBasePresenter {
         void logIn();
+
         void logOut();
+
         void getUser();
+
+        void requestHistory(Context context);
+
     }
 }

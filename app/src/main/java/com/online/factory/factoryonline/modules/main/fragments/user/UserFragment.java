@@ -105,7 +105,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     }
 
     public void openBrowsingHistory() {
-        Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
+        mPresenter.requestHistory(getContext());
     }
 
     public void openFeedback() {

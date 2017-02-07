@@ -1,5 +1,7 @@
 package com.online.factory.factoryonline.modules.main.fragments.user;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
@@ -91,5 +93,10 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
                         getView().showUser(null);
                     }
                 });
+    }
+
+    @Override
+    public void requestHistory(Context context) {
+        loginContext.openHistory(context);
     }
 }

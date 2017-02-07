@@ -46,7 +46,7 @@
                 android:drawableLeft="@drawable/ic_pwd_open"
                 android:drawablePadding="@dimen/x5"
                 android:layout_marginTop="@dimen/x16"
-                android:text="浏览:203人"
+                android:text="@{viewModel.viewCount}"
                 android:textColor="#ccc"
                 android:textSize="@dimen/x11" />
         </LinearLayout>

@@ -39,6 +39,11 @@ public class LogOutState implements UserState {
         context.startActivity(SettingActivity.getStartIntent(context));
     }
 
+    @Override
+    public void openHistory(Context context) {
+        Toast.makeText(context, "尚未登录", Toast.LENGTH_SHORT).show();
+    }
+
     public void toLoginActivity(Context context) {
         Activity activity = ((Activity) context);
 //        Toast.makeText(context, "尚未登录，请先登录", Toast.LENGTH_SHORT).show();

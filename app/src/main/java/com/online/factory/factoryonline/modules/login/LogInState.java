@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.login;
 
 import android.content.Context;
 
+import com.online.factory.factoryonline.modules.browseHistory.BrowseHistoryActivity;
 import com.online.factory.factoryonline.modules.collection.CollectionActivity;
 import com.online.factory.factoryonline.modules.personalInfo.PersonalInfoActivity;
 import com.online.factory.factoryonline.modules.publication.PublicationActivity;
@@ -38,5 +39,10 @@ public class LogInState implements UserState {
     @Override
     public void openSetting(Context context) {
         context.startActivity(SettingActivity.getStartIntent(context));
+    }
+
+    @Override
+    public void openHistory(Context context) {
+        context.startActivity(BrowseHistoryActivity.getStartIntent(context));
     }
 }

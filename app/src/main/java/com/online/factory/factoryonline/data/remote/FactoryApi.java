@@ -219,4 +219,7 @@ public interface FactoryApi {
 
     @POST("wantedmessages/{wantedmessage_id}/view/")
     Observable<Response> viewMessage(@Path("wantedmessage_id") String id, @Header("TIME") String timestamp, @Header("Authorization") String token);
+
+    @GET("user/historys/wantedmessages")
+    Observable<HomeResponse> getBrowseHistory(@Header("TIME") String timestamp, @Header("Authorization") String token);
 }

@@ -17,4 +17,6 @@ public interface UserState {
     void openCollection(Context context);
 
     void openSetting(Context context);
+
+    void openHistory(Context context);
 }

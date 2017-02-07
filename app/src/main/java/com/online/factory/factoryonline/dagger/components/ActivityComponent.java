@@ -6,6 +6,7 @@ import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActiv
 import com.online.factory.factoryonline.modules.agent.AgentActivity;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
+import com.online.factory.factoryonline.modules.browseHistory.BrowseHistoryActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.collection.CollectionActivity;
 import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
@@ -89,4 +90,7 @@ public interface ActivityComponent {
     void inject(com.online.factory.factoryonline.modules.main.fragments.home.agent.areaAgent.AreaActivity  areaActivity);
 
     void inject(TranslucentRolePickActivity translucentRolePickActivity);
+
+    void inject(BrowseHistoryActivity browseHistoryActivity);
+
 }

@@ -96,6 +96,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
         <activity android:name=".modules.translucent.role.TranslucentRolePickActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
+        <activity android:name=".modules.browseHistory.BrowseHistoryActivity" />
+
         <activity
             android:name=".WBShareActivity"
             android:configChanges="keyboardHidden|orientation"

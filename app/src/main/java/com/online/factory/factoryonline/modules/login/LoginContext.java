@@ -41,4 +41,8 @@ public class LoginContext {
     public void openSetting(Context context) {
         mState.openSetting(context);
     }
+
+    public void openHistory(Context context) {
+        mState.openHistory(context);
+    }
 }
