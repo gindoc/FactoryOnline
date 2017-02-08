@@ -65,10 +65,25 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
     }
 
     public void logOut() {
-        Saver.setLoginState(false);
-        Saver.saveSerializableObject(null, SharePreferenceKey.USER);
-        Saver.setToken("");
-        getView().refreshWhenLogOut();
+        dataManager.logout()
+                .compose(getView().<Response>getBindToLifecycle())
+                .compose(RxResultHelper.<Response>handleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<Response>() {
+                    @Override
+                    public void _onNext(Response response) {
+                        Saver.setLoginState(false);
+                        Saver.saveSerializableObject(null, SharePreferenceKey.USER);
+                        Saver.setToken("");
+                        getView().refreshWhenLogOut();
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
     }
 
     public void getUser() {

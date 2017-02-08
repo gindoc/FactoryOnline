@@ -3,6 +3,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+    //设置虚拟机堆内存空间大小，避免在编译期间OOM
     dexOptions{
         maxProcessCount 2
         javaMaxHeapSize "2g"
@@ -72,9 +73,20 @@ android {
     dataBinding {
         enabled = true
     }
+
+    // 去掉第三方jar包中重复的类
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/ASL2.0'
     }
 }
 

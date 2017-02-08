@@ -222,4 +222,7 @@ public interface FactoryApi {
 
     @GET("user/historys/wantedmessages")
     Observable<HomeResponse> getBrowseHistory(@Header("TIME") String timestamp, @Header("Authorization") String token);
+
+    @DELETE("user/")
+    Observable<Response> logout(@Header("TIME") String timestamp, @Header("Authorization") String token);
 }

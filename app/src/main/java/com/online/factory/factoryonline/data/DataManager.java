@@ -430,4 +430,11 @@ public class DataManager {
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
         return factoryApi.getBrowseHistory(timestamp, token);
     }
+
+    public Observable<Response> logout() {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.logout(timestamp, token);
+    }
 }
