@@ -55,4 +55,22 @@ public class InterceptScrollView extends ScrollView {
         }
         return super.onInterceptTouchEvent(e);
     }
+
+    public interface ScrollViewListener{
+        void onScrollChange(ScrollView scrollView, int x, int y, int oldx, int oldy);
+    }
+
+    private ScrollViewListener scrollViewListener = null;
+
+    public void setScrollViewListener(ScrollViewListener scrollViewListener) {
+        this.scrollViewListener = scrollViewListener;
+    }
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        if (scrollViewListener != null) {
+            scrollViewListener.onScrollChange(this, l, t, oldl, oldt);
+        }
+    }
 }

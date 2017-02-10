@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.modules.main.fragments.home;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -26,6 +29,7 @@ import com.online.factory.factoryonline.modules.main.fragments.home.index.IndexF
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.WindowUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -43,7 +47,7 @@ import timber.log.Timber;
  */
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
     public static final int PERMISSION_REQUEST_CODE = 199;
-    private FragmentHomeBinding mBinding;
+    public FragmentHomeBinding mBinding;
 
 //    @Inject
 //    HomeRecyclerViewAdapter mAdapter;
@@ -107,11 +111,24 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
                 //设置toolbar,actionbar等view
                 .setActionbarView(mBinding.llTopBar)
                 .process();
+        int height =  WindowUtil.getStatusHeight(getContext())
+                + getResources().getDimensionPixelSize(R.dimen.header_height);
+        mBinding.whiteEmptyView.getLayoutParams().height = height;
+        mBinding.gradientBackground.getLayoutParams().height = height;
+        ((FrameLayout.LayoutParams) mBinding.llScrollContainer.getLayoutParams()).topMargin += WindowUtil.getStatusHeight(getContext());
+        mBinding.ivSearch.post(new Runnable() {
+            @Override
+            public void run() {
+                ((LinearLayout.LayoutParams) mBinding.ivSearch.getLayoutParams()).rightMargin = -mBinding.ivSearch.getWidth();
+            }
+        });
 
         mBinding.setPresenter(mPresenter);
         mBinding.setView(this);
 
+
         initViewPager();
+
         return mBinding.getRoot();
     }
 

@@ -1,6 +1,12 @@
 package com.online.factory.factoryonline.modules.main.fragments.home.index;
 
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,18 +17,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.FullyLinearLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.scrollview.RefreshScrollView;
 import com.online.factory.factoryonline.databinding.FragmentIndexBinding;
 import com.online.factory.factoryonline.databinding.ItemHighQualityFactoryBinding;
+import com.online.factory.factoryonline.databinding.TestBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
+import com.online.factory.factoryonline.utils.WindowUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -31,14 +45,21 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import timber.log.Timber;
+
 /**
  * 作者: GIndoc
  * 日期: 2017/1/11 15:59
  * 作用:
  */
 
-public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresenter> implements IndexContract.View, BaseRecyclerViewAdapter.OnItemClickListener{
+public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresenter> implements IndexContract.View,
+        BaseRecyclerViewAdapter.OnItemClickListener, RefreshScrollView.OnRefreshScrollViewListener, RefreshScrollView.ScrollChangeListener {
     private FragmentIndexBinding mBinding;
+    private TestBinding testBinding;
+
+    @Inject
+    Resources resources;
 
     @Inject
     IndexRecyclerViewAdapter mAdapter;
@@ -64,6 +85,7 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentIndexBinding.inflate(inflater);
+        testBinding = TestBinding.inflate(inflater, mBinding.scrollView, false);
         mBinding.setPresenter(mPresenter);
         mBinding.setView(this);
 
@@ -73,17 +95,28 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
         mPresenter.requestWantedMessages();
         mPresenter.requestHighQualityFactory();
 
+//        mBinding.scrollView.setScrollViewListener(this);
+        mBinding.scrollView.setupContainer(getContext(), testBinding.getRoot());
+        mBinding.scrollView.setupSearchView(((HomeFragment)getParentFragment()).mBinding.llSearch);
+        mBinding.scrollView.setOnRefreshScrollViewListener(this);
+        mBinding.scrollView.setEnableRefresh(true);
+        mBinding.scrollView.setScrollChangeListener(this);
+
         return mBinding.getRoot();
     }
 
     private void initRecyclerView() {
         FullyLinearLayoutManager fullyLinearLayoutManager = new FullyLinearLayoutManager(getContext());
         fullyLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mBinding.recyclerView.setLayoutManager(fullyLinearLayoutManager);
-        mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        /*mBinding*/
+        testBinding.recyclerView.setLayoutManager(fullyLinearLayoutManager);
+        /*mBinding*/
+        testBinding.recyclerView.setAdapter(mAdapter);
+        /*mBinding*/
+        testBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter.setOnItemClickListener(this);
-        mBinding.llEmptyView.setVisibility(View.VISIBLE);
+        /*mBinding*/
+        testBinding.llEmptyView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -104,13 +137,15 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
     @Override
     public void onResume() {
         super.onResume();
-        mBinding.slideShowView.startPlay();
+        /*mBinding*/
+        testBinding.slideShowView.startPlay();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mBinding.slideShowView.stopPlay();
+        /*mBinding*/
+        testBinding.slideShowView.stopPlay();
     }
 
     @Override
@@ -131,27 +166,31 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
 
     @Override
     public void initSlideShowView(String[] urls) {
-        mBinding.slideShowView.setImageUrls(urls);
+        /*mBinding*/
+        testBinding.slideShowView.setImageUrls(urls);
     }
 
     @Override
     public void loadWantedMessages(List<WantedMessage> wantedMessages) {
         mAdapter.setData(wantedMessages);
-        mBinding.recyclerView.notifyDataSetChanged();
+        /*mBinding*/
+        testBinding.recyclerView.notifyDataSetChanged();
         if (wantedMessages.size() > 0) {
-            mBinding.llEmptyView.setVisibility(View.GONE);
+            /*mBinding*/
+            testBinding.llEmptyView.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void loadHighQualityFactory(List<WantedMessage> wantedMessages) {
-        mBinding.llHighQualityDots.removeAllViews();
+        /*mBinding*/
+        testBinding.llHighQualityDots.removeAllViews();
         List<View> highQualityItem = new ArrayList<>();
         List<View> dotViewsList = new ArrayList<>();
-        for (int i=0;i<wantedMessages.size();i++) {
+        for (int i = 0; i < wantedMessages.size(); i++) {
             WantedMessage w = wantedMessages.get(i);
             ItemHighQualityFactoryBinding binding = ItemHighQualityFactoryBinding.inflate(LayoutInflater.from(getContext()),
-                    mBinding.highQualityViewpager, false);
+                    /*mBinding*/testBinding.highQualityViewpager, false);
             IndexViewModel model = provider.get();
             model.setWantedMessage(w);
             binding.setViewModel(model);
@@ -165,11 +204,12 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
             params.rightMargin = 4;
             int size = getResources().getDimensionPixelOffset(R.dimen.x8);
             params.width = params.height = size;
-            mBinding.llHighQualityDots.addView(dotView, params);
+            /*mBinding*/
+            testBinding.llHighQualityDots.addView(dotView, params);
             dotViewsList.add(dotView);
             if (i == 0) {
                 dotView.setBackgroundResource(R.drawable.hight_quality_selected_dot);
-            }else {
+            } else {
                 dotView.setBackgroundResource(R.drawable.gray_oval_background);
             }
         }
@@ -203,16 +243,17 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
 
         ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
             boolean isAutoPlay = false;
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int pos) {
-                for(int i=0;i < dotViewsList.size();i++){
-                    if(i == pos){
+                for (int i = 0; i < dotViewsList.size(); i++) {
+                    if (i == pos) {
                         (dotViewsList.get(pos)).setBackgroundResource(R.drawable.hight_quality_selected_dot);
-                    }else {
+                    } else {
                         (dotViewsList.get(i)).setBackgroundResource(R.drawable.gray_oval_background);
                     }
                 }
@@ -230,31 +271,86 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
                         break;
                     case 0:// 滑动结束，即切换完毕或者加载完毕
                         // 当前为最后一张，此时从右向左滑，则切换到第一张
-                        if (mBinding.highQualityViewpager.getCurrentItem() == mBinding.highQualityViewpager.getAdapter().getCount() - 1 && !isAutoPlay) {
-                            mBinding.highQualityViewpager.setCurrentItem(0);
+                        if (/*mBinding*/testBinding.highQualityViewpager.getCurrentItem() == /*mBinding*/testBinding.highQualityViewpager.getAdapter().getCount() - 1 && !isAutoPlay) {
+                            /*mBinding*/
+                            testBinding.highQualityViewpager.setCurrentItem(0);
                         }
                         // 当前为第一张，此时从左向右滑，则切换到最后一张
-                        else if (mBinding.highQualityViewpager.getCurrentItem() == 0 && !isAutoPlay) {
-                            mBinding.highQualityViewpager.setCurrentItem(mBinding.highQualityViewpager.getAdapter().getCount() - 1);
+                        else if (/*mBinding*/testBinding.highQualityViewpager.getCurrentItem() == 0 && !isAutoPlay) {
+                            /*mBinding*/
+                            testBinding.highQualityViewpager.setCurrentItem(/*mBinding*/testBinding.highQualityViewpager.getAdapter().getCount() - 1);
                         }
                         break;
                 }
             }
         };
-        mBinding.highQualityViewpager.setAdapter(pagerAdapter);
-        mBinding.highQualityViewpager.addOnPageChangeListener(pageChangeListener);
+        /*mBinding*/
+        testBinding.highQualityViewpager.setAdapter(pagerAdapter);
+        /*mBinding*/
+        testBinding.highQualityViewpager.addOnPageChangeListener(pageChangeListener);
         handler.sendEmptyMessageDelayed(0, 3000);
     }
 
     private int mCurrentItem;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            mBinding.highQualityViewpager.setCurrentItem(mCurrentItem);
-            mCurrentItem = (mCurrentItem+1)%mBinding.llHighQualityDots.getChildCount();
+            /*mBinding*/
+            testBinding.highQualityViewpager.setCurrentItem(mCurrentItem);
+            mCurrentItem = (mCurrentItem + 1) %/*mBinding*/testBinding.llHighQualityDots.getChildCount();
             sendEmptyMessageDelayed(0, 3000);
         }
     };
 
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBinding.scrollView.stopRefresh();
+                testBinding.llMessage.setVisibility(View.VISIBLE);
+                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.dark_fade_in);
+                testBinding.llMessage.setAnimation(animation);
+                testBinding.llMessage.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        testBinding.llMessage.setVisibility(View.GONE);
+                        testBinding.llMessage.setAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.dark_fade_out));
+                    }
+                }, 2000);
+            }
+        }, 3000);
+    }
+
+    @Override
+    public void onScrollChange(ScrollView scrollView, int l, int t, int oldl, int oldt) {
+        HomeFragment homeFragment = (HomeFragment) getParentFragment();
+        LinearLayout.LayoutParams searchParams = (LinearLayout.LayoutParams) homeFragment.mBinding.llSearch.getLayoutParams();
+        LinearLayout.LayoutParams ivSearchParams = (LinearLayout.LayoutParams) homeFragment.mBinding.ivSearch.getLayoutParams();
+//        LinearLayout.LayoutParams pagerParams = (LinearLayout.LayoutParams) homeFragment.mBinding.viewpager.getLayoutParams();
+        Timber.e("l:%d  t:%d  oldl:%d   oldt:%d", l, t, oldl, oldt);
+        int limit = searchParams.height + resources.getDimensionPixelSize(R.dimen.x12) + resources.getDimensionPixelSize(R.dimen.x7);
+        searchParams.topMargin = resources.getDimensionPixelSize(R.dimen.x7)-t;
+        if (t > limit) {
+            homeFragment.mBinding.llSearch.setVisibility(View.GONE);
+            homeFragment.mBinding.gradientBackground.setAlpha(1);
+            homeFragment.mBinding.llCity.setAlpha(0);
+            homeFragment.mBinding.tabLayout.setTabTextColors(Color.WHITE, Color.WHITE);
+            homeFragment.mBinding.tabLayout.getLayoutParams().width += 100;
+//            homeFragment.mBinding.tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#1ab80f"));
+        }else {
+            homeFragment.mBinding.llSearch.setVisibility(View.VISIBLE);
+            homeFragment.mBinding.gradientBackground.setAlpha(t*1.f / limit);
+            homeFragment.mBinding.llCity.setAlpha(1 - t*1.f / limit);
+            int normalRGB = (int) (128+127.f * t/ limit);
+            normalRGB = Color.argb(255, normalRGB, normalRGB, normalRGB);
+            int r = 26 + 229 * t / limit;
+            int g = 184 + 71 * t / limit;
+            int b = 15 + 240 * t / limit;
+            int selectedRGB = Color.argb(255, r, g, b);
+            homeFragment.mBinding.tabLayout.setTabTextColors(normalRGB, selectedRGB);
+            homeFragment.mBinding.tabLayout.getLayoutParams().width = resources.getDimensionPixelSize(R.dimen.x170) + 100 * t / limit;
+        }
+    }
 }

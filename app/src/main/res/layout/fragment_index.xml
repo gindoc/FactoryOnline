@@ -15,18 +15,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <com.online.factory.factoryonline.customview.InterceptScrollView
+
+        <com.online.factory.factoryonline.customview.scrollview.RefreshScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <include android:id="@+id/scrollview_header"
+                    layout="@layout/scrollview_header" />
                 <RelativeLayout
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/x18"
@@ -221,8 +229,8 @@
                             android:scrollbars="vertical" />
                     </RelativeLayout>
                 </RelativeLayout>
-            </LinearLayout>
+            </LinearLayout>-->
 
-        </com.online.factory.factoryonline.customview.InterceptScrollView>
+        </com.online.factory.factoryonline.customview.scrollview.RefreshScrollView>
     </LinearLayout>
 </layout>
