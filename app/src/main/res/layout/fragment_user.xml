@@ -65,7 +65,8 @@
                 android:layout_width="@dimen/x75"
                 android:layout_height="@dimen/x75"
                 android:onClick="@{()->view.clickRoundImage()}"
-                android:src="@drawable/boy"
+                app:user="@{user}"
+                android:src="@drawable/avatar_user"
                 app:border_outside_color1="#DFDFDF"
                 app:border_outside_thickness="@dimen/x1" />
 
@@ -111,7 +112,8 @@
             android:id="@+id/iv_publish_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_publish_pen" />
+            tool:src="@drawable/ic_publish_history"
+            android:src='@{user.type==2?@drawable/ic_publish_history:@drawable/ic_order_history}' />
 
         <TextView
             android:id="@+id/tv_collection"

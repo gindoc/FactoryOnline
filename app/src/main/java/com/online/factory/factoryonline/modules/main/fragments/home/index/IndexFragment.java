@@ -81,7 +81,6 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
         fullyLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBinding.recyclerView.setLayoutManager(fullyLinearLayoutManager);
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter.setOnItemClickListener(this);
         mBinding.llEmptyView.setVisibility(View.VISIBLE);
     }
@@ -161,16 +160,15 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
 
             ImageView dotView = new ImageView(getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.leftMargin = 4;
-            params.rightMargin = 4;
-            int size = getResources().getDimensionPixelOffset(R.dimen.x8);
-            params.width = params.height = size;
+            params.rightMargin = getResources().getDimensionPixelSize(R.dimen.x5);
+//            int size = getResources().getDimensionPixelOffset(R.dimen.x7);
+//            params.width = params.height = size;
             mBinding.llHighQualityDots.addView(dotView, params);
             dotViewsList.add(dotView);
             if (i == 0) {
                 dotView.setBackgroundResource(R.drawable.hight_quality_selected_dot);
             }else {
-                dotView.setBackgroundResource(R.drawable.gray_oval_background);
+                dotView.setBackgroundResource(R.drawable.gray_oval_background_x5);
             }
         }
         initHighQualityViewPager(highQualityItem, dotViewsList);
@@ -213,7 +211,7 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
                     if(i == pos){
                         (dotViewsList.get(pos)).setBackgroundResource(R.drawable.hight_quality_selected_dot);
                     }else {
-                        (dotViewsList.get(i)).setBackgroundResource(R.drawable.gray_oval_background);
+                        (dotViewsList.get(i)).setBackgroundResource(R.drawable.gray_oval_background_x5);
                     }
                 }
                 mCurrentItem = pos;

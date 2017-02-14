@@ -73,7 +73,6 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
     private void initRecyclerView() {
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setOnPageListener(this);
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mAdapter.setOnItemClickListener(this);
     }
 

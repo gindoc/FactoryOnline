@@ -54,7 +54,7 @@ public class SearchResultViewModel extends BaseObservable {
 
     @Bindable
     public String getPrice() {
-        return factory.getPrice()+"元/㎡/月";
+        return factory.getPrice()+"元/㎡";
     }
 
     /*@Bindable

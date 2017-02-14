@@ -169,7 +169,6 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
         mBinding.recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.setOnPageListener(this);
         mAdapter.setOnItemClickListener(this);
 

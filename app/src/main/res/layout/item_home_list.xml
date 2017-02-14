@@ -19,17 +19,15 @@
         android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/y11"
-        android:paddingLeft="@dimen/x11"
-        android:paddingRight="@dimen/x15"
-        android:paddingTop="@dimen/y12">
+        android:paddingBottom="@dimen/x15"
+        android:paddingTop="@dimen/x15">
 
         <ImageView
             android:id="@+id/factory_img"
-            android:layout_width="@dimen/x108"
-            android:layout_height="match_parent"
+            android:layout_width="@dimen/x126"
+            android:layout_height="@dimen/x94"
             android:scaleType="fitXY"
-            android:layout_marginRight="@dimen/x15"
+            android:layout_marginRight="@dimen/x18"
             app:imageUrl="@{viewModel.factoryImg}" />
 
         <LinearLayout
@@ -100,7 +98,7 @@
                     android:textSize="@dimen/x13"
                     android:maxLines="1"
                     android:text="@{viewModel.factoryPrice}"
-                    tool:text="10元/㎡/月"
+                    tool:text="10元/㎡"
                     android:id="@+id/textView4" />
             </LinearLayout>
 

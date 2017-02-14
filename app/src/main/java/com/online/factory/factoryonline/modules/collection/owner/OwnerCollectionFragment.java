@@ -76,7 +76,6 @@ public class OwnerCollectionFragment extends BaseFragment<OwnerCollectionContrac
     private void initRecyclerView() {
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setOnPageListener(this);
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter.setOnItemClickListener(this);
     }
 

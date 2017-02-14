@@ -28,7 +28,7 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y240"
+            android:layout_height="@dimen/x240"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -56,9 +56,9 @@
                     <TextView
                         android:id="@+id/tv_pager_index"
                         android:layout_width="@dimen/x44"
-                        android:layout_height="@dimen/y18"
+                        android:layout_height="@dimen/x18"
                         android:layout_gravity="right|bottom"
-                        android:layout_marginBottom="@dimen/y10"
+                        android:layout_marginBottom="@dimen/x10"
                         android:layout_marginRight="@dimen/x15"
                         android:background="@drawable/half_black_rectangle_background"
                         android:gravity="center"
@@ -121,7 +121,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y66"
+                        android:layout_height="@dimen/x66"
                         android:background="@android:color/white"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -136,7 +136,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/y5"
+                                android:layout_marginBottom="@dimen/x5"
                                 android:gravity="center"
                                 android:text="@{viewModel.totalPrice}"
                                 android:textColor="#DF4142"
@@ -146,7 +146,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/y5"
+                                android:layout_marginTop="@dimen/x5"
                                 android:gravity="center"
                                 android:text="月租"
                                 android:textColor="#464646"
@@ -155,7 +155,7 @@
 
                         <View
                             android:layout_width="1px"
-                            android:layout_height="@dimen/y50"
+                            android:layout_height="@dimen/x50"
                             android:background="#E9E9E9" />
 
                         <LinearLayout
@@ -168,7 +168,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/y5"
+                                android:layout_marginBottom="@dimen/x5"
                                 android:gravity="center"
                                 android:text="@{viewModel.price}"
                                 android:textColor="#DF4142"
@@ -178,7 +178,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/y5"
+                                android:layout_marginTop="@dimen/x5"
                                 android:gravity="center"
                                 android:text="每平"
                                 android:textColor="#464646"
@@ -187,7 +187,7 @@
 
                         <View
                             android:layout_width="1px"
-                            android:layout_height="@dimen/y50"
+                            android:layout_height="@dimen/x50"
                             android:background="#E9E9E9" />
 
                         <LinearLayout
@@ -200,7 +200,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/y5"
+                                android:layout_marginBottom="@dimen/x5"
                                 android:gravity="center"
                                 android:text="@{viewModel.range}"
                                 android:textColor="#DF4142"
@@ -210,7 +210,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/y5"
+                                android:layout_marginTop="@dimen/x5"
                                 android:gravity="center"
                                 android:text="面积"
                                 android:textColor="#464646"
@@ -222,14 +222,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y8"
+                        android:layout_height="@dimen/x8"
                         android:background="#f5f5f5" />
 
                     <include layout="@layout/line" />
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y37"
+                        android:layout_height="@dimen/x37"
                         android:background="@android:color/white"
                         android:drawablePadding="@dimen/x10"
                         android:drawableStart="@drawable/green_rectangle_solid_background"
@@ -247,7 +247,7 @@
                         android:background="@android:color/white"
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/x15"
-                        android:paddingTop="@dimen/y15">
+                        android:paddingTop="@dimen/x15">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -349,14 +349,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y8"
+                        android:layout_height="@dimen/x8"
                         android:background="#f5f5f5" />
 
                     <include layout="@layout/line" />
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y37"
+                        android:layout_height="@dimen/x37"
                         android:background="@android:color/white"
                         android:drawablePadding="@dimen/x10"
                         android:drawableStart="@drawable/green_rectangle_solid_background"
@@ -380,7 +380,7 @@
                             android:id="@+id/tv_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:lineSpacingExtra="@dimen/y3"
+                            android:lineSpacingExtra="@dimen/x3"
                             android:maxLines="3"
                             android:text='@{viewModel.description}'
                             android:textColor="#424242"
@@ -390,8 +390,8 @@
                         <Button
                             android:id="@+id/btn_expand_desc"
                             android:layout_width="@dimen/x86"
-                            android:layout_height="@dimen/y27"
-                            android:layout_marginTop="@dimen/y10"
+                            android:layout_height="@dimen/x27"
+                            android:layout_marginTop="@dimen/x10"
                             android:background="@drawable/green_rectangle_outline_background"
                             android:gravity="center"
                             android:onClick="@{()->view.expandDesc()}"
@@ -404,14 +404,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y8"
+                        android:layout_height="@dimen/x8"
                         android:background="#f5f5f5" />
 
                     <include layout="@layout/line" />
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y37"
+                        android:layout_height="@dimen/x37"
                         android:background="@android:color/white"
                         android:drawablePadding="@dimen/x10"
                         android:drawableStart="@drawable/green_rectangle_solid_background"
@@ -425,7 +425,7 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y130"
+                        android:layout_height="@dimen/x130"
                         android:padding="@dimen/x15">
 
                         <ImageView
@@ -461,12 +461,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/y49"
+                android:layout_marginBottom="@dimen/x48"
                 android:background="#cccccc" />
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/y49"
+                android:layout_height="@dimen/x48"
                 android:layout_alignParentBottom="true"
                 android:background="@android:color/transparent"
                 android:paddingTop="1px">
@@ -481,7 +481,7 @@
                 android:layout_width="@dimen/x48"
                 android:layout_height="@dimen/x48"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/y15"
+                android:layout_marginBottom="@dimen/x14"
                 android:layout_marginLeft="@dimen/x25"
                 android:background="@drawable/gray_oval_background" />
 
@@ -490,9 +490,9 @@
                 android:layout_width="@dimen/x48"
                 android:layout_height="@dimen/x48"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/y15"
+                android:layout_marginBottom="@dimen/x14"
                 android:layout_marginLeft="@dimen/x25"
-                android:src="@drawable/photo_head"
+                android:src="@drawable/contacter"
                 app:border_outside_color="@android:color/transparent"
                 app:border_thickness="1px"
                 app:imageUrl="@{viewModel.avatar}" />
@@ -504,7 +504,7 @@
                 android:layout_alignTop="@id/view_line"
                 android:layout_marginLeft="@dimen/x5"
                 android:layout_toRightOf="@id/iv_contact_people"
-                android:paddingTop="@dimen/y2"
+                android:paddingTop="@dimen/x2"
                 android:text="@{viewModel.contactName}"
                 android:textColor="#424242"
                 android:textSize="@dimen/x13" />
@@ -515,7 +515,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_contact_people_name"
                 android:layout_marginLeft="@dimen/x5"
-                android:layout_marginTop="@dimen/y1"
+                android:layout_marginTop="@dimen/x1"
                 android:layout_toRightOf="@id/iv_contact_people"
                 android:text="@{viewModel.contactNum}"
                 android:textColor="#424242"

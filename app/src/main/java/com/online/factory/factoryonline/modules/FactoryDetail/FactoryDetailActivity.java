@@ -390,7 +390,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
             ImageView imageView = imageViewsList.get(position);
             Picasso.with(FactoryDetailActivity.this)
                     .load((String) imageView.getTag())
-                    .placeholder(R.drawable.ic_msg_online)
+                    .placeholder(R.drawable.ic_no_pic)
                     .error(R.drawable.ic_home_full)
                     .into(imageView);
 

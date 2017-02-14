@@ -4,18 +4,9 @@
     <item android:gravity="center">
         <shape android:shape="oval">
             <size
-                android:width="@dimen/x8"
-                android:height="@dimen/x8" />
-            <solid android:color="@color/colorPrimary"/>
-        </shape>
-    </item>
-    <item android:gravity="center">
-        <shape android:shape="oval">
-            <size
                 android:width="@dimen/x7"
                 android:height="@dimen/x7" />
-            <solid android:color="@android:color/white" />
+            <solid android:color="@color/colorPrimary"/>
         </shape>
-
     </item>
 </layer-list>

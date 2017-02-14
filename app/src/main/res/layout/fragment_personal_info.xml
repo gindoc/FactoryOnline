@@ -80,7 +80,7 @@
                     android:id="@+id/iv_head_photo"
                     android:layout_width="@dimen/x29"
                     android:layout_height="@dimen/x29"
-                    app:imageUrl="@{user.avatar}"
+                    app:user="@{user}"
                     app:border_outside_color="#999"
                     app:border_thickness="1px" />
             </LinearLayout>

@@ -89,7 +89,6 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
     }
 
     private void initRecyclerView() {
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.addHeader(mHeaderBinding.getRoot());
         mBinding.recyclerView.setOnPageListener(this);

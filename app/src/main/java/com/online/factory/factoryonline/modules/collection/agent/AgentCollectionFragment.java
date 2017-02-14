@@ -77,7 +77,6 @@ public class AgentCollectionFragment extends BaseFragment<AgentCollectionContrac
     private void initRecyclerView() {
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setOnPageListener(this);
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         mAdapter.setOnItemClickListener(this);
     }
 

@@ -24,17 +24,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingTop="@dimen/x12"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/x18"
-                    android:paddingRight="@dimen/x18">
+                    android:layout_height="wrap_content">
 
                     <com.online.factory.factoryonline.customview.SlideShowView
                         android:id="@+id/slideShowView"
                         android:layout_width="match_parent"
+                        android:layout_marginLeft="@dimen/x18"
+                        android:layout_marginRight="@dimen/x18"
                         android:layout_height="@dimen/x132" />
 
                     <LinearLayout
@@ -43,6 +44,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/slideShowView"
                         android:layout_marginTop="@dimen/x16"
+                        android:layout_marginLeft="@dimen/x18"
+                        android:layout_marginRight="@dimen/x18"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -50,7 +53,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="@dimen/x8"
                             android:layout_weight="1"
-                            android:background="@drawable/gray_rectangle_outline_with_corner"
+                            android:background="@drawable/gray_rectangle_outline_with_corner_f6"
                             android:orientation="vertical"
                             android:padding="@dimen/x10">
 
@@ -78,7 +81,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/x8"
                             android:layout_weight="1"
-                            android:background="@drawable/gray_rectangle_outline_with_corner"
+                            android:background="@drawable/gray_rectangle_outline_with_corner_f6"
                             android:orientation="vertical"
                             android:padding="@dimen/x10">
 
@@ -106,17 +109,21 @@
                     <View
                         android:id="@+id/split_line1"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/x5"
+                        android:layout_height="@dimen/x1"
                         android:layout_below="@id/ll_recommend_active"
                         android:layout_marginBottom="@dimen/x16"
                         android:layout_marginTop="@dimen/x13"
-                        android:background="#FBFBFB" />
+                        android:layout_marginLeft="@dimen/x18"
+                        android:layout_marginRight="@dimen/x18"
+                        android:background="#ededed" />
 
                     <LinearLayout
                         android:id="@+id/ll_high_quality_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/split_line1"
+                        android:layout_marginLeft="@dimen/x18"
+                        android:layout_marginRight="@dimen/x18"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -146,9 +153,9 @@
                                 android:src="@drawable/hight_quality_selected_dot" />
 
                             <ImageView
-                                android:layout_width="@dimen/x7"
-                                android:layout_height="@dimen/x7"
-                                android:src="@drawable/gray_oval_background" />
+                                android:layout_width="@dimen/x5"
+                                android:layout_height="@dimen/x5"
+                                android:src="@drawable/gray_oval_background_x5" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -156,17 +163,21 @@
                         android:id="@+id/high_quality_viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/x135"
+                        android:layout_marginLeft="@dimen/x18"
+                        android:layout_marginRight="@dimen/x18"
                         android:layout_below="@id/ll_high_quality_title"
                         android:layout_marginTop="@dimen/x22" />
 
                     <View
                         android:id="@+id/split_line2"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/x5"
+                        android:layout_height="@dimen/x1"
                         android:layout_below="@id/high_quality_viewpager"
                         android:layout_marginBottom="@dimen/x16"
+                        android:layout_marginLeft="@dimen/x18"
+                        android:layout_marginRight="@dimen/x18"
                         android:layout_marginTop="@dimen/x13"
-                        android:background="#FBFBFB" />
+                        android:background="#ededed" />
 
                     <TextView
                         android:id="@+id/tv_great_factory_tag"
@@ -176,6 +187,9 @@
                         android:layout_marginBottom="@dimen/x5"
                         android:drawableLeft="@drawable/tag_greate_factory"
                         android:drawablePadding="@dimen/x6"
+                        android:maxLines="2"
+                        android:layout_marginLeft="@dimen/x18"
+                        android:layout_marginRight="@dimen/x18"
                         android:gravity="center_vertical"
                         android:text="优质厂房"
                         android:textColor="#1ab80f"

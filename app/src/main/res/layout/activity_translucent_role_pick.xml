@@ -8,6 +8,7 @@
             type="com.online.factory.factoryonline.modules.translucent.role.TranslucentRolePickActivity" />
 
     </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,22 +32,50 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginRight="@dimen/x20"
-                android:onClick="@{()->view.switchRole(1)}"
-                android:src="@drawable/role_agent" />
-
-            <ImageView
-                android:layout_width="0dp"
                 android:layout_weight="1"
+                android:onClick="@{()->view.switchRole(2)}"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/role_agent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="专家"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/x13" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/x20"
-                android:onClick="@{()->view.switchRole(2)}"
-                android:src="@drawable/role_user" />
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="@{()->view.switchRole(1)}"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/role_user" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用户"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/x13" />
+            </LinearLayout>
         </LinearLayout>
 
         <TextView

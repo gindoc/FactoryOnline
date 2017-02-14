@@ -11,142 +11,162 @@
 
         <variable
             name="viewModel"
-            type="com.online.factory.factoryonline.modules.collection.owner.CollectionViewModel"/>
+            type="com.online.factory.factoryonline.modules.collection.owner.CollectionViewModel" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_click_background"
         android:clickable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/x23"
-        android:paddingLeft="@dimen/x15"
-        android:paddingRight="@dimen/x15"
-        android:paddingTop="@dimen/x23">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.online.factory.factoryonline.customview.RoundImage
-                android:id="@+id/factory_img"
-                android:layout_width="@dimen/x138"
-                android:layout_height="@dimen/x103"
-                android:layout_marginRight="@dimen/x20"
-                android:scaleType="fitXY"
-                app:borderRadius="@dimen/x5"
-                app:imageUrl="@{viewModel.imgUrl}"
-                app:type="round" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_pwd_open"
-                android:drawablePadding="@dimen/x5"
-                android:layout_marginTop="@dimen/x16"
-                android:text="@{viewModel.viewCount}"
-                android:textColor="#ccc"
-                android:textSize="@dimen/x11" />
-        </LinearLayout>
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/x18"
+        android:paddingRight="@dimen/x18">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/x15"
+            android:paddingTop="@dimen/x15">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@{viewModel.name}"
-                android:textColor="#424242"
-                android:textSize="@dimen/x16"
-                android:textStyle="bold"
-                tool:text="南城 带装修独院厂房25000" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#424242"
-                android:textSize="@dimen/x13"
-                android:text="@{viewModel.addressOverview}"
-                android:layout_marginTop="@dimen/x12"
-                android:layout_marginBottom="@dimen/x16"
-                tool:text="万江-水蛇涌"/>
+                android:orientation="vertical">
+
+                <com.online.factory.factoryonline.customview.RoundImage
+                    android:id="@+id/factory_img"
+                    android:layout_width="@dimen/x126"
+                    android:layout_height="@dimen/x94"
+                    android:layout_marginRight="@dimen/x18"
+                    android:scaleType="fitXY"
+                    app:borderRadius="@dimen/x5"
+                    app:imageUrl="@{viewModel.imgUrl}"
+                    app:type="round" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/x16"
+                    android:drawableLeft="@drawable/ic_pwd_open"
+                    android:drawablePadding="@dimen/x5"
+                    android:text="@{viewModel.viewCount}"
+                    android:textColor="#ccc"
+                    android:textSize="@dimen/x11" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/x16"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:ellipsize="end"
                     android:maxLines="1"
-                    android:text='@{viewModel.area}'
+                    android:text="@{viewModel.name}"
                     android:textColor="#424242"
-                    android:textSize="@dimen/x14"
-                    tool:text="2500 ㎡" />
+                    android:textSize="@dimen/x16"
+                    android:textStyle="bold"
+                    tool:text="南城 带装修独院厂房25000" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:text="@{viewModel.price}"
-                    android:textColor="#e52929"
-                    android:textSize="@dimen/x14"
-                    tool:text="10元/㎡/月" />
+                    android:layout_marginBottom="@dimen/x16"
+                    android:layout_marginTop="@dimen/x12"
+                    android:text="@{viewModel.addressOverview}"
+                    android:textColor="#424242"
+                    android:textSize="@dimen/x13"
+                    tool:text="万江-水蛇涌" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/x16"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text='@{viewModel.area}'
+                        android:textColor="#424242"
+                        android:textSize="@dimen/x14"
+                        tool:text="2500 ㎡" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="@{viewModel.price}"
+                        android:textColor="#e52929"
+                        android:textSize="@dimen/x14"
+                        tool:text="10元/㎡" />
+                </LinearLayout>
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x8"
+                        android:background="@{viewModel.tag1Background}"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/x1"
+                        android:paddingLeft="@dimen/x2"
+                        android:paddingRight="@dimen/x2"
+                        android:paddingTop="@dimen/x1"
+                        android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
+                        android:textColor="@{viewModel.tag1TextColor}"
+                        android:textSize="@dimen/x11"
+                        android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}' />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/x8"
+                        android:background="@{viewModel.tag2Background}"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/x1"
+                        android:paddingLeft="@dimen/x2"
+                        android:paddingRight="@dimen/x2"
+                        android:paddingTop="@dimen/x1"
+                        android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
+                        android:textColor="@{viewModel.tag2TextColor}"
+                        android:textSize="@dimen/x11"
+                        android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}' />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@{viewModel.tag3Background}"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/x1"
+                        android:paddingLeft="@dimen/x2"
+                        android:paddingRight="@dimen/x2"
+                        android:paddingTop="@dimen/x1"
+                        android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
+                        android:textColor="@{viewModel.tag3TextColor}"
+                        android:textSize="@dimen/x11"
+                        android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}' />
+                </com.google.android.flexbox.FlexboxLayout>
+
             </LinearLayout>
-
-            <com.google.android.flexbox.FlexboxLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/x10"
-                    android:background="@{viewModel.tag1Background}"
-                    android:gravity="center"
-                    android:padding="@dimen/x3"
-                    android:text='@{!TextUtils.isEmpty(viewModel.tag1)?viewModel.tag1:""}'
-                    android:textColor="@{viewModel.tag1TextColor}"
-                    android:textSize="@dimen/x11"
-                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag1)?View.VISIBLE:View.GONE}' />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/x10"
-                    android:background="@{viewModel.tag2Background}"
-                    android:gravity="center"
-                    android:padding="@dimen/x3"
-                    android:text='@{!TextUtils.isEmpty(viewModel.tag2)?viewModel.tag2:""}'
-                    android:textColor="@{viewModel.tag2TextColor}"
-                    android:textSize="@dimen/x11"
-                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag2)?View.VISIBLE:View.GONE}' />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@{viewModel.tag3Background}"
-                    android:gravity="center"
-                    android:padding="@dimen/x3"
-                    android:text='@{!TextUtils.isEmpty(viewModel.tag3)?viewModel.tag3:""}'
-                    android:textColor="@{viewModel.tag3TextColor}"
-                    android:textSize="@dimen/x11"
-                    android:visibility='@{!TextUtils.isEmpty(viewModel.tag3)?View.VISIBLE:View.GONE}' />
-            </com.google.android.flexbox.FlexboxLayout>
-
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:background="#ededed" />
     </LinearLayout>
 
 </layout>

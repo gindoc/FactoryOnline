@@ -36,7 +36,7 @@ public class PublicationViewModel extends BaseObservable {
 
     @Bindable
     public String getPrice() {
-        return info.getPrice()+"元/㎡/月";
+        return info.getPrice()+"元/㎡";
     }
 
     @Bindable

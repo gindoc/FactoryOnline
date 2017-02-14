@@ -42,7 +42,7 @@ public class HomeViewModel extends BaseObservable {
 
     @Bindable
     public String getFactoryPrice() {
-        return factoryInfo.getPrice()+"元/㎡/月";
+        return factoryInfo.getPrice()+"元/㎡";
     }
 
     @Bindable
