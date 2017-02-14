@@ -101,15 +101,15 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
     }
 
     public void submit(){
-        Editable description = mBinding.etDescription.getText();
+        String description = mBinding.etDescription.getText().toString();
         int checkedId = mBinding.radioGroup.getCheckedRadioButtonId();
-        if (TextUtils.isEmpty(description)) {
+        if (TextUtils.isEmpty(description.trim())) {
             Toast.makeText(this, "请描述您需要的厂房内容/详情..(2~400字)", Toast.LENGTH_SHORT).show();
             return;
         }else if (description.length() < 2 || description.length() > 400){
             Toast.makeText(this, "字数不符合要求(2~400字)",Toast.LENGTH_SHORT).show();
             return;
-        } else if (checkedId == -1 && TextUtils.isEmpty(mBinding.etInputTime.getText())) {
+        } else if (checkedId == -1 && TextUtils.isEmpty(mBinding.etInputTime.getText().toString().trim())) {
             Toast.makeText(this, "请选择匹配时间", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -117,9 +117,9 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
             RadioButton radioButton = (RadioButton) mBinding.radioGroup.findViewById(checkedId);
             String c = radioButton.getText().toString();
             c = c.substring(0, c.length() - 1);
-            mPresenter.publishNeededMessages(description.toString(), c);
+            mPresenter.publishNeededMessages(description, c);
         }else {
-            mPresenter.publishNeededMessages(description.toString(), mBinding.etInputTime.getText().toString());
+            mPresenter.publishNeededMessages(description, mBinding.etInputTime.getText().toString());
         }
     }
 

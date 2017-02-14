@@ -225,4 +225,8 @@ public interface FactoryApi {
 
     @DELETE("user/")
     Observable<Response> logout(@Header("TIME") String timestamp, @Header("Authorization") String token);
+
+    @POST("feedbacks/app/")
+    Observable<Response> feedback(@Body RequestBody body);
+
 }

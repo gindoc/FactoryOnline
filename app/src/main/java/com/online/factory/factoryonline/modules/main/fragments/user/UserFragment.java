@@ -1,6 +1,7 @@
 package com.online.factory.factoryonline.modules.main.fragments.user;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.databinding.FragmentUserBinding;
 import com.online.factory.factoryonline.models.User;
+import com.online.factory.factoryonline.modules.feedback.FeedbackActivity;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.login.LoginContext;
@@ -109,7 +111,8 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     }
 
     public void openFeedback() {
-        Toast.makeText(getContext(), "该功能尚未开放", Toast.LENGTH_SHORT).show();
+        Context context = getContext();
+        context.startActivity(FeedbackActivity.getStartIntent(context));
     }
 
     public void openRolePick() {

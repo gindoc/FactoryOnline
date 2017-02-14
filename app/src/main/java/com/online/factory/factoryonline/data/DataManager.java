@@ -437,4 +437,14 @@ public class DataManager {
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
         return factoryApi.logout(timestamp, token);
     }
+
+    public Observable<Response> feedback(String type, String description, String phoneNum) {
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        builder.addFormDataPart("app_type", type)
+                .addFormDataPart("feedback_content", description)
+                .addFormDataPart("contact_way", phoneNum);
+
+        return factoryApi.feedback(builder.build());
+    }
 }

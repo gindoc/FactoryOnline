@@ -9,6 +9,7 @@ import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.browseHistory.BrowseHistoryActivity;
 import com.online.factory.factoryonline.modules.city.CityActivity;
 import com.online.factory.factoryonline.modules.collection.CollectionActivity;
+import com.online.factory.factoryonline.modules.feedback.FeedbackActivity;
 import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
@@ -93,4 +94,5 @@ public interface ActivityComponent {
 
     void inject(BrowseHistoryActivity browseHistoryActivity);
 
+    void inject(FeedbackActivity feedbackActivity);
 }
