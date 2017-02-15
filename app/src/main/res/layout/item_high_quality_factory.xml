@@ -8,11 +8,15 @@
             name="viewModel"
             type="com.online.factory.factoryonline.modules.main.fragments.home.index.IndexViewModel" />
 
+        <variable
+            name="context"
+            type="android.content.Context" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()->viewModel.onHighQualityItemClick(context)}"
         android:orientation="vertical">
 
         <LinearLayout

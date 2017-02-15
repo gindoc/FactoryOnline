@@ -1,5 +1,7 @@
 package com.online.factory.factoryonline.modules.main.fragments.home.index;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
@@ -12,6 +14,7 @@ import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.Tag;
 import com.online.factory.factoryonline.models.WantedMessage;
+import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 
 import java.util.List;
 
@@ -36,10 +39,6 @@ public class IndexViewModel extends BaseObservable {
         this.wantedMessage = wantedMessage;
         factoryInfo = wantedMessage.getFactory();
     }
-
-//    public void setFactoryInfo(Factory factoryInfo) {
-//        this.factoryInfo = factoryInfo;
-//    }
 
     @Bindable
     public String getFactoryName() {
@@ -224,5 +223,12 @@ public class IndexViewModel extends BaseObservable {
         }else {
             return null;
         }
+    }
+
+    public void onHighQualityItemClick(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, FactoryDetailActivity.class);
+        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, wantedMessage);
+        context.startActivity(intent);
     }
 }

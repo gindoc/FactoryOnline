@@ -154,6 +154,7 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
             IndexViewModel model = provider.get();
             model.setWantedMessage(w);
             binding.setViewModel(model);
+            binding.setContext(getContext());
             View view = binding.getRoot();
             view.setTag(w);
             highQualityItem.add(view);
@@ -161,8 +162,6 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
             ImageView dotView = new ImageView(getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.rightMargin = getResources().getDimensionPixelSize(R.dimen.x5);
-//            int size = getResources().getDimensionPixelOffset(R.dimen.x7);
-//            params.width = params.height = size;
             mBinding.llHighQualityDots.addView(dotView, params);
             dotViewsList.add(dotView);
             if (i == 0) {
