@@ -19,7 +19,7 @@ public class ForgetPwdContract {
     interface Presenter extends IBasePresenter {
         void getVerifyCode(String phoneNum);
 
-        void modifyPwd(String newPwd, String verifyCode);
+        void modifyPwd(String phoneNum, String newPwd, String verifyCode);
     }
 
 }

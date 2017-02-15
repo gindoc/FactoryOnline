@@ -23,7 +23,10 @@ public class DataBindingProperty {
 
     @BindingAdapter({"user"})
     public static void setUserPhoto(ImageView imageView, User user) {
-        if (user == null) return;
+        if (user == null) {
+            Picasso.with(imageView.getContext()).load(R.drawable.avatar_user).into(imageView);
+            return;
+        }
         int avatar = user.getType() == 1 ? R.drawable.avatar_user : R.drawable.avtar_agent;
         if (!TextUtils.isEmpty(user.getAvatar())) {
             String decodedUrl = new String(Base64.decodeBase64(user.getAvatar().getBytes()));

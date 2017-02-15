@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityFeedbackBinding;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -22,7 +25,7 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class FeedbackActivity extends BaseActivity<FeedbackContract.View, FeedbackPresenter> implements FeedbackContract.View {
+public class FeedbackActivity extends BaseActivity<FeedbackContract.View, FeedbackPresenter> implements FeedbackContract.View, TitleBar.OnTitleBarClickListener {
 
     @Inject
     FeedbackPresenter mPresenter;
@@ -35,6 +38,13 @@ public class FeedbackActivity extends BaseActivity<FeedbackContract.View, Feedba
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_feedback);
         mBinding.setView(this);
+
+        StatusBarUtils.from(this)
+                .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
+                .setActionbarView(mBinding.rlTopBar)
+                .process();
+        mBinding.rlTopBar.setOnTitleBarClickListener(this);
     }
 
     @Override
@@ -52,7 +62,22 @@ public class FeedbackActivity extends BaseActivity<FeedbackContract.View, Feedba
 
     }
 
-    public void submit() {
+    @Override
+    public void submitSuccessful() {
+        finish();
+    }
+
+    public static Intent getStartIntent(Context context) {
+        return new Intent(context, FeedbackActivity.class);
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
         String description = mBinding.etDescription.getText().toString().trim();
         if (TextUtils.isEmpty(description)) {
             Toast.makeText(this, "请描述您反馈的问题或者建议..(2~400字)", Toast.LENGTH_SHORT).show();
@@ -68,14 +93,4 @@ public class FeedbackActivity extends BaseActivity<FeedbackContract.View, Feedba
         }
         mPresenter.submitFeedback(description, phoneNum);
     }
-
-    @Override
-    public void submitSuccessful() {
-        finish();
-    }
-
-    public static Intent getStartIntent(Context context) {
-        return new Intent(context, FeedbackActivity.class);
-    }
-
 }

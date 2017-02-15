@@ -1,6 +1,8 @@
 package com.online.factory.factoryonline.data;
 
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.LocalApi;
@@ -88,11 +90,12 @@ public class DataManager {
      * minrange   筛选边界的最小值
      * filterType 筛选类型1.区域筛选2.价格筛选3.面积筛选
      * areaId     筛选的区域id
+     *
      * @param params
      * @return
      */
     public Observable<RecommendResponse> getRecommendInfos(Map<String, Object> params, boolean action) {
-        if (action){
+        if (action) {
             return factoryApi.getRecommendInfos(params);
         } else {
             List<WantedMessage> wantedMessages = localApi.queryWantedMessages((Integer) params.get("page"));
@@ -119,6 +122,7 @@ public class DataManager {
 
     /**
      * 获取数据库WantedMessage表中最大的updateTime
+     *
      * @return
      */
     public Observable<Integer> getMaxUpdateTime() {
@@ -129,7 +133,7 @@ public class DataManager {
         return Observable.just(localApi.queryMaxIdWantedMessage());
     }
 
-    public Observable<WantedMessage> getMaxIdHomeWantedMessage(){
+    public Observable<WantedMessage> getMaxIdHomeWantedMessage() {
         return Observable.just(localApi.queryMaxIdHomeWantedMessage());
     }
 
@@ -184,6 +188,7 @@ public class DataManager {
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
         return factoryApi.deleteCollectionState(token, timestamp, id);
     }
+
     /**
      * 注册
      *
@@ -232,10 +237,10 @@ public class DataManager {
      * @return
      */
     public Observable<retrofit2.Response<JsonObject>> getUser() {
-            String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
-            StringBuilder iv = new StringBuilder(timestamp).reverse();
-            String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
-            return factoryApi.getUser(token, timestamp);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.getUser(token, timestamp);
     }
 
     public Observable<RecommendResponse> getStreetFactories(String url, Map<String, Object> params) {
@@ -296,7 +301,7 @@ public class DataManager {
 
     public Observable<PublicationResponse> requestPublications(String next) {
         String token = Saver.getToken().replace("\"", "");
-        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         token = AESUtil.encrypt(token, timestamp, iv.toString());
         token = "Token " + token;
@@ -305,7 +310,7 @@ public class DataManager {
 
     public Observable<MyCollectionResponse> requestOwnerCollections(String next) {
         String token = Saver.getToken().replace("\"", "");
-        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         token = AESUtil.encrypt(token, timestamp, iv.toString());
         token = "Token " + token;
@@ -314,7 +319,7 @@ public class DataManager {
 
     public Observable<ProMediumMessageResponse> requestAgentCollections(String next) {
         String token = Saver.getToken().replace("\"", "");
-        String timestamp = String.valueOf(System.currentTimeMillis()*1000);
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         token = AESUtil.encrypt(token, timestamp, iv.toString());
         token = "Token " + token;
@@ -322,15 +327,27 @@ public class DataManager {
     }
 
     public Observable<Response> updateUser(UpdateUser updateUser) {
+        return forgetPwd(updateUser, null);
+    }
+
+    public Observable<Response> forgetPwd(UpdateUser updateUser, String phoneNum) {
+        String token = Saver.getToken();
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
-        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
         String json = new Gson().toJson(updateUser);
         String encodedJosn = AESUtil.encrypt(json, timestamp, iv.toString());
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("updateUser", encodedJosn);
-        return factoryApi.updateUser(token, timestamp, builder.build());
+        if (!TextUtils.isEmpty(phoneNum)) {
+           builder.addFormDataPart("phone_num", phoneNum);
+        }
+        if (!TextUtils.isEmpty(token)) {
+            token = "Token " + AESUtil.encrypt(token, timestamp, iv.toString());
+            return factoryApi.updateUser(token, timestamp, builder.build());
+        } else {
+            return factoryApi.updateUser(null, timestamp, builder.build());
+        }
     }
 
     public Observable<ProMediumResponse> requestAgents(String next) {
@@ -372,9 +389,11 @@ public class DataManager {
     public Observable<ProMediumMessageResponse> requestSearchPromediumMessage(String next) {
         return factoryApi.getSearchPromediumMessage(next);
     }
+
     public Observable<RecommendResponse> requestSearchWantedMessage(String next) {
         return factoryApi.getSearchWantedMessage(next);
     }
+
     public Observable<Response> messageFeedback(int messageId, String content, String remark) {
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);

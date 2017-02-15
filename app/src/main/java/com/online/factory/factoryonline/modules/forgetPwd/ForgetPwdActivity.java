@@ -83,7 +83,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
             if (TextUtils.isEmpty(newPwd)) throw new Exception("请输入新密码");
             if (TextUtils.isEmpty(newPwdAgain)) throw new Exception("请再次输入新密码");
             if (!newPwdAgain.equals(newPwd)) throw new Exception("两次密码不一致，请重新输入");
-            mPresenter.modifyPwd(newPwd, verifyCode);
+            mPresenter.modifyPwd(phoneNum, newPwd, verifyCode);
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }

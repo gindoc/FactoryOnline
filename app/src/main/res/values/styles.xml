@@ -88,4 +88,5 @@
         <item name="android:textSize">@dimen/x14</item>
         <item name="android:textColor">#424242</item>
     </style>
+
 </resources>

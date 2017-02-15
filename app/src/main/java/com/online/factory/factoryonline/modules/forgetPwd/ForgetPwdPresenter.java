@@ -8,6 +8,8 @@ import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
+import org.apache.commons.codec.binary.Base64;
+
 import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -29,16 +31,16 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdContract.View> im
     }
 
 
-    public void modifyPwd(String newPwd, String verifyCode) {
+    public void modifyPwd(String phoneNum, String newPwd, String verifyCode) {
         JsonObject jo = new JsonObject();
         jo.addProperty("pwd", newPwd);
         jo.addProperty("verify_code", verifyCode);
 
         UpdateUser updateUser = new UpdateUser();
-        updateUser.setUpdate_type(3);
-        updateUser.setUpdate_value(jo.toString());
+        updateUser.setUpdate_type(5);
+        updateUser.setUpdate_value(new String(Base64.encodeBase64(jo.toString().getBytes())));
 
-        dataManager.updateUser(updateUser)
+        dataManager.forgetPwd(updateUser, phoneNum)
                 .compose(getView().<Response>getBindToLifecycle())
                 .compose(RxResultHelper.<Response>handleResult())
                 .subscribeOn(Schedulers.io())
@@ -57,7 +59,7 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdContract.View> im
     }
 
     public void getVerifyCode(String phoneNum){
-        dataManager.getSmsCode(phoneNum, "3")
+        dataManager.getSmsCode(phoneNum, "4")
                 .compose(getView().<Response>getBindToLifecycle())
                 .compose(RxResultHelper.<Response>handleResult())
                 .subscribeOn(Schedulers.io())

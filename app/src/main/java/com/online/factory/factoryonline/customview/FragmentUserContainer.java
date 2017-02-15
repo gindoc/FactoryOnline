@@ -41,7 +41,7 @@ public class FragmentUserContainer extends RelativeLayout {
         paint.setStyle(Paint.Style.FILL);
 
         paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint2.setColor(Color.GREEN);
+        paint2.setColor(Color.parseColor("#1ab80f"));
         paint2.setStyle(Paint.Style.FILL);
 
     }
