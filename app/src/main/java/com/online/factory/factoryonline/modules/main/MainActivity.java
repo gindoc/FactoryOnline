@@ -21,11 +21,13 @@ import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment
 import com.online.factory.factoryonline.modules.translucent.publish.TranslucentPublishActivity;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FastBlurUtil;
+import com.online.factory.factoryonline.utils.Saver;
 
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
 
+    private static final int TO_TRANSLUCENT_PUBLISH_ACTIVITY = 101;
     private ActivityMainBinding mBinding;
     private long mExitTime;
     @Inject
@@ -69,17 +71,28 @@ public class MainActivity extends BaseActivity {
     }
 
     public void toPublish(View view) {
+        if (Saver.getLoginState()) {
+            Toast.makeText(this, "尚未登录，无法发布信息~~", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        view.setEnabled(false);
         Bitmap blurBackground = BitmapManager.screenShot(this);
         blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);
         blurBackground = FastBlurUtil.doBlur(blurBackground, 8, true);
         Intent intent = TranslucentPublishActivity.getStartIntent(this, blurBackground);
-        startActivity(intent);
+        startActivityForResult(intent, TO_TRANSLUCENT_PUBLISH_ACTIVITY);
         overridePendingTransition(R.anim.no_anim, R.anim.no_animation);
     }
 
     public void onClickUser(View view) {
         showHideFragment(userFragment, recommendFragment);
         showHideFragment(userFragment, homeFragment);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mBinding.bottomTab.ivPublish.setEnabled(true);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

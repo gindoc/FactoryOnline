@@ -14,9 +14,12 @@ import android.view.View;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.base.BaseTranslucentActivity;
+import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.databinding.ActivityTranslucentPublishBinding;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.order.OrderActivity;
 import com.online.factory.factoryonline.modules.publishRental.PublishRentalActivity;
+import com.online.factory.factoryonline.utils.Saver;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.annotation.Nonnull;
@@ -29,6 +32,7 @@ import javax.annotation.Nonnull;
 
 public class TranslucentPublishActivity extends BaseTranslucentActivity {
     private static final String BACKGROUND = "BACKGROUND";
+    private int type = 1;
     private ActivityTranslucentPublishBinding mBinding;
     private AnimatorSet animatorSetOut;
     private AnimatorSet animatorSetIn;
@@ -37,6 +41,15 @@ public class TranslucentPublishActivity extends BaseTranslucentActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_translucent_publish);
+        User user = Saver.getSerializableObject(SharePreferenceKey.USER);
+        type = user.getType();
+        if (type == 1) {
+            mBinding.ivContent.setImageResource(R.drawable.ic_popup_order);
+            mBinding.tvContent.setText("预定");
+        }else {
+            mBinding.ivContent.setImageResource(R.drawable.ic_popup_publish);
+            mBinding.tvContent.setText("发布");
+        }
         initAnimationSet();
         Bitmap blurBackground = getIntent().getParcelableExtra(BACKGROUND);
         mBinding.ivBackground.setImageBitmap(blurBackground);
@@ -93,7 +106,12 @@ public class TranslucentPublishActivity extends BaseTranslucentActivity {
         mBinding.llOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = OrderActivity.getStartIntent(TranslucentPublishActivity.this);
+                Intent intent;
+                if (type == 1) {
+                    intent = OrderActivity.getStartIntent(TranslucentPublishActivity.this);
+                }else {
+                    intent = new Intent(TranslucentPublishActivity.this, PublishRentalActivity.class);
+                }
                 startActivity(intent);
             }
         });

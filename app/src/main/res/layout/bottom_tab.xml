@@ -32,6 +32,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/iv_publish"
                     android:layout_width="@dimen/x30"
                     android:layout_height="@dimen/x30"
                     android:onClick="toPublish"
@@ -39,7 +40,6 @@
                     android:src="@drawable/green_rectangle_solid_with_corner" />
 
                 <ImageView
-                    android:id="@+id/iv_publish"
                     android:layout_width="@dimen/x25"
                     android:layout_height="@dimen/x25"
                     android:layout_gravity="center"
