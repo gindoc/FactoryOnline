@@ -142,6 +142,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
+                .setTransparentStatusbar(true)
                 .setActionbarView(mBinding.toolbar)
                 .process();
         mBinding.toolbar.setTitle("");
@@ -176,6 +177,8 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
                     shareItem.setIcon(R.drawable.ic_share_outline);
                     mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_left_green);
                     mBinding.tvTitle.setVisibility(View.VISIBLE);
+                }else {
+                    mBinding.tvTitle.setVisibility(View.GONE);
                 }
 
             }
