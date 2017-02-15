@@ -22,6 +22,7 @@ import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.translucent.role.TranslucentRolePickActivity;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FastBlurUtil;
+import com.online.factory.factoryonline.utils.Saver;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -116,6 +117,10 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     }
 
     public void openRolePick() {
+        if (!Saver.getLoginState()){
+            Toast.makeText(getContext(), "只有登录后才可以进行此操作哦~~",Toast.LENGTH_SHORT).show();
+            return;
+        }
         Activity activity = getActivity();
         Bitmap blurBackground = BitmapManager.screenShot(activity);
         blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);

@@ -101,6 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_head_photo"
             android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:layout_marginTop="@dimen/x5"
             android:hint="请登录 >"
             android:onClick="@{()->view.clickRoundImage()}"

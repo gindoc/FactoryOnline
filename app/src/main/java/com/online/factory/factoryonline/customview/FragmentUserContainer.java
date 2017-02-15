@@ -62,14 +62,14 @@ public class FragmentUserContainer extends RelativeLayout {
         int point8Y = height * 330 / 568;
 
         float hexPoint1Y = point3Y;
-        float hexPoint2X = halfScreenWidth + 25 / 320f * width;
+        float hexPoint2X = halfScreenWidth + 22 / 320f * width;
         float hexPoint2Y = height * 110 / 284f - 14 / 568f * height;
         float hexPoint3X = hexPoint2X;
-        float hexPoint3Y = height * 110 / 284f - 40 / 568f * height;
+        float hexPoint3Y = height * 110 / 284f - 39 / 568f * height;
         float hexPoint4Y = height * 110 / 284f - 55 / 568f * height;
-        float hexPoint5X = halfScreenWidth - 25 / 320f * width;
-        float hexPoint5Y = height * 110 / 284f - 40 / 568f * height;
-        float hexPoint6X = halfScreenWidth - 25 / 320f * width;
+        float hexPoint5X = halfScreenWidth - 22 / 320f * width;
+        float hexPoint5Y = height * 110 / 284f - 39 / 568f * height;
+        float hexPoint6X = hexPoint5X;
         float hexPoint6Y = height * 110 / 284f - 14 / 568f * height;
 
         float dogPoint1X = width;

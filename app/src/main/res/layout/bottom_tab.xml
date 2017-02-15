@@ -29,12 +29,12 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:onClick="toPublish"
                 android:layout_weight="1">
 
                 <ImageView
                     android:layout_width="@dimen/x30"
                     android:layout_height="@dimen/x30"
+                    android:onClick="toPublish"
                     android:layout_gravity="center"
                     android:src="@drawable/green_rectangle_solid_with_corner" />
 

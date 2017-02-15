@@ -70,6 +70,7 @@ public class TranslucentPublishActivity extends BaseTranslucentActivity {
         mBinding.ivBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBinding.ivBackground.setEnabled(false);
                 animatorSetIn.start();
                 animatorSetIn.addListener(new Animator.AnimatorListener() {
                     @Override
@@ -94,10 +95,6 @@ public class TranslucentPublishActivity extends BaseTranslucentActivity {
             public void onClick(View v) {
                 Intent intent = OrderActivity.getStartIntent(TranslucentPublishActivity.this);
                 startActivity(intent);
-//                Intent intent = new Intent();
-//                intent.setClass(TranslucentPublishActivity.this, PublishRentalActivity.class);
-//                startActivity(intent);
-
             }
         });
     }
