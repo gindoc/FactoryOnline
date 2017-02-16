@@ -123,7 +123,7 @@
             android:drawablePadding="@dimen/x5"
             android:drawableTop="@drawable/ic_collection"
             android:gravity="center"
-            android:onClick="@{()->view.openPublish()}"
+            android:onClick="@{()->view.openCollection()}"
             android:text="我的收藏"
             android:textColor="#424242"
             android:textSize="@dimen/x13" />

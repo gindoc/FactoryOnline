@@ -4,9 +4,7 @@ package com.online.factory.factoryonline.data.remote;
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.models.CityBean;
 import com.online.factory.factoryonline.models.News;
-import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.PublishUserResponse;
-import com.online.factory.factoryonline.models.SearchResult;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.BranchResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
@@ -24,7 +22,6 @@ import com.online.factory.factoryonline.models.response.SearchResultResponse;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -220,8 +217,8 @@ public interface FactoryApi {
     @POST("wantedmessages/{wantedmessage_id}/view/")
     Observable<Response> viewMessage(@Path("wantedmessage_id") String id, @Header("TIME") String timestamp, @Header("Authorization") String token);
 
-    @GET("user/historys/wantedmessages")
-    Observable<HomeResponse> getBrowseHistory(@Header("TIME") String timestamp, @Header("Authorization") String token);
+    @GET
+    Observable<HomeResponse> getBrowseHistory(@Url String next, @Header("TIME") String timestamp, @Header("Authorization") String token);
 
     @DELETE("user/")
     Observable<Response> logout(@Header("TIME") String timestamp, @Header("Authorization") String token);

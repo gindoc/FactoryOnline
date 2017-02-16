@@ -6,13 +6,17 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityAreaAgentBinding;
+import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.ProMedium;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -25,9 +29,9 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter> implements AreaContract.View, OnPageListener {
+public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter> implements AreaContract.View, OnPageListener, TitleBar.OnTitleBarClickListener {
 
-    private static final String BRANCH_ID = "BRANCH_ID";
+    private static final String BRANCH = "BRANCH";
     private ActivityAreaAgentBinding mBinding;
     private String next;
 
@@ -44,9 +48,19 @@ public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter>
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_area_agent);
         mBinding.setView(this);
 
-        int branchId = getIntent().getIntExtra(BRANCH_ID, -1);
-        if (branchId != -1) {
-            mPresenter.requestAgent(getString(R.string.api) + "promediums/branches/" + branchId);
+        StatusBarUtils.from(this)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTitle)
+                .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
+
+        Branch branch = (Branch) getIntent().getSerializableExtra(BRANCH);
+        if (branch != null) {
+            mPresenter.requestAgent(getString(R.string.api) + "promediums/branches/" + branch.getId());
+            mBinding.rlTitle.setTitle(branch.getName());
         }
 
         mBinding.recyclerView.setAdapter(mAdapter);
@@ -67,9 +81,9 @@ public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter>
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
-    public static Intent getStartIntent(Context context, int id) {
+    public static Intent getStartIntent(Context context, Branch branch) {
         Intent intent = new Intent(context, AreaActivity.class);
-        intent.putExtra(BRANCH_ID, id);
+        intent.putExtra(BRANCH, branch);
         return intent;
     }
 
@@ -92,5 +106,15 @@ public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter>
             showError("没有更多内容了");
             mBinding.recyclerView.setIsLoading(false);
         }
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

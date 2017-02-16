@@ -16,6 +16,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.PermissionCallback;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityAgentBinding;
@@ -37,7 +38,8 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresenter> implements AgentContract.View, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresenter> implements AgentContract.View,
+        OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener, TitleBar.OnTitleBarClickListener {
     public static final String PROMEDIUM = "PROMEDIUM";
     private static final int PERMISSION_CALL_PHONE = 199;
     private static final int PERMISSION_SEND_SMS = 200;
@@ -73,8 +75,10 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setTransparentStatusbar(true)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
 
         initAgent();
         initRecyclerView();
@@ -179,5 +183,15 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

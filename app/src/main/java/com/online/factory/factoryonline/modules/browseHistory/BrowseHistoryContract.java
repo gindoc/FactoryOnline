@@ -16,11 +16,13 @@ public interface BrowseHistoryContract {
     interface View extends IBaseView {
 
         void loadHistory(List<WantedMessage> wantedMessages);
+
+        void loadNext(String next);
     }
 
     interface Presenter extends IBasePresenter {
 
-        void requestHistory();
+        void requestHistory(String next);
 
     }
 }

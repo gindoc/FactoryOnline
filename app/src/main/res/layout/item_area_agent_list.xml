@@ -45,6 +45,7 @@
             android:textSize="@dimen/x11" />
 
         <ImageView
+            android:id="@+id/iv_rank"
             android:layout_width="@dimen/x25"
             android:layout_height="@dimen/x25"
             android:src="@drawable/no_one"

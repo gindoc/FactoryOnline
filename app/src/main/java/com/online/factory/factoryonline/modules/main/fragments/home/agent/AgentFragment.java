@@ -113,7 +113,7 @@ public class AgentFragment extends BaseFragment<AgentContract.View, AgentPresent
             activity.overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
         }else {
             Branch branch = branchAdapter.getData().get(position);
-            startActivity(AreaActivity.getStartIntent(getContext(), branch.getId()));
+            startActivity(AreaActivity.getStartIntent(getContext(), branch));
         }
     }
 }

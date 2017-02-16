@@ -498,18 +498,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignLeft="@id/tv_publish_people"
-                                android:layout_below="@id/tv_publish_people"
-                                android:layout_marginTop="@dimen/x5"
                                 android:onClick="@{()->view.smsToPublish()}"
+                                android:layout_alignBottom="@id/iv_publish_people"
                                 android:src="@drawable/ic_sms_outline" />
 
                             <ImageView
                                 android:id="@+id/iv_phone_to_publish"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/tv_publish_people"
                                 android:layout_marginLeft="@dimen/x10"
-                                android:layout_marginTop="@dimen/x5"
+                                android:layout_alignBottom="@id/iv_publish_people"
                                 android:layout_toRightOf="@id/iv_sms_to_publish"
                                 android:onClick="@{()->view.phoneToPublish()}"
                                 android:src="@drawable/ic_phone_outline" />

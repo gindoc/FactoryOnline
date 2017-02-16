@@ -28,8 +28,8 @@ public class BrowseHistoryPresenter extends BasePresenter<BrowseHistoryContract.
     }
 
     @Override
-    public void requestHistory() {
-        dataManager.requestBrowseHistory()
+    public void requestHistory(String next) {
+        dataManager.requestBrowseHistory(next)
                 .compose(getView().<HomeResponse>getBindToLifecycle())
                 .compose(RxResultHelper.<HomeResponse>handleResult())
                 .subscribeOn(Schedulers.io())
@@ -38,6 +38,7 @@ public class BrowseHistoryPresenter extends BasePresenter<BrowseHistoryContract.
                     @Override
                     public void _onNext(HomeResponse homeResponse) {
                         getView().loadHistory(homeResponse.getWantedMessages());
+                        getView().loadNext(homeResponse.getNext());
                     }
 
                     @Override

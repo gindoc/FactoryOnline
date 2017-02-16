@@ -55,6 +55,7 @@ public class CollectionActivity extends BaseActivity<CollectionContract.View, Co
         StatusBarUtils.from(this)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
                 //设置toolbar,actionbar等view
                 .setActionbarView(mBinding.rlTopBar)
                 .process();

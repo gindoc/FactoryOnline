@@ -111,6 +111,24 @@ public class TitleBar extends FrameLayout {
         });
     }
 
+    public void setTitle(String title) {
+        if (tvTitle != null) {
+            tvTitle.setText(title);
+        }
+    }
+
+    public void setLeftText(String left) {
+        if (tvLeft != null) {
+            tvLeft.setText(left);
+        }
+    }
+
+    public void setRightText(String right) {
+        if (tvLeft != null) {
+            tvRight.setText(right);
+        }
+    }
+
     public interface OnTitleBarClickListener{
         void onLeftButtonClickListener(View view);
         void onRightButtonClickListener(View view);

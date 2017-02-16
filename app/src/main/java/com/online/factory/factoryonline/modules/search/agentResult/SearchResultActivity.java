@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityAgentSearchResultBinding;
@@ -30,7 +31,7 @@ import javax.inject.Inject;
  */
 
 public class SearchResultActivity extends BaseActivity<SearchResultContract.View, SearchResultPresenter> implements SearchResultContract.View,
-        OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+        OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener, TitleBar.OnTitleBarClickListener {
     private static final String CONTENT_ID = "CONTENT_ID";
     @Inject
     SearchResultPresenter mPresenter;
@@ -58,8 +59,10 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setTransparentStatusbar(true)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setOnPageListener(this);
         mAdapter.setOnItemClickListener(this);
@@ -107,5 +110,15 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
     @Override
     public void onItemClick(View view, int position) {
         startActivity(FactoryDetailActivity.getStartIntent(this, mAdapter.getData().get(position), null));
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

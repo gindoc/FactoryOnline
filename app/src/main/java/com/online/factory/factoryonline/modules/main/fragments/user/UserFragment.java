@@ -107,6 +107,10 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         mLoginContext.openPublish(getContext());
     }
 
+    public void openCollection() {
+        mLoginContext.openCollection(getContext());
+    }
+
     public void openBrowsingHistory() {
         mPresenter.requestHistory(getContext());
     }

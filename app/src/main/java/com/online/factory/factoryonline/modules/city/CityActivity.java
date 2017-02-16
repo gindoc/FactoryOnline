@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityCityBinding;
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -26,7 +28,7 @@ import timber.log.Timber;
  * Created by cwenhui on 2016/11/7.
  */
 
-public class CityActivity extends BaseActivity<CityContract.View, CityPresenter> implements CityContract.View/*, IndexListBar.OnTouchingLetterChangedListener*/ {
+public class CityActivity extends BaseActivity<CityContract.View, CityPresenter> implements CityContract.View, TitleBar.OnTitleBarClickListener {
 
     private ActivityCityBinding mBinding;
 
@@ -54,9 +56,11 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
         StatusBarUtils.from(this)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         locating();
     }
 
@@ -112,5 +116,15 @@ public class CityActivity extends BaseActivity<CityContract.View, CityPresenter>
     protected void onDestroy() {
         mLocationClient.stop();
         super.onDestroy();
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

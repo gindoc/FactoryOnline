@@ -5,13 +5,18 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.View;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
+import com.online.factory.factoryonline.customview.TitleBar;
+import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityBrowseHistoryBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.main.fragments.home.index.IndexRecyclerViewAdapter;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -27,7 +32,8 @@ import timber.log.Timber;
  * 作用:
  */
 
-public class BrowseHistoryActivity extends BaseActivity<BrowseHistoryContract.View, BrowseHistoryPresenter> implements BrowseHistoryContract.View {
+public class BrowseHistoryActivity extends BaseActivity<BrowseHistoryContract.View, BrowseHistoryPresenter> implements BrowseHistoryContract.View,
+        TitleBar.OnTitleBarClickListener, OnPageListener{
 
     @Inject
     IndexRecyclerViewAdapter mAdapter;
@@ -36,6 +42,7 @@ public class BrowseHistoryActivity extends BaseActivity<BrowseHistoryContract.Vi
     BrowseHistoryPresenter mPresenter;
 
     private ActivityBrowseHistoryBinding mBinding;
+    private String next = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +50,18 @@ public class BrowseHistoryActivity extends BaseActivity<BrowseHistoryContract.Vi
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_browse_history);
         mBinding.setView(this);
-
+        StatusBarUtils.from(this)
+                //白底黑字状态栏
+                .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
+                //设置toolbar,actionbar等view
+                .setActionbarView(mBinding.rlTitle)
+                .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setOnPageListener(this);
 
-        mPresenter.requestHistory();
+        mPresenter.requestHistory(getResources().getString(R.string.api)+"user/historys/wantedmessages");
 
     }
 
@@ -61,9 +76,20 @@ public class BrowseHistoryActivity extends BaseActivity<BrowseHistoryContract.Vi
 
     @Override
     public void loadHistory(List<WantedMessage> wantedMessages) {
-        mAdapter.addData(wantedMessages);
-        mBinding.recyclerView.notifyDataSetChanged();
+        int lastRange = mAdapter.getItemCount();
+        if (mAdapter.getItemCount() == 0) {
+            mAdapter.addData(wantedMessages);
+            mBinding.recyclerView.notifyDataSetChanged();
+        }else {
+            mAdapter.notifyItemRangeInserted(lastRange, wantedMessages.size());
+            mAdapter.addData(wantedMessages);
+//            mAdapter.notifyItemRangeChanged(lastRange, wantedMessages.size());
+        }
+    }
 
+    @Override
+    public void loadNext(String next) {
+        this.next = next;
     }
 
     @Override
@@ -74,5 +100,21 @@ public class BrowseHistoryActivity extends BaseActivity<BrowseHistoryContract.Vi
     @Override
     public void showError(String error) {
         Timber.e(error);
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+    }
+
+    @Override
+    public void onPage() {
+        if (!TextUtils.isEmpty(next)) {
+            mPresenter.requestHistory(next);
+        }
     }
 }

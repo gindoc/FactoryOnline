@@ -10,7 +10,6 @@ import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.NeededMessage;
 import com.online.factory.factoryonline.models.News;
-import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.UpdateUser;
 import com.online.factory.factoryonline.models.WantedMessage;
@@ -440,14 +439,14 @@ public class DataManager {
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         token = "Token " + AESUtil.encrypt(token, timestamp, iv.toString());
-        return factoryApi.viewMessage(id, token, timestamp);
+        return factoryApi.viewMessage(id, timestamp, token);
     }
 
-    public Observable<HomeResponse> requestBrowseHistory() {
+    public Observable<HomeResponse> requestBrowseHistory(String next) {
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
-        return factoryApi.getBrowseHistory(timestamp, token);
+        return factoryApi.getBrowseHistory(next, timestamp, token);
     }
 
     public Observable<Response> logout() {

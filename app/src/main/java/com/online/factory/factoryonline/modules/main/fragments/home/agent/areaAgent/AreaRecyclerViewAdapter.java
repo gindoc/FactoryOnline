@@ -54,6 +54,6 @@ public class AreaRecyclerViewAdapter extends BaseRecyclerViewAdapter<ProMedium, 
                 drawable = R.drawable.no_three;
                 break;
         }
-        binding.ivAgentAvatar.setImageResource(drawable);
+        binding.ivRank.setImageResource(drawable);
     }
 }
