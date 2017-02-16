@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -18,7 +19,7 @@
         android:background="#F5F5F5"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:id="@+id/rl_top_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/header_height"
@@ -49,7 +50,22 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#ccc" />
+            android:background="#ccc" />-->
+        <com.online.factory.factoryonline.customview.TitleBar
+            android:id="@+id/rl_title"
+            android:layout_width="match_parent"
+            app:title_name="设置"
+            android:background="@android:color/white"
+            app:title_visible="true"
+            app:title_text_size="@dimen/x6"
+            app:title_text_color="#424242"
+            app:left_text="返回"
+            app:left_text_color="@color/colorPrimary"
+            app:left_text_visible="true"
+            app:left_text_drawable="@drawable/ic_arrow_left_green"
+            app:left_text_size="@dimen/x5"
+            app:left_drawable_padding="@dimen/x5"
+            android:layout_height="@dimen/header_height"/>
 
         <View
             android:layout_width="match_parent"

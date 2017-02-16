@@ -10,6 +10,7 @@ import android.view.View;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ActivityPrePayBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -28,7 +29,7 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class PrePayActivity extends BaseActivity implements BaseRecyclerViewAdapter.OnItemClickListener{
+public class PrePayActivity extends BaseActivity implements BaseRecyclerViewAdapter.OnItemClickListener, TitleBar.OnTitleBarClickListener{
     public static final String SELECTED_PRE_PAY = "selectedPay";
     private ActivityPrePayBinding mBinding;
     private List<String> prePaies = new ArrayList<>();
@@ -50,8 +51,10 @@ public class PrePayActivity extends BaseActivity implements BaseRecyclerViewAdap
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setActionbarView(mBinding.rlTitle)
+                .setTransparentStatusbar(true)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         prePaies.addAll(Arrays.asList(getResources().getStringArray(R.array.pre_pay)));
 
         initRecyclerView();
@@ -86,5 +89,14 @@ public class PrePayActivity extends BaseActivity implements BaseRecyclerViewAdap
         setResult(RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
     }
 }

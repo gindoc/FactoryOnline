@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.login;
 
 import android.content.Context;
 
+import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.Saver;
 
 /**
@@ -44,5 +45,9 @@ public class LoginContext {
 
     public void openHistory(Context context) {
         mState.openHistory(context);
+    }
+
+    public void openTransparentPublish(MainActivity mainActivity) {
+        mState.openTransparentPublish(mainActivity);
     }
 }

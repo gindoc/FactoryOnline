@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ActivityPublishAreaBinding;
 import com.online.factory.factoryonline.models.Area;
@@ -29,7 +30,8 @@ import javax.inject.Inject;
  * 作用: 发布信息的镇区列表页面
  */
 
-public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter> implements AreaContract.View, BaseRecyclerViewAdapter.OnItemClickListener {
+public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter> implements AreaContract.View, BaseRecyclerViewAdapter.OnItemClickListener,
+        TitleBar.OnTitleBarClickListener{
     public static final String SELECTED_AREA = "selected_area";
     private ActivityPublishAreaBinding mBinding;
 
@@ -53,8 +55,9 @@ public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter>
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         mPresenter.getAreas();
         initRecyclerView();
     }
@@ -98,5 +101,15 @@ public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter>
         setResult(RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

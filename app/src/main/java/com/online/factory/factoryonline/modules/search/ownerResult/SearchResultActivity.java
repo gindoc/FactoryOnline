@@ -6,10 +6,12 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityOwnerSearchResultBinding;
 import com.online.factory.factoryonline.models.ProMediumMessage;
@@ -27,7 +29,8 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class SearchResultActivity extends BaseActivity<SearchResultContract.View, SearchResultPresenter> implements SearchResultContract.View, OnPageListener {
+public class SearchResultActivity extends BaseActivity<SearchResultContract.View, SearchResultPresenter> implements SearchResultContract.View,
+        OnPageListener, TitleBar.OnTitleBarClickListener {
     private static final String CONTENT_ID = "CONTENT_ID";
     @Inject
     SearchResultPresenter mPresenter;
@@ -55,8 +58,10 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setTransparentStatusbar(true)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setOnPageListener(this);
 
@@ -98,5 +103,14 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
             showError("没有更多内容了");
             mBinding.recyclerView.setIsLoading(false);
         }
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
     }
 }

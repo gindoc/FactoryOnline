@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityForgetPwdBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -34,7 +36,7 @@ import timber.log.Timber;
  * 作用:
  */
 
-public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, ForgetPwdPresenter> implements ForgetPwdContract.View {
+public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, ForgetPwdPresenter> implements ForgetPwdContract.View, TitleBar.OnTitleBarClickListener {
     private ActivityForgetPwdBinding mBinding;
     private Subscription subscription;
     @Inject
@@ -53,8 +55,9 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
     }
 
     @Override
@@ -152,5 +155,15 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
             mBinding.etNewPwd.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
         }
         isShowPwd = !isShowPwd;
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

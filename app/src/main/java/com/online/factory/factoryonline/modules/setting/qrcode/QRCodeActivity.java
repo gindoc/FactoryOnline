@@ -6,10 +6,12 @@ import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityQrcodeBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.squareup.picasso.Picasso;
@@ -25,7 +27,7 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class QRCodeActivity extends BaseActivity<QRCodeContract.View, QRCodePresenter> implements QRCodeContract.View {
+public class QRCodeActivity extends BaseActivity<QRCodeContract.View, QRCodePresenter> implements QRCodeContract.View, TitleBar.OnTitleBarClickListener {
     private ActivityQrcodeBinding mBinding;
 
     @Inject
@@ -44,8 +46,10 @@ public class QRCodeActivity extends BaseActivity<QRCodeContract.View, QRCodePres
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
+                .setTransparentStatusbar(true)
                 .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         int qrcodeDimen = resources.getDimensionPixelSize(R.dimen.x150);
         mPresenter.createQRCode(qrcodeDimen,qrcodeDimen);
     }
@@ -75,5 +79,15 @@ public class QRCodeActivity extends BaseActivity<QRCodeContract.View, QRCodePres
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, QRCodeActivity.class);
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

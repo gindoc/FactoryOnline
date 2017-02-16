@@ -10,6 +10,7 @@ import android.view.View;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.ActivityRentTypeBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -28,7 +29,7 @@ import javax.inject.Inject;
  * 作用: 出租方式
  */
 
-public class RentTypeActivity extends BaseActivity implements BaseRecyclerViewAdapter.OnItemClickListener {
+public class RentTypeActivity extends BaseActivity implements BaseRecyclerViewAdapter.OnItemClickListener, TitleBar.OnTitleBarClickListener {
     public static final String SELECTED_RENT_TYPE = "selectedRentType";
     private ActivityRentTypeBinding mBinding;
     private List<String> rentTypes = new ArrayList<>();
@@ -49,9 +50,11 @@ public class RentTypeActivity extends BaseActivity implements BaseRecyclerViewAd
         StatusBarUtils.from(this)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         rentTypes.addAll(Arrays.asList(getResources().getStringArray(R.array.rent_type)));
 
         initRecyclerView();
@@ -86,5 +89,15 @@ public class RentTypeActivity extends BaseActivity implements BaseRecyclerViewAd
         setResult(RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityRecordBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -22,7 +24,7 @@ import timber.log.Timber;
  * 作用:
  */
 
-public class RecordActivity extends BaseActivity<RecordContract.View, RecordPresenter> implements RecordContract.View {
+public class RecordActivity extends BaseActivity<RecordContract.View, RecordPresenter> implements RecordContract.View, TitleBar.OnTitleBarClickListener {
 
     @Inject
     RecordPresenter mPresenter;
@@ -40,8 +42,10 @@ public class RecordActivity extends BaseActivity<RecordContract.View, RecordPres
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setTransparentStatusbar(true)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
     }
 
     @Override
@@ -57,5 +61,15 @@ public class RecordActivity extends BaseActivity<RecordContract.View, RecordPres
     @Override
     public void showError(String error) {
         Timber.e(error);
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

@@ -22,6 +22,7 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.CustomDialog;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.data.local.SharePreferenceKey;
 import com.online.factory.factoryonline.databinding.ActivityPublishRentalBinding;
 import com.online.factory.factoryonline.models.Area;
@@ -50,7 +51,8 @@ import javax.inject.Inject;
 /**
  * Created by cwenhui on 2016/10/19.
  */
-public class PublishRentalActivity extends BaseActivity<PublishRentalContract.View, PublishRentalPresenter> implements PublishRentalContract.View, OnGetGeoCoderResultListener {
+public class PublishRentalActivity extends BaseActivity<PublishRentalContract.View, PublishRentalPresenter> implements PublishRentalContract.View,
+        OnGetGeoCoderResultListener, TitleBar.OnTitleBarClickListener {
     public static final String REQUEST_CODE = "requestCode";
     public static final int TO_PHOTO_WALL = 68;
     public static final int TO_PHOTO_SELECTED = 69;
@@ -82,8 +84,10 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.llTitle)
+                .setTransparentStatusbar(true)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         initView();
         mBinding.setView(this);
 
@@ -386,5 +390,15 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
     protected void onDestroy() {
         geoCoder.destroy();
         super.onDestroy();
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+
     }
 }

@@ -15,6 +15,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityTagBinding;
+import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.io.Serializable;
@@ -40,12 +41,17 @@ public class TagActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_tag);
         mBinding.setView(this);
+        StatusBarUtils.from(this)
+                .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
+                .setActionbarView(mBinding.viewTitle)
+                .process();
         initTags();
     }
 
     private void initTags() {
         selectedTag.addAll(getIntent().getStringArrayListExtra(SELECTED_TAG));
-        for (int i=1;i<mBinding.rlContainer.getChildCount();i++) {
+        for (int i=2;i<mBinding.rlContainer.getChildCount();i++) {      // 从2开始，避免ClassCastException
             CheckBox checkBox = (CheckBox) mBinding.rlContainer.getChildAt(i);
             if (selectedTag.contains(checkBox.getText())) {
                 checkBox.setChecked(true);

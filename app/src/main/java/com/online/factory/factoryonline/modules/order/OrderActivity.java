@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityOrderBinding;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -33,7 +34,7 @@ import timber.log.Timber;
  * 作用:
  */
 
-public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresenter> implements OrderContract.View, View.OnTouchListener {
+public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresenter> implements OrderContract.View, View.OnTouchListener, TitleBar.OnTitleBarClickListener {
     private ActivityOrderBinding mBinding;
 
     @Inject
@@ -48,8 +49,10 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
 
         StatusBarUtils.from(this)
                 .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
                 .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
 
         mBinding.radioGroup.getChildAt(0).setOnTouchListener(this);
         mBinding.radioGroup.getChildAt(1).setOnTouchListener(this);
@@ -100,7 +103,18 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
         return false;
     }
 
-    public void submit(){
+    @Override
+    public void submitSuccessful() {
+        finish();
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
         String description = mBinding.etDescription.getText().toString();
         int checkedId = mBinding.radioGroup.getCheckedRadioButtonId();
         if (TextUtils.isEmpty(description.trim())) {
@@ -121,10 +135,5 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
         }else {
             mPresenter.publishNeededMessages(description, mBinding.etInputTime.getText().toString());
         }
-    }
-
-    @Override
-    public void submitSuccessful() {
-        finish();
     }
 }

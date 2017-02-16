@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.DividerItemDecoration;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityPublicationBinding;
@@ -33,7 +34,7 @@ import javax.inject.Inject;
  */
 
 public class PublicationActivity extends BaseActivity<PublicationContract.View, PublicationPresenter> implements PublicationContract.View,
-        SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+        SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener, TitleBar.OnTitleBarClickListener {
 
     @Inject
     PublicationPresenter mPresenter;
@@ -59,8 +60,10 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
                 //白底黑字状态栏
                 .setLightStatusBar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setTransparentStatusbar(true)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
 
         initRecyclerView();
 
@@ -134,5 +137,14 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
         intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, wantedMessage);
         startActivity(intent);
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
     }
 }

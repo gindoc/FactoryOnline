@@ -3,7 +3,6 @@ package com.online.factory.factoryonline.modules.main;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,16 +17,10 @@ import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
-import com.online.factory.factoryonline.modules.translucent.publish.TranslucentPublishActivity;
-import com.online.factory.factoryonline.utils.BitmapManager;
-import com.online.factory.factoryonline.utils.FastBlurUtil;
-import com.online.factory.factoryonline.utils.Saver;
 
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
-
-    private static final int TO_TRANSLUCENT_PUBLISH_ACTIVITY = 101;
     private ActivityMainBinding mBinding;
     private long mExitTime;
     @Inject
@@ -70,29 +63,22 @@ public class MainActivity extends BaseActivity {
         showHideFragment(homeFragment, userFragment);
     }
 
-    public void toPublish(View view) {
-        if (Saver.getLoginState()) {
-            Toast.makeText(this, "尚未登录，无法发布信息~~", Toast.LENGTH_SHORT).show();
-            return;
-        }
+    public void toPublish(final View view) {
+        mLoginContext.openTransparentPublish(this);
         view.setEnabled(false);
-        Bitmap blurBackground = BitmapManager.screenShot(this);
-        blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);
-        blurBackground = FastBlurUtil.doBlur(blurBackground, 8, true);
-        Intent intent = TranslucentPublishActivity.getStartIntent(this, blurBackground);
-        startActivityForResult(intent, TO_TRANSLUCENT_PUBLISH_ACTIVITY);
-        overridePendingTransition(R.anim.no_anim, R.anim.no_animation);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (view != null) {
+                    view.setEnabled(true);
+                }
+            }
+        }, 500);
     }
 
     public void onClickUser(View view) {
         showHideFragment(userFragment, recommendFragment);
         showHideFragment(userFragment, homeFragment);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        mBinding.bottomTab.ivPublish.setEnabled(true);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
