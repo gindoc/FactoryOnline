@@ -148,6 +148,7 @@
                 android:drawableLeft="@drawable/ic_new_pwd"
                 android:drawablePadding="@dimen/x10"
                 android:hint="请再次输入新密码"
+                android:inputType="textPassword"
                 android:paddingLeft="@dimen/x10"
                 android:textColor="#424242"
                 android:textColorHint="#cdcdcd"

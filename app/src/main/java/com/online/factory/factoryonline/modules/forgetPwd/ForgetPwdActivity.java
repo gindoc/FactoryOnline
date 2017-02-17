@@ -141,7 +141,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
 
     @Override
     protected void onDestroy() {
-        if (subscription!=null&&subscription.isUnsubscribed()) {
+        if (subscription!=null&&!subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
         super.onDestroy();

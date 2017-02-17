@@ -40,7 +40,6 @@ public class SmsLoginFragment extends BaseFragment<SmsLoginContract.View, SmsLog
     @Inject
     @Named("device_id")
     String device_id;
-    private CountDownTimer mCountDownTimer;
     private Subscription subscription;
 
     @Inject
@@ -147,7 +146,7 @@ public class SmsLoginFragment extends BaseFragment<SmsLoginContract.View, SmsLog
 
     @Override
     public void onDestroy() {
-        if (subscription!=null&&subscription.isUnsubscribed()) {
+        if (subscription!=null&&!subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
         super.onDestroy();
