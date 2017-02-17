@@ -98,6 +98,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
         <activity android:name=".modules.browseHistory.BrowseHistoryActivity" />
         <activity android:name=".modules.feedback.FeedbackActivity" />
+        <activity android:name=".modules.orderRecord.OrderRecordActivity" />
 
         <activity
             android:name=".WBShareActivity"

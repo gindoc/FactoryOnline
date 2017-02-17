@@ -89,7 +89,9 @@ public class DataManagerModule {
                 fileName = "Cities.json";
             } else if (path.matches("^(/areas)")){
                 fileName = "Areas.json";
-            } else{
+            } else if (path.matches("^(/order/record)")){
+                fileName = "OrderRecord.json";
+            }else{
                 fileName = "SlideUrl.json";
             }
             reader = new BufferedReader(new InputStreamReader(assetManager.open(fileName)));

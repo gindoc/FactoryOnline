@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.FragmentModifyPwdBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -34,7 +35,7 @@ import timber.log.Timber;
  * 作用:
  */
 
-public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, ModifyPwdPresenter> implements ModifyPwdContract.View {
+public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, ModifyPwdPresenter> implements ModifyPwdContract.View, TitleBar.OnTitleBarClickListener {
     public static final String PHONE_NUM = "PHONE_NUM";
     private FragmentModifyPwdBinding mBinding;
     private Subscription subscription;
@@ -60,9 +61,11 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
         StatusBarUtils.from((Activity) getContext())
                 //白底黑字状态栏
                 .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
 
         mBinding.etPhonenum.setText(getArguments().getString(PHONE_NUM));
 
@@ -81,21 +84,6 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
 
     @Override
     public void showError(String error) {
-
-    }
-
-    public void submit() {
-        try {
-            String phoneNum = mBinding.etPhonenum.getText().toString();
-            String verifyCode = mBinding.etVerificationcode.getText().toString();
-            String newPwd = mBinding.etNewPwd.getText().toString();
-            Validate.validatePhoneNum(phoneNum);
-            if (TextUtils.isEmpty(verifyCode)) throw new Exception("请输入验证码");
-            if (TextUtils.isEmpty(newPwd)) throw new Exception("请输入新密码");
-            mPresenter.modifyPwd(newPwd, verifyCode);
-        } catch (Exception e) {
-            ToastUtil.show(getContext(), e.getMessage());
-        }
     }
 
     public void getVerifyCode(){
@@ -149,4 +137,23 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
         super.onDestroyView();
     }
 
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+        try {
+            String phoneNum = mBinding.etPhonenum.getText().toString();
+            String verifyCode = mBinding.etVerificationcode.getText().toString();
+            String newPwd = mBinding.etNewPwd.getText().toString();
+            Validate.validatePhoneNum(phoneNum);
+            if (TextUtils.isEmpty(verifyCode)) throw new Exception("请输入验证码");
+            if (TextUtils.isEmpty(newPwd)) throw new Exception("请输入新密码");
+            mPresenter.modifyPwd(newPwd, verifyCode);
+        } catch (Exception e) {
+            ToastUtil.show(getContext(), e.getMessage());
+        }
+    }
 }

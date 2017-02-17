@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.CustomDialog;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LogOutState;
@@ -35,7 +36,8 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View, PersonalInfoPresenter> implements PersonalInfoContract.View {
+public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View, PersonalInfoPresenter> implements PersonalInfoContract.View,
+        TitleBar.OnTitleBarClickListener {
     private static final int MODIFY_NAME_REQUEST_CODE = 199;
     private static final int MODIFY_PWD_REQUEST_CODE = 200;
     private static final int SELECT_IMAGE_REQUEST_CODE = 201;
@@ -78,9 +80,11 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
         StatusBarUtils.from(getActivity())
                 //白底黑字状态栏
                 .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
         return mBinding.getRoot();
     }
 
@@ -180,6 +184,16 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     @Override
     public void showError(String error) {
+
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
 
     }
 }

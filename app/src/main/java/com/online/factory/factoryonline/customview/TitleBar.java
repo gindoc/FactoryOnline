@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -45,23 +46,27 @@ public class TitleBar extends FrameLayout {
 
         resources = getResources();
         defaultColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null);
+        float titleSize = resources.getDimension(R.dimen.x16);
+        float leftSize = resources.getDimension(R.dimen.x14);
+        float rightSize = resources.getDimension(R.dimen.x14);
+
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
 
         titleText = typedArray.getText(R.styleable.TitleBar_title_name);
         titleTextColor = typedArray.getColor(R.styleable.TitleBar_title_text_color, defaultColor);
-        titleTextSize = typedArray.getDimension(R.styleable.TitleBar_title_text_size,0);
+        titleTextSize = typedArray.getDimension(R.styleable.TitleBar_title_text_size,titleSize);
         titleVisible = typedArray.getBoolean(R.styleable.TitleBar_title_visible, false);
 
         leftText = typedArray.getString(R.styleable.TitleBar_left_text);
         leftTextColor = typedArray.getColor(R.styleable.TitleBar_left_text_color, defaultColor );
-        leftTextSize = typedArray.getDimension(R.styleable.TitleBar_left_text_size, 0);
+        leftTextSize = typedArray.getDimension(R.styleable.TitleBar_left_text_size, leftSize);
         leftDrawablePadding = typedArray.getDimensionPixelOffset(R.styleable.TitleBar_left_drawable_padding, 0);
         leftTextDrawable = typedArray.getDrawable(R.styleable.TitleBar_left_text_drawable);
         leftVisible = typedArray.getBoolean(R.styleable.TitleBar_left_text_visible, false);
 
         rightText = typedArray.getText(R.styleable.TitleBar_right_text);
         rightTextColor = typedArray.getColor(R.styleable.TitleBar_right_text_color, defaultColor);
-        rightTextSize = typedArray.getDimension(R.styleable.TitleBar_right_text_size, 0);
+        rightTextSize = typedArray.getDimension(R.styleable.TitleBar_right_text_size, rightSize);
         rightDrawablePadding = typedArray.getDimensionPixelOffset(R.styleable.TitleBar_right_drawable_padding, 0);
         rightTextDrawable = typedArray.getDrawable(R.styleable.TitleBar_right_text_drawable);
         rightVisible = typedArray.getBoolean(R.styleable.TitleBar_right_text_visible, false);
@@ -75,19 +80,19 @@ public class TitleBar extends FrameLayout {
 
         tvTitle.setText(titleText);
         tvTitle.setTextColor(titleTextColor);
-        tvTitle.setTextSize(titleTextSize);
+        tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, titleTextSize);
         tvTitle.setVisibility(titleVisible ? VISIBLE : GONE);
 
         tvLeft.setText(leftText);
         tvLeft.setTextColor(leftTextColor);
-        tvLeft.setTextSize(leftTextSize);
+        tvLeft.setTextSize(TypedValue.COMPLEX_UNIT_PX, leftTextSize);
         tvLeft.setCompoundDrawablePadding(leftDrawablePadding);
         tvLeft.setCompoundDrawablesWithIntrinsicBounds(leftTextDrawable, null, null, null);
         tvLeft.setVisibility(leftVisible ? VISIBLE : GONE);
 
         tvRight.setText(rightText);
         tvRight.setTextColor(rightTextColor);
-        tvRight.setTextSize(rightTextSize);
+        tvRight.setTextSize(TypedValue.COMPLEX_UNIT_PX, rightTextSize);
         tvRight.setCompoundDrawablePadding(rightDrawablePadding);
         tvRight.setCompoundDrawablesWithIntrinsicBounds(null, null, rightTextDrawable, null);
         tvRight.setVisibility(rightVisible ? VISIBLE : GONE);

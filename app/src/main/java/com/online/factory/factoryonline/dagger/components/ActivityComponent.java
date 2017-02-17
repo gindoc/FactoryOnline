@@ -16,6 +16,7 @@ import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.dagger.modules.ActivityModule;
 import com.online.factory.factoryonline.dagger.modules.FragmentModule;
 import com.online.factory.factoryonline.modules.order.OrderActivity;
+import com.online.factory.factoryonline.modules.orderRecord.OrderRecordActivity;
 import com.online.factory.factoryonline.modules.personalInfo.PersonalInfoActivity;
 import com.online.factory.factoryonline.modules.publication.PublicationActivity;
 import com.online.factory.factoryonline.modules.publishRental.PrePay.PrePayActivity;
@@ -95,4 +96,6 @@ public interface ActivityComponent {
     void inject(BrowseHistoryActivity browseHistoryActivity);
 
     void inject(FeedbackActivity feedbackActivity);
+
+    void inject(OrderRecordActivity orderRecordActivity);
 }

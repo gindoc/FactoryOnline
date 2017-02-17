@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.online.factory.factoryonline.modules.orderRecord.OrderRecordViewModel" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/x15"
+        android:paddingRight="@dimen/x16"
+        android:background="@android:color/white"
+        android:onClick="@{viewModel::toogleDescription}"
+        android:paddingTop="@dimen/x13">
+
+        <TextView
+            android:id="@+id/tv_publish_time"
+            android:layout_width="wrap_content"
+            android:text="@{viewModel.publishTime}"
+            android:layout_height="wrap_content"
+            android:textColor="#808080"
+            android:textSize="@dimen/x13"
+            tool:text="发布时间：2017/2/15" />
+
+        <TextView
+            android:id="@+id/tv_match_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.matchRange}"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/red_rectangle_background"
+            android:gravity="center"
+            android:paddingBottom="@dimen/x2"
+            android:paddingLeft="@dimen/x6"
+            android:paddingRight="@dimen/x6"
+            android:paddingTop="@dimen/x2"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/x11"
+            tool:text="匹配中:37天" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_match_range"
+            android:layout_marginTop="@dimen/x7"
+            android:ellipsize="end"
+            android:lineSpacingExtra="@dimen/x10"
+            android:textSize="@dimen/x14"
+            android:text="@{viewModel.description}"
+            android:textColor="#424242"
+            android:maxLines="@{viewModel.arrowVisible?2:Integer.MAX_VALUE}"
+            tool:text="大岭山大塘工业园新2500平方求组.最好带办公室.要贴近高速路口" />
+
+        <ImageView
+            android:id="@+id/iv_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_description"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/x8"
+            android:visibility="@{viewModel.arrowVisible?View.VISIBLE:View.GONE}"
+            android:src="@drawable/ic_arrow_down_outline" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_below="@id/iv_arrow"
+            android:layout_marginTop="@dimen/x8"
+            android:background="#ededed" />
+    </RelativeLayout>
+</layout>

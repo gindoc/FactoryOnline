@@ -12,6 +12,7 @@ import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
+import com.online.factory.factoryonline.models.response.OrderRecordResponse;
 import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
 import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
@@ -226,4 +227,6 @@ public interface FactoryApi {
     @POST("feedbacks/app/")
     Observable<Response> feedback(@Body RequestBody body);
 
+    @GET("/order/record")
+    Observable<OrderRecordResponse> getOrderRecord();
 }

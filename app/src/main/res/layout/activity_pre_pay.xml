@@ -19,13 +19,11 @@
             app:title_name="押金选择"
             android:background="@android:color/white"
             app:title_visible="true"
-            app:title_text_size="@dimen/x6"
             app:title_text_color="#424242"
             app:left_text="返回"
             app:left_text_color="@color/colorPrimary"
             app:left_text_visible="true"
             app:left_text_drawable="@drawable/ic_arrow_left_green"
-            app:left_text_size="@dimen/x5"
             app:left_drawable_padding="@dimen/x5"
             android:layout_height="@dimen/header_height"/>
 

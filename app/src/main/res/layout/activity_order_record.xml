@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="view"
-            type="com.online.factory.factoryonline.modules.publishRental.RentType.RentTypeActivity" />
-    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +10,7 @@
         <com.online.factory.factoryonline.customview.TitleBar
             android:id="@+id/rl_title"
             android:layout_width="match_parent"
-            app:title_name="出租方式"
+            app:title_name="预定记录"
             android:background="@android:color/white"
             app:title_visible="true"
             app:title_text_color="#424242"
@@ -29,9 +23,8 @@
 
         <com.online.factory.factoryonline.customview.recyclerview.SuperRecyclerView
             android:id="@+id/recyclerView"
+            android:background="#f5f5f5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </layout>

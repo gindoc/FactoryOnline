@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.base.BaseFragment;
+import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.FragmentModifyNameBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
@@ -22,7 +23,8 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, ModifyNamePresenter> implements ModifyNameContract.View {
+public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, ModifyNamePresenter> implements ModifyNameContract.View,
+        TitleBar.OnTitleBarClickListener {
     public static final String USER_NAME = "USER_NAME";
     private FragmentModifyNameBinding mBinding;
 
@@ -48,9 +50,11 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
         StatusBarUtils.from((Activity) getContext())
                 //白底黑字状态栏
                 .setLightStatusBar(true)
+                .setTransparentStatusbar(true)
                 //设置toolbar,actionbar等view
-                .setActionbarView(mBinding.rlTopBar)
+                .setActionbarView(mBinding.rlTitle)
                 .process();
+        mBinding.rlTitle.setOnTitleBarClickListener(this);
 
         mBinding.etUsername.setText(getArguments().getString(USER_NAME));
 
@@ -69,15 +73,6 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
 
     @Override
     public void showError(String error) {
-
-    }
-
-    public void modifyName() {
-        if (!TextUtils.isEmpty(mBinding.etUsername.getText())) {
-            mPresenter.modifyName(mBinding.etUsername.getText().toString());
-        } else {
-            ToastUtil.show(getContext(), "请输入新用户名");
-        }
     }
 
     public void clearName() {
@@ -86,7 +81,20 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
 
     @Override
     public void finish() {
-        ToastUtil.show(getContext(), "修改名字成功");
         pop();
+    }
+
+    @Override
+    public void onLeftButtonClickListener(View view) {
+        finish();
+    }
+
+    @Override
+    public void onRightButtonClickListener(View view) {
+        if (!TextUtils.isEmpty(mBinding.etUsername.getText())) {
+            mPresenter.modifyName(mBinding.etUsername.getText().toString());
+        } else {
+            ToastUtil.show(getContext(), "请输入新用户名");
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.online.factory.factoryonline.data.remote.Consts;
 import com.online.factory.factoryonline.modules.browseHistory.BrowseHistoryActivity;
 import com.online.factory.factoryonline.modules.collection.CollectionActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
+import com.online.factory.factoryonline.modules.orderRecord.OrderRecordActivity;
 import com.online.factory.factoryonline.modules.personalInfo.PersonalInfoActivity;
 import com.online.factory.factoryonline.modules.publication.PublicationActivity;
 import com.online.factory.factoryonline.modules.setting.SettingActivity;
@@ -55,7 +56,7 @@ public class LogInState implements UserState {
     @Override
     public void openRecord(Context context, int type) {
         if (type == Consts.TYPE_USER) {
-//            context.startActivity();
+            context.startActivity(OrderRecordActivity.getStartIntent(context));
         }else {
             context.startActivity(PublicationActivity.getStartIntent(context));
         }
