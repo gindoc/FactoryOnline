@@ -4,21 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityTagBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +67,7 @@ public class TagActivity extends BaseActivity {
 
     public void finishSelected(View view) {
         if (selectedTag.size() > 3) {
-            Toast.makeText(this, "最多只能选三个标签", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "最多只能选三个标签");
             return;
         }
         Intent intent = new Intent();

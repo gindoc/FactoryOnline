@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -30,12 +29,12 @@ import com.online.factory.factoryonline.modules.FactoryDetail.report.ReportActiv
 import com.online.factory.factoryonline.utils.CommunicationUtil;
 import com.online.factory.factoryonline.utils.GeoHash;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -259,7 +258,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     public void phoneToPublish() {
         if (userPublic==null) {
-            Toast.makeText(this, "发布人信息不全", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "发布人信息不全");
             return;
         }
         phone(userPublic.getPhone_num());
@@ -267,7 +266,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     private void phone(final String phoneNum){
         if (TextUtils.isEmpty(phoneNum)) {
-            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "没有联系电话");
             return;
         }
         performCodeWithPermission(getString(R.string.permission_call_rationale), PERMISSION_CALL_PHONE,
@@ -292,7 +291,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     public void smsToPublish(){
         if (userPublic==null) {
-            Toast.makeText(this, "发布人信息不全", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "发布人信息不全");
             return;
         }
         sms(userPublic.getPhone_num());
@@ -300,7 +299,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     private void sms(final String phoneNum){
         if (TextUtils.isEmpty(phoneNum)) {
-            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "没有联系电话");
             return;
         }
         performCodeWithPermission(getString(R.string.permission_send_sms_rationale), PERMISSION_SEND_SMS,

@@ -18,6 +18,7 @@ import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentAgentCollectionBinding;
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -106,12 +107,11 @@ public class AgentCollectionFragment extends BaseFragment<AgentCollectionContrac
 
     @Override
     public void showError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getContext(), error);
     }
 
     @Override
     public void onRefresh() {
-//        Toast.makeText(getContext(), "共"+count+"条数据",Toast.LENGTH_SHORT).show();
         mBinding.swipe.setRefreshing(false);
     }
 

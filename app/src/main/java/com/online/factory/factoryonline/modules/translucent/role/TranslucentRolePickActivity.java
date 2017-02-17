@@ -6,15 +6,13 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
-import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.base.BaseTranslucentActivity;
 import com.online.factory.factoryonline.databinding.ActivityTranslucentRolePickBinding;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 /**
@@ -66,7 +64,7 @@ public class TranslucentRolePickActivity extends BaseTranslucentActivity<RolePic
 
     @Override
     public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, error);
     }
 
     public void switchRole(int type) {

@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -16,9 +15,9 @@ import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityLoginBinding;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
-import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -109,7 +108,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     @Override
     public void showError(String error) {
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, error);
     }
 
     @Override

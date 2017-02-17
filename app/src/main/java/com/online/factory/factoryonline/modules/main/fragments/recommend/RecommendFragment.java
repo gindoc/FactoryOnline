@@ -31,6 +31,7 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -310,8 +311,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Override
     public void showError(String error) {
-        Timber.e(error);
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getContext(), error);
     }
 
     @Override
@@ -404,7 +404,7 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     @Override
     public void onRefresh() {
         if (isFilter) {
-            Toast.makeText(getContext(), "共有" + filterCount + "条信息", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), "共有" + filterCount + "条信息");
             mBinding.swipe.setRefreshing(false);
         } else {
             mPresenter.requestRecommendListByNet(downPage);
@@ -432,15 +432,15 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         CharSequence max = binding.maximum.getText();
         CharSequence min = binding.minimum.getText();
         if (TextUtils.isEmpty(min)) {
-            Toast.makeText(getContext(), "请填写最小值", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), "请填写最小值");
             return false;
         }
         if (TextUtils.isEmpty(max)) {
-            Toast.makeText(getContext(), "请填写最大值", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), "请填写最大值");
             return false;
         }
         if (Integer.parseInt(max.toString()) < Integer.parseInt(min.toString())) {
-            Toast.makeText(getContext(), "请输入正确的值（最大值不能小于最小值）", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), "请输入正确的值（最大值不能小于最小值）");
             return false;
         }
         mBinding.dropDownMenu.setTabText(min + "~" + max);

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -17,6 +16,7 @@ import com.online.factory.factoryonline.databinding.ActivityAreaAgentBinding;
 import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.ProMedium;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -78,7 +78,7 @@ public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter>
 
     @Override
     public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, error);
     }
 
     public static Intent getStartIntent(Context context, Branch branch) {

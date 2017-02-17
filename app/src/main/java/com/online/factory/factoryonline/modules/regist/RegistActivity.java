@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -16,6 +15,7 @@ import com.online.factory.factoryonline.databinding.ActivityRegistBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.Validate;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -121,7 +121,7 @@ public class RegistActivity extends BaseActivity<RegistContract.View, RegistPres
 
     @Override
     public void showError(String error) {
-        Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, error);
     }
 
     @Override

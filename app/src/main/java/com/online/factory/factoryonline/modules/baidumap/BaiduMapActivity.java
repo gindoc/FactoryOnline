@@ -40,6 +40,7 @@ import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActiv
 import com.online.factory.factoryonline.modules.locate.fragments.MyLocationListener;
 import com.online.factory.factoryonline.utils.GeoHash;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -256,6 +257,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
 
     @Override
     public void showError(String error) {
+        ToastUtil.show(this, error);
     }
 
     @Override
@@ -273,7 +275,7 @@ public class BaiduMapActivity extends BaseActivity<BaiduMapConstract.View, Baidu
         if (!TextUtils.isEmpty(mNext)) {
             mPresenter.requestWantedMessagesByNet(mNext, clickedAreaId);
         }else {
-            Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            showError("没有更多数据了");
             mBinding.recyclerView.hideLoadingFooter();
         }
     }

@@ -13,6 +13,7 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.databinding.FragmentModifyPwdBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.Validate;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -93,7 +94,7 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
             if (TextUtils.isEmpty(newPwd)) throw new Exception("请输入新密码");
             mPresenter.modifyPwd(newPwd, verifyCode);
         } catch (Exception e) {
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), e.getMessage());
         }
     }
 
@@ -103,7 +104,7 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
             Validate.validatePhoneNum(phoneNum);
             mPresenter.getVerifyCode(phoneNum);
         } catch (ValidateException ve) {
-            Toast.makeText(getContext(), ve.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), ve.getMessage());
         }
     }
 
@@ -136,7 +137,7 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
 
     @Override
     public void finish() {
-        Toast.makeText(getContext(), "修改密码成功", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getContext(), "修改密码成功");
         pop();
     }
 

@@ -9,11 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
-import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
@@ -21,6 +19,7 @@ import com.online.factory.factoryonline.databinding.ActivityPublicationBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -115,7 +114,7 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
     @Override
     public void onRefresh() {
         mBinding.swipe.setRefreshing(false);
-        Toast.makeText(this, "共" + count + "条信息", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, "共" + count + "条信息");
     }
 
     @Override
@@ -124,7 +123,7 @@ public class PublicationActivity extends BaseActivity<PublicationContract.View, 
         if (!TextUtils.isEmpty(next)) {
             mPresenter.requestPublications(next);
         }else {
-            Toast.makeText(this, "没有更多数据了", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "没有更多数据了");
             mBinding.recyclerView.setIsLoading(false);
             mBinding.swipe.setRefreshing(false);
         }

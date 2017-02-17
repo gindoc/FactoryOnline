@@ -28,6 +28,7 @@ import com.online.factory.factoryonline.modules.publishRental.PublishRentalActiv
 import com.online.factory.factoryonline.utils.FileUtils;
 import com.online.factory.factoryonline.utils.ScanImageUtils;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -165,7 +166,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     @Override
     public void showError(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getContext(), error);
     }
 
     @Override
@@ -184,7 +185,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
 
     private void toCameraPage() {
         if (mAdapter.getUploadedItem().size() + mAdapter.getReadyToUpload().size() >= 9) {
-            Toast.makeText(getContext(), "最多选择9张图片", Toast.LENGTH_SHORT).show();
+            showError("最多选择9张图片");
             return;
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -200,16 +201,16 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
         if (requestCode == READ_PERMISSION_REQUEST_CODE) {
             mPresenter.getPhotos();
         } else if (requestCode == WRITE_PERMISSION_REQUEST_CODE) {
-            Toast.makeText(getContext(), "读写权限已打开，可以开始拍照了", Toast.LENGTH_SHORT).show();
+            showError("读写权限已打开，可以开始拍照了");
             mPresenter.getPhotos();
         } else if (requestCode == ScanImageUtils.CHOOSE_CAPTURE) {
             if (resultCode != Activity.RESULT_OK) {
-                Toast.makeText(getContext(), "未拍摄有图片...", Toast.LENGTH_SHORT).show();
+                showError("未拍摄有图片...");
                 return;
             }
             File picture = new File(mImageCapturePath);
             if (picture.length() > 0) {
-                Toast.makeText(getContext(), picture.toString(), Toast.LENGTH_SHORT).show();
+                showError("picture.toString()");
                 ArrayList<String> readyToUpload = (ArrayList<String>) mAdapter.getReadyToUpload();
                 readyToUpload.add(mImageCapturePath);
                 mPresenter.uploadImage(readyToUpload);
@@ -294,7 +295,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
     @Override
     public void initRecyclerview(File maxImgDir, int imgCount, List<ImageFolderBean> beanList) {
         if (maxImgDir == null) {
-            Toast.makeText(getContext(), "擦，一张图片没扫描到", Toast.LENGTH_SHORT).show();
+            showError("一张图片没扫描到~~");
             return;
         }
         mAdapter.setData(Arrays.asList(maxImgDir.list()));

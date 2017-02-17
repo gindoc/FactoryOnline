@@ -14,7 +14,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -25,6 +24,7 @@ import com.online.factory.factoryonline.databinding.ActivitySearchBinding;
 import com.online.factory.factoryonline.models.SearchResult;
 import com.online.factory.factoryonline.modules.search.agentResult.SearchResultActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -36,8 +36,6 @@ import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.subjects.BehaviorSubject;
-import rx.subjects.Subject;
 import timber.log.Timber;
 
 /**
@@ -116,7 +114,7 @@ public class SearchActivity extends BaseActivity<SearchContract.View, SearchPres
             mBinding.tvAgentMsgCount.setText(agentResult.getCount() + "");
         } else {
             mPresenter.loadSearchHistory();
-            Toast.makeText(this, "搜索不到相关结果", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "搜索不到相关结果");
         }
     }
 

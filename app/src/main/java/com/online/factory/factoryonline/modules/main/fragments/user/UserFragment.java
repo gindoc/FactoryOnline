@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
@@ -23,6 +22,7 @@ import com.online.factory.factoryonline.modules.translucent.role.TranslucentRole
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FastBlurUtil;
 import com.online.factory.factoryonline.utils.Saver;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -82,7 +82,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
 
     @Override
     public void refreshWhenLogOut() {
-        Toast.makeText(getContext(), "注销成功", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getContext(), "注销成功");
         mLoginContext.setmState(new LogOutState());
         mBinding.tvUsername.setText("");
         mBinding.ivHeadPhoto.setImageResource(R.drawable.boy);
@@ -122,7 +122,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
 
     public void openRolePick() {
         if (!Saver.getLoginState()){
-            Toast.makeText(getContext(), "只有登录后才可以进行此操作哦~~",Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), "只有登录后才可以进行此操作哦~~");
             return;
         }
         Activity activity = getActivity();

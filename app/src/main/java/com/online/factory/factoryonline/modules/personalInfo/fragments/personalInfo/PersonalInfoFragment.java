@@ -24,6 +24,7 @@ import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -147,7 +148,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     @Override
     public void refreshWhenLogOut() {
-        Toast.makeText(getContext(), "注销成功", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getContext(), "注销成功");
         mLoginContext.setmState(new LogOutState());
         getActivity().finish();
     }
@@ -160,7 +161,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     @Override
     public void unLogin() {
-        Toast.makeText(getContext(), "当前未登陆，请先登录", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getContext(), "当前未登陆，请先登录");
         new AlertDialog.Builder(getContext())
                 .setMessage(R.string.unLogin)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {

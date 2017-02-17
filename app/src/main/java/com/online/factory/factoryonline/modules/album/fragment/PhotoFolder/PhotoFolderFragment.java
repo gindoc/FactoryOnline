@@ -18,6 +18,7 @@ import com.online.factory.factoryonline.models.ImageFolderBean;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoWall.PhotoWallFragment;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
@@ -117,7 +118,7 @@ public class PhotoFolderFragment extends BaseFragment<PhotoFolderContract.View, 
     @Override
     public void loadImageFolders() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            Toast.makeText(getContext(), "暂无外部存储", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), "暂无外部存储");
             return;
         }
         mAdapter.setData(mFolderBeens);

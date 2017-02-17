@@ -35,6 +35,7 @@ import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.models.UserPublic;
 import com.online.factory.factoryonline.utils.CommunicationUtil;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.umeng.socialize.ShareAction;
@@ -274,7 +275,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     public void smsToContacter() {
         if (TextUtils.isEmpty(mBinding.tvContactPeoplePhone.getText())) {
-            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "没有联系电话");
             return;
         }
         performCodeWithPermission(getString(R.string.permission_send_sms_rationale), PERMISSION_SEND_SMS,
@@ -295,7 +296,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     public void phoneToContacter() {
         if (TextUtils.isEmpty(mBinding.tvContactPeoplePhone.getText())) {
-            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this,"没有联系电话");
             return;
         }
         performCodeWithPermission(getString(R.string.permission_call_rationale), PERMISSION_CALL_PHONE,

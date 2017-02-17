@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
@@ -37,6 +36,7 @@ import com.online.factory.factoryonline.modules.publishRental.tag.TagActivity;
 import com.online.factory.factoryonline.utils.GeoHash;
 import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.Validate;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -322,13 +322,13 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             publish.setCity_id(305);
             return true;
         } catch (ValidateException e) {
-            Toast.makeText(this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "请输入正确的手机号码");
             return false;
         } catch (NumberFormatException nfe) {
-            Toast.makeText(this, "请输入正确的面积或价格", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "请输入正确的面积或价格");
             return false;
         } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, e.getMessage());
             return false;
         }
     }

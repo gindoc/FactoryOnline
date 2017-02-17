@@ -6,27 +6,21 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityOrderBinding;
-import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
-
-import timber.log.Timber;
 
 /**
  * 作者: GIndoc
@@ -118,13 +112,13 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
         String description = mBinding.etDescription.getText().toString();
         int checkedId = mBinding.radioGroup.getCheckedRadioButtonId();
         if (TextUtils.isEmpty(description.trim())) {
-            Toast.makeText(this, "请描述您需要的厂房内容/详情..(2~400字)", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "请描述您需要的厂房内容/详情..(2~400字)");
             return;
         }else if (description.length() < 2 || description.length() > 400){
-            Toast.makeText(this, "字数不符合要求(2~400字)",Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "字数不符合要求(2~400字)");
             return;
         } else if (checkedId == -1 && TextUtils.isEmpty(mBinding.etInputTime.getText().toString().trim())) {
-            Toast.makeText(this, "请选择匹配时间", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "请选择匹配时间");
             return;
         }
         if (checkedId != -1) {

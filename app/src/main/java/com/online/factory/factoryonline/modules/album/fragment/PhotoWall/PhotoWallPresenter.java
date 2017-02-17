@@ -57,7 +57,7 @@ public class PhotoWallPresenter extends BasePresenter<PhotoWallContract.View> im
     @Override
     public void getPhotos() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            Toast.makeText(context, "暂无外部存储", Toast.LENGTH_SHORT).show();
+            getView().showError("暂无外部存储");
             return;
         }
         getView().showLoadingDialog();

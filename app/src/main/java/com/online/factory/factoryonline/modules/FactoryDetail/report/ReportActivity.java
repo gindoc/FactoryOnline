@@ -8,13 +8,13 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityReportBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -73,7 +73,7 @@ public class ReportActivity extends BaseActivity<ReportContract.View, ReportPres
 
     @Override
     public void feedbackSuccessful() {
-        Toast.makeText(this, "举报成功，静候佳音", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, "举报成功，静候佳音");
         finish();
     }
 
@@ -86,15 +86,15 @@ public class ReportActivity extends BaseActivity<ReportContract.View, ReportPres
     public void onRightButtonClickListener(View view) {
         int checkedId = mBinding.radioGroup.getCheckedRadioButtonId();
         if (checkedId == -1) {
-            Toast.makeText(this, "请选择举报内容", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "请选择举报内容");
             return;
         }
         if (TextUtils.isEmpty(mBinding.etRemark.getText())) {
-            Toast.makeText(this, "既然不满，总得吐槽点什么吧~~~", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "既然不满，总得吐槽点什么吧~~~");
             return;
         }
         if (mBinding.etRemark.getText().toString().length() > 200) {
-            Toast.makeText(this,"最多吐槽200字哦~~", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "最多吐槽200字哦~~");
             return;
         }
         RadioButton radioButton = (RadioButton)findViewById(checkedId);

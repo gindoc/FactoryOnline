@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -16,6 +15,7 @@ import com.online.factory.factoryonline.modules.setting.about.AboutActivity;
 import com.online.factory.factoryonline.modules.setting.copyright.CopyrightActivity;
 import com.online.factory.factoryonline.modules.setting.qrcode.QRCodeActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -67,7 +67,7 @@ public class SettingActivity extends BaseActivity<SettingContract.View, SettingP
 
     @Override
     public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, error);
     }
 
     @Override

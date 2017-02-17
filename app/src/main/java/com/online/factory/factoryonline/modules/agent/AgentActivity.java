@@ -26,6 +26,7 @@ import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.utils.CommunicationUtil;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -70,7 +71,6 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_agent);
         mHeaderBinding = LayoutAgentHeaderBinding.inflate(LayoutInflater.from(this), (ViewGroup) mBinding.getRoot(), false);
         mBinding.setView(this);
-
         StatusBarUtils.from(this)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
@@ -111,7 +111,7 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
 
     @Override
     public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, error);
     }
 
     @Override
@@ -145,7 +145,7 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
 
     public void sms(){
         if (TextUtils.isEmpty(proMedium.getPhone_num())) {
-            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "没有联系电话");
             return;
         }
         performCodeWithPermission(getString(R.string.permission_send_sms_rationale), PERMISSION_SEND_SMS,
@@ -166,7 +166,7 @@ public class AgentActivity extends BaseActivity<AgentContract.View, AgentPresent
 
     public void phone(){
         if (TextUtils.isEmpty(proMedium.getPhone_num())) {
-            Toast.makeText(this, "没有联系电话", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, "没有联系电话");
             return;
         }
         performCodeWithPermission(getString(R.string.permission_call_rationale), PERMISSION_CALL_PHONE,

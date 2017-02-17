@@ -7,11 +7,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.databinding.FragmentModifyNameBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -76,7 +76,7 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
         if (!TextUtils.isEmpty(mBinding.etUsername.getText())) {
             mPresenter.modifyName(mBinding.etUsername.getText().toString());
         } else {
-            Toast.makeText(getContext(), "请输入新用户名", Toast.LENGTH_SHORT).show();
+            ToastUtil.show(getContext(), "请输入新用户名");
         }
     }
 
@@ -86,7 +86,7 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
 
     @Override
     public void finish() {
-        Toast.makeText(getContext(), "修改名字成功", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(getContext(), "修改名字成功");
         pop();
     }
 }

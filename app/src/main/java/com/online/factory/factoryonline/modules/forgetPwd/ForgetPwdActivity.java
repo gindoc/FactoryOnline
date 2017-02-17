@@ -16,6 +16,7 @@ import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityForgetPwdBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.Validate;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -88,7 +89,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
             if (!newPwdAgain.equals(newPwd)) throw new Exception("两次密码不一致，请重新输入");
             mPresenter.modifyPwd(phoneNum, newPwd, verifyCode);
         } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, e.getMessage());
         }
     }
 
@@ -98,7 +99,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
             Validate.validatePhoneNum(phoneNum);
             mPresenter.getVerifyCode(phoneNum);
         } catch (ValidateException ve) {
-            Toast.makeText(this, ve.getMessage(), Toast.LENGTH_SHORT).show();
+            ToastUtil.show(this, ve.getMessage());
         }
     }
 
@@ -130,7 +131,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
     }
 
     public void modifyDone(){
-        Toast.makeText(this, "密码修改完成", Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, "密码修改完成");
         finish();
     }
 

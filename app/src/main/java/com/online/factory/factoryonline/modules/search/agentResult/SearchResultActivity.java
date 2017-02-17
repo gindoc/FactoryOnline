@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -18,6 +17,7 @@ import com.online.factory.factoryonline.databinding.ActivityAgentSearchResultBin
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -82,7 +82,7 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
 
     @Override
     public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        ToastUtil.show(this, error);
     }
 
     @Override
