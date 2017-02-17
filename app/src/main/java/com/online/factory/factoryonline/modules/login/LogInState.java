@@ -1,11 +1,11 @@
 package com.online.factory.factoryonline.modules.login;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
 import com.online.factory.factoryonline.R;
+import com.online.factory.factoryonline.data.remote.Consts;
 import com.online.factory.factoryonline.modules.browseHistory.BrowseHistoryActivity;
 import com.online.factory.factoryonline.modules.collection.CollectionActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
@@ -21,22 +21,10 @@ import com.online.factory.factoryonline.utils.FastBlurUtil;
  */
 
 public class LogInState implements UserState {
-//    @Override
-//    public void openMsg(Context context) {
-//        BaseActivity baseActivity = (BaseActivity) context;
-//        if(baseActivity.findFragment(MsgFragment.class) == null){
-//            baseActivity.startWithPop(MsgFragment.newInstance());
-//        }
-//    }
 
     @Override
     public void openUserDetail(Context context) {
         context.startActivity(PersonalInfoActivity.getStartIntent(context));
-    }
-
-    @Override
-    public void openPublish(Context context) {
-        context.startActivity(PublicationActivity.getStartIntent(context));
     }
 
     @Override
@@ -62,5 +50,14 @@ public class LogInState implements UserState {
         Intent intent = TranslucentPublishActivity.getStartIntent(context, blurBackground);
         context.startActivity(intent);
         context.overridePendingTransition(R.anim.no_anim, R.anim.no_animation);
+    }
+
+    @Override
+    public void openRecord(Context context, int type) {
+        if (type == Consts.TYPE_USER) {
+//            context.startActivity();
+        }else {
+            context.startActivity(PublicationActivity.getStartIntent(context));
+        }
     }
 }

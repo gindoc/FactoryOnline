@@ -23,16 +23,8 @@ public class LoginContext {
         this.mState = mState;
     }
 
-//    public void openMsg(Context context) {
-//        mState.openMsg(context);
-//    }
-
     public void openUserDetail(Context context) {
         mState.openUserDetail(context);
-    }
-
-    public void openPublish(Context context) {
-        mState.openPublish(context);
     }
 
     public void openCollection(Context context) {
@@ -49,5 +41,9 @@ public class LoginContext {
 
     public void openTransparentPublish(MainActivity mainActivity) {
         mState.openTransparentPublish(mainActivity);
+    }
+
+    public void openRecord(Context context, int type) {
+        mState.openRecord(context, type);
     }
 }

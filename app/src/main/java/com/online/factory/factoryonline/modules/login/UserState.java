@@ -10,11 +10,8 @@ import com.online.factory.factoryonline.modules.main.MainActivity;
 
 public interface UserState {
 
-//    void openMsg(Context context);
-
     void openUserDetail(Context context);
 
-    void openPublish(Context context);
 
     void openCollection(Context context);
 
@@ -23,4 +20,6 @@ public interface UserState {
     void openHistory(Context context);
 
     void openTransparentPublish(MainActivity mainActivity);
+
+    void openRecord(Context context, int type);
 }

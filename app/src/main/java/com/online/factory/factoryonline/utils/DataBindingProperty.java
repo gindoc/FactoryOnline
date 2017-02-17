@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.online.factory.factoryonline.R;
+import com.online.factory.factoryonline.data.remote.Consts;
 import com.online.factory.factoryonline.models.User;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -27,7 +28,7 @@ public class DataBindingProperty {
             Picasso.with(imageView.getContext()).load(R.drawable.avatar_user).into(imageView);
             return;
         }
-        int avatar = user.getType() == 1 ? R.drawable.avatar_user : R.drawable.avtar_agent;
+        int avatar = user.getType() == Consts.TYPE_USER ? R.drawable.avatar_user : R.drawable.avtar_agent;
         if (!TextUtils.isEmpty(user.getAvatar())) {
             String decodedUrl = new String(Base64.decodeBase64(user.getAvatar().getBytes()));
             RequestCreator requestCreator = Picasso.with(imageView.getContext())

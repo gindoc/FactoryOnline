@@ -7,6 +7,8 @@
 
         <import type="android.text.TextUtils" />
 
+        <import type="com.online.factory.factoryonline.data.remote.Consts" />
+
         <variable
             name="view"
             type="com.online.factory.factoryonline.modules.main.fragments.user.UserFragment" />
@@ -81,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text='@{user.type==1?"预约":"发布"}'
+                    android:text='@{user.type==Consts.TYPE_USER?"预约":"发布"}'
                     android:textColor="#A0A0A0"
                     android:textSize="@dimen/x11" />
 
@@ -114,7 +116,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tool:src="@drawable/ic_publish_history"
-            android:src='@{user.type==2?@drawable/ic_publish_history:@drawable/ic_order_history}' />
+            android:onClick="@{()->view.record()}"
+            android:src='@{user.type==Consts.TYPE_USER?@drawable/ic_order_history:@drawable/ic_publish_history}' />
 
         <TextView
             android:id="@+id/tv_collection"

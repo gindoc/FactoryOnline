@@ -12,4 +12,7 @@ public class Consts {
     public static final int downToken = 2;
     public static final int manageToken = 3;
 
+    public static final int TYPE_USER = 1;      //用户
+    public static final int TYPE_AGENT = 2;      //专家
+
 }

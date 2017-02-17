@@ -103,10 +103,6 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     public void showError(String error) {
     }
 
-    public void openPublish() {
-        mLoginContext.openPublish(getContext());
-    }
-
     public void openCollection() {
         mLoginContext.openCollection(getContext());
     }
@@ -136,5 +132,12 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
 
     public void openSetting() {
         mLoginContext.openSetting(getContext());
+    }
+
+    public void record(){
+        User user = mBinding.getUser();
+        if (user != null) {
+            mLoginContext.openRecord(getContext(), user.getType());
+        }
     }
 }
