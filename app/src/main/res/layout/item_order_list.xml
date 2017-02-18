@@ -42,7 +42,7 @@
             android:paddingTop="@dimen/x2"
             android:textColor="@android:color/white"
             android:textSize="@dimen/x11"
-            tool:text="匹配中:37天" />
+            tool:text="处理中:37天" />
 
         <TextView
             android:id="@+id/tv_description"

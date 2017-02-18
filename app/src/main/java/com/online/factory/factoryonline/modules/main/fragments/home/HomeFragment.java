@@ -5,11 +5,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -44,9 +46,6 @@ import timber.log.Timber;
 public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter> implements HomeContract.View {
     public static final int PERMISSION_REQUEST_CODE = 199;
     private FragmentHomeBinding mBinding;
-
-//    @Inject
-//    HomeRecyclerViewAdapter mAdapter;
 
     @Inject
     IndexFragment indexFragment;
@@ -131,14 +130,36 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
                 return fragments.size();
             }
 
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return fragments.get(position).getTitle();
-            }
         };
         mBinding.viewpager.setAdapter(pagerAdapter);
         mBinding.tabLayout.setupWithViewPager(mBinding.viewpager);
         mBinding.viewpager.setOffscreenPageLimit(3);
+        for (int i = 0; i < pagerAdapter.getCount(); i++) {
+            TabLayout.Tab tab = mBinding.tabLayout.getTabAt(i);//获得每一个tab
+            tab.setCustomView(R.layout.tab_item);//给每一个tab设置view
+            if (i == 0) {
+                // 设置第一个tab的TextView是被选择的样式
+                tab.getCustomView().findViewById(R.id.view_indicator).setVisibility(View.VISIBLE);//第一个tab被选中
+            }
+            TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tab_text);
+            textView.setText(fragments.get(i).getTitle());//设置tab上的文字
+        }
+        mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tab.getCustomView().findViewById(R.id.view_indicator).setVisibility(View.VISIBLE);
+                mBinding.viewpager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.getCustomView().findViewById(R.id.view_indicator).setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     private void checkPermission() {

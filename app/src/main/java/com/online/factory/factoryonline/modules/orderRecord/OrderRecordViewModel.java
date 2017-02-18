@@ -38,7 +38,7 @@ public class OrderRecordViewModel extends BaseObservable {
     }
 
     public String getMatchRange() {
-        return "匹配中:" + order.getMatchRange() + "天";
+        return "处理中:" + order.getMatchRange() + "天";
     }
 
     public String getDescription() {

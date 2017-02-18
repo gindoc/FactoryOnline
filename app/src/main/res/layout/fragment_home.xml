@@ -51,25 +51,22 @@
                     android:src="@drawable/ic_location_arrow_down" />
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:paddingRight="@dimen/x14"
-                android:paddingTop="@dimen/x7"
-                android:paddingBottom="@dimen/x7"
-                android:layout_height="wrap_content">
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="@dimen/x170"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical|right"
-                    app:tabGravity="center"
-                    app:tabIndicatorColor="@color/colorPrimary"
-                    app:tabSelectedTextColor="@color/colorPrimary"
-                    app:tabTextAppearance="@style/LoginTabLayoutStyle"
-                    app:tabTextColor="#808080" />
-            </FrameLayout>
-
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="@dimen/x170"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|right"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabTextAppearance="@style/LoginTabLayoutStyle"
+                app:tabTextColor="#808080" />
 
         </LinearLayout>
 
