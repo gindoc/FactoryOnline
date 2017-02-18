@@ -139,7 +139,9 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
             tab.setCustomView(R.layout.tab_item);//给每一个tab设置view
             if (i == 0) {
                 // 设置第一个tab的TextView是被选择的样式
-                tab.getCustomView().findViewById(R.id.view_indicator).setVisibility(View.VISIBLE);//第一个tab被选中
+                View view = tab.getCustomView();
+                view.findViewById(R.id.view_indicator).setVisibility(View.VISIBLE);//第一个tab被选中
+                view.findViewById(R.id.tab_text).setSelected(true);
             }
             TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tab_text);
             textView.setText(fragments.get(i).getTitle());//设置tab上的文字
@@ -147,13 +149,17 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tab.getCustomView().findViewById(R.id.view_indicator).setVisibility(View.VISIBLE);
+                View view = tab.getCustomView();
+                view.findViewById(R.id.view_indicator).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.tab_text).setSelected(true);
                 mBinding.viewpager.setCurrentItem(tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                tab.getCustomView().findViewById(R.id.view_indicator).setVisibility(View.INVISIBLE);
+                View view = tab.getCustomView();
+                view.findViewById(R.id.view_indicator).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.tab_text).setSelected(false);
             }
 
             @Override
