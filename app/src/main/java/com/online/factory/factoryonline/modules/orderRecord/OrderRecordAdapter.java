@@ -1,6 +1,8 @@
 package com.online.factory.factoryonline.modules.orderRecord;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
@@ -28,23 +30,29 @@ public class OrderRecordAdapter extends BaseRecyclerViewAdapter<NeededMessage, B
 
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemOrderListBinding binding = ItemOrderListBinding.inflate(layoutInflater, parent, false);
+        final ItemOrderListBinding binding = ItemOrderListBinding.inflate(layoutInflater, parent, false);
+        binding.tvDescription.post(new Runnable() {
+            @Override
+            public void run() {
+                int lineCount = binding.tvDescription.getLineCount();
+                OrderRecordViewModel viewModel = binding.getViewModel();
+                if (viewModel == null) return;
+                viewModel.setArrowVisible(lineCount>2);
+                if (lineCount > 2) {
+                    binding.tvDescription.setEllipsize(TextUtils.TruncateAt.END);
+                    binding.ivArrow.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
     @Override
     public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        final OrderRecordViewModel viewModel = provider.get();
-        final ItemOrderListBinding binding = (ItemOrderListBinding) holder.getBinding();
+        OrderRecordViewModel viewModel = provider.get();
+        ItemOrderListBinding binding = (ItemOrderListBinding) holder.getBinding();
         viewModel.setNeededMessage(data.get(position));
         binding.setViewModel(viewModel);
-        binding.tvDescription.post(new Runnable() {
-            @Override
-            public void run() {
-                int lineCount = binding.tvDescription.getLineCount();
-                viewModel.setArrowVisible(lineCount>2);
-            }
-        });
     }
 }

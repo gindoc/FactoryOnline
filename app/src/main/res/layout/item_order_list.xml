@@ -50,12 +50,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_match_range"
             android:layout_marginTop="@dimen/x7"
-            android:ellipsize="end"
             android:lineSpacingExtra="@dimen/x10"
             android:textSize="@dimen/x14"
             android:text="@{viewModel.description}"
             android:textColor="#424242"
-            android:maxLines="@{viewModel.arrowVisible?2:Integer.MAX_VALUE}"
+            android:maxLines="2"
             tool:text="大岭山大塘工业园新2500平方求组.最好带办公室.要贴近高速路口" />
 
         <ImageView
@@ -65,7 +64,7 @@
             android:layout_below="@id/tv_description"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/x8"
-            android:visibility="@{viewModel.arrowVisible?View.VISIBLE:View.GONE}"
+            android:visibility="gone"
             android:src="@drawable/ic_arrow_down_outline" />
 
         <View
