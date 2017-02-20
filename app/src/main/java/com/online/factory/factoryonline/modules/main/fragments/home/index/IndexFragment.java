@@ -263,6 +263,18 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
 
     @Override
     public void onRefresh() {
-        mBinding.scrollView.stopRefresh();
+        mBinding.llOnlineMessage.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBinding.scrollView.stopRefresh();
+                mBinding.llOnlineMessage.setVisibility(View.VISIBLE);
+                mBinding.llOnlineMessage.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mBinding.llOnlineMessage.setVisibility(View.GONE);
+                    }
+                }, 500);
+            }
+        }, 1500);
     }
 }
