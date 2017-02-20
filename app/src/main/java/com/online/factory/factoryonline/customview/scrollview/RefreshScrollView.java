@@ -43,6 +43,7 @@ public class RefreshScrollView extends ScrollView {
 
     public RefreshScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        initView(context);
     }
 
     /**

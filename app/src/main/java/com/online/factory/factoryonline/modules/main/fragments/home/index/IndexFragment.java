@@ -66,7 +66,7 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentIndexBinding.inflate(inflater);
-        mContentBinding = FragmentIndexContentBinding.inflate(inflater);
+        mContentBinding = FragmentIndexContentBinding.inflate(inflater, mBinding.scrollView, false);
         mBinding.setPresenter(mPresenter);
         mBinding.setView(this);
 
