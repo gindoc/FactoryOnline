@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.online.factory.factoryonline.BR;
 import com.online.factory.factoryonline.R;
-import com.online.factory.factoryonline.models.Order;
+import com.online.factory.factoryonline.models.NeededMessage;
 import com.online.factory.factoryonline.utils.TimeUtil;
 
 import javax.inject.Inject;
@@ -20,7 +20,7 @@ import javax.inject.Inject;
  */
 
 public class OrderRecordViewModel extends BaseObservable {
-    private Order order;
+    private NeededMessage neededMessage;
     private boolean isShowMore = false;
     private boolean arrowVisible;
 
@@ -28,21 +28,21 @@ public class OrderRecordViewModel extends BaseObservable {
     public OrderRecordViewModel() {
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setNeededMessage(NeededMessage neededMessage) {
+        this.neededMessage = neededMessage;
     }
 
     public String getPublishTime() {
-        String time = TimeUtil.formatTimeStamp("yyyy/MM/dd", order.getPublishTime());
+        String time = TimeUtil.formatTimeStamp("yyyy/MM/dd", neededMessage.getCreated_time());
         return "发布时间" + time;
     }
 
     public String getMatchRange() {
-        return "处理中:" + order.getMatchRange() + "天";
+        return "处理中:" + neededMessage.getNeed().getCallback_day() + "天";
     }
 
     public String getDescription() {
-        return order.getDescription();
+        return neededMessage.getNeed().getContent();
     }
 
     @Bindable

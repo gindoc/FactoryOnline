@@ -2,7 +2,7 @@ package com.online.factory.factoryonline.modules.orderRecord;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
-import com.online.factory.factoryonline.models.Order;
+import com.online.factory.factoryonline.models.NeededMessage;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public interface OrderRecordContract {
     interface View extends IBaseView {
 
-        void loadOrderRecords(List<Order> orders);
+        void loadOrderRecords(List<NeededMessage> neededMessages);
     }
 
     interface Presenter extends IBasePresenter {

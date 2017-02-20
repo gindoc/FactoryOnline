@@ -2,7 +2,7 @@ package com.online.factory.factoryonline.modules.orderRecord;
 
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
-import com.online.factory.factoryonline.models.response.OrderRecordResponse;
+import com.online.factory.factoryonline.models.response.NeededMessageResponse;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -29,14 +29,14 @@ public class OrderRecordPresenter extends BasePresenter<OrderRecordContract.View
     @Override
     public void requestRecord() {
         dataManager.requestOrderRecord()
-                .compose(getView().<OrderRecordResponse>getBindToLifecycle())
-                .compose(RxResultHelper.<OrderRecordResponse>handleResult())
+                .compose(getView().<NeededMessageResponse>getBindToLifecycle())
+                .compose(RxResultHelper.<NeededMessageResponse>handleResult())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<OrderRecordResponse>() {
+                .subscribe(new RxSubscriber<NeededMessageResponse>() {
                     @Override
-                    public void _onNext(OrderRecordResponse response) {
-                        getView().loadOrderRecords(response.getOrders());
+                    public void _onNext(NeededMessageResponse response) {
+                        getView().loadOrderRecords(response.getNeededMessages());
                     }
 
                     @Override

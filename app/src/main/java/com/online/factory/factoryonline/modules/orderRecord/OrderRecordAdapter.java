@@ -1,14 +1,12 @@
 package com.online.factory.factoryonline.modules.orderRecord;
 
 import android.content.Context;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemOrderListBinding;
-import com.online.factory.factoryonline.models.Order;
+import com.online.factory.factoryonline.models.NeededMessage;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -19,7 +17,7 @@ import javax.inject.Provider;
  * 作用:
  */
 
-public class OrderRecordAdapter extends BaseRecyclerViewAdapter<Order, BaseRecyclerViewHolder> {
+public class OrderRecordAdapter extends BaseRecyclerViewAdapter<NeededMessage, BaseRecyclerViewHolder> {
     private Provider<OrderRecordViewModel> provider;
 
     @Inject
@@ -39,7 +37,7 @@ public class OrderRecordAdapter extends BaseRecyclerViewAdapter<Order, BaseRecyc
         super.onBindViewHolder(holder, position);
         final OrderRecordViewModel viewModel = provider.get();
         final ItemOrderListBinding binding = (ItemOrderListBinding) holder.getBinding();
-        viewModel.setOrder(data.get(position));
+        viewModel.setNeededMessage(data.get(position));
         binding.setViewModel(viewModel);
         binding.tvDescription.post(new Runnable() {
             @Override

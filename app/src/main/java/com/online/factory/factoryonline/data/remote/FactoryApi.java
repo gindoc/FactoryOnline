@@ -12,7 +12,7 @@ import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
-import com.online.factory.factoryonline.models.response.OrderRecordResponse;
+import com.online.factory.factoryonline.models.response.NeededMessageResponse;
 import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
 import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
@@ -27,7 +27,6 @@ import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
@@ -227,6 +226,6 @@ public interface FactoryApi {
     @POST("feedbacks/app/")
     Observable<Response> feedback(@Body RequestBody body);
 
-    @GET("/order/record")
-    Observable<OrderRecordResponse> getOrderRecord();
+    @GET("user/publications/needs")
+    Observable<NeededMessageResponse> getOrderRecord(@Header("TIME") String timestamp, @Header("Authorization") String token);
 }

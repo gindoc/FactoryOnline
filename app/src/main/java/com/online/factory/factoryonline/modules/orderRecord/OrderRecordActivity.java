@@ -11,8 +11,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityOrderRecordBinding;
-import com.online.factory.factoryonline.models.Order;
-import com.online.factory.factoryonline.modules.order.OrderContract;
+import com.online.factory.factoryonline.models.NeededMessage;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -69,8 +68,8 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
     }
 
     @Override
-    public void loadOrderRecords(List<Order> orders) {
-        mAdapter.addData(orders);
+    public void loadOrderRecords(List<NeededMessage> neededMessages) {
+        mAdapter.addData(neededMessages);
         mBinding.recyclerView.notifyDataSetChanged();
     }
 

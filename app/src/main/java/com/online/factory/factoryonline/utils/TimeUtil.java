@@ -3,6 +3,7 @@ package com.online.factory.factoryonline.utils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 /**
@@ -15,7 +16,7 @@ public class TimeUtil {
 
     public static String formatTimeStamp(String stringFormat, long timestamp) {
         SimpleDateFormat format =  new SimpleDateFormat(stringFormat);
-        return format.format(timestamp);
+        return format.format(new Date(timestamp*1000));
     }
 
     /**

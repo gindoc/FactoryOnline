@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.models.Branch;
-import com.online.factory.factoryonline.models.NeededMessage;
+import com.online.factory.factoryonline.models.Need;
 import com.online.factory.factoryonline.models.News;
 import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.UpdateUser;
@@ -23,7 +23,7 @@ import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
-import com.online.factory.factoryonline.models.response.OrderRecordResponse;
+import com.online.factory.factoryonline.models.response.NeededMessageResponse;
 import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
 import com.online.factory.factoryonline.models.response.ProMediumResponse;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
@@ -416,7 +416,7 @@ public class DataManager {
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
-        NeededMessage neededMessage = new NeededMessage();
+        Need neededMessage = new Need();
         neededMessage.setContent(description);
         neededMessage.setCallback_day(Float.parseFloat(time));
         String json = new Gson().toJson(neededMessage);
@@ -467,7 +467,10 @@ public class DataManager {
         return factoryApi.feedback(builder.build());
     }
 
-    public Observable<OrderRecordResponse> requestOrderRecord() {
-        return factoryApi.getOrderRecord();
+    public Observable<NeededMessageResponse> requestOrderRecord() {
+        String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
+        StringBuilder iv = new StringBuilder(timestamp).reverse();
+        String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
+        return factoryApi.getOrderRecord(timestamp, token);
     }
 }
