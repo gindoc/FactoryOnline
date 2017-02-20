@@ -20,11 +20,14 @@
         <com.online.factory.factoryonline.customview.RoundImage
             android:layout_width="@dimen/x100"
             android:layout_height="@dimen/x60"
-            android:foreground="@drawable/half_black_rectangle_background"
             app:borderRadius="@dimen/x5"
             app:imageId="@{viewModel.branchImgUrl}"
             app:type="round" />
 
+        <View
+            android:layout_width="@dimen/x100"
+            android:layout_height="@dimen/x60"
+            android:background="@drawable/half_black_rectangle_background" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
