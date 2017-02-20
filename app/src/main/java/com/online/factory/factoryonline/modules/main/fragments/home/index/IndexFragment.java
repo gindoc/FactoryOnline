@@ -20,6 +20,7 @@ import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.FullyLinearLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.databinding.FragmentIndexBinding;
+import com.online.factory.factoryonline.databinding.FragmentIndexContentBinding;
 import com.online.factory.factoryonline.databinding.ItemHighQualityFactoryBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
@@ -39,6 +40,7 @@ import javax.inject.Provider;
 
 public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresenter> implements IndexContract.View, BaseRecyclerViewAdapter.OnItemClickListener{
     private FragmentIndexBinding mBinding;
+    private FragmentIndexContentBinding mContentBinding;
 
     @Inject
     IndexRecyclerViewAdapter mAdapter;
@@ -64,10 +66,14 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentIndexBinding.inflate(inflater);
+        mContentBinding = FragmentIndexContentBinding.inflate(inflater);
         mBinding.setPresenter(mPresenter);
         mBinding.setView(this);
 
         initRecyclerView();
+
+        mBinding.scrollView.setEnableRefresh(true);
+        mBinding.scrollView.setupContainer(getContext(), mContentBinding.getRoot());
 
         mPresenter.requestIndexPicUrls();
         mPresenter.requestWantedMessages();
@@ -79,10 +85,10 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
     private void initRecyclerView() {
         FullyLinearLayoutManager fullyLinearLayoutManager = new FullyLinearLayoutManager(getContext());
         fullyLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mBinding.recyclerView.setLayoutManager(fullyLinearLayoutManager);
-        mBinding.recyclerView.setAdapter(mAdapter);
+        mContentBinding.recyclerView.setLayoutManager(fullyLinearLayoutManager);
+        mContentBinding.recyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
-        mBinding.llEmptyView.setVisibility(View.VISIBLE);
+        mContentBinding.llEmptyView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -103,13 +109,13 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
     @Override
     public void onResume() {
         super.onResume();
-        mBinding.slideShowView.startPlay();
+        mContentBinding.slideShowView.startPlay();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mBinding.slideShowView.stopPlay();
+        mContentBinding.slideShowView.stopPlay();
     }
 
     @Override
@@ -130,27 +136,27 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
 
     @Override
     public void initSlideShowView(String[] urls) {
-        mBinding.slideShowView.setImageUrls(urls);
+        mContentBinding.slideShowView.setImageUrls(urls);
     }
 
     @Override
     public void loadWantedMessages(List<WantedMessage> wantedMessages) {
         mAdapter.setData(wantedMessages);
-        mBinding.recyclerView.notifyDataSetChanged();
+        mContentBinding.recyclerView.notifyDataSetChanged();
         if (wantedMessages.size() > 0) {
-            mBinding.llEmptyView.setVisibility(View.GONE);
+            mContentBinding.llEmptyView.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void loadHighQualityFactory(List<WantedMessage> wantedMessages) {
-        mBinding.llHighQualityDots.removeAllViews();
+        mContentBinding.llHighQualityDots.removeAllViews();
         List<View> highQualityItem = new ArrayList<>();
         List<View> dotViewsList = new ArrayList<>();
         for (int i=0;i<wantedMessages.size();i++) {
             WantedMessage w = wantedMessages.get(i);
             ItemHighQualityFactoryBinding binding = ItemHighQualityFactoryBinding.inflate(LayoutInflater.from(getContext()),
-                    mBinding.highQualityViewpager, false);
+                    mContentBinding.highQualityViewpager, false);
             IndexViewModel model = provider.get();
             model.setWantedMessage(w);
             binding.setViewModel(model);
@@ -162,7 +168,7 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
             ImageView dotView = new ImageView(getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.rightMargin = getResources().getDimensionPixelSize(R.dimen.x5);
-            mBinding.llHighQualityDots.addView(dotView, params);
+            mContentBinding.llHighQualityDots.addView(dotView, params);
             dotViewsList.add(dotView);
             if (i == 0) {
                 dotView.setBackgroundResource(R.drawable.hight_quality_selected_dot);
@@ -227,19 +233,19 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
                         break;
                     case 0:// 滑动结束，即切换完毕或者加载完毕
                         // 当前为最后一张，此时从右向左滑，则切换到第一张
-                        if (mBinding.highQualityViewpager.getCurrentItem() == mBinding.highQualityViewpager.getAdapter().getCount() - 1 && !isAutoPlay) {
-                            mBinding.highQualityViewpager.setCurrentItem(0);
+                        if (mContentBinding.highQualityViewpager.getCurrentItem() == mContentBinding.highQualityViewpager.getAdapter().getCount() - 1 && !isAutoPlay) {
+                            mContentBinding.highQualityViewpager.setCurrentItem(0);
                         }
                         // 当前为第一张，此时从左向右滑，则切换到最后一张
-                        else if (mBinding.highQualityViewpager.getCurrentItem() == 0 && !isAutoPlay) {
-                            mBinding.highQualityViewpager.setCurrentItem(mBinding.highQualityViewpager.getAdapter().getCount() - 1);
+                        else if (mContentBinding.highQualityViewpager.getCurrentItem() == 0 && !isAutoPlay) {
+                            mContentBinding.highQualityViewpager.setCurrentItem(mContentBinding.highQualityViewpager.getAdapter().getCount() - 1);
                         }
                         break;
                 }
             }
         };
-        mBinding.highQualityViewpager.setAdapter(pagerAdapter);
-        mBinding.highQualityViewpager.addOnPageChangeListener(pageChangeListener);
+        mContentBinding.highQualityViewpager.setAdapter(pagerAdapter);
+        mContentBinding.highQualityViewpager.addOnPageChangeListener(pageChangeListener);
         handler.sendEmptyMessageDelayed(0, 3000);
     }
 
@@ -248,8 +254,8 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            mBinding.highQualityViewpager.setCurrentItem(mCurrentItem);
-            mCurrentItem = (mCurrentItem+1)%mBinding.llHighQualityDots.getChildCount();
+            mContentBinding.highQualityViewpager.setCurrentItem(mCurrentItem);
+            mCurrentItem = (mCurrentItem+1)%mContentBinding.llHighQualityDots.getChildCount();
             sendEmptyMessageDelayed(0, 3000);
         }
     };
