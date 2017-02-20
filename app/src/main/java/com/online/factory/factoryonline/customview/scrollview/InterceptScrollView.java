@@ -1,4 +1,4 @@
-package com.online.factory.factoryonline.customview;
+package com.online.factory.factoryonline.customview.scrollview;
 
 import android.content.Context;
 import android.util.AttributeSet;

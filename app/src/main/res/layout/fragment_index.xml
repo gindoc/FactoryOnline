@@ -17,7 +17,7 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
-        <com.online.factory.factoryonline.customview.InterceptScrollView
+        <com.online.factory.factoryonline.customview.scrollview.InterceptScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -237,6 +237,6 @@
                 </RelativeLayout>
             </LinearLayout>
 
-        </com.online.factory.factoryonline.customview.InterceptScrollView>
+        </com.online.factory.factoryonline.customview.scrollview.InterceptScrollView>
     </LinearLayout>
 </layout>
