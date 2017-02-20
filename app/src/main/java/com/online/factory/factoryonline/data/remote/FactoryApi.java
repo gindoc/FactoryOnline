@@ -145,8 +145,8 @@ public interface FactoryApi {
     @GET("qiniutokens/{tokenType}")
     Observable<JsonObject> getToken(@Header("Authorization") String auth, @Header("TIME")String time, @Path("tokenType") int tokenType, @Query("bucket") String bucket);
 
-    //    @DELETE("images/{imageKey}/")
-    @HTTP(method = "delete", path = "images/{imageKey}", hasBody = false)
+//    @HTTP(method = "delete", path = "images/{imageKey}", hasBody = false)
+    @DELETE("images/{imageKey}/")
     Observable<JsonObject> deleteImage(@Path("imageKey") String imageKey);
 
     @GET("/areas")

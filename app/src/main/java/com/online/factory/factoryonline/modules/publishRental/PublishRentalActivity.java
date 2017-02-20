@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
+import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
@@ -379,6 +380,8 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             GeoHash geoHash = new GeoHash();
             publish.setGeohash(geoHash.encode(latitude, longitude));
             mPresenter.publishMessage(publish);
+        } else if (geoCodeResult.error == SearchResult.ERRORNO.PERMISSION_UNFINISHED) {
+            submit();
         }
     }
 
