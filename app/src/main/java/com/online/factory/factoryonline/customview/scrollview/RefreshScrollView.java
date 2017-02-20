@@ -1,20 +1,14 @@
 package com.online.factory.factoryonline.customview.scrollview;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Scroller;
-
-import com.online.factory.factoryonline.R;
-
-import timber.log.Timber;
 
 public class RefreshScrollView extends ScrollView {
 
@@ -27,9 +21,7 @@ public class RefreshScrollView extends ScrollView {
     private Scroller scroller = null;
     private OnRefreshScrollViewListener listener = null;
     private LinearLayout scrollContainer = null;
-//    private ScrollViewHeader headerView = null;
     private ScrollViewFrameHeader headerView = null;
-    private View searchView;
     private int mTouchSlop;
     private float xDistance, yDistance;     // 水平/竖直滑动距离
 
@@ -84,10 +76,6 @@ public class RefreshScrollView extends ScrollView {
         scrollContainer.addView(containerView);
     }
 
-    public void setupSearchView(View searchView) {
-        this.searchView = searchView;
-    }
-
     /**
      * 设置scroll是否可以刷新
      *
@@ -132,10 +120,6 @@ public class RefreshScrollView extends ScrollView {
         case MotionEvent.ACTION_MOVE:
             int deltY = (int) (ev.getY() - lastY);
             lastY = (int) ev.getY();
-            Timber.d("getScrollY:" + getScrollY());
-//            if (getScrollY() == 0 && deltY > 0 && deltY < searchView.getHeight()) {
-//                return false;
-//            }
             if (getScrollY() == 0
                     && (deltY > 0 || headerView.getTopMargin() > -headerHeight)) {
                 updateHeader(deltY/OFFSET_RADIO);
@@ -144,27 +128,12 @@ public class RefreshScrollView extends ScrollView {
             break;
         default:
             //这里没有使用action_up的原因是，可能会受到viewpager的影响接收到action_cacel事件
-            Timber.d("ev.getAction: " +ev.getAction());
             if (getScrollY() == 0) {
-                Timber.d("topMargin():" + headerView.getTopMargin());
                 if (headerView.getTopMargin() > 0 && enableRefresh && !refreshing) {
                     refreshing = true;
                     headerView.setState(ScrollViewHeader.STATE_REFRESHING);
-//                    new Handler().postDelayed(new Runnable() {
-//
-//                        @Override
-//                        public void run() {
-//                            if(listener != null) {
-//                                listener.onRefresh();
-//                                refreshing = false;
-////                                ShowUtils.shortShow("更新成功");
-//                                resetHeaderView();
-//                            }
-//                        }
-//                    }, 3000);
                     startRefresh();
                 }
-//                Timber.d("resetHeaderView...");
                 resetHeaderView();
             }
             break;
@@ -205,8 +174,6 @@ public class RefreshScrollView extends ScrollView {
         if(margin <= 0 && !refreshing) {
             finalMargin = headerHeight;
         }
-        Timber.d("margin: " + margin);
-        Timber.d("finalMargin: " + finalMargin);
         //松开刷新，或者下拉刷新，又松手，没有触发刷新
         scroller.startScroll(0, -margin, 0, finalMargin + margin, SCROLL_DURATION);
 
@@ -220,7 +187,6 @@ public class RefreshScrollView extends ScrollView {
         refreshing = true;
         headerView.setState(ScrollViewHeader.STATE_REFRESHING);
         if(listener != null) {
-            Timber.d("xxx: " + headerHeight);
             scroller.startScroll(0, 0, 0, headerHeight, SCROLL_DURATION);
             invalidate();
             listener.onRefresh();
@@ -240,8 +206,7 @@ public class RefreshScrollView extends ScrollView {
     @Override
     public void computeScroll() {
         if(scroller.computeScrollOffset()) {
-            Timber.d("getCurrY: " + scroller.getCurrY());
-            headerView.updateMargin(-scroller.getCurrY());  
+            headerView.updateMargin(-scroller.getCurrY());
             //继续重绘  
             postInvalidate();  
         }  
@@ -253,22 +218,7 @@ public class RefreshScrollView extends ScrollView {
     }  
       
     public interface OnRefreshScrollViewListener {  
-        public void onRefresh();  
+        void onRefresh();
     }
 
-    @Override
-    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        super.onScrollChanged(l, t, oldl, oldt);
-        scrollChangeListener.onScrollChange(this, l, t, oldl, oldt);
-    }
-
-    private ScrollChangeListener scrollChangeListener;
-
-    public void setScrollChangeListener(ScrollChangeListener scrollChangeListener) {
-        this.scrollChangeListener = scrollChangeListener;
-    }
-
-    public interface ScrollChangeListener{
-        void onScrollChange(ScrollView scrollView, int l, int t, int oldl, int oldt);
-    }
 }

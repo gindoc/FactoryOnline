@@ -16,9 +16,9 @@ import android.widget.LinearLayout;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.FullyLinearLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
+import com.online.factory.factoryonline.customview.scrollview.RefreshScrollView;
 import com.online.factory.factoryonline.databinding.FragmentIndexBinding;
 import com.online.factory.factoryonline.databinding.FragmentIndexContentBinding;
 import com.online.factory.factoryonline.databinding.ItemHighQualityFactoryBinding;
@@ -38,7 +38,8 @@ import javax.inject.Provider;
  * 作用:
  */
 
-public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresenter> implements IndexContract.View, BaseRecyclerViewAdapter.OnItemClickListener{
+public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresenter> implements IndexContract.View,
+        BaseRecyclerViewAdapter.OnItemClickListener, RefreshScrollView.OnRefreshScrollViewListener{
     private FragmentIndexBinding mBinding;
     private FragmentIndexContentBinding mContentBinding;
 
@@ -74,6 +75,7 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
 
         mBinding.scrollView.setEnableRefresh(true);
         mBinding.scrollView.setupContainer(getContext(), mContentBinding.getRoot());
+        mBinding.scrollView.setOnRefreshScrollViewListener(this);
 
         mPresenter.requestIndexPicUrls();
         mPresenter.requestWantedMessages();
@@ -103,7 +105,6 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
 
     @Override
     public void showError(String error) {
-
     }
 
     @Override
@@ -260,4 +261,8 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
         }
     };
 
+    @Override
+    public void onRefresh() {
+        mBinding.scrollView.stopRefresh();
+    }
 }
