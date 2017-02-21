@@ -113,6 +113,7 @@ public class TranslucentPublishActivity extends BaseTranslucentActivity {
                     intent = new Intent(TranslucentPublishActivity.this, PublishRentalActivity.class);
                 }
                 startActivity(intent);
+                finish();
             }
         });
     }
