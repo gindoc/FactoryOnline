@@ -11,6 +11,7 @@ import com.online.factory.factoryonline.BR;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.Tag;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class RecommendViewModel extends BaseObservable {
     private String categoryName;
     private String childCategoryNum;
     private boolean isClick;
+    private WantedMessage wantedMessage;
 
     @Inject
     Resources resources;
@@ -33,8 +35,9 @@ public class RecommendViewModel extends BaseObservable {
     public RecommendViewModel() {
     }
 
-    public void setInfo(Factory info) {
-        this.info = info;
+    public void setWantedMessage(WantedMessage wantedMessage) {
+        this.wantedMessage = wantedMessage;
+        info = wantedMessage.getFactory();
     }
 
     public void setClick(boolean click) {
@@ -60,6 +63,10 @@ public class RecommendViewModel extends BaseObservable {
     @Bindable
     public String getArea() {
         return (int)info.getRange()+"㎡";
+    }
+
+    public String getViewCount() {
+        return "浏览：" + wantedMessage.getView_count() + "人";
     }
 
     @Bindable

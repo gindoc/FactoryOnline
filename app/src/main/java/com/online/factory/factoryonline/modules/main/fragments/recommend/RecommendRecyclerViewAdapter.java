@@ -39,8 +39,7 @@ public class RecommendRecyclerViewAdapter extends BaseRecyclerViewAdapter<Wanted
         super.onBindViewHolder(holder, position);
         RecommendViewModel viewModel = provider.get();
         WantedMessage wantedMessage = data.get(position);
-        Factory info = wantedMessage.getFactory();
-        viewModel.setInfo(info);
+        viewModel.setWantedMessage(wantedMessage);
         ItemRecommendListBinding binding = (ItemRecommendListBinding) holder.getBinding();
         binding.setViewModel(viewModel);
 

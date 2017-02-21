@@ -41,8 +41,7 @@ public class PublicationRecyclerViewAdapter extends BaseRecyclerViewAdapter<Want
         super.onBindViewHolder(holder, position);
         PublicationViewModel viewModel = provider.get();
         WantedMessage wantedMessage = data.get(position);
-        Factory info = wantedMessage.getFactory();
-        viewModel.setInfo(info);
+        viewModel.setWantedMessage(wantedMessage);
         ItemPublicationListBinding binding = (ItemPublicationListBinding) holder.getBinding();
         binding.setViewModel(viewModel);
     }

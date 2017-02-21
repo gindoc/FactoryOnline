@@ -41,16 +41,6 @@ public class DBManager {
         db = helper.getWritableDatabase();
         Cursor c = null;
         try {
-            /*StringBuffer sb = new StringBuffer();
-            if (id != null) {
-                for (int i : id) {
-                    sb.append(",").append(i);
-                }
-            }
-            String ids = "";
-            if (sb.length() > 0) {
-                ids = sb.toString().substring(1);
-            }*/
             c = db.rawQuery("SELECT * FROM (WantedMessage INNER JOIN Factory ON factoryId = Factory.id) INNER JOIN Contacter ON contacterId = Contacter.id ORDER BY id desc LIMIT 10 OFFSET ?",
                     new String[]{String.valueOf(count)});
             List<WantedMessage> wantedMessages = new ArrayList<>();
@@ -96,6 +86,7 @@ public class DBManager {
                 wantedMessage.setOwner_id(c.getString(c.getColumnIndex("owner_id")));
                 wantedMessage.setUpdate_id(c.getString(c.getColumnIndex("update_id")));
                 wantedMessage.setUpdate_time(c.getInt(c.getColumnIndex("update_time")));
+                wantedMessage.setView_count(c.getInt(c.getColumnIndex("view_count")));
                 wantedMessage.setFactory(factory);
                 wantedMessage.setContacter(contacter);
 
@@ -162,6 +153,7 @@ public class DBManager {
                 wantedMessage.setOwner_id(c.getString(c.getColumnIndex("owner_id")));
                 wantedMessage.setUpdate_id(c.getString(c.getColumnIndex("update_id")));
                 wantedMessage.setUpdate_time(c.getInt(c.getColumnIndex("update_time")));
+                wantedMessage.setView_count(c.getInt(c.getColumnIndex("view_count")));
                 wantedMessage.setFactory(factory);
                 wantedMessage.setContacter(contacter);
 
@@ -228,6 +220,7 @@ public class DBManager {
                 values3.put("owner_id", wantedMessage.getOwner_id());
                 values3.put("update_id", wantedMessage.getUpdate_id());
                 values3.put("update_time", wantedMessage.getUpdate_time());
+                values3.put("view_count", wantedMessage.getView_count());
                 values3.put("factoryId", factory.getId());
                 values3.put("contacterId", contacter.getId());
                 db.insert("WantedMessage", null, values3);
@@ -314,6 +307,7 @@ public class DBManager {
                 values3.put("owner_id", wantedMessage.getOwner_id());
                 values3.put("update_id", wantedMessage.getUpdate_id());
                 values3.put("update_time", wantedMessage.getUpdate_time());
+                values3.put("view_count", wantedMessage.getView_count());
                 values3.put("factoryId", factory.getId());
                 values3.put("contacterId", contacter.getId());
                 db.insert("HomeWantedMessage", null, values3);
@@ -379,6 +373,7 @@ public class DBManager {
                 wantedMessage.setOwner_id(c.getString(c.getColumnIndex("owner_id")));
                 wantedMessage.setUpdate_id(c.getString(c.getColumnIndex("update_id")));
                 wantedMessage.setUpdate_time(c.getInt(c.getColumnIndex("update_time")));
+                wantedMessage.setView_count(c.getInt(c.getColumnIndex("view_count")));
                 wantedMessage.setFactory(factory);
                 wantedMessage.setContacter(contacter);
 
@@ -444,6 +439,7 @@ public class DBManager {
                 wantedMessage.setOwner_id(c.getString(c.getColumnIndex("owner_id")));
                 wantedMessage.setUpdate_id(c.getString(c.getColumnIndex("update_id")));
                 wantedMessage.setUpdate_time(c.getInt(c.getColumnIndex("update_time")));
+                wantedMessage.setView_count(c.getInt(c.getColumnIndex("view_count")));
                 wantedMessage.setFactory(factory);
                 wantedMessage.setContacter(contacter);
             }
@@ -507,6 +503,7 @@ public class DBManager {
                 wantedMessage.setOwner_id(c.getString(c.getColumnIndex("owner_id")));
                 wantedMessage.setUpdate_id(c.getString(c.getColumnIndex("update_id")));
                 wantedMessage.setUpdate_time(c.getInt(c.getColumnIndex("update_time")));
+                wantedMessage.setView_count(c.getInt(c.getColumnIndex("view_count")));
                 wantedMessage.setFactory(factory);
                 wantedMessage.setContacter(contacter);
             }

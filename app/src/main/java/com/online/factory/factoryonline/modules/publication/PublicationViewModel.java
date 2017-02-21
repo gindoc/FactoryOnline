@@ -9,6 +9,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.models.Factory;
 import com.online.factory.factoryonline.models.Tag;
+import com.online.factory.factoryonline.models.WantedMessage;
 
 import java.util.List;
 
@@ -19,14 +20,18 @@ import javax.inject.Inject;
  */
 public class PublicationViewModel extends BaseObservable {
     private Factory info;
+    private WantedMessage wantedMessage;
+
     @Inject
     Resources resources;
+
     @Inject
     public PublicationViewModel() {
     }
 
-    public void setInfo(Factory info) {
-        this.info = info;
+    public void setWantedMessage(WantedMessage wantedMessage) {
+        this.wantedMessage = wantedMessage;
+        info = wantedMessage.getFactory();
     }
 
     @Bindable
@@ -42,6 +47,10 @@ public class PublicationViewModel extends BaseObservable {
     @Bindable
     public String getArea() {
         return (int)info.getRange()+"㎡";
+    }
+
+    public String getViewCount() {
+        return "浏览：" + wantedMessage.getView_count() + "人";
     }
 
     @Bindable
