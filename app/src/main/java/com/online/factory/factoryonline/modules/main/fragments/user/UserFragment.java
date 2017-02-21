@@ -18,11 +18,13 @@ import com.online.factory.factoryonline.modules.feedback.FeedbackActivity;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.modules.personalInfo.PersonalInfoActivity;
 import com.online.factory.factoryonline.modules.translucent.role.TranslucentRolePickActivity;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FastBlurUtil;
 import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.ToastUtil;
+import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.inject.Inject;
@@ -32,6 +34,7 @@ import javax.inject.Inject;
  */
 public class UserFragment extends BaseFragment<UserContract.View, UserPresenter> implements UserContract.View {
     public static final int TO_LOGIN_ACTIVITY = 101;
+    public static final String RESULT_USER = "RESULT_USER";
     private FragmentUserBinding mBinding;
 
     @Inject
@@ -56,17 +59,13 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         mBinding = FragmentUserBinding.inflate(inflater);
         mBinding.setPresenter(mPresenter);
         mBinding.setView(this);
+        mPresenter.getUser();
         return mBinding.getRoot();
     }
 
     public void clickRoundImage() {
-        mLoginContext.openUserDetail(getContext());
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.getUser();
+        startActivityForResult(PersonalInfoActivity.getStartIntent(getContext()),0);
+//        mLoginContext.openUserDetail(getActivity());
     }
 
     @Override
@@ -138,6 +137,16 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         User user = mBinding.getUser();
         if (user != null) {
             mLoginContext.openRecord(getContext(), user.getType());
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) return;
+        if (data != null) {
+            User user = (User) data.getSerializableExtra(RESULT_USER);
+            mBinding.setUser(user);
         }
     }
 }

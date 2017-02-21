@@ -248,7 +248,7 @@ public class PhotoWallFragment extends BaseFragment<PhotoWallContract.View, Phot
             @Override
             public void result(Object o) {
                 if (o.equals("YES")) {
-                    loginContext.openUserDetail(getContext());
+                    loginContext.openUserDetail(getActivity());
                 }
             }
         }).show();

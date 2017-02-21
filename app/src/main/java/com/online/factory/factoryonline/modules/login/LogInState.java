@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,8 +25,8 @@ import com.online.factory.factoryonline.utils.FastBlurUtil;
 public class LogInState implements UserState {
 
     @Override
-    public void openUserDetail(Context context) {
-        context.startActivity(PersonalInfoActivity.getStartIntent(context));
+    public void openUserDetail(Activity context) {
+        context.startActivityForResult(PersonalInfoActivity.getStartIntent(context), 0);
     }
 
     @Override

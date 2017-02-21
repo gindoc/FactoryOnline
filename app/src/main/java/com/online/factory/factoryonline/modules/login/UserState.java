@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.login;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.online.factory.factoryonline.modules.main.MainActivity;
@@ -10,7 +11,7 @@ import com.online.factory.factoryonline.modules.main.MainActivity;
 
 public interface UserState {
 
-    void openUserDetail(Context context);
+    void openUserDetail(Activity context);
 
 
     void openCollection(Context context);

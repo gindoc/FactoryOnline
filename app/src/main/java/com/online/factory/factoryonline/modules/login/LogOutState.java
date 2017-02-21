@@ -15,7 +15,7 @@ import com.online.factory.factoryonline.utils.ToastUtil;
 public class LogOutState implements UserState {
 
     @Override
-    public void openUserDetail(Context context) {
+    public void openUserDetail(Activity context) {
         toLoginActivity(context);
     }
 

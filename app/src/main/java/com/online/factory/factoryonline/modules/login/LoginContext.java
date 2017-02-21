@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.login;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.online.factory.factoryonline.modules.main.MainActivity;
@@ -23,7 +24,7 @@ public class LoginContext {
         this.mState = mState;
     }
 
-    public void openUserDetail(Context context) {
+    public void openUserDetail(Activity context) {
         mState.openUserDetail(context);
     }
 

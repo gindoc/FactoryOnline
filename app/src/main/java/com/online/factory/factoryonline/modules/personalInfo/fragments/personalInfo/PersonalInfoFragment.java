@@ -22,6 +22,7 @@ import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
@@ -109,10 +110,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
         startActivityForResult(intent, SELECT_IMAGE_REQUEST_CODE);
     }
 
-    public void finish() {
-        getActivity().finish();
-    }
-
     @Override
     protected void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
@@ -178,7 +175,10 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     @Override
     public void onLeftButtonClickListener(View view) {
-        finish();
+        Intent intent = new Intent();
+        intent.putExtra(UserFragment.RESULT_USER, user);
+        getActivity().setResult(Activity.RESULT_OK, intent);
+        getActivity().finish();
     }
 
     @Override
