@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.FragmentModifyNameBinding;
+import com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo.PersonalInfoFragment;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -73,6 +74,7 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
 
     @Override
     public void showError(String error) {
+        ToastUtil.show(getContext(), error);
     }
 
     public void clearName() {
@@ -81,6 +83,9 @@ public class ModifyNameFragment extends BaseFragment<ModifyNameContract.View, Mo
 
     @Override
     public void finish() {
+        Bundle bundle = new Bundle();
+        bundle.putString(PersonalInfoFragment.RESULT_USERNAME, mBinding.etUsername.getText().toString());
+        setFramgentResult(Activity.RESULT_OK, bundle);
         pop();
     }
 

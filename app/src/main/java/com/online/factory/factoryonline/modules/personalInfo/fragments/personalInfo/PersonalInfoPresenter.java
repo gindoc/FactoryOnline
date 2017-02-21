@@ -87,43 +87,7 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
     }
 
     public void getUser() {
-        dataManager.getUser()
-                .compose(getView().<retrofit2.Response<JsonObject>>getBindToLifecycle())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<retrofit2.Response<JsonObject>>() {
-                    @Override
-                    public void _onNext(retrofit2.Response<JsonObject> response) {
-                        try {
-                            if (response.errorBody() != null && response.errorBody().string().contains("认证令牌")) {
-                                Saver.logout();
-                                loginContext.setmState(new LogOutState());
-                                getView().unLogin();
-                                return;
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        JsonObject body = response.body();
-                        if (body.get("erro_code").toString().equals("200")) {
-                            String str_user = body.get("user").getAsString();
-                            Headers headers = response.headers();
-                            String timestamp = headers.values("TIME") != null && headers.size() > 1 ? headers.values("TIME").get(0) : null;
-                            StringBuilder iv = new StringBuilder(timestamp).reverse();
-                            str_user = AESUtil.desEncrypt(str_user, timestamp, iv.toString());
-                            str_user = str_user.substring(0, str_user.indexOf("}") + 1);
-                            User user = new Gson().fromJson(str_user, User.class);
-
-                            Saver.saveSerializableObject(user, SharePreferenceKey.USER);
-                            getView().showUser(user);
-                        }
-                    }
-
-                    @Override
-                    public void _onError(Throwable throwable) {
-                        Timber.e(throwable.getMessage());
-                    }
-                });
+        getView().showUser((User) Saver.getSerializableObject(SharePreferenceKey.USER));
     }
 
     public void uploadImage(final String imagePath) {
@@ -177,7 +141,47 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
                 .subscribe(new RxSubscriber<Response>() {
                     @Override
                     public void _onNext(Response response) {
-                        getUser();
+                        getUserFromNet();
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+    }
+
+    public void getUserFromNet() {
+        dataManager.getUser()
+                .compose(getView().<retrofit2.Response<JsonObject>>getBindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<retrofit2.Response<JsonObject>>() {
+                    @Override
+                    public void _onNext(retrofit2.Response<JsonObject> response) {
+                        try {
+                            if (response.errorBody() != null && response.errorBody().string().contains("认证令牌")) {
+                                Saver.logout();
+                                loginContext.setmState(new LogOutState());
+                                getView().unLogin();
+                                return;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        JsonObject body = response.body();
+                        if (body.get("erro_code").toString().equals("200")) {
+                            String str_user = body.get("user").getAsString();
+                            Headers headers = response.headers();
+                            String timestamp = headers.values("TIME") != null && headers.size() > 1 ? headers.values("TIME").get(0) : null;
+                            StringBuilder iv = new StringBuilder(timestamp).reverse();
+                            str_user = AESUtil.desEncrypt(str_user, timestamp, iv.toString());
+                            str_user = str_user.substring(0, str_user.indexOf("}") + 1);
+                            User user = new Gson().fromJson(str_user, User.class);
+
+                            Saver.saveSerializableObject(user, SharePreferenceKey.USER);
+                            getView().showUser(user);
+                        }
                     }
 
                     @Override

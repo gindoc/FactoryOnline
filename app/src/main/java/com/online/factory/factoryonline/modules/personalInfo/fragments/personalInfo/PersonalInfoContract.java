@@ -12,8 +12,6 @@ import com.online.factory.factoryonline.models.User;
 
 public interface PersonalInfoContract {
     interface View extends IBaseView{
-        void showLoading();
-        void hideLoading();
 
         void refreshWhenLogOut();
 
@@ -24,6 +22,12 @@ public interface PersonalInfoContract {
 
     interface Presenter extends IBasePresenter {
         void logOut();
+
+        void uploadImage(final String imagePath);
+
+        void modifyHeadPhoto(String imageKey);
+
+        void getUserFromNet();
     }
 
 }

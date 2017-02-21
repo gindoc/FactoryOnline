@@ -41,6 +41,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     private static final int MODIFY_NAME_REQUEST_CODE = 199;
     private static final int MODIFY_PWD_REQUEST_CODE = 200;
     private static final int SELECT_IMAGE_REQUEST_CODE = 201;
+    public static final String RESULT_USERNAME = "RESULT_USERNAME";
     private FragmentPersonalInfoBinding mBinding;
 
     @Inject
@@ -85,19 +86,12 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
                 .setActionbarView(mBinding.rlTitle)
                 .process();
         mBinding.rlTitle.setOnTitleBarClickListener(this);
-        return mBinding.getRoot();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         mPresenter.getUser();
+        return mBinding.getRoot();
     }
 
     public void modifyName() {
         Bundle bundle = new Bundle();
-//        String name = user.getUserName() == null ? "" : user.getUserName();
-//        bundle.putString(ModifyNameFragment.USER_NAME, name);
         bundle.putString(ModifyNameFragment.USER_NAME, user.getUserName());
         modifyNameFragment.setArguments(bundle);
         startForResult(modifyNameFragment, MODIFY_NAME_REQUEST_CODE);
@@ -122,7 +116,12 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     @Override
     protected void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
-        mPresenter.getUser();
+        if (resultCode!=Activity.RESULT_OK) return;
+        if (requestCode == MODIFY_NAME_REQUEST_CODE){
+            String name = data.getString(RESULT_USERNAME);
+            mBinding.tvName.setText(name);
+            user.setUserName(name);
+        }
     }
 
     @Override
@@ -138,16 +137,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
             c.close();
             mPresenter.uploadImage(picturePath);
         }
-    }
-
-    @Override
-    public void showLoading() {
-        CustomDialog.createLoadingDialog(getContext()).show();
-    }
-
-    @Override
-    public void hideLoading() {
-        CustomDialog.dismissDialog();
     }
 
     @Override

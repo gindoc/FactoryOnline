@@ -125,13 +125,12 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
 
     @Override
     public void finish() {
-        ToastUtil.show(getContext(), "修改密码成功");
         pop();
     }
 
     @Override
     public void onDestroyView() {
-        if (subscription!=null&&subscription.isUnsubscribed()) {
+        if (subscription!=null&&!subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
         super.onDestroyView();
