@@ -11,9 +11,11 @@ import android.view.View;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.TitleBar;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityOwnerSearchResultBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
+import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -29,7 +31,7 @@ import javax.inject.Inject;
  */
 
 public class SearchResultActivity extends BaseActivity<SearchResultContract.View, SearchResultPresenter> implements SearchResultContract.View,
-        OnPageListener, TitleBar.OnTitleBarClickListener {
+        OnPageListener, TitleBar.OnTitleBarClickListener, BaseRecyclerViewAdapter.OnItemClickListener {
     private static final String CONTENT_ID = "CONTENT_ID";
     @Inject
     SearchResultPresenter mPresenter;
@@ -53,6 +55,15 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_owner_search_result);
         mBinding.setView(this);
+
+        initToolbar();
+        initRecyclerView();
+
+        mPresenter.requestSearchResult(getString(R.string.api)+"search/contents/"+getIntent().getIntExtra(CONTENT_ID, 0));
+    }
+
+
+    private void initToolbar() {
         StatusBarUtils.from(this)
                 //白底黑字状态栏
                 .setLightStatusBar(true)
@@ -61,10 +72,12 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
                 .setActionbarView(mBinding.rlTitle)
                 .process();
         mBinding.rlTitle.setOnTitleBarClickListener(this);
+    }
+
+    private void initRecyclerView() {
         mBinding.recyclerView.setAdapter(mAdapter);
         mBinding.recyclerView.setOnPageListener(this);
-
-        mPresenter.requestSearchResult(getString(R.string.api)+"search/contents/"+getIntent().getIntExtra(CONTENT_ID, 0));
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -111,5 +124,13 @@ public class SearchResultActivity extends BaseActivity<SearchResultContract.View
 
     @Override
     public void onRightButtonClickListener(View view) {
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Intent intent = new Intent();
+        intent.setClass(this, FactoryDetailActivity.class);
+        intent.putExtra(FactoryDetailActivity.WANTED_MESSAGE, mAdapter.getData().get(position));
+        startActivity(intent);
     }
 }
