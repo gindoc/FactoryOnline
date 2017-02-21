@@ -288,7 +288,12 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
             mBinding.llPickMore.setVisibility(View.VISIBLE);
             mBinding.tvPickMore.setText(mSelectedImage.size() + "/9");
             mBinding.ivSelectedImg.setClickable(true);
-
+        }else {
+            mBinding.ivPickImg.setVisibility(View.VISIBLE);
+            mBinding.tvPickImg.setVisibility(View.VISIBLE);
+            mBinding.llPickMore.setVisibility(View.GONE);
+            mBinding.ivSelectedImg.setClickable(false);
+            mBinding.ivSelectedImg.setImageResource(R.drawable.publish_rental_background);
         }
     }
 
