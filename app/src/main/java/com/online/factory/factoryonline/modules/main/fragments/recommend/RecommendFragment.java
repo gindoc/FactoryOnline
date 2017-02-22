@@ -1,6 +1,7 @@
 package com.online.factory.factoryonline.modules.main.fragments.recommend;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
 import com.online.factory.factoryonline.modules.baidumap.BaiduMapActivity;
 import com.online.factory.factoryonline.modules.search.SearchActivity;
+import com.online.factory.factoryonline.utils.InputMethodManagerLeakUtil;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -72,6 +74,9 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     @Inject
     RecommendPresenter mPresenter;
+
+    @Inject
+    Context context;
 
     private int downPage = 1;
     private int upPage = 1;
@@ -501,6 +506,13 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
         public Set<String> getFiltertype() {
             return filtertype;
         }
+
+    }
+
+    @Override
+    public void onDestroy() {
+        InputMethodManagerLeakUtil.fixFocusedViewLeak((Application) context);
+        super.onDestroy();
 
     }
 }
