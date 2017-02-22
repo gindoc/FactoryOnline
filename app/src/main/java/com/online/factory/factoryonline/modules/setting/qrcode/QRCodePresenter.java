@@ -1,8 +1,14 @@
 package com.online.factory.factoryonline.modules.setting.qrcode;
 
 import com.online.factory.factoryonline.base.BasePresenter;
+import com.online.factory.factoryonline.data.DataManager;
+import com.online.factory.factoryonline.models.response.DownloadUrlResponse;
 import com.online.factory.factoryonline.utils.QRCodeUtil;
+import com.online.factory.factoryonline.utils.WindowUtil;
+import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
+
+import org.apache.commons.codec.binary.Base64;
 
 import javax.inject.Inject;
 
@@ -20,16 +26,39 @@ import timber.log.Timber;
  */
 
 public class QRCodePresenter extends BasePresenter<QRCodeContract.View> implements QRCodeContract.Presenter {
+    private DataManager dataManager;
 
     @Inject
-    public QRCodePresenter() {
+    public QRCodePresenter(DataManager dataManager) {
+        this.dataManager = dataManager;
     }
 
-    public void createQRCode(final int width, final int height) {
+    public void createQRCode(String versionCode, final int width, final int height) {
+        dataManager.requestDownloadUrl(versionCode)
+                .compose(getView().<DownloadUrlResponse>getBindToLifecycle())
+                .compose(RxResultHelper.<DownloadUrlResponse>handleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new RxSubscriber<DownloadUrlResponse>() {
+                    @Override
+                    public void _onNext(DownloadUrlResponse response) {
+                        String url = new String(Base64.decodeBase64(response.getDownload_url().getBytes()));
+                        saveQRCode(url, width, height);
+                    }
+
+                    @Override
+                    public void _onError(Throwable throwable) {
+                        Timber.e(throwable.getMessage());
+                    }
+                });
+
+    }
+
+    private void saveQRCode(final String url, final int width, final int height) {
         Observable.create(new Observable.OnSubscribe<Boolean>() {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
-                boolean success = QRCodeUtil.createQRImage("http:www.baidu.com", width, height, null, QRCodeContract.View.QRCODE_PATH);
+                boolean success = QRCodeUtil.createQRImage(url, width, height, null, QRCodeContract.View.QRCODE_PATH);
                 subscriber.onNext(success);
             }
         }).compose(getView().<Boolean>getBindToLifecycle())
@@ -52,5 +81,6 @@ public class QRCodePresenter extends BasePresenter<QRCodeContract.View> implemen
                         Timber.e(throwable.getMessage());
                     }
                 });
+
     }
 }

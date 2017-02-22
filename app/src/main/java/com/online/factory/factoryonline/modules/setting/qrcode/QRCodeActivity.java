@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.setting.qrcode;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityQrcodeBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
+import com.online.factory.factoryonline.utils.WindowUtil;
 import com.squareup.picasso.Picasso;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -51,7 +53,12 @@ public class QRCodeActivity extends BaseActivity<QRCodeContract.View, QRCodePres
                 .process();
         mBinding.rlTitle.setOnTitleBarClickListener(this);
         int qrcodeDimen = resources.getDimensionPixelSize(R.dimen.x150);
-        mPresenter.createQRCode(qrcodeDimen,qrcodeDimen);
+        PackageInfo packageInfo = WindowUtil.getPackageInfo(this);
+        if (packageInfo != null) {
+            mPresenter.createQRCode(packageInfo.versionName, qrcodeDimen,qrcodeDimen);
+        }else {
+            ToastUtil.show(this, "无法获取包信息，无法获得下载地址");
+        }
     }
 
     @Override
@@ -71,9 +78,7 @@ public class QRCodeActivity extends BaseActivity<QRCodeContract.View, QRCodePres
 
     @Override
     public void loadQRCode() {
-//        int size = mBinding.ivQrcode.getWidth();
         Picasso.with(this).load(new File(QRCodeContract.View.QRCODE_PATH))
-//                .resize(size, size)
                 .into(mBinding.ivQrcode);
     }
 

@@ -8,6 +8,7 @@ import com.online.factory.factoryonline.models.PublishUserResponse;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.BranchResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
+import com.online.factory.factoryonline.models.response.DownloadUrlResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
@@ -238,4 +239,7 @@ public interface FactoryApi {
     @Streaming
     @GET
     Observable<ResponseBody> download(@Url String url);
+
+    @GET("apps/android")
+    Observable<DownloadUrlResponse> getDownloadUrl(@Query("version") String versionCode);
 }

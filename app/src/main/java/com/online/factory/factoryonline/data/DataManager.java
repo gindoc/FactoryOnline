@@ -19,6 +19,7 @@ import com.online.factory.factoryonline.models.post.Regist;
 import com.online.factory.factoryonline.models.response.BaiduMapResponse;
 import com.online.factory.factoryonline.models.response.BranchResponse;
 import com.online.factory.factoryonline.models.response.CollectionResponse;
+import com.online.factory.factoryonline.models.response.DownloadUrlResponse;
 import com.online.factory.factoryonline.models.response.FactoryResponse;
 import com.online.factory.factoryonline.models.response.HighQualityFactoryResponse;
 import com.online.factory.factoryonline.models.response.HomeResponse;
@@ -483,5 +484,9 @@ public class DataManager {
 
     public Observable<ResponseBody> downloadApk(String apk_url) {
         return factoryApi.download(apk_url);
+    }
+
+    public Observable<DownloadUrlResponse> requestDownloadUrl(String versionCode) {
+        return factoryApi.getDownloadUrl(versionCode);
     }
 }

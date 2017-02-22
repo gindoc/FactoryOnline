@@ -18,7 +18,7 @@ public interface QRCodeContract {
     }
 
     interface Presenter extends IBasePresenter {
-        void createQRCode(final int width, final int height);
+        void createQRCode(String versionCode, int width, int height);
     }
 
 }
