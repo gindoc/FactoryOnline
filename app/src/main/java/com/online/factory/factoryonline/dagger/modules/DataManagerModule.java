@@ -3,13 +3,13 @@ package com.online.factory.factoryonline.dagger.modules;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.util.Base64;
 
 import com.github.aurae.retrofit2.LoganSquareConverterFactory;
 import com.online.factory.factoryonline.BuildConfig;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
+import com.online.factory.factoryonline.modules.download.DownloadProgressResponseBody;
 import com.online.factory.factoryonline.utils.ComponentHolder;
 import com.online.factory.factoryonline.utils.DBManager;
 
@@ -18,10 +18,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -37,6 +37,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 
@@ -106,10 +107,11 @@ public class DataManagerModule {
 
     @Provides
     @Named("localdata")
-    public Interceptor provideLocalDataInterceptor() {
+    public Interceptor provideLocalDataInterceptor(@Named("downloadSubject") final BehaviorSubject subject) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
+                Response originalResponse = null;
                 String responseString = createResponseBody(chain);
                 Request request = chain.request();
                 Request realRequest = null;
@@ -127,9 +129,17 @@ public class DataManagerModule {
                         || request.url().toString().contains("neededmessages")
                         || request.url().toString().contains("promediummessages")
                         || request.url().toString().contains("branches")
+                        || request.url().toString().contains("apps")
                         || request.url().toString().contains("feedbacks")) {
                     realRequest = request.newBuilder().build();
-                } else {
+                    originalResponse = chain.proceed(realRequest);
+                } else if (request.url().toString().contains("http://olpkux7qo.bkt.clouddn.com/")){
+                    originalResponse = chain.proceed(chain.request());
+                    originalResponse.newBuilder()
+                            .body(new DownloadProgressResponseBody(originalResponse.body(), subject))
+                            .build();
+
+                }else {
                     intercepterResponse = new Response.Builder()
                             .code(200)
                             .message(responseString)
@@ -140,11 +150,21 @@ public class DataManagerModule {
                             .addHeader("content-type", "application/json")
                             .build();
                 }
-
-                return intercepterResponse == null ? chain.proceed(realRequest) : intercepterResponse;
+                if (intercepterResponse == null) {
+                    return originalResponse;
+                }else {
+                    return intercepterResponse;
+                }
             }
         };
         return BuildConfig.DEBUG ? interceptor : null;
+    }
+
+    @Provides
+    @Singleton
+    @Named("downloadSubject")
+    public BehaviorSubject getDownloadSubject() {
+        return BehaviorSubject.create();
     }
 
     private String bodyToString(final RequestBody request) {

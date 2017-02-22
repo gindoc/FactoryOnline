@@ -2,6 +2,8 @@ package com.online.factory.factoryonline.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
@@ -38,6 +40,15 @@ public class WindowUtil {
             WindowManager.LayoutParams attr = activity.getWindow().getAttributes();
             attr.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
             activity.getWindow().setAttributes(attr);
+        }
+    }
+
+    public static PackageInfo getPackageInfo(Context context) {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

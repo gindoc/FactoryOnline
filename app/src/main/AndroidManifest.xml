@@ -140,6 +140,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
 
+        <service android:name=".modules.download.DownloadService" />
         <!--<service android:name="com.sina.weibo.sdk.net.DownloadService"
             android:exported="false"/>-->
 

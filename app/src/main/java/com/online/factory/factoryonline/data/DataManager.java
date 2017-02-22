@@ -30,6 +30,7 @@ import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.SearchResultResponse;
+import com.online.factory.factoryonline.models.response.UpdateInfoResponse;
 import com.online.factory.factoryonline.utils.AESUtil;
 import com.online.factory.factoryonline.utils.Saver;
 
@@ -40,6 +41,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import rx.Observable;
 
 /**
@@ -472,5 +474,14 @@ public class DataManager {
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
         return factoryApi.getOrderRecord(timestamp, token);
+    }
+
+    public Observable<UpdateInfoResponse> requestUpdateInfo(int versionCode) {
+        return factoryApi.getUpdateInfo(versionCode);
+
+    }
+
+    public Observable<ResponseBody> downloadApk(String apk_url) {
+        return factoryApi.download(apk_url);
     }
 }

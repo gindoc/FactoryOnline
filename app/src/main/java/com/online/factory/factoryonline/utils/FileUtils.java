@@ -6,6 +6,7 @@ import android.os.Environment;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,6 +47,14 @@ public class FileUtils {
         return new File(getImagePath());
     }
 
+    public static File getFile(String name){
+        File file = new File(EXTERNAL_STORAGE + SEPARATOR + name);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return file;
+    }
+
     public static File createTempImage(Context context) {
         String timeStamp = new SimpleDateFormat(PATTERN, Locale.CHINA).format(new Date());
         return new File(getImagePath(), timeStamp + ".jpg");
@@ -70,7 +79,6 @@ public class FileUtils {
         }
 
     }
-
 
     public static void createFile(String filePath) {
         String externalStorageState = Environment.getExternalStorageState();
@@ -122,6 +130,31 @@ public class FileUtils {
             }
         }
         return fileContent;
+    }
+
+    /**
+     * 写入文件
+     *
+     * @param in
+     * @param file
+     */
+    public static void writeFile(InputStream in, File file) throws IOException {
+        if (!file.getParentFile().exists())
+            file.getParentFile().mkdirs();
+
+        if (file != null && file.exists())
+            file.delete();
+
+        FileOutputStream out = new FileOutputStream(file);
+        byte[] buffer = new byte[1024 * 128];
+        int len = -1;
+        while ((len = in.read(buffer)) != -1) {
+            out.write(buffer, 0, len);
+        }
+        out.flush();
+        out.close();
+        in.close();
+
     }
 
     public static File getDatabaseDir(Context context) {

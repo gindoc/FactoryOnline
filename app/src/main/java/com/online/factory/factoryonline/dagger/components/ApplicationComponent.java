@@ -22,5 +22,7 @@ public interface ApplicationComponent {
 
     ActivityComponent plus(ActivityModule module);
 
+    ServiceComponent plus();
+
     Context getContext();
 }

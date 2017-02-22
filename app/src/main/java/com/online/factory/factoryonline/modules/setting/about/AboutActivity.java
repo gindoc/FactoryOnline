@@ -15,6 +15,8 @@ import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityAboutBinding;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
+import com.online.factory.factoryonline.utils.WindowUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import javax.annotation.Nonnull;
@@ -49,12 +51,12 @@ public class AboutActivity extends BaseActivity implements TitleBar.OnTitleBarCl
     }
 
     private void initVersionCode() {
-        try {
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            mBinding.tvVersionCode.setText("版本:" + packageInfo.versionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        PackageInfo packageInfo = WindowUtil.getPackageInfo(this);
+        if (packageInfo == null){
+            ToastUtil.show(this, "暂无版本信息");
+            return;
         }
+        mBinding.tvVersionCode.setText("版本:" + packageInfo.versionName);
     }
 
     @Override

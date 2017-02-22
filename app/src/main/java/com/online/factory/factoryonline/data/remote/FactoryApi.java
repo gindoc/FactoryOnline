@@ -19,11 +19,13 @@ import com.online.factory.factoryonline.models.response.PublicationResponse;
 import com.online.factory.factoryonline.models.response.RecommendResponse;
 import com.online.factory.factoryonline.models.response.Response;
 import com.online.factory.factoryonline.models.response.SearchResultResponse;
+import com.online.factory.factoryonline.models.response.UpdateInfoResponse;
 
 import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -34,6 +36,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 import rx.Observable;
 
@@ -228,4 +231,11 @@ public interface FactoryApi {
 
     @GET("user/publications/needs")
     Observable<NeededMessageResponse> getOrderRecord(@Header("TIME") String timestamp, @Header("Authorization") String token);
+
+    @GET("apps/android/update")
+    Observable<UpdateInfoResponse> getUpdateInfo(@Query("current_version") int versionCode);
+
+    @Streaming
+    @GET
+    Observable<ResponseBody> download(@Url String url);
 }
