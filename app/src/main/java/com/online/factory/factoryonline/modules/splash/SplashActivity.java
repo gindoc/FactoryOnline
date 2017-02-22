@@ -109,6 +109,12 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
             }
         });
         dialog = builder.show();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                toMainActivity();
+            }
+        });
     }
 
     @Override
