@@ -12,6 +12,7 @@ import com.online.factory.factoryonline.databinding.FragmentLoginbySmsBinding;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.modules.login.LoginActivity;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.Validate;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -110,6 +111,7 @@ public class SmsLoginFragment extends BaseFragment<SmsLoginContract.View, SmsLog
 
     @Override
     public void showError(String error) {
+        ToastUtil.show(getContext(), error);
     }
 
     @Override

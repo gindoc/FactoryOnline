@@ -72,6 +72,9 @@ public class ForgetPwdPresenter extends BasePresenter<ForgetPwdContract.View> im
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable.getMessage().contains("Frequency limit reaches")) {
+                            getView().showError("操作过于频繁,请稍后");
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });

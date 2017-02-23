@@ -140,7 +140,7 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
 
     @Override
     protected void onDestroy() {
-        handler.sendEmptyMessage(1);
+        handler.sendEmptyMessageAtTime(1, 0);
         handler.removeCallbacksAndMessages(null);
         if (dialog != null) {
             dialog.dismiss();

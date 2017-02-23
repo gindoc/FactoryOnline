@@ -91,6 +91,7 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
 
     @Override
     public void showError(String error) {
+        ToastUtil.show(getContext(), error);
     }
 
     public void getVerifyCode(){

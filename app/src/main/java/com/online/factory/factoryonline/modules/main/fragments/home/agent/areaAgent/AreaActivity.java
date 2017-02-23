@@ -11,10 +11,12 @@ import android.view.View;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.TitleBar;
+import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityAreaAgentBinding;
 import com.online.factory.factoryonline.models.Branch;
 import com.online.factory.factoryonline.models.ProMedium;
+import com.online.factory.factoryonline.modules.agent.AgentActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -29,7 +31,8 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter> implements AreaContract.View, OnPageListener, TitleBar.OnTitleBarClickListener {
+public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter> implements AreaContract.View, OnPageListener,
+        TitleBar.OnTitleBarClickListener, BaseRecyclerViewAdapter.OnItemClickListener {
 
     private static final String BRANCH = "BRANCH";
     private ActivityAreaAgentBinding mBinding;
@@ -64,6 +67,7 @@ public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter>
         }
 
         mBinding.recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -116,5 +120,12 @@ public class AreaActivity extends BaseActivity<AreaContract.View, AreaPresenter>
     @Override
     public void onRightButtonClickListener(View view) {
 
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        ProMedium proMedium = mAdapter.getData().get(position);
+        startActivity(AgentActivity.getStartIntent(this, proMedium));
+        overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
     }
 }

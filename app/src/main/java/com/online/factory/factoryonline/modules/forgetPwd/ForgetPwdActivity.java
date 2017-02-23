@@ -73,7 +73,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
 
     @Override
     public void showError(String error) {
-
+        ToastUtil.show(this, error);
     }
 
     public void submit() {
