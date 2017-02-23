@@ -1,9 +1,11 @@
 package com.online.factory.factoryonline.modules.collection.owner;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentAgentCollectionBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.modules.FactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -37,6 +40,9 @@ public class OwnerCollectionFragment extends BaseFragment<OwnerCollectionContrac
 
     @Inject
     CollectionRecyclerViewAdapter mAdapter;
+
+    @Inject
+    LoginContext loginContext;
 
     private FragmentAgentCollectionBinding mBinding;
     private String next;
@@ -95,6 +101,19 @@ public class OwnerCollectionFragment extends BaseFragment<OwnerCollectionContrac
     public void loadNextUrlAndCount(String next, int count) {
         this.next = next;
         this.count = count;
+    }
+
+    @Override
+    public void unLogin() {
+        mBinding.swipe.setRefreshing(false);
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.unLogin)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        loginContext.openUserDetail(getActivity());
+                    }
+                }).create().show();
     }
 
     @Override

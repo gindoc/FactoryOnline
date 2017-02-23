@@ -18,6 +18,8 @@ public interface OwnerCollectionContract {
         void loadCollectionList(List<WantedMessage> wantedMessages);
 
         void loadNextUrlAndCount(String next, int count);
+
+        void unLogin();
     }
 
     interface Presenter extends IBasePresenter{

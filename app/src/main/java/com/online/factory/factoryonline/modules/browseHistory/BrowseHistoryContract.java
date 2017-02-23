@@ -18,6 +18,9 @@ public interface BrowseHistoryContract {
         void loadHistory(List<WantedMessage> wantedMessages);
 
         void loadNext(String next);
+
+        void unLogin();
+
     }
 
     interface Presenter extends IBasePresenter {

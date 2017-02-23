@@ -1,9 +1,11 @@
 package com.online.factory.factoryonline.modules.collection.agent;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.FragmentAgentCollectionBinding;
 import com.online.factory.factoryonline.models.ProMediumMessage;
 import com.online.factory.factoryonline.modules.agentFactoryDetail.FactoryDetailActivity;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 

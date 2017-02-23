@@ -44,6 +44,7 @@ import javax.inject.Inject;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import rx.Observable;
+import timber.log.Timber;
 
 /**
  * Created by louiszgm on 2016/9/29.
@@ -335,6 +336,8 @@ public class DataManager {
 
     public Observable<Response> forgetPwd(UpdateUser updateUser, String phoneNum) {
         String token = Saver.getToken();
+        Timber.e("save after : token : %s", token);
+
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         String json = new Gson().toJson(updateUser);

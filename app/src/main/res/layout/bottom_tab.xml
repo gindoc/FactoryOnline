@@ -5,11 +5,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="@dimen/y40"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <RadioButton
@@ -18,13 +20,6 @@
                 android:drawableTop="@drawable/rb_home_drawable_selector"
                 android:onClick="onClickHome"
                 android:text="厂房在线" />
-
-            <!--<RadioButton
-                android:id="@+id/rb_recommend"
-                style="@style/bottom_tab_style"
-                android:drawableTop="@drawable/rb_locate_drawable_selector"
-                android:onClick="onClickRecommend"
-                android:text="推荐"/>-->
 
             <FrameLayout
                 android:layout_width="0dp"
@@ -40,8 +35,8 @@
                     android:src="@drawable/green_rectangle_solid_with_corner" />
 
                 <ImageView
-                    android:layout_width="@dimen/x25"
-                    android:layout_height="@dimen/x25"
+                    android:layout_width="@dimen/x20"
+                    android:layout_height="@dimen/x20"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_publish" />
             </FrameLayout>

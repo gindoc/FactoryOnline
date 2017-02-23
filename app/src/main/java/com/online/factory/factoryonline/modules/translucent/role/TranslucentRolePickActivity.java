@@ -1,15 +1,20 @@
 package com.online.factory.factoryonline.modules.translucent.role;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseTranslucentActivity;
 import com.online.factory.factoryonline.databinding.ActivityTranslucentRolePickBinding;
+import com.online.factory.factoryonline.models.User;
+import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -26,6 +31,9 @@ public class TranslucentRolePickActivity extends BaseTranslucentActivity<RolePic
     private ActivityTranslucentRolePickBinding mBinding;
     @Inject
     RolePickPresenter mPresenter;
+
+    @Inject
+    LoginContext loginContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +72,6 @@ public class TranslucentRolePickActivity extends BaseTranslucentActivity<RolePic
 
     @Override
     public void showError(String error) {
-        ToastUtil.show(this, error);
     }
 
     public void switchRole(int type) {
@@ -76,7 +83,16 @@ public class TranslucentRolePickActivity extends BaseTranslucentActivity<RolePic
     }
 
     @Override
-    public void roleSwitchingSuccessful() {
+    public void roleSwitchingSuccessful(User user) {
+        Intent intent = new Intent();
+        intent.putExtra(MainActivity.RESULT_USER, user);
+        setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    public void unLogin() {
+        ToastUtil.show(this, "尚未登录，请先登录");
+        loginContext.openUserDetail(TranslucentRolePickActivity.this);
     }
 }

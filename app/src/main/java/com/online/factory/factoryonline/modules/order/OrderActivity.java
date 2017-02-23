@@ -1,11 +1,13 @@
 package com.online.factory.factoryonline.modules.order;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityOrderBinding;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -33,6 +36,9 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
 
     @Inject
     OrderPresenter mPresenter;
+
+    @Inject
+    LoginContext loginContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +106,18 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
     @Override
     public void submitSuccessful() {
         finish();
+    }
+
+    @Override
+    public void unLogin() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.unLogin)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        loginContext.openUserDetail(OrderActivity.this);
+                    }
+                }).create().show();
     }
 
     @Override

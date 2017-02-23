@@ -19,6 +19,7 @@ public interface AgentCollectionContract {
         void loadCollectionList(List<ProMediumMessage> wantedMessages);
 
         void loadNextUrlAndCount(String next, int count);
+
     }
 
     interface Presenter extends IBasePresenter{

@@ -10,13 +10,17 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.data.local.LocalApi;
 import com.online.factory.factoryonline.data.remote.FactoryApi;
 import com.online.factory.factoryonline.modules.download.DownloadProgressResponseBody;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.ComponentHolder;
 import com.online.factory.factoryonline.utils.DBManager;
+import com.online.factory.factoryonline.utils.Saver;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -107,8 +111,8 @@ public class DataManagerModule {
 
     @Provides
     @Named("localdata")
-    public Interceptor provideLocalDataInterceptor(@Named("downloadSubject") final BehaviorSubject subject) {
-        Interceptor interceptor = new Interceptor() {
+    public Interceptor provideLocalDataInterceptor(@Named("downloadSubject") final BehaviorSubject subject, final LoginContext loginContext) {
+        final Interceptor interceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Response originalResponse = null;
@@ -133,6 +137,10 @@ public class DataManagerModule {
                         || request.url().toString().contains("feedbacks")) {
                     realRequest = request.newBuilder().build();
                     originalResponse = chain.proceed(realRequest);
+                    if (originalResponse.message().contains("Unauthorized")/*||originalResponse.body().string().contains("305")*/){
+                        Saver.logout();
+                        loginContext.setmState(new LogOutState());
+                    }
                 } else if (request.url().toString().contains("http://olpkux7qo.bkt.clouddn.com/")){
                     originalResponse = chain.proceed(chain.request());
                     originalResponse.newBuilder()

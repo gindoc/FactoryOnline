@@ -5,9 +5,6 @@
     <data>
 
         <variable
-            name="presenter"
-            type="com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo.PersonalInfoPresenter" />
-        <variable
             name="view"
             type="com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo.PersonalInfoFragment" />
 
@@ -179,7 +176,7 @@
                 android:background="@android:color/white"
                 android:gravity="center"
                 android:text="退出登录"
-                android:onClick="@{()->presenter.logOut()}"
+                android:onClick="@{()->view.logOut()}"
                 android:textColor="#424242"
                 android:textSize="@dimen/x14" />
 

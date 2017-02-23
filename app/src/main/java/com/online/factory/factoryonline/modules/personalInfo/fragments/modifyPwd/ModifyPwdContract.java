@@ -14,6 +14,8 @@ public interface ModifyPwdContract {
         void refleshSmsButton();
 
         void finish();
+
+        void unLogin();
     }
 
     interface Presenter extends IBasePresenter {

@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:background="@drawable/button_click_background"
         android:paddingLeft="@dimen/x23"
         android:paddingRight="@dimen/x30">
 
@@ -22,11 +22,11 @@
             android:id="@+id/iv_agent_avatar"
             android:layout_width="@dimen/x49"
             android:layout_height="@dimen/x49"
-            android:layout_marginBottom="@dimen/y9"
-            android:layout_marginTop="@dimen/y14"
+            android:layout_marginBottom="@dimen/x9"
+            android:layout_marginTop="@dimen/x10"
             android:scaleType="centerCrop"
             app:imageUrl="@{viewModel.agentAvatar}"
-            tool:src="@drawable/boy" />
+            tool:src="@drawable/publisher" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,5 +60,12 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/green_rectangle_solid_background"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x1"
+            android:layout_below="@id/iv_agent_avatar"
+            android:layout_marginTop="@dimen/x3"
+            android:background="#ededed" />
     </RelativeLayout>
 </layout>

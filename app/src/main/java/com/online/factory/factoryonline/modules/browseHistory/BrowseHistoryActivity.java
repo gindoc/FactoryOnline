@@ -1,10 +1,12 @@
 package com.online.factory.factoryonline.modules.browseHistory;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -15,6 +17,7 @@ import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityBrowseHistoryBinding;
 import com.online.factory.factoryonline.models.WantedMessage;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.index.IndexRecyclerViewAdapter;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -40,6 +43,9 @@ public class BrowseHistoryActivity extends BaseActivity<BrowseHistoryContract.Vi
 
     @Inject
     BrowseHistoryPresenter mPresenter;
+
+    @Inject
+    LoginContext loginContext;
 
     private ActivityBrowseHistoryBinding mBinding;
     private String next = null;
@@ -90,6 +96,18 @@ public class BrowseHistoryActivity extends BaseActivity<BrowseHistoryContract.Vi
     @Override
     public void loadNext(String next) {
         this.next = next;
+    }
+
+    @Override
+    public void unLogin() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.unLogin)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        loginContext.openUserDetail(BrowseHistoryActivity.this);
+                    }
+                }).create().show();
     }
 
     @Override

@@ -56,6 +56,9 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
 
                             Saver.saveSerializableObject(user, SharePreferenceKey.USER);
                             String token = AESUtil.desEncrypt(body.get("token").getAsString(), timestamp, iv.toString());
+
+                            Timber.e("save before: token  %s", token);
+
                             Saver.setToken(token);
                             Saver.setLoginState(true);
 

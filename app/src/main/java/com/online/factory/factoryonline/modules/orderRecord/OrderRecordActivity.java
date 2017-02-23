@@ -1,10 +1,12 @@
 package com.online.factory.factoryonline.modules.orderRecord;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.online.factory.factoryonline.R;
@@ -12,6 +14,7 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.ActivityOrderRecordBinding;
 import com.online.factory.factoryonline.models.NeededMessage;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
@@ -32,6 +35,9 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
 
     @Inject
     OrderRecordAdapter mAdapter;
+
+    @Inject
+    LoginContext loginContext;
 
     private ActivityOrderRecordBinding mBinding;
 
@@ -71,6 +77,18 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
     public void loadOrderRecords(List<NeededMessage> neededMessages) {
         mAdapter.addData(neededMessages);
         mBinding.recyclerView.notifyDataSetChanged();
+    }
+
+    @Override
+    public void unLogin() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.unLogin)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        loginContext.openUserDetail(OrderRecordActivity.this);
+                    }
+                }).create().show();
     }
 
     public static Intent getStartIntent(Context context) {

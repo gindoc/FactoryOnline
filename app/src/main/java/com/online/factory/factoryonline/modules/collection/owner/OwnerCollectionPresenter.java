@@ -6,6 +6,9 @@ import com.online.factory.factoryonline.models.WantedMessage;
 import com.online.factory.factoryonline.models.response.MyCollectionResponse;
 import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
 import com.online.factory.factoryonline.modules.collection.agent.AgentCollectionContract;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -24,6 +27,10 @@ import timber.log.Timber;
 public class OwnerCollectionPresenter extends BasePresenter<OwnerCollectionContract.View> implements OwnerCollectionContract.Presenter {
 
     private DataManager dataManager;
+
+    @Inject
+    LoginContext loginContext;
+
     @Inject
     public OwnerCollectionPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
@@ -44,6 +51,11 @@ public class OwnerCollectionPresenter extends BasePresenter<OwnerCollectionContr
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable.getMessage().contains("Unauthorized")||throwable.getMessage().contains("请先登录")){
+                            Saver.logout();
+                            loginContext.setmState(new LogOutState());
+                            getView().unLogin();
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });

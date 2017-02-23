@@ -1,7 +1,6 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,23 +8,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.customview.CustomDialog;
 import com.online.factory.factoryonline.customview.TitleBar;
 import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.MainActivity;
-import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -79,7 +77,6 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBinding = FragmentPersonalInfoBinding.inflate(inflater);
         mBinding.setView(this);
-        mBinding.setPresenter(mPresenter);
         StatusBarUtils.from(getActivity())
                 //白底黑字状态栏
                 .setLightStatusBar(true)
@@ -115,7 +112,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     protected void onFragmentResult(int requestCode, int resultCode, Bundle data) {
         super.onFragmentResult(requestCode, resultCode, data);
         if (resultCode!=Activity.RESULT_OK) return;
-        if (requestCode == MODIFY_NAME_REQUEST_CODE){
+        if (requestCode == MODIFY_NAME_REQUEST_CODE && data != null) {
             String name = data.getString(RESULT_USERNAME);
             mBinding.tvName.setText(name);
             user.setUserName(name);
@@ -154,16 +151,19 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     @Override
     public void unLogin() {
-        ToastUtil.show(getContext(), "当前未登陆，请先登录");
         new AlertDialog.Builder(getContext())
                 .setMessage(R.string.unLogin)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        getActivity().finish();
+                        mLoginContext.openUserDetail(getActivity());
                     }
                 }).create().show();
+    }
+
+    @Override
+    public void logOut() {
+        mPresenter.logOut(getActivity());
     }
 
     @Override
@@ -173,14 +173,18 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
 
     @Override
     public void showError(String error) {
-
+        ToastUtil.show(getContext(), error);
     }
 
     @Override
     public void onLeftButtonClickListener(View view) {
         Intent intent = new Intent();
-        intent.putExtra(MainActivity.RESULT_USER, user);
-        getActivity().setResult(Activity.RESULT_OK, intent);
+        if (Saver.getLoginState()) {
+            intent.putExtra(MainActivity.RESULT_USER, user);
+            getActivity().setResult(Activity.RESULT_OK, intent);
+        }else {
+            getActivity().setResult(Activity.RESULT_OK);
+        }
         getActivity().finish();
     }
 

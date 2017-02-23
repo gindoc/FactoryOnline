@@ -15,6 +15,8 @@ public interface OrderContract {
     interface View extends IBaseView{
 
         void submitSuccessful();
+
+        void unLogin();
     }
 
     interface Presenter extends IBasePresenter {

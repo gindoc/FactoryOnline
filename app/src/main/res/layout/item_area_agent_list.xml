@@ -13,16 +13,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/x15"
+        android:paddingLeft="@dimen/x23"
+        android:paddingRight="@dimen/x23"
         android:paddingTop="@dimen/x15">
 
         <com.online.factory.factoryonline.customview.RoundImageView
             android:id="@+id/iv_agent_avatar"
-            android:layout_width="@dimen/x63"
-            android:layout_height="@dimen/x63"
+            android:layout_width="@dimen/x49"
+            android:layout_height="@dimen/x49"
             android:layout_marginRight="@dimen/x10"
             app:imageUrl="@{viewModel.agentAvatar}"
-            tool:src="@drawable/boy"
+            tool:src="@drawable/publisher"
             android:scaleType="centerCrop"/>
 
         <TextView
@@ -47,14 +48,14 @@
         <ImageView
             android:id="@+id/iv_rank"
             android:layout_width="@dimen/x25"
-            android:layout_height="@dimen/x25"
+            android:layout_height="@dimen/x15"
             android:src="@drawable/no_one"
             android:layout_alignBottom="@id/iv_agent_avatar"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="#dbdbdb"
+            android:layout_height="@dimen/x1"
+            android:background="#ededed"
             android:layout_below="@id/iv_agent_avatar"
             android:layout_marginTop="@dimen/x15"/>
     </RelativeLayout>

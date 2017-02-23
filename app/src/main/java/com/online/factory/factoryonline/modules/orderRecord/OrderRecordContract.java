@@ -16,6 +16,9 @@ public interface OrderRecordContract {
     interface View extends IBaseView {
 
         void loadOrderRecords(List<NeededMessage> neededMessages);
+
+        void unLogin();
+
     }
 
     interface Presenter extends IBasePresenter {

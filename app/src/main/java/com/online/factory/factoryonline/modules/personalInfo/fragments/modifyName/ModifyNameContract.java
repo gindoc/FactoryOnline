@@ -12,6 +12,8 @@ import com.online.factory.factoryonline.base.IBaseView;
 public interface ModifyNameContract {
     interface View extends IBaseView {
 
+        void unLogin();
+
         void finish();
     }
 

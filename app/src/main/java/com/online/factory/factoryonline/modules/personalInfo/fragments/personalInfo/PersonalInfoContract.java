@@ -1,5 +1,7 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo;
 
+import android.app.Activity;
+
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
 import com.online.factory.factoryonline.models.User;
@@ -18,10 +20,12 @@ public interface PersonalInfoContract {
         void showUser(User user);
 
         void unLogin();
+
+        void logOut();
     }
 
     interface Presenter extends IBasePresenter {
-        void logOut();
+        void logOut(Activity activity);
 
         void uploadImage(final String imagePath);
 

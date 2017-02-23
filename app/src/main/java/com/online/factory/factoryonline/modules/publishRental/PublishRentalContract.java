@@ -18,6 +18,8 @@ public interface PublishRentalContract {
         void finishLoading();
 
         void publishSuccess();
+
+        void unLogin();
     }
 
     interface Prensenter extends IBasePresenter{

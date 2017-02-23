@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.personalInfo.fragments.personalInfo;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 
@@ -64,7 +65,7 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
         this.dataManager = dataManager;
     }
 
-    public void logOut() {
+    public void logOut(final Activity activity) {
         dataManager.logout()
                 .compose(getView().<Response>getBindToLifecycle())
                 .compose(RxResultHelper.<Response>handleResult())
@@ -81,6 +82,11 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable.getMessage().contains("Unauthorized")||throwable.getMessage().contains("请先登录")){
+                            Saver.logout();
+                            loginContext.setmState(new LogOutState());
+                            getView().unLogin();
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });
@@ -124,6 +130,11 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoContract.Vi
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable.getMessage().contains("Unauthorized")||throwable.getMessage().contains("请先登录")){
+                            Saver.logout();
+                            loginContext.setmState(new LogOutState());
+                            getView().unLogin();
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });

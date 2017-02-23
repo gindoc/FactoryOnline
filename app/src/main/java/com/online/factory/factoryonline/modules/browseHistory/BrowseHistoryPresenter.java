@@ -3,6 +3,9 @@ package com.online.factory.factoryonline.modules.browseHistory;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.response.HomeResponse;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -24,6 +27,9 @@ public class BrowseHistoryPresenter extends BasePresenter<BrowseHistoryContract.
     DataManager dataManager;
 
     @Inject
+    LoginContext loginContext;
+
+    @Inject
     public BrowseHistoryPresenter() {
     }
 
@@ -43,6 +49,11 @@ public class BrowseHistoryPresenter extends BasePresenter<BrowseHistoryContract.
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable.getMessage().contains("Unauthorized")||throwable.getMessage().contains("请先登录")){
+                            Saver.logout();
+                            loginContext.setmState(new LogOutState());
+                            getView().unLogin();
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });

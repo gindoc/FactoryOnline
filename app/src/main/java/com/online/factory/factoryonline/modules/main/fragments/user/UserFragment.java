@@ -124,7 +124,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         blurBackground = Bitmap.createScaledBitmap(blurBackground, blurBackground.getWidth() / 10, blurBackground.getHeight() / 10, false);
         blurBackground = FastBlurUtil.doBlur(blurBackground, 8, true);
         Intent intent = TranslucentRolePickActivity.getStartIntent(activity, blurBackground);
-        startActivity(intent);
+        startActivityForResult(intent, 0);
         activity.overridePendingTransition(R.anim.no_anim, R.anim.no_animation);
     }
 

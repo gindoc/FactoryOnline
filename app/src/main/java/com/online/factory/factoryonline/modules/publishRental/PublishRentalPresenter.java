@@ -14,8 +14,11 @@ import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.data.remote.Consts;
 import com.online.factory.factoryonline.models.Area;
 import com.online.factory.factoryonline.models.post.Publish;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.BitmapManager;
 import com.online.factory.factoryonline.utils.FileUtils;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -48,6 +51,8 @@ public class PublishRentalPresenter extends BasePresenter<PublishRentalContract.
 
     @Inject
     UploadManager mUploadManager;
+
+    LoginContext loginContext;
 
     @Inject
     public PublishRentalPresenter(DataManager dataManager) {
@@ -141,6 +146,11 @@ public class PublishRentalPresenter extends BasePresenter<PublishRentalContract.
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable.getMessage().contains("Unauthorized")||throwable.getMessage().contains("请先登录")){
+                            Saver.logout();
+                            loginContext.setmState(new LogOutState());
+                            getView().unLogin();
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });

@@ -3,6 +3,9 @@ package com.online.factory.factoryonline.modules.collection.agent;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.response.ProMediumMessageResponse;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -21,6 +24,7 @@ import timber.log.Timber;
 public class AgentCollectionPresenter extends BasePresenter<AgentCollectionContract.View> implements AgentCollectionContract.Presenter {
 
     private DataManager dataManager;
+
     @Inject
     public AgentCollectionPresenter(DataManager dataManager) {
         this.dataManager = dataManager;

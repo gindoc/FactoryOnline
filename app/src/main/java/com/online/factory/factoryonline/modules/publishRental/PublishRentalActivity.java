@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.publishRental;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +32,7 @@ import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.models.post.Publish;
 import com.online.factory.factoryonline.modules.album.AlbumActivity;
 import com.online.factory.factoryonline.modules.album.fragment.PhotoSelected.PhotoSelectedFragment;
+import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.publishRental.PrePay.PrePayActivity;
 import com.online.factory.factoryonline.modules.publishRental.RentType.RentTypeActivity;
 import com.online.factory.factoryonline.modules.publishRental.area.AreaActivity;
@@ -67,6 +70,9 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
 
     @Inject
     PublishRentalPresenter mPresenter;
+
+    @Inject
+    LoginContext loginContext;
 
     @Inject
     Resources resources;
@@ -365,6 +371,18 @@ public class PublishRentalActivity extends BaseActivity<PublishRentalContract.Vi
     public void publishSuccess() {
         finish();
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
+    }
+
+    @Override
+    public void unLogin() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.unLogin)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        loginContext.openUserDetail(PublishRentalActivity.this);
+                    }
+                }).create().show();
     }
 
     public void getGeoHash(String city, String address) {

@@ -4,6 +4,9 @@ import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.data.DataManager;
 import com.online.factory.factoryonline.models.response.PublicationResponse;
+import com.online.factory.factoryonline.modules.login.LogOutState;
+import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.utils.Saver;
 import com.online.factory.factoryonline.utils.rx.RxResultHelper;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 
@@ -22,6 +25,10 @@ import timber.log.Timber;
 public class PublicationPresenter extends BasePresenter<PublicationContract.View> implements PublicationContract.Presenter {
 
     private DataManager dataManager;
+
+    @Inject
+    LoginContext loginContext;
+
     @Inject
     public PublicationPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
@@ -42,6 +49,11 @@ public class PublicationPresenter extends BasePresenter<PublicationContract.View
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable.getMessage().contains("Unauthorized")||throwable.getMessage().contains("请先登录")){
+                            Saver.logout();
+                            loginContext.setmState(new LogOutState());
+                            getView().unLogin();
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });

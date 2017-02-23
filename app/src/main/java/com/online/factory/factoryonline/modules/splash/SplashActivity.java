@@ -16,13 +16,18 @@ import com.online.factory.factoryonline.models.UpdateInfo;
 import com.online.factory.factoryonline.modules.download.DownloadService;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.WindowUtil;
+import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import org.apache.commons.codec.binary.Base64;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by louiszgm on 2016/9/29.
@@ -33,6 +38,7 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
     SplashPresenter mPresenter;
 
     private AlertDialog dialog;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +59,7 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
     }
 
     private void toMainActivity() {
+//        handler.removeCallbacksAndMessages(null);
         startActivity(MainActivity.getStartIntent(SplashActivity.this));
         finish();
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
@@ -75,12 +82,26 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
 
     @Override
     public void toMainActivityForSeconds() {
-        new Handler().postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 toMainActivity();
             }
         }, 1000);
+//        Observable.timer(1, TimeUnit.SECONDS)
+//                .compose(this.<Long>bindToLifecycle())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RxSubscriber<Long>() {
+//                    @Override
+//                    public void _onNext(Long aLong) {
+//                        toMainActivity();
+//                    }
+//
+//                    @Override
+//                    public void _onError(Throwable throwable) {
+//
+//                    }
+//                });
     }
 
     @Override
@@ -119,10 +140,13 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        handler.sendEmptyMessage(1);
+        handler.removeCallbacksAndMessages(null);
         if (dialog != null) {
             dialog.dismiss();
             dialog = null;
         }
+
+        super.onDestroy();
     }
 }

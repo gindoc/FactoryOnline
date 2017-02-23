@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.translucent.role;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
+import com.online.factory.factoryonline.models.User;
 
 /**
  * 作者: GIndoc
@@ -15,8 +16,9 @@ public interface RolePickContract {
 
     interface View extends IBaseView {
 
-        void roleSwitchingSuccessful();
+        void roleSwitchingSuccessful(User type);
 
+        void unLogin();
     }
 
     interface Presenter extends IBasePresenter {
