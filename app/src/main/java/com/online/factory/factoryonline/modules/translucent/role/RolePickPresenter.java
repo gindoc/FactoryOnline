@@ -65,6 +65,7 @@ public class RolePickPresenter extends BasePresenter<RolePickContract.View> impl
     public void getUser(String type) {
         User user = Saver.getSerializableObject(SharePreferenceKey.USER);
         user.setType(Integer.parseInt(type));
+        Saver.saveSerializableObject(user, SharePreferenceKey.USER);
         getView().roleSwitchingSuccessful(user);
     }
 }

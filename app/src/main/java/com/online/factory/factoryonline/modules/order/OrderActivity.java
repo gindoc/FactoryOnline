@@ -138,6 +138,9 @@ public class OrderActivity extends BaseActivity<OrderContract.View, OrderPresent
         } else if (checkedId == -1 && TextUtils.isEmpty(mBinding.etInputTime.getText().toString().trim())) {
             ToastUtil.show(this, "请选择匹配时间");
             return;
+        }else if (checkedId == -1 && Float.parseFloat(mBinding.etInputTime.getText().toString().trim())>180){
+            ToastUtil.show(this, "最多预约180天");
+            return;
         }
         if (checkedId != -1) {
             RadioButton radioButton = (RadioButton) mBinding.radioGroup.findViewById(checkedId);
