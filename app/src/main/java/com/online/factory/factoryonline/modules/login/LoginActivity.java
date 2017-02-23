@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.login;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -13,8 +14,10 @@ import com.online.factory.factoryonline.base.BaseFragment;
 import com.online.factory.factoryonline.base.BaseFragmentPagerAdapter;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityLoginBinding;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
+import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
@@ -112,8 +115,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     }
 
     @Override
-    public void loginSuccessfully() {
+    public void loginSuccessfully(User user) {
 //        startActivity(MainActivity.getStartIntent(this));
+        Intent intent = new Intent();
+        intent.putExtra(MainActivity.RESULT_USER, user);
+        setResult(Activity.RESULT_OK, intent);
         finish();
         overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }

@@ -22,6 +22,7 @@ import com.online.factory.factoryonline.databinding.FragmentPersonalInfoBinding;
 import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LogOutState;
 import com.online.factory.factoryonline.modules.login.LoginContext;
+import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.main.fragments.user.UserFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyName.ModifyNameFragment;
 import com.online.factory.factoryonline.modules.personalInfo.fragments.modifyPwd.ModifyPwdFragment;
@@ -140,7 +141,9 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     public void refreshWhenLogOut() {
         ToastUtil.show(getContext(), "注销成功");
         mLoginContext.setmState(new LogOutState());
-        getActivity().finish();
+        Activity activity =  getActivity();
+        activity.setResult(Activity.RESULT_OK);
+        activity.finish();
     }
 
     @Override
@@ -176,7 +179,7 @@ public class PersonalInfoFragment extends BaseFragment<PersonalInfoContract.View
     @Override
     public void onLeftButtonClickListener(View view) {
         Intent intent = new Intent();
-        intent.putExtra(UserFragment.RESULT_USER, user);
+        intent.putExtra(MainActivity.RESULT_USER, user);
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
     }

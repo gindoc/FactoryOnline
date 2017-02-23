@@ -46,7 +46,7 @@ public class LogOutState implements UserState {
 
     public void toLoginActivity(Context context) {
         Activity activity = ((Activity) context);
-        activity.startActivity(LoginActivity.getStartIntent(context));
+        activity.startActivityForResult(LoginActivity.getStartIntent(context), 0);
         activity.overridePendingTransition(R.anim.translate_vetical_bottom_in, R.anim.no_animation);
     }
 

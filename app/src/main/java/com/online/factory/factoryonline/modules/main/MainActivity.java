@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.modules.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -13,6 +14,7 @@ import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.base.BasePresenter;
 import com.online.factory.factoryonline.databinding.ActivityMainBinding;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.modules.main.fragments.home.HomeFragment;
 import com.online.factory.factoryonline.modules.main.fragments.recommend.RecommendFragment;
@@ -22,6 +24,7 @@ import com.online.factory.factoryonline.utils.ToastUtil;
 import javax.inject.Inject;
 
 public class MainActivity extends BaseActivity {
+    public static final String RESULT_USER = "RESULT_USER";
     private ActivityMainBinding mBinding;
     private long mExitTime;
     @Inject
@@ -96,4 +99,15 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) return;
+        if (data != null) {
+            User user = (User) data.getSerializableExtra(RESULT_USER);
+            userFragment.mBinding.setUser(user);
+        }else {
+            userFragment.mBinding.setUser(null);
+        }
+    }
 }

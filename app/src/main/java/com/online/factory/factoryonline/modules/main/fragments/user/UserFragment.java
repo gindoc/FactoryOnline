@@ -34,8 +34,8 @@ import javax.inject.Inject;
  */
 public class UserFragment extends BaseFragment<UserContract.View, UserPresenter> implements UserContract.View {
     public static final int TO_LOGIN_ACTIVITY = 101;
-    public static final String RESULT_USER = "RESULT_USER";
-    private FragmentUserBinding mBinding;
+//    public static final String RESULT_USER = "RESULT_USER";
+    public FragmentUserBinding mBinding;
 
     @Inject
     UserPresenter mPresenter;
@@ -64,8 +64,7 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
     }
 
     public void clickRoundImage() {
-        startActivityForResult(PersonalInfoActivity.getStartIntent(getContext()),0);
-//        mLoginContext.openUserDetail(getActivity());
+        mLoginContext.openUserDetail(getActivity());
     }
 
     @Override
@@ -140,13 +139,4 @@ public class UserFragment extends BaseFragment<UserContract.View, UserPresenter>
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) return;
-        if (data != null) {
-            User user = (User) data.getSerializableExtra(RESULT_USER);
-            mBinding.setUser(user);
-        }
-    }
 }

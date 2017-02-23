@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.login;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Login;
 
 /**
@@ -13,6 +14,6 @@ public interface LoginContract {
         void login(Login loginBean);
     }
     interface View extends IBaseView{
-        void loginSuccessfully();
+        void loginSuccessfully(User user);
     }
 }

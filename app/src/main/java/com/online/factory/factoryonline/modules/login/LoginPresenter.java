@@ -59,7 +59,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
                             Saver.setToken(token);
                             Saver.setLoginState(true);
 
-                            getView().loginSuccessfully();
+                            getView().loginSuccessfully(user);
                         } else if (body.get("erro_code").toString().equals("303")) {
                             getView().showError("密码错误，请重新登录");
                         }
