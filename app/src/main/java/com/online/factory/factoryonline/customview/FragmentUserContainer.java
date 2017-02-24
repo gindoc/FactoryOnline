@@ -217,4 +217,9 @@ public class FragmentUserContainer extends RelativeLayout {
 
     }
 
+    public void toggleHexBackground(int type) {
+        paint2.setColor(type == 1? Color.parseColor("#1ab80f"): Color.parseColor("#49befe"));
+        postInvalidate();
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.online.factory.factoryonline.utils;
+package com.online.factory.factoryonline.customview;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

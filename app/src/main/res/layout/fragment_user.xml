@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
-                    android:text="1703"
+                    android:text="0"
                     android:textColor="#424242"
                     android:textSize="@dimen/x13" />
             </LinearLayout>
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/x5"
-                    android:text="6"
+                    android:text='@{String.valueOf(user.publish_count)}'
                     android:textColor="#424242"
                     android:textSize="@dimen/x13" />
             </LinearLayout>
@@ -115,9 +115,9 @@
             android:id="@+id/iv_publish_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tool:src="@drawable/ic_publish_history"
+            tool:src="@drawable/ic_order_history"
             android:onClick="@{()->view.record()}"
-            android:src='@{user.type==Consts.TYPE_USER?@drawable/ic_order_history:@drawable/ic_publish_history}' />
+            android:src='@{user.type==Consts.TYPE_AGENT?@drawable/ic_publish_history:@drawable/ic_order_history}' />
 
         <TextView
             android:id="@+id/tv_collection"

@@ -1,6 +1,5 @@
 package com.online.factory.factoryonline.modules.splash;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
@@ -8,7 +7,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.online.factory.factoryonline.R;
@@ -16,20 +14,15 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.models.UpdateInfo;
 import com.online.factory.factoryonline.modules.download.DownloadService;
 import com.online.factory.factoryonline.modules.main.MainActivity;
-import com.online.factory.factoryonline.utils.DetachableClickListener;
+import com.online.factory.factoryonline.customview.DetachableClickListener;
 import com.online.factory.factoryonline.utils.WindowUtil;
-import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import org.apache.commons.codec.binary.Base64;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by louiszgm on 2016/9/29.

@@ -106,6 +106,7 @@ public class MainActivity extends BaseActivity {
         if (data != null) {
             User user = (User) data.getSerializableExtra(RESULT_USER);
             userFragment.mBinding.setUser(user);
+            userFragment.mBinding.rlContainer.toggleHexBackground(user.getType());
         }else {
             userFragment.mBinding.setUser(null);
         }
