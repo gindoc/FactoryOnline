@@ -67,8 +67,9 @@ public class DataManagerModule {
     @Named("httpLogger")
     public HttpLoggingInterceptor providesHttpLogger() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        HttpLoggingInterceptor.Level basic = BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.HEADERS :
-                HttpLoggingInterceptor.Level.NONE;
+//        HttpLoggingInterceptor.Level basic = BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.HEADERS :
+//                HttpLoggingInterceptor.Level.NONE;
+        HttpLoggingInterceptor.Level basic = HttpLoggingInterceptor.Level.HEADERS;
         interceptor.setLevel(basic);
         return interceptor;
     }
@@ -147,7 +148,8 @@ public class DataManagerModule {
                 }
             }
         };
-        return BuildConfig.DEBUG ? interceptor : null;
+//        return BuildConfig.DEBUG ? interceptor : null;
+        return interceptor;
     }
 
     @Provides

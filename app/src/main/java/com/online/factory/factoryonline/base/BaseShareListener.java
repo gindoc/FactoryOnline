@@ -30,12 +30,12 @@ public class BaseShareListener implements UMShareListener {
 
     @Override
     public void onResult(SHARE_MEDIA platform) {
-        Toast.makeText(context, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onError(SHARE_MEDIA platform, Throwable t) {
-        Toast.makeText(context, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
         if (t != null) {
             Timber.e("throw:" + t.getMessage());
         }
@@ -43,6 +43,6 @@ public class BaseShareListener implements UMShareListener {
 
     @Override
     public void onCancel(SHARE_MEDIA platform) {
-        Toast.makeText(context, platform + " 分享取消啦", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, platform + " 分享取消啦", Toast.LENGTH_SHORT).show();
     }
 }
