@@ -19,11 +19,13 @@ public interface OrderRecordContract {
 
         void unLogin();
 
+        void loadNext(String next);
+
     }
 
     interface Presenter extends IBasePresenter {
 
-        void requestRecord();
+        void requestRecord(String next);
 
     }
 }

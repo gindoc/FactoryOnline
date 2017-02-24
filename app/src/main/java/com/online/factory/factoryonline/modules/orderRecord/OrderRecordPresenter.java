@@ -33,8 +33,8 @@ public class OrderRecordPresenter extends BasePresenter<OrderRecordContract.View
     }
 
     @Override
-    public void requestRecord() {
-        dataManager.requestOrderRecord()
+    public void requestRecord(String next) {
+        dataManager.requestOrderRecord(next)
                 .compose(getView().<NeededMessageResponse>getBindToLifecycle())
                 .compose(RxResultHelper.<NeededMessageResponse>handleResult())
                 .subscribeOn(Schedulers.io())
@@ -43,6 +43,7 @@ public class OrderRecordPresenter extends BasePresenter<OrderRecordContract.View
                     @Override
                     public void _onNext(NeededMessageResponse response) {
                         getView().loadOrderRecords(response.getNeededMessages());
+                        getView().loadNext(response.getNext());
                     }
 
                     @Override

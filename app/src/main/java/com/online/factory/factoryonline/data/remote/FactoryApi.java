@@ -230,8 +230,8 @@ public interface FactoryApi {
     @POST("feedbacks/app/")
     Observable<Response> feedback(@Body RequestBody body);
 
-    @GET("user/publications/needs")
-    Observable<NeededMessageResponse> getOrderRecord(@Header("TIME") String timestamp, @Header("Authorization") String token);
+    @GET
+    Observable<NeededMessageResponse> getOrderRecord(@Url String next, @Header("TIME") String timestamp, @Header("Authorization") String token);
 
     @GET("apps/android/update")
     Observable<UpdateInfoResponse> getUpdateInfo(@Query("current_version") int versionCode);

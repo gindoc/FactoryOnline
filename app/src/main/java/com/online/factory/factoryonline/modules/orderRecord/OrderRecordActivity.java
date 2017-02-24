@@ -12,10 +12,12 @@ import android.view.View;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.customview.TitleBar;
+import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
 import com.online.factory.factoryonline.databinding.ActivityOrderRecordBinding;
 import com.online.factory.factoryonline.models.NeededMessage;
 import com.online.factory.factoryonline.modules.login.LoginContext;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
+import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.List;
@@ -28,7 +30,8 @@ import javax.inject.Inject;
  * 作用:
  */
 
-public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, OrderRecordPresenter> implements OrderRecordContract.View, TitleBar.OnTitleBarClickListener {
+public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, OrderRecordPresenter> implements OrderRecordContract.View,
+        TitleBar.OnTitleBarClickListener, OnPageListener {
 
     @Inject
     OrderRecordPresenter mPresenter;
@@ -40,6 +43,7 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
     LoginContext loginContext;
 
     private ActivityOrderRecordBinding mBinding;
+    private String next = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +59,9 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
         mBinding.rlTitle.setOnTitleBarClickListener(this);
 
         mBinding.recyclerView.setAdapter(mAdapter);
-        mPresenter.requestRecord();
+        mBinding.recyclerView.setOnPageListener(this);
+
+        mPresenter.requestRecord(getString(R.string.api)+"user/publications/needs");
     }
 
     @Override
@@ -91,6 +97,11 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
                 }).create().show();
     }
 
+    @Override
+    public void loadNext(String next) {
+        this.next = next;
+    }
+
     public static Intent getStartIntent(Context context) {
         return new Intent(context, OrderRecordActivity.class);
     }
@@ -102,5 +113,15 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
 
     @Override
     public void onRightButtonClickListener(View view) {
+    }
+
+    @Override
+    public void onPage() {
+        if (next != null) {
+            mPresenter.requestRecord(next);
+        }else {
+            ToastUtil.show(this, "没有更多数据了");
+            mBinding.recyclerView.setIsLoading(false);
+        }
     }
 }

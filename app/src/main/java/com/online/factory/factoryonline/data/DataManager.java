@@ -473,11 +473,11 @@ public class DataManager {
         return factoryApi.feedback(builder.build());
     }
 
-    public Observable<NeededMessageResponse> requestOrderRecord() {
+    public Observable<NeededMessageResponse> requestOrderRecord(String next) {
         String timestamp = String.valueOf(System.currentTimeMillis() * 1000);
         StringBuilder iv = new StringBuilder(timestamp).reverse();
         String token = "Token " + AESUtil.encrypt(Saver.getToken(), timestamp, iv.toString());
-        return factoryApi.getOrderRecord(timestamp, token);
+        return factoryApi.getOrderRecord(next, timestamp, token);
     }
 
     public Observable<UpdateInfoResponse> requestUpdateInfo(int versionCode) {
