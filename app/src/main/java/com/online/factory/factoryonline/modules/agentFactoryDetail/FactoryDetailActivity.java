@@ -41,6 +41,9 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
 
 
 import org.apache.commons.codec.binary.Base64;
@@ -115,7 +118,33 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
         shareAction = new ShareAction(this).setDisplayList(
                 SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
                 SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SMS
-        ).withText("分享厂房信息").setCallback(shareListener);
+        ).setShareboardclickCallback(new ShareBoardlistener() {
+            @Override
+            public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                if (share_media.equals(SHARE_MEDIA.SMS)){
+                    new ShareAction(FactoryDetailActivity.this).setPlatform(share_media)
+                            .withText("您的好友向您推荐了《找厂房》APP,请点击链接前往下载 http://apps.oncom.cn")
+                            .setCallback(shareListener)
+                            .share();
+                }else {
+                    UMImage umImage;
+                    if (!TextUtils.isEmpty(wantedMessage.getProMediumFactory().getThumbnail_url())) {
+                        String url = new String(Base64.decodeBase64(wantedMessage.getProMediumFactory().getThumbnail_url().getBytes()));
+                        umImage = new UMImage(FactoryDetailActivity.this, url);
+                    }else {
+                        umImage = new UMImage(FactoryDetailActivity.this, R.mipmap.ic_launcher);
+                    }
+                    new ShareAction(FactoryDetailActivity.this)
+                            .setPlatform(share_media)
+                            .withTitle(wantedMessage.getProMediumFactory().getTitle())
+                            .withText(wantedMessage.getProMediumFactory().getDescription())
+                            .withTargetUrl("http://apps.oncom.cn")
+                            .withMedia(umImage)
+                            .setCallback(shareListener)
+                            .share();
+                }
+            }
+        });
     }
 
     private void initBaiduMap() {
