@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import com.online.factory.factoryonline.R;
@@ -15,6 +16,7 @@ import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.models.UpdateInfo;
 import com.online.factory.factoryonline.modules.download.DownloadService;
 import com.online.factory.factoryonline.modules.main.MainActivity;
+import com.online.factory.factoryonline.utils.DetachableClickListener;
 import com.online.factory.factoryonline.utils.WindowUtil;
 import com.online.factory.factoryonline.utils.rx.RxSubscriber;
 import com.trello.rxlifecycle.LifecycleTransformer;
@@ -59,7 +61,6 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
     }
 
     private void toMainActivity() {
-//        handler.removeCallbacksAndMessages(null);
         startActivity(MainActivity.getStartIntent(SplashActivity.this));
         finish();
         overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
@@ -88,24 +89,26 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
                 toMainActivity();
             }
         }, 1000);
-//        Observable.timer(1, TimeUnit.SECONDS)
-//                .compose(this.<Long>bindToLifecycle())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new RxSubscriber<Long>() {
-//                    @Override
-//                    public void _onNext(Long aLong) {
-//                        toMainActivity();
-//                    }
-//
-//                    @Override
-//                    public void _onError(Throwable throwable) {
-//
-//                    }
-//                });
     }
 
     @Override
     public void showAlertDialog(final UpdateInfo updateInfo) {
+        DetachableClickListener onNegativeClickListener = DetachableClickListener.wrap(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String url = new String(Base64.decodeBase64(updateInfo.getApk_url().getBytes()));
+                startService(DownloadService.getStartIntent(SplashActivity.this, url));
+                toMainActivity();
+            }
+        });
+
+        DetachableClickListener onPositiveClickListener = DetachableClickListener.wrap(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                toMainActivity();
+            }
+        });
+
         StringBuffer sb = new StringBuffer();
         List<String> logs = updateInfo.getUpdate_log();
         for (String s : logs) {
@@ -115,38 +118,19 @@ public class SplashActivity extends BaseActivity<SplashContract.View, SplashPres
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("最新版本信息，新增内容如下:");
         builder.setMessage(sb.toString());
-        builder.setNegativeButton("遗憾离开", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                toMainActivity();
-            }
-        });
-        builder.setPositiveButton("确认更新", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String url = new String(Base64.decodeBase64(updateInfo.getApk_url().getBytes()));
-                startService(DownloadService.getStartIntent(SplashActivity.this, url));
-                toMainActivity();
-            }
-        });
-        dialog = builder.show();
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                toMainActivity();
-            }
-        });
+        builder.setCancelable(false);
+
+        builder.setNegativeButton("遗憾离开", onPositiveClickListener);
+        builder.setPositiveButton("确认更新", onNegativeClickListener);
+        dialog = builder.create();
+        onNegativeClickListener.clearOnDetach(dialog);
+        onPositiveClickListener.clearOnDetach(dialog);
+        dialog.show();
     }
 
     @Override
     protected void onDestroy() {
-        handler.sendEmptyMessageAtTime(1, 0);
         handler.removeCallbacksAndMessages(null);
-        if (dialog != null) {
-            dialog.dismiss();
-            dialog = null;
-        }
-
         super.onDestroy();
     }
 }
