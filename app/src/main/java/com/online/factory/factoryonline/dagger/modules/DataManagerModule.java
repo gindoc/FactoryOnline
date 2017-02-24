@@ -1,5 +1,6 @@
 package com.online.factory.factoryonline.dagger.modules;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -76,22 +77,15 @@ public class DataManagerModule {
     private String createResponseBody(Interceptor.Chain chain) {
         HttpUrl uri = chain.request().url();
         String path = uri.url().getPath();
-//        String query = uri.url().getQuery();
         StringBuffer response = new StringBuffer();
         BufferedReader reader;
         AssetManager assetManager = ComponentHolder.getAppComponent().getContext().getAssets();
         try {
             String fileName;
-            if (path.matches("^(/scrollMsgs)$")) {      //匹配/scrollMsgs
-                fileName = "ScrollMsgs.json";
-            } else if (path.matches("^(/recommendPriceCats)")) {
+            if (path.matches("^(/recommendPriceCats)")) {
                 fileName = "RecommendPriceCats.json";
             } else if (path.matches("^(/recommendAreaCats)")) {
                 fileName = "RecomendAreaCats.json";
-            }else if (path.matches("^(/factorypoi/[1-9]\\d*)")) {
-                fileName = "FactoryPois.json";
-            } else if (path.matches("^(/cities)")){
-                fileName = "Cities.json";
             } else if (path.matches("^(/areas)")){
                 fileName = "Areas.json";
             } else{
@@ -105,7 +99,6 @@ public class DataManagerModule {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return response.toString();
     }
 
@@ -120,34 +113,11 @@ public class DataManagerModule {
                 Request request = chain.request();
                 Request realRequest = null;
                 Timber.d("requestBody : %s", bodyToString(request.body()));
-                Response intercepterResponse = null;
-                if (request.url().toString().contains("users")
-                        || request.url().toString().contains("user")
-                        || request.url().toString().contains("qiniutokens")
-                        || request.url().toString().contains("images")
-                        || request.url().toString().contains("wantedmessages")
-                        || request.url().toString().contains("factorypois/district/")
-                        || request.url().toString().contains("smses")
-                        || request.url().toString().contains("promediums")
-                        || request.url().toString().contains("search")
-                        || request.url().toString().contains("neededmessages")
-                        || request.url().toString().contains("promediummessages")
-                        || request.url().toString().contains("branches")
-                        || request.url().toString().contains("apps")
-                        || request.url().toString().contains("feedbacks")) {
-                    realRequest = request.newBuilder().build();
-                    originalResponse = chain.proceed(realRequest);
-                    if (originalResponse.message().contains("Unauthorized")/*||originalResponse.body().string().contains("305")*/){
-                        Saver.logout();
-                        loginContext.setmState(new LogOutState());
-                    }
-                } else if (request.url().toString().contains("http://olpkux7qo.bkt.clouddn.com/")){
-                    originalResponse = chain.proceed(chain.request());
-                    originalResponse.newBuilder()
-                            .body(new DownloadProgressResponseBody(originalResponse.body(), subject))
-                            .build();
-
-                }else {
+                Response intercepterResponse = null;        //local data
+                if (request.url().toString().contains("recommendPriceCats")
+                        || request.url().toString().contains("recommendAreaCats")
+                        || request.url().toString().contains("indexPicUrls")
+                        || request.url().toString().contains("areas")) {
                     intercepterResponse = new Response.Builder()
                             .code(200)
                             .message(responseString)
@@ -157,6 +127,18 @@ public class DataManagerModule {
                                     .getBytes()))
                             .addHeader("content-type", "application/json")
                             .build();
+                } else if (request.url().toString().contains("http://olpkux7qo.bkt.clouddn.com/")){
+                    originalResponse = chain.proceed(chain.request());
+                    originalResponse.newBuilder()
+                            .body(new DownloadProgressResponseBody(originalResponse.body(), subject))
+                            .build();
+                }else {
+                    realRequest = request.newBuilder().build();
+                    originalResponse = chain.proceed(realRequest);
+                    if (originalResponse.message().contains("Unauthorized")/*||originalResponse.body().string().contains("305")*/){
+                        Saver.logout();
+                        loginContext.setmState(new LogOutState());
+                    }
                 }
                 if (intercepterResponse == null) {
                     return originalResponse;

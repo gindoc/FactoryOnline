@@ -20,4 +20,5 @@
 
     <string name="permission_send_sms_rationale">请打开发送短信权限，否则无法发送短信</string>
     <string name="permission_send_sms_deny_again">打开应用程序修改应用程序的发送短信权限</string>
+    
 </resources>

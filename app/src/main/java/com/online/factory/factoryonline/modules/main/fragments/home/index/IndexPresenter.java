@@ -63,7 +63,7 @@ public class IndexPresenter extends BasePresenter<IndexContract.View> implements
 
                     @Override
                     public void _onError(Throwable throwable) {
-
+                        Timber.e(throwable.getMessage());
                     }
                 });
     }
