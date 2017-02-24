@@ -250,6 +250,7 @@
                             android:background="@android:color/white"
                             android:orientation="horizontal"
                             android:paddingLeft="@dimen/x15"
+                            android:paddingRight="@dimen/x15"
                             android:paddingTop="@dimen/x15">
 
                             <TextView
@@ -279,7 +280,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="118人"
+                                android:text="@{viewModel.viewCount}"
                                 android:textColor="#424242"
                                 android:textSize="@dimen/x13"
                                 android:textStyle="bold" />
@@ -343,7 +344,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="666666"
+                                android:text="@{viewModel.factoryId}"
                                 android:textColor="#424242"
                                 android:textSize="@dimen/x13"
                                 android:textStyle="bold" />

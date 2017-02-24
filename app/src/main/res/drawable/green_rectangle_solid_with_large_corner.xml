@@ -3,7 +3,7 @@
     android:shape="rectangle">
     <size
         android:width="@dimen/x255"
-        android:height="@dimen/y44" />
+        android:height="@dimen/x44" />
     <solid android:color="#19B90F" />
     <corners android:radius="@dimen/x55" />
 </shape>

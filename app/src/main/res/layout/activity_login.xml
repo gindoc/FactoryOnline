@@ -20,12 +20,13 @@
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tabs"
-                    android:layout_width="match_parent"
+                    android:layout_width="@dimen/x200"
+                    android:layout_gravity="center"
                     android:layout_height="match_parent"
                     app:tabTextAppearance="@style/LoginTabLayoutStyle"
                     app:tabSelectedTextColor="#1ab80f"
                     app:tabIndicatorColor="#1BB80F"
-                    app:tabIndicatorHeight="@dimen/y2"
+                    app:tabIndicatorHeight="0dp"
                     app:tabGravity="center"
                     app:tabMode="fixed" />
 

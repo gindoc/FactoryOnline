@@ -51,8 +51,8 @@ public class ActivityModule {
     @Named("LoginFragments")
     public ArrayList<BaseFragment> provideLoginFragments(PwdLoginFragment pwdLoginFragment , SmsLoginFragment smsLoginFragment){
         ArrayList<BaseFragment> list = new ArrayList<>();
-        list.add(pwdLoginFragment);
         list.add(smsLoginFragment);
+        list.add(pwdLoginFragment);
         return list;
     }
 }

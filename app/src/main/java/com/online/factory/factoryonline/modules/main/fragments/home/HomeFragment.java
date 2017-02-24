@@ -136,11 +136,11 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
         mBinding.viewpager.setOffscreenPageLimit(3);
         for (int i = 0; i < pagerAdapter.getCount(); i++) {
             TabLayout.Tab tab = mBinding.tabLayout.getTabAt(i);//获得每一个tab
-            tab.setCustomView(R.layout.tab_item);//给每一个tab设置view
+            tab.setCustomView(R.layout.tab_item_home);//给每一个tab设置view
             if (i == 0) {
                 // 设置第一个tab的TextView是被选择的样式
                 View view = tab.getCustomView();
-                view.findViewById(R.id.view_indicator).setVisibility(View.VISIBLE);//第一个tab被选中
+                view.findViewById(R.id.view_indicator).setSelected(true);       //第一个tab被选中
                 view.findViewById(R.id.tab_text).setSelected(true);
             }
             TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tab_text);
@@ -150,7 +150,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 View view = tab.getCustomView();
-                view.findViewById(R.id.view_indicator).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.view_indicator).setSelected(true);
                 view.findViewById(R.id.tab_text).setSelected(true);
                 mBinding.viewpager.setCurrentItem(tab.getPosition());
             }
@@ -158,7 +158,7 @@ public class HomeFragment extends BaseFragment<HomeContract.View, HomePresenter>
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 View view = tab.getCustomView();
-                view.findViewById(R.id.view_indicator).setVisibility(View.INVISIBLE);
+                view.findViewById(R.id.view_indicator).setSelected(false);
                 view.findViewById(R.id.tab_text).setSelected(false);
             }
 

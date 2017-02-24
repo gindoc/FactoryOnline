@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -19,10 +23,12 @@ import com.online.factory.factoryonline.models.post.Login;
 import com.online.factory.factoryonline.modules.forgetPwd.ForgetPwdActivity;
 import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.modules.regist.RegistActivity;
+import com.online.factory.factoryonline.utils.DensityUtil;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.trello.rxlifecycle.LifecycleTransformer;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -79,6 +85,39 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
         mBinding.viewpager.setAdapter(adapter);
         adapter.setFragments(fragments);
         mBinding.tabs.setupWithViewPager(mBinding.viewpager);
+        for (int i=0;i<adapter.getCount();i++) {
+            TabLayout.Tab tab = mBinding.tabs.getTabAt(i);
+            tab.setCustomView(R.layout.tab_item_login);//给每一个tab设置view
+            if (i == 0) {
+                // 设置第一个tab的TextView是被选择的样式
+                View view = tab.getCustomView();
+                view.findViewById(R.id.view_indicator).setSelected(true);       //第一个tab被选中
+                view.findViewById(R.id.tab_text).setSelected(true);
+            }
+            TextView textView = (TextView) tab.getCustomView().findViewById(R.id.tab_text);
+            textView.setText(fragments.get(i).getTitle());//设置tab上的文字
+        }
+        mBinding.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                View view = tab.getCustomView();
+                view.findViewById(R.id.view_indicator).setSelected(true);
+                view.findViewById(R.id.tab_text).setSelected(true);
+                mBinding.viewpager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View view = tab.getCustomView();
+                view.findViewById(R.id.view_indicator).setSelected(false);
+                view.findViewById(R.id.tab_text).setSelected(false);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+        setUpIndicatorWidth();
     }
 
     public void onCLickSignUp(View view){
@@ -124,5 +163,38 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
         overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }
 
+    /**
+     * 通过反射修改TabLayout Indicator的宽度（仅在Android 4.2及以上生效）
+     */
+    private void setUpIndicatorWidth() {
+        Class<?> tabLayoutClass = mBinding.tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tabLayoutClass.getDeclaredField("mTabStrip");
+            tabStrip.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
 
+        LinearLayout layout = null;
+        try {
+            if (tabStrip != null) {
+                layout = (LinearLayout) tabStrip.get(mBinding.tabs);
+            }
+            for (int i = 0; i < layout.getChildCount(); i++) {
+                View child = layout.getChildAt(i);
+                child.setPadding(0, 0, 0, 0);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    int spacing = getResources().getDimensionPixelOffset(R.dimen.x10);
+                    params.setMarginStart(spacing);
+                    params.setMarginEnd(spacing);
+                }
+                child.setLayoutParams(params);
+                child.invalidate();
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }

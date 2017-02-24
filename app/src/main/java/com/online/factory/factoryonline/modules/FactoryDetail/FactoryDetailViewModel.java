@@ -69,6 +69,16 @@ public class FactoryDetailViewModel extends BaseObservable {
     }
 
     @Bindable
+    public String getFactoryId() {
+        return String.valueOf(factory.getId());
+    }
+
+    @Bindable
+    public String getViewCount() {
+        return wantedMessage.getView_count() + "人";
+    }
+
+    @Bindable
     public String getCreateTime() {
         return TimeUtil.vagueTime(wantedMessage.getCreated_time());
     }

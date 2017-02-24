@@ -13,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_click_background"
         android:paddingLeft="@dimen/x23"
         android:paddingRight="@dimen/x23"
         android:paddingTop="@dimen/x15">
