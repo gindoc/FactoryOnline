@@ -82,7 +82,9 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
     @Override
     public void loadOrderRecords(List<NeededMessage> neededMessages) {
         mAdapter.addData(neededMessages);
-        mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.getAdapter().notifyItemRangeChanged(mAdapter.getData().size(), neededMessages.size());
+//        mBinding.recyclerView.notifyDataSetChanged();
+        mBinding.recyclerView.setIsLoading(false);
     }
 
     @Override
@@ -120,7 +122,6 @@ public class OrderRecordActivity extends BaseActivity<OrderRecordContract.View, 
         if (next != null) {
             mPresenter.requestRecord(next);
         }else {
-            ToastUtil.show(this, "没有更多数据了");
             mBinding.recyclerView.setIsLoading(false);
         }
     }

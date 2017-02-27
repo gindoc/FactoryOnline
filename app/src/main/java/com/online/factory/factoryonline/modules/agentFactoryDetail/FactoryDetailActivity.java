@@ -380,6 +380,7 @@ public class FactoryDetailActivity extends BaseActivity<FactoryDetailContract.Vi
 
     @Override
     public void showError(String error) {
+        ToastUtil.show(this, error);
     }
 
     @Override

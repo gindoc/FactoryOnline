@@ -68,6 +68,9 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
 
                     @Override
                     public void _onError(Throwable throwable) {
+                        if (throwable.getMessage().contains("Unauthorized")) {
+                            getView().showError("登录后才可以收藏哦");
+                        }
                         Timber.e(throwable.getMessage());
                     }
                 });
@@ -125,7 +128,6 @@ public class FactoryDetailPresenter extends BasePresenter<FactoryDetailContract.
                 .subscribe(new RxSubscriber<Response>() {
                     @Override
                     public void _onNext(Response response) {
-                        getView().showError(response.getErro_msg());
                     }
 
                     @Override

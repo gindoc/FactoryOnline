@@ -28,6 +28,7 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -268,12 +269,15 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
             public void run() {
                 mBinding.scrollView.stopRefresh();
                 mBinding.llOnlineMessage.setVisibility(View.VISIBLE);
+                Random random = new Random();
+                mBinding.tvFactoryMsg.setText("在线人数:" + (random.nextInt(400) % (400 - 300 + 1) + 300));
+                mBinding.tvOnlineNum.setText("厂房信息:" + (random.nextInt(800) % (800 - 600 + 1) + 600));
                 mBinding.llOnlineMessage.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         mBinding.llOnlineMessage.setVisibility(View.GONE);
                     }
-                }, 500);
+                },1000);
             }
         }, 1500);
     }
