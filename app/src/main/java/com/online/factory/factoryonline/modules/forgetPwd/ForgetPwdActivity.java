@@ -76,23 +76,6 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
         ToastUtil.show(this, error);
     }
 
-    public void submit() {
-        try {
-            String phoneNum = mBinding.etPhonenum.getText().toString();
-            String verifyCode = mBinding.etVerificationcode.getText().toString();
-            String newPwd = mBinding.etNewPwd.getText().toString();
-            String newPwdAgain = mBinding.etNewPwd.getText().toString();
-            Validate.validatePhoneNum(phoneNum);
-            if (TextUtils.isEmpty(verifyCode)) throw new Exception("请输入验证码");
-            if (TextUtils.isEmpty(newPwd)) throw new Exception("请输入新密码");
-            if (TextUtils.isEmpty(newPwdAgain)) throw new Exception("请再次输入新密码");
-            if (!newPwdAgain.equals(newPwd)) throw new Exception("两次密码不一致，请重新输入");
-            mPresenter.modifyPwd(phoneNum, newPwd, verifyCode);
-        } catch (Exception e) {
-            ToastUtil.show(this, e.getMessage());
-        }
-    }
-
     public void getVerifyCode(){
         try {
             String phoneNum = mBinding.etPhonenum.getText().toString();
@@ -171,6 +154,19 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
 
     @Override
     public void onRightButtonClickListener(View view) {
-
+        try {
+            String phoneNum = mBinding.etPhonenum.getText().toString();
+            String verifyCode = mBinding.etVerificationcode.getText().toString();
+            String newPwd = mBinding.etNewPwd.getText().toString();
+            String newPwdAgain = mBinding.etNewPwd.getText().toString();
+            Validate.validatePhoneNum(phoneNum);
+            if (TextUtils.isEmpty(verifyCode)) throw new Exception("请输入验证码");
+            if (TextUtils.isEmpty(newPwd)) throw new Exception("请输入新密码");
+            if (TextUtils.isEmpty(newPwdAgain)) throw new Exception("请再次输入新密码");
+            if (!newPwdAgain.equals(newPwd)) throw new Exception("两次密码不一致，请重新输入");
+            mPresenter.modifyPwd(phoneNum, newPwd, verifyCode);
+        } catch (Exception e) {
+            ToastUtil.show(this, e.getMessage());
+        }
     }
 }

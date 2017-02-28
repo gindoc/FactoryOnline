@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">找厂房</string>
     <string name="api">http://api.oncom.cn:8000/api/v1/</string>
-    <!--<string name="api">http://192.168.0.143:8000/api/v1/</string>-->
+    <!--<string name="api">http://oncom.cn:8000/api/v1/</string>-->
 
     <string name="unLogin">当前未登陆，请先登录</string>
 

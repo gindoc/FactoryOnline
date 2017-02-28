@@ -12,8 +12,10 @@ import android.view.View;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
 import com.online.factory.factoryonline.databinding.ActivityRegistBinding;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.exception.ValidateException;
 import com.online.factory.factoryonline.models.post.Regist;
+import com.online.factory.factoryonline.modules.main.MainActivity;
 import com.online.factory.factoryonline.utils.StatusBarUtils;
 import com.online.factory.factoryonline.utils.ToastUtil;
 import com.online.factory.factoryonline.utils.Validate;
@@ -125,8 +127,10 @@ public class RegistActivity extends BaseActivity<RegistContract.View, RegistPres
     }
 
     @Override
-    public void registSuccessfully() {
-        setResult(REGIST_SUCCESS);
+    public void registSuccessfully(User user) {
+        Intent intent = new Intent();
+        intent.putExtra(MainActivity.RESULT_USER, user);
+        setResult(REGIST_SUCCESS, intent);
         finish();
         overridePendingTransition(R.anim.zoomin,R.anim.zoomout);
     }

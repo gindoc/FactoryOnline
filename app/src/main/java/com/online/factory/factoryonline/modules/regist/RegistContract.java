@@ -2,6 +2,7 @@ package com.online.factory.factoryonline.modules.regist;
 
 import com.online.factory.factoryonline.base.IBasePresenter;
 import com.online.factory.factoryonline.base.IBaseView;
+import com.online.factory.factoryonline.models.User;
 import com.online.factory.factoryonline.models.post.Regist;
 
 /**
@@ -11,7 +12,7 @@ import com.online.factory.factoryonline.models.post.Regist;
 public interface RegistContract {
 
     interface View extends IBaseView {
-        void registSuccessfully();
+        void registSuccessfully(User user);
 
         void refleshSmsButton();
 

@@ -65,7 +65,7 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                             Saver.setToken(token);
                             Saver.setLoginState(true);
 
-                            getView().registSuccessfully();
+                            getView().registSuccessfully(user);
                         } else{
                             getView().showError(body.get("erro_msg").getAsString());
                         }

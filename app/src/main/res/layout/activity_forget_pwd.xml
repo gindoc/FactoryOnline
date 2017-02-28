@@ -28,6 +28,8 @@
             app:left_text_visible="true"
             app:left_text_drawable="@drawable/ic_arrow_left_green"
             app:left_drawable_padding="@dimen/x5"
+            app:right_text="提交"
+            app:right_text_visible="true"
             android:layout_height="@dimen/header_height"/>
 
         <LinearLayout

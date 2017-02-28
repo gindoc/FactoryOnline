@@ -134,6 +134,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RegistActivity.REGIST_SUCCESS && requestCode == TO_REGIST_ACTIVITY) {
+            setResult(Activity.RESULT_OK, data);
             finish();
         }
     }
