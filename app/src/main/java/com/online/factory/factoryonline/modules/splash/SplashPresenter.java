@@ -26,24 +26,24 @@ public class SplashPresenter extends BasePresenter<SplashContract.View> implemen
         this.dataManager = dataManager;
     }
 
-    @Override
-    public void requestUpdateInfo(int versionCode) {
-        dataManager.requestUpdateInfo(versionCode)
-                .compose(getView().<UpdateInfoResponse>getBindToLifecycle())
-                .compose(RxResultHelper.<UpdateInfoResponse>handleResult())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new RxSubscriber<UpdateInfoResponse>() {
-                    @Override
-                    public void _onNext(UpdateInfoResponse updateInfoResponse) {
-                        getView().showAlertDialog(updateInfoResponse.getUpdateInfo());
-                    }
-
-                    @Override
-                    public void _onError(Throwable throwable) {
-                        getView().toMainActivityForSeconds();
-                    }
-                });
-    }
+//    @Override
+//    public void requestUpdateInfo(int versionCode) {
+//        dataManager.requestUpdateInfo(versionCode)
+//                .compose(getView().<UpdateInfoResponse>getBindToLifecycle())
+//                .compose(RxResultHelper.<UpdateInfoResponse>handleResult())
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new RxSubscriber<UpdateInfoResponse>() {
+//                    @Override
+//                    public void _onNext(UpdateInfoResponse updateInfoResponse) {
+//                        getView().showAlertDialog(updateInfoResponse.getUpdateInfo());
+//                    }
+//
+//                    @Override
+//                    public void _onError(Throwable throwable) {
+//                        getView().toMainActivityForSeconds();
+//                    }
+//                });
+//    }
 
 }

@@ -147,6 +147,11 @@ public class SmsLoginFragment extends BaseFragment<SmsLoginContract.View, SmsLog
     }
 
     @Override
+    public void activeButton() {
+        mBinding.tvGetVertifycode.setClickable(true);
+    }
+
+    @Override
     public void onDestroy() {
         if (subscription!=null&&!subscription.isUnsubscribed()) {
             subscription.unsubscribe();

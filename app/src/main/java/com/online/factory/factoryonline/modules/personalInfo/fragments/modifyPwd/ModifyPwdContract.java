@@ -16,6 +16,8 @@ public interface ModifyPwdContract {
         void finish();
 
         void unLogin();
+
+        void activeButton();
     }
 
     interface Presenter extends IBasePresenter {

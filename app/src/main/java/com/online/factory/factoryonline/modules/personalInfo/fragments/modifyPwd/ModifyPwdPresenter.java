@@ -87,6 +87,7 @@ public class ModifyPwdPresenter extends BasePresenter<ModifyPwdContract.View> im
                         if (throwable.getMessage().contains("Frequency limit reaches")) {
                             getView().showError("操作过于频繁,请稍后");
                         }
+                        getView().activeButton();
                         Timber.e(throwable.getMessage());
                     }
                 });

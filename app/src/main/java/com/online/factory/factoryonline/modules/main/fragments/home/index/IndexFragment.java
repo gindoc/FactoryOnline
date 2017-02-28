@@ -257,7 +257,10 @@ public class IndexFragment extends BaseFragment<IndexContract.View, IndexPresent
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             mContentBinding.highQualityViewpager.setCurrentItem(mCurrentItem);
-            mCurrentItem = (mCurrentItem+1)%mContentBinding.llHighQualityDots.getChildCount();
+            int count = mContentBinding.llHighQualityDots.getChildCount();
+            if (count != 0) {
+                mCurrentItem = (mCurrentItem + 1) % count;
+            }
             sendEmptyMessageDelayed(0, 3000);
         }
     };

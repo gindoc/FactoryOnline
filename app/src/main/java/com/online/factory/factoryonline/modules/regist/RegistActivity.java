@@ -159,6 +159,11 @@ public class RegistActivity extends BaseActivity<RegistContract.View, RegistPres
                 });
     }
 
+    @Override
+    public void activeSmsButton() {
+        mBinding.tvGetVertifycode.setClickable(true);
+    }
+
     private String getInputPhoneNum() {
         return mBinding.etPhonenum.getText().toString();
     }

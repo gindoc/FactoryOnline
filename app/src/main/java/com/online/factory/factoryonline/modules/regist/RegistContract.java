@@ -15,6 +15,7 @@ public interface RegistContract {
 
         void refleshSmsButton();
 
+        void activeSmsButton();
     }
 
     interface Presenter extends IBasePresenter {

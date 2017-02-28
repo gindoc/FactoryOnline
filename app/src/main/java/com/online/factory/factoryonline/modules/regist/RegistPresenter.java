@@ -95,6 +95,7 @@ public class RegistPresenter extends BasePresenter<RegistContract.View> implemen
                     @Override
                     public void _onError(Throwable throwable) {
                         Timber.e(throwable.getMessage());
+                        getView().activeSmsButton();
                     }
                 });
     }

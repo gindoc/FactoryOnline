@@ -97,6 +97,7 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
         try {
             String phoneNum = mBinding.etPhonenum.getText().toString();
             Validate.validatePhoneNum(phoneNum);
+            mBinding.tvGetVertifycode.setClickable(false);
             mPresenter.getVerifyCode(phoneNum);
         } catch (ValidateException ve) {
             ToastUtil.show(this, ve.getMessage());
@@ -133,6 +134,11 @@ public class ForgetPwdActivity extends BaseActivity<ForgetPwdContract.View, Forg
     public void modifyDone(){
         ToastUtil.show(this, "密码修改完成");
         finish();
+    }
+
+    @Override
+    public void activeButton() {
+        mBinding.tvGetVertifycode.setClickable(true);
     }
 
     public static Intent getStartIntent(Context context) {

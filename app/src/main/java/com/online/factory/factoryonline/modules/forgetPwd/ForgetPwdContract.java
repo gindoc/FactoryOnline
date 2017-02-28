@@ -14,6 +14,8 @@ public class ForgetPwdContract {
         void refleshSmsButton();
 
         void modifyDone();
+
+        void activeButton();
     }
 
     interface Presenter extends IBasePresenter {

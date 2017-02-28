@@ -98,6 +98,7 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
         try {
             String phoneNum = mBinding.etPhonenum.getText().toString();
             Validate.validatePhoneNum(phoneNum);
+            mBinding.tvGetVertifycode.setClickable(false);
             mPresenter.getVerifyCode(phoneNum);
         } catch (ValidateException ve) {
             ToastUtil.show(getContext(), ve.getMessage());
@@ -146,6 +147,11 @@ public class ModifyPwdFragment extends BaseFragment<ModifyPwdContract.View, Modi
                         loginContext.openUserDetail(getActivity());
                     }
                 }).create().show();
+    }
+
+    @Override
+    public void activeButton() {
+        mBinding.tvGetVertifycode.setClickable(true);
     }
 
     @Override

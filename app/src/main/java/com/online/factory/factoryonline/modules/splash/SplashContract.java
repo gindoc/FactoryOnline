@@ -17,12 +17,12 @@ public interface SplashContract {
 
         void toMainActivityForSeconds();
 
-        void showAlertDialog(UpdateInfo updateInfo);
+//        void showAlertDialog(UpdateInfo updateInfo);
     }
 
     interface Presenter extends IBasePresenter {
 
-        void requestUpdateInfo(int versionCode);
+//        void requestUpdateInfo(int versionCode);
 
     }
 
