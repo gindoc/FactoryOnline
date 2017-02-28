@@ -5,10 +5,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewHolder;
 import com.online.factory.factoryonline.databinding.ItemOrderListBinding;
 import com.online.factory.factoryonline.models.NeededMessage;
+import com.online.factory.factoryonline.utils.WindowUtil;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -30,20 +32,7 @@ public class OrderRecordAdapter extends BaseRecyclerViewAdapter<NeededMessage, B
 
     @Override
     public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final ItemOrderListBinding binding = ItemOrderListBinding.inflate(layoutInflater, parent, false);
-        binding.tvDescription.post(new Runnable() {
-            @Override
-            public void run() {
-                int lineCount = binding.tvDescription.getLineCount();
-                OrderRecordViewModel viewModel = binding.getViewModel();
-                if (viewModel == null) return;
-                viewModel.setArrowVisible(lineCount>2);
-                if (lineCount > 2) {
-                    binding.tvDescription.setEllipsize(TextUtils.TruncateAt.END);
-                    binding.ivArrow.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        ItemOrderListBinding binding = ItemOrderListBinding.inflate(layoutInflater, parent, false);
         return new BaseRecyclerViewHolder(binding.getRoot(), binding);
     }
 
@@ -51,8 +40,22 @@ public class OrderRecordAdapter extends BaseRecyclerViewAdapter<NeededMessage, B
     public void onBindViewHolder(BaseRecyclerViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         OrderRecordViewModel viewModel = provider.get();
-        ItemOrderListBinding binding = (ItemOrderListBinding) holder.getBinding();
+        final ItemOrderListBinding binding = (ItemOrderListBinding) holder.getBinding();
         viewModel.setNeededMessage(data.get(position));
         binding.setViewModel(viewModel);
+        int padding = mContext.getResources().getDimensionPixelOffset(R.dimen.x31);
+        int textWidth = (int) binding.tvDescription.getPaint().measureText(data.get(position).getNeed().getContent());
+        int containerWidth = WindowUtil.getScreenWidthAndHeight(mContext)[0] - padding;
+        if (textWidth*1f / containerWidth > 2) {
+            viewModel.setArrowVisible(true);
+            binding.tvDescription.setEllipsize(TextUtils.TruncateAt.END);
+            binding.tvDescription.setMaxLines(2);
+            binding.ivArrow.setVisibility(View.VISIBLE);
+            binding.ivArrow.setImageResource(R.drawable.ic_arrow_down_outline);
+        }else {
+            viewModel.setArrowVisible(false);
+//            binding.tvDescription.setMaxLines(Integer.MAX_VALUE);
+            binding.ivArrow.setVisibility(View.GONE);
+        }
     }
 }
