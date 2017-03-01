@@ -88,6 +88,12 @@ android {
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/ASL2.0'
     }
+
+    repositories {
+        maven {
+            url "http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories"
+        }
+    }
 }
 
 dependencies {
@@ -147,4 +153,7 @@ dependencies {
 
     //UMENG
     compile 'com.umeng.analytics:analytics:latest.integration'
+
+    //alibaichuan
+    compile 'com.taobao.android:alisdk-hotfix:1.4.0'
 }

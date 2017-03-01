@@ -266,3 +266,18 @@ public static final ** CREATOR;
 
 -keep class com.linkedin.** { *; }
 -keepattributes Signature
+
+
+#阿里百川hotfix
+-keep class * extends java.lang.annotation.Annotation
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+-keep class com.alipay.euler.andfix.**{
+    *;
+}
+-keep class com.taobao.hotfix.aidl.**{*;}
+-keep class com.ta.utdid2.device.**{*;}
+-keep class com.taobao.hotfix.HotFixManager{
+    public *;
+}

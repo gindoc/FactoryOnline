@@ -47,6 +47,13 @@
         <meta-data android:value="584e4c15b27b0a4150000132" android:name="UMENG_APPKEY"/>
         <meta-data android:value="${UMENG_CHANNEL_VALUE}" android:name="UMENG_CHANNEL"/>
 
+        <meta-data
+            android:name="com.taobao.android.hotfix.APPSECRET"
+            android:value="cc2de86fb6f5998ed9d67341f6300d60" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.RSASECRET"
+            android:value="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCA4yz3hNVHuVZ6aiHEq5YpC84LNJkzHLr19nRIlG9KIjZTZ4oHZS10kufFpO58uuQvSZ+kHv8UYGvMWBT1HXu9MTG/cNin1gHNY+nX+OEs9ed17EHAS3p3GG/Tg7FCerImQX0vdmYyerNxCWtm9Wnp+l48LM0jfqXDg53T55mwhKL2AhkZXdv5H3ykJxPmS4biMPhAsGFBeYsMv3N7AtR1OnUQdNMAM6qlIXlRaiWzuxbFmaq/1kW1A4gPdDc6kIMzDm55P046KbVz5I3H5e4UuboOlQItmWQH/aaj0HEadoNOu0gYfNkH600ngY6ZCY9WHcCtokw8VEVcWFpGtcMjAgMBAAECggEACqpBu02blG7KsCB+INcN+uGGMDkvACK9ecLmBmd5+glws2Aa9NezdjT9xsYKEfopDZyrABqsgtQjt2oGee3xoksi0bOVyfWUepls7Tkj8ON8Pq7JFg9o19gG0NrR3S1n9nBu2nGSrVSn6o+b+o4OMJVOHO6cHvbI4q/ObI16kzeXmqfCWaxsQb/aXX5cQveOR6r86iz+IZNAB7ek71nbyLzTZ+gT9GWH2YJFv1vfIznouHyAVhCTH6wOSGVOyxwWc6B4n3WZcCtv37bVOS0i7K/fymtwv6P1hesWkgNsV/DGdNUTIzU+4qScsE1Cq7KDxB/qDJYILLGrQB4CkCsOaQKBgQDl1a9L91VEqB9gLzjz5N3a63EONjj0ufPXb8mt4rf2AuYVYu9ITBhPUGs/evtnC0XEtopmMsOJXluk7EMwL2UhFBl/1fer98pCZ/PfnZzdvRQV34u3AUZ/UOKlfxdm4q9FkjgRej75spcQyr+1wkK+53xFZbkQIvnannmOaMpYBwKBgQCPj3orzvYK0nt0t1zJypVQOzvBk8tLjXPIJkBf0XgWEyH/b8zUdvOlBKTjm+oqeQOCMM08BvbT7hXVPMvzJmnDeVA3q1dz6d3pw3HvKvn9CxZ9OYFU2Lwz+wGtxbJd8dwumgbfjmjTZTbPgjG6NDyGYeZxG6CwngKpuZwDtBzdBQKBgEciiAr/FkkVsABZHUt/fpsPXAKGDcLQ+wOm+cjz7vQZmZTs9hpuUufZgBg5vC38cy+bP+K5u4N8zOiSp4j2YlqGmg3S78EuBE/hVL3VToPizaCne9q8blFhe4S1fUy+xHjH9MqUB4HJILB10Dg1U+s6QmBIR6sS6Dod6omFLXtpAoGAfeMmEdZpgTHzmnTURAuGhZV7oBM2+SiwN/n7B0sLD+h1LqZeKo2ot7Lr2L+3RslZX0fmINZGia9Eq/mlKrIrmoL96eMxS+7vbva5KS45i0C21tafZ8SqvLZGUZiEAcd9+cuNbWpW19DwkGStsIfv7zNYPSUp8taMpUKi4ciGavUCgYEAszWvorHy0U+zd4mnZr61BFSRvrfsRo6dbUaO2BMNg+qD1R3kca6a4b+SJGJiRSQlvhk5NUNDJKscubMZkkg4eOagmb8EVuQ1tIbnQxzv2IvP+s7BwWTgV2zC9u67qB1X2UypBQMUwsRFhFQcGt2za+WOpPCrZyzRz69VviT3Mak=" />
+
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"/>
 
         <activity android:name=".modules.main.MainActivity"
