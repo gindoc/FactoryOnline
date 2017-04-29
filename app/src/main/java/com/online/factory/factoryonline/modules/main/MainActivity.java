@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseActivity;
@@ -110,5 +109,11 @@ public class MainActivity extends BaseActivity {
         }else {
             userFragment.mBinding.setUser(null);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        System.exit(0);
+        super.onDestroy();
     }
 }

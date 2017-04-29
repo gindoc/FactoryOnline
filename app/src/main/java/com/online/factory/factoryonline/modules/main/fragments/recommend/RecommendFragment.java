@@ -15,12 +15,10 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.online.factory.factoryonline.R;
 import com.online.factory.factoryonline.base.BaseFragment;
-import com.online.factory.factoryonline.customview.DividerItemDecoration;
 import com.online.factory.factoryonline.customview.WrapContentLinearLayoutManager;
 import com.online.factory.factoryonline.customview.recyclerview.BaseRecyclerViewAdapter;
 import com.online.factory.factoryonline.customview.recyclerview.OnPageListener;
@@ -45,13 +43,12 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import timber.log.Timber;
-
 /**
  * Created by louiszgm on 2016/9/30.
  */
 public class RecommendFragment extends BaseFragment<RecommendContract.View, RecommendPresenter> implements
-        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener, BaseRecyclerViewAdapter.OnItemClickListener {
+        RecommendContract.View, SwipeRefreshLayout.OnRefreshListener, OnPageListener,
+        BaseRecyclerViewAdapter.OnItemClickListener {
     private FragmentRecommendBinding mBinding;
     private LayoutRecommendFilterDistrictBinding mDistrictBinding;
     private LayoutRecommendFilterPriceAreaBinding mPriceBinding;
@@ -154,7 +151,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
             @Override
             public void onGlobalLayout() {
                 int height = mBinding.dropDownMenu.getChildAt(0).getHeight();
-                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams
+                        .MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                 lp.setMargins(0, height, 0, 0);
                 mBinding.swipe.setLayoutParams(lp);
             }
@@ -173,7 +171,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     }
 
     private void initRecyclerView(LayoutInflater inflater, @Nullable ViewGroup container) {
-        mBinding.recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mBinding.recyclerView.setLayoutManager(new WrapContentLinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
         mBinding.recyclerView.setAdapter(mAdapter);                                   //初始化推荐列表
         mBinding.recyclerView.setOnPageListener(this);
         mAdapter.setOnItemClickListener(this);
@@ -292,7 +291,8 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
 
     private void initSwipeLayout() {
         mBinding.swipe.setColorSchemeResources(R.color.swipe_color_red, R.color.swipe_color_yellow, R.color
-                .swipe_color_blue);                                                      //初始化swipeRefleshLayout
+                .swipe_color_blue);
+        //初始化swipeRefleshLayout
         mBinding.swipe.setProgressViewEndTarget(true, 300);
         mBinding.swipe.setOnRefreshListener(this);
     }
@@ -513,6 +513,5 @@ public class RecommendFragment extends BaseFragment<RecommendContract.View, Reco
     public void onDestroy() {
         InputMethodManagerLeakUtil.fixFocusedViewLeak((Application) context);
         super.onDestroy();
-
     }
 }
